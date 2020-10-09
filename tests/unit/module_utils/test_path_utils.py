@@ -9,6 +9,7 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 import json
+import heapq
 import os
 import unittest
 from ansible_collections.ansible.utils.plugins.module_utils.path_utils import (
@@ -70,7 +71,7 @@ class TestPathUtils(unittest.TestCase):
         result = to_paths(var, wantlist=True, prepend="var")
         self.assertEqual(result, expected)
 
-    def test_to_paths_prepend(self):
+    def test_to_paths_prepend_fail(self):
         var = {"a": {"b": {"c": {"d": [0, 1]}}}}
         expected = "must be a string"
         with self.assertRaises(Exception) as exc:
@@ -78,6 +79,8 @@ class TestPathUtils(unittest.TestCase):
         self.assertIn(expected, str(exc.exception))
 
     def test_roundtrip_large(self):
+        """ Test the 1000 longest keys, otherwise this takes a _really_ long time
+        """
         big_json_path = os.path.join(
             os.path.dirname(__file__), "fixtures", "large.json"
         )
@@ -85,6 +88,7 @@ class TestPathUtils(unittest.TestCase):
             big_json = fhand.read()
         var = json.loads(big_json)
         paths = to_paths(var)
-        for key, value in paths.items():
-            gotten = get_path(var, key, environment=self._environment)
-            self.assertEqual(gotten, value)
+        to_tests = heapq.nlargest(1000, list(paths.keys()), key=len)
+        for to_test in to_tests:
+            gotten = get_path(var, to_test, environment=self._environment)
+            self.assertEqual(gotten, paths[to_test])
