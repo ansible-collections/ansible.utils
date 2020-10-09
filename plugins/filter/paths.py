@@ -17,24 +17,30 @@ from ansible.module_utils.common._collections_compat import (
     MutableMapping,
 )
 
-from ansible_collections.ansible.utils.plugins.module_utils.generate_paths import (
-    generate_paths,
+from ansible_collections.ansible.utils.plugins.module_utils.path_utils import (
+    to_paths,
+    get_path,
 )
 from jinja2.filters import environmentfilter
 
 
-def to_paths(obj, prepend=None):
-    return generate_paths(obj, prepend)
+def _to_paths(*args, **kwargs):
+    """ Convert complex objects to paths. [See examples](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.to_paths_lookup.rst)
+    """
+    return to_paths(*args, **kwargs)
 
 
 @environmentfilter
-def get_path(environment, vars, path):
-    string_to_variable = "{{ %s }}" % path
-    return environment.from_string(string_to_variable).render(**vars)
+def _get_path(*args, **kwargs):
+    """ Get value using path. [See examples](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.get_path_lookup.rst)
+    """
+    kwargs["environment"] = args[0]
+    args = args[1:]
+    return get_path(*args, **kwargs)
 
 
 class FilterModule(object):
-    """ Network filter """
+    """ path filters """
 
     def filters(self):
-        return {"to_paths": to_paths, "get_path": get_path}
+        return {"to_paths": _to_paths, "get_path": _get_path}
