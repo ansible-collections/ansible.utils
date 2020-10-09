@@ -48,7 +48,7 @@ def get_path(var, path, environment, wantlist=False):
 def to_paths(var, prepend=False, wantlist=False):
     if prepend:
         if not isinstance(prepend, str):
-            raise AnsibleError("The value of 'prepend' must be a sting.")
+            raise AnsibleError("The value of 'prepend' must be a string.")
         var = {prepend: var}
 
     out = {}
