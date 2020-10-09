@@ -85,7 +85,7 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v2
         with:
-          path: ansible_collections/ansible/COLLECTION_NAME
+          path: ansible_collections/ansible/utils
 
       - name: Set up Python ${{ matrix.ansible }}
         uses: actions/setup-python@v2
@@ -103,12 +103,12 @@ jobs:
       # Run the unit tests
       - name: Run unit test
         run: ansible-test units -v --color --python ${{ matrix.python }} --docker --coverage
-        working-directory: ./ansible_collections/ansible/COLLECTION_NAME
+        working-directory: ./ansible_collections/ansible/utils
 
         # ansible-test support producing code coverage date
       - name: Generate coverage report
         run: ansible-test coverage xml -v --requirements --group-by command --group-by version
-        working-directory: ./ansible_collections/ansible/COLLECTION_NAME
+        working-directory: ./ansible_collections/ansible/utils
 
       # See the reports at https://codecov.io/gh/ansible_collections/GITHUBORG/REPONAME
       - uses: codecov/codecov-action@v1
