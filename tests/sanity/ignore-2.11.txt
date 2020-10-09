@@ -1,0 +1,1 @@
+plugins/module_utils/path_utils.py pylint:ansible-bad-module-import # file's use is limited to filter and lookups on control node

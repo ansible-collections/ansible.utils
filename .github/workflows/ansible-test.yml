@@ -24,7 +24,7 @@ jobs:
         ansible:
           # It's important that Sanity is tested against all stable-X.Y branches
           # Testing against `devel` may fail as new tests are added.
-        # - stable-2.9 # Only if your collection supports Ansible 2.9
+          - stable-2.9 # Only if your collection supports Ansible 2.9
           - stable-2.10
           - devel
     runs-on: ubuntu-latest
@@ -36,7 +36,7 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v2
         with:
-          path: ansible_collections/NAMESPACE/COLLECTION_NAME
+          path: ansible_collections/ansible/utils
 
       - name: Set up Python
         uses: actions/setup-python@v2
@@ -54,7 +54,7 @@ jobs:
       # and all python versions ansible supports.
       - name: Run sanity tests
         run: ansible-test sanity --docker -v --color
-        working-directory: ./ansible_collections/NAMESPACE/COLLECTION_NAME
+        working-directory: ./ansible_collections/ansible/utils
 
 ###
 # Unit tests (OPTIONAL)
@@ -69,11 +69,10 @@ jobs:
       fail-fast: true
       matrix:
         ansible:
-          # - stable-2.9 # Only if your collection supports Ansible 2.9
+          - stable-2.9 # Only if your collection supports Ansible 2.9
           - stable-2.10
           - devel
         python:
-          - 2.6
           - 2.7
           - 3.5
           - 3.6
@@ -88,7 +87,7 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v2
         with:
-          path: ansible_collections/NAMESPACE/COLLECTION_NAME
+          path: ansible_collections/ansible/COLLECTION_NAME
 
       - name: Set up Python ${{ matrix.ansible }}
         uses: actions/setup-python@v2
@@ -106,12 +105,12 @@ jobs:
       # Run the unit tests
       - name: Run unit test
         run: ansible-test units -v --color --python ${{ matrix.python }} --docker --coverage
-        working-directory: ./ansible_collections/NAMESPACE/COLLECTION_NAME
+        working-directory: ./ansible_collections/ansible/COLLECTION_NAME
 
         # ansible-test support producing code coverage date
       - name: Generate coverage report
         run: ansible-test coverage xml -v --requirements --group-by command --group-by version
-        working-directory: ./ansible_collections/NAMESPACE/COLLECTION_NAME
+        working-directory: ./ansible_collections/ansible/COLLECTION_NAME
 
       # See the reports at https://codecov.io/gh/ansible_collections/GITHUBORG/REPONAME
       - uses: codecov/codecov-action@v1
@@ -139,7 +138,6 @@ jobs:
           - stable-2.10
           - devel
         python:
-          - 2.6
           - 2.7
           - 3.5
           - 3.6
@@ -154,7 +152,7 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v2
         with:
-          path: ansible_collections/NAMESPACE/COLLECTION_NAME
+          path: ansible_collections/ansible/utils
 
       - name: Set up Python ${{ matrix.ansible }}
         uses: actions/setup-python@v2
@@ -172,12 +170,12 @@ jobs:
       # Run the integration tests
       - name: Run integration test
         run: ansible-test integration -v --color --retry-on-error --continue-on-error --diff --python ${{ matrix.python }} --docker --coverage
-        working-directory: ./ansible_collections/NAMESPACE/COLLECTION_NAME
+        working-directory: ./ansible_collections/ansible/utils
 
         # ansible-test support producing code coverage date
       - name: Generate coverage report
         run: ansible-test coverage xml -v --requirements --group-by command --group-by version
-        working-directory: ./ansible_collections/NAMESPACE/COLLECTION_NAME
+        working-directory: ./ansible_collections/ansible/utils
 
       # See the reports at https://codecov.io/gh/ansible_collections/GITHUBORG/REPONAME
       - uses: codecov/codecov-action@v1
