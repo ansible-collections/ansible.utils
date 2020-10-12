@@ -24,7 +24,7 @@ jobs:
         ansible:
           # It's important that Sanity is tested against all stable-X.Y branches
           # Testing against `devel` may fail as new tests are added.
-          - stable-2.9 # Only if your collection supports Ansible 2.9
+          - stable-2.9
           - stable-2.10
     runs-on: ubuntu-latest
     steps:
@@ -68,7 +68,7 @@ jobs:
       fail-fast: true
       matrix:
         ansible:
-          - stable-2.9 # Only if your collection supports Ansible 2.9
+          - stable-2.9
           - stable-2.10
         python:
           - 2.7
@@ -97,15 +97,15 @@ jobs:
 
       # OPTIONAL If your unit test requires Python libraries from other collections
       # Install them like this
-      - name: Install collection dependencies
-        run: ansible-galaxy collection install ansible.netcommon -p .
+      # - name: Install collection dependencies
+      #   run: ansible-galaxy collection install ansible.netcommon -p .
 
       # Run the unit tests
       - name: Run unit test
         run: ansible-test units -v --color --python ${{ matrix.python }} --docker --coverage
         working-directory: ./ansible_collections/ansible/utils
 
-        # ansible-test support producing code coverage date
+      # ansible-test support producing code coverage date
       - name: Generate coverage report
         run: ansible-test coverage xml -v --requirements --group-by command --group-by version
         working-directory: ./ansible_collections/ansible/utils
@@ -115,67 +115,63 @@ jobs:
         with:
           fail_ci_if_error: false
 
-###
+##
 # Integration tests (RECOMMENDED)
-#
 # https://docs.ansible.com/ansible/latest/dev_guide/testing_integration.html
-
-
 # If the application you are testing is available as a docker container and you want to test
 # multiple versions see the following for an example:
 # https://github.com/ansible-collections/community.zabbix/tree/master/.github/workflows
 
-  # integration:
-  #   runs-on: ubuntu-latest
-  #   name: I (Ⓐ${{ matrix.ansible }}+py${{ matrix.python }}})
-  #   strategy:
-  #     fail-fast: false
-  #     matrix:
-  #       ansible:
-  #         # - stable-2.9 # Only if your collection supports Ansible 2.9
-  #         - stable-2.10
-  #         - devel
-  #       python:
-  #         - 2.7
-  #         - 3.5
-  #         - 3.6
-  #         - 3.7
-  #         - 3.8
-  #         - 3.9
-  #       exclude:
-  #         - ansible: stable-2.9
-  #           python: 3.9
+  integration:
+    runs-on: ubuntu-latest
+    name: I (Ⓐ${{ matrix.ansible }}+py${{ matrix.python }}})
+    strategy:
+      fail-fast: false
+      matrix:
+        ansible:
+          - stable-2.9
+          - stable-2.10
+        python:
+          - 2.7
+          - 3.5
+          - 3.6
+          - 3.7
+          - 3.8
+          - 3.9
+        exclude:
+          - ansible: stable-2.9
+            python: 3.9
 
-  #   steps:
-  #     - name: Check out code
-  #       uses: actions/checkout@v2
-  #       with:
-  #         path: ansible_collections/ansible/utils
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+        with:
+          path: ansible_collections/ansible/utils
 
-  #     - name: Set up Python ${{ matrix.ansible }}
-  #       uses: actions/setup-python@v2
-  #       with:
-  #         python-version: ${{ matrix.python }}
+      - name: Set up Python ${{ matrix.ansible }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python }}
 
-  #     - name: Install ansible-base (${{ matrix.ansible }})
-  #       run: pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible }}.tar.gz --disable-pip-version-check
+      - name: Install ansible-base (${{ matrix.ansible }})
+        run: pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible }}.tar.gz --disable-pip-version-check
 
       # OPTIONAL If your integration test requires Python libraries or modules from other collections
       # Install them like this
       # - name: Install collection dependencies
       #   run: ansible-galaxy collection install ansible.netcommon -p .
 
-      # # Run the integration tests
-      # - name: Run integration test
-      #   run: ansible-test integration -v --color --retry-on-error --continue-on-error --diff --python ${{ matrix.python }} --docker --coverage
-      #   working-directory: ./ansible_collections/ansible/utils
+      # Run the integration tests
+      - name: Run integration test
+        run: ansible-test integration -v --color --retry-on-error --continue-on-error --diff --python ${{ matrix.python }} --docker --coverage
+        working-directory: ./ansible_collections/ansible/utils
 
-      #   # ansible-test support producing code coverage date
-      # - name: Generate coverage report
-      #   run: ansible-test coverage xml -v --requirements --group-by command --group-by version
-      #   working-directory: ./ansible_collections/ansible/utils
+      # ansible-test support producing code coverage date
+      - name: Generate coverage report
+        run: ansible-test coverage xml -v --requirements --group-by command --group-by version
+        working-directory: ./ansible_collections/ansible/utils
 
-      # # See the reports at https://codecov.io/gh/ansible_collections/GITHUBORG/REPONAME
-      # - uses: codecov/codecov-action@v1
-      #   with:
-      #     fail_ci_if_error: false
+      # See the reports at https://codecov.io/gh/ansible_collections/GITHUBORG/REPONAME
+      - uses: codecov/codecov-action@v1
+        with:
+          fail_ci_if_error: false

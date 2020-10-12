@@ -41,7 +41,7 @@ def get_path(var, path, environment, wantlist=False):
     string_to_variable = "{{ %s }}" % path
     result = environment.from_string(string_to_variable).render(**var)
     if wantlist:
-        return [result]
+        return list(result)
     return result
 
 
