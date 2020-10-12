@@ -25,7 +25,7 @@ from jinja2.filters import environmentfilter
 
 
 def _to_paths(*args, **kwargs):
-    """Convert complex objects to paths. [See examples](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.to_paths_lookup.rst)"""
+    """Convert objects to paths. [See examples](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.to_paths_lookup.rst)"""
     return to_paths(*args, **kwargs)
 
 
