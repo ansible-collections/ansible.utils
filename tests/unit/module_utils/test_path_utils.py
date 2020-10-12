@@ -79,8 +79,7 @@ class TestPathUtils(unittest.TestCase):
         self.assertIn(expected, str(exc.exception))
 
     def test_roundtrip_large(self):
-        """ Test the 1000 longest keys, otherwise this takes a _really_ long time
-        """
+        """Test the 1000 longest keys, otherwise this takes a _really_ long time"""
         big_json_path = os.path.join(
             os.path.dirname(__file__), "fixtures", "large.json"
         )

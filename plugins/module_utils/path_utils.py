@@ -27,7 +27,7 @@ except ImportError:
 
 
 def get_path(var, path, environment, wantlist=False):
-    """ Get the value of a path within an object
+    """Get the value of a path within an object
 
     :param var: The var from which the value is retrieved
     :type var: should be dict or list, but jinja can sort that out
