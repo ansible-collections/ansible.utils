@@ -1,9 +1,9 @@
 
 
 # Ansible Utilities Collection 
-[![CI](https://zuul-ci.org/gated.svg)](https://dashboard.zuul.ansible.com/t/ansible/builds?project=ansible-collections%2Fansible.utils) <!--[![Codecov](https://img.shields.io/codecov/c/github/ansible-collections/ansible.utils)](https://codecov.io/gh/ansible-collections/ansible.utils)-->
+[![Codecov](https://img.shields.io/codecov/c/github/ansible-collections/ansible.utils)](https://codecov.io/gh/ansible-collections/ansible.utils)
 
-The Ansible ``ansible.utils`` collection includes FIXME
+The Ansible ``ansible.utils`` collection includes a variety of plugins that aid in the management, manupulation and visibility of data for the Ansible playbook developer.
 
 <!--start requires_ansible-->
 ## Ansible version compatibility
@@ -47,7 +47,7 @@ collections:
 ```
 ## Using this collection
 
-The most common use case for this collection is FIXME
+The most common use case for this collection is when complex data structures are present in an Ansible playbook, inventory, or returned from modules are worked with.
 
 
 **NOTE**: For Ansible 2.9, you may not see deprecation warnings when you run your playbooks with this collection. Use this documentation to track when a module is deprecated.
