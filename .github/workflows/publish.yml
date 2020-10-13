@@ -1,8 +1,8 @@
-
 name: Publish
 on:
   release:
-    types: [created]
+    types:
+    - created
 
 jobs:
   publish:

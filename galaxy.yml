@@ -9,4 +9,5 @@ readme: README.md
 repository: https://github.com/ansible-collections/ansible.utils
 tags: [networking, security, cloud, utilities, data, validation]
 # this will be updated by a gh action prior to push
-version: {{ version }}
+# do not modify, see /github/workflows/publish.yml
+version: 0.0.0
