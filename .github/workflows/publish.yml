@@ -7,6 +7,7 @@ on:
 jobs:
   publish:
     name: Publish to galaxy
+    runs-on: ubuntu-latest
     steps:
     - name: Check out code
       uses: actions/checkout@v2
@@ -23,7 +24,7 @@ jobs:
       env:
         VERSION: ${{ github.event.release.tag_name }}
       run: |
-        sed 's/{{ version }}/'$VERSION'/' galaxy.yml
+        sed 's/0.0.0/'$VERSION'/' galaxy.yml
         cat galaxy.yml
 
     # - name: Build and publish
