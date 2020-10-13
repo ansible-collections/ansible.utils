@@ -12,7 +12,7 @@ import json
 import heapq
 import os
 import unittest
-from ansible_collections.ansible.utils.plugins.module_utils.path_utils import (
+from ansible_collections.ansible.utils.plugins.module_utils.common.path import (
     get_path,
     to_paths,
 )

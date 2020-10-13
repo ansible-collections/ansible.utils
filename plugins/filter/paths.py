@@ -17,7 +17,7 @@ from ansible.module_utils.common._collections_compat import (
     MutableMapping,
 )
 
-from ansible_collections.ansible.utils.plugins.module_utils.path_utils import (
+from ansible_collections.ansible.utils.plugins.module_utils.common.path import (
     to_paths,
     get_path,
 )

@@ -140,7 +140,7 @@ RETURN = """
 """
 
 from ansible.plugins.lookup import LookupBase
-from ansible_collections.ansible.utils.plugins.module_utils.path_utils import (
+from ansible_collections.ansible.utils.plugins.module_utils.common.path import (
     to_paths,
 )
 
