@@ -8,6 +8,5 @@ description: Ansible Collection with utilities to ease the management, manipulat
 readme: README.md
 repository: https://github.com/ansible-collections/ansible.utils
 tags: [networking, security, cloud, utilities, data, validation]
-# NOTE(pabelanger): We create an empty version key to keep ansible-galaxy
-# happy. We dynamically inject version info based on git information.
-version: null
+# this will be updated by a gh action prior to push
+version: {{ version }}
