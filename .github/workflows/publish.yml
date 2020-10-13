@@ -24,7 +24,7 @@ jobs:
       env:
         VERSION: ${{ github.event.release.tag_name }}
       run: |
-        sed 's/0.0.0/'$VERSION'/' galaxy.yml
+        sed -i 's/0.0.0/'$VERSION'/' galaxy.yml
         cat galaxy.yml
 
     # - name: Build and publish
