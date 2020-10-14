@@ -68,8 +68,7 @@ class TestIndexOfFilter(unittest.TestCase):
         self.assertIn("'a' was not found", str(exc.exception))
 
     def test_just_test(self):
-        """ Limit to jinja < 2.11 tests
-        """
+        """Limit to jinja < 2.11 tests"""
         objs = [
             # ([True], "true", 0),
             # ([False], "not false", []),
