@@ -26,7 +26,7 @@ except ImportError:
 
 
 def _raise_error(msg):
-    """ Raise an error message, prepend with filter name
+    """Raise an error message, prepend with filter name
 
     :param msg: The message
     :type msg: str
@@ -37,7 +37,7 @@ def _raise_error(msg):
 
 
 def _list_to_and_str(lyst):
-    """ Convert a list to a command delimited string
+    """Convert a list to a command delimited string
     with the last entry being an and
 
     :param lyst: The list to turn into a str
@@ -50,7 +50,7 @@ def _list_to_and_str(lyst):
 
 
 def _to_well_known_type(obj):
-    """ Convert an ansible internal type to a well-known type
+    """Convert an ansible internal type to a well-known type
     ie AnsibleUnicode => str
 
     :param obj: the obj to convert
@@ -60,7 +60,7 @@ def _to_well_known_type(obj):
 
 
 def _check_reqs(obj, wantlist):
-    """ Check the args passed, ensure given a list
+    """Check the args passed, ensure given a list
 
     :param obj: The object passed to the filter plugin
     :type obj: unknown
@@ -81,7 +81,7 @@ def _check_reqs(obj, wantlist):
 
 
 def _run_test(entry, test, right, tests):
-    """ Run a test
+    """Run a test
 
     :param test: The test to run
     :type test: a lambda from the qual_map
@@ -150,7 +150,7 @@ def index_of(
     fail_on_missing=False,
     tests=None,
 ):
-    """ Find the index or indices of entries in list of objects"
+    """Find the index or indices of entries in list of objects"
 
     :param data: The data passed in (data|index_of(...))
     :type data: unknown

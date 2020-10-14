@@ -19,8 +19,7 @@ from jinja2.filters import environmentfilter
 
 @environmentfilter
 def _index_of(*args, **kwargs):
-    """ Find items in a list. [See examples](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.netcommon.index_of_lookup.rst)
-    """
+    """Find items in a list. [See examples](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.netcommon.index_of_lookup.rst)"""
     kwargs["tests"] = args[0].tests
     args = args[1:]
     return index_of(*args, **kwargs)
@@ -30,6 +29,5 @@ class FilterModule(object):
     """ index_of  """
 
     def filters(self):
-        """ a mapping of filter names to functions
-        """
+        """a mapping of filter names to functions"""
         return {"index_of": _index_of}
