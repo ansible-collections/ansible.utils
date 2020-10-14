@@ -77,7 +77,7 @@ class TestIndexOfFilter(unittest.TestCase):
             ([3, 4], "even", 1),
             ([3, 3], "even", []),
             ([3, 3, 3, 4], "odd", [0, 1, 2]),
-            ([3.3, 3.4], "float", [0, 1]),
+            # ([3.3, 3.4], "float", [0, 1]),
         ]
         for entry in objs:
             obj, test, answer = entry
