@@ -1,2 +1,0 @@
-# Use jinja 2.11 for true, false, boolean tests
-jinja2>=2.11
