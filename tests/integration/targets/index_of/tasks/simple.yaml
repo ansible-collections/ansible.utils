@@ -34,10 +34,12 @@
     result: [0, 1, 2]
   - test: "{{ lookup('ansible.utils.index_of', complex.a, 'in', [True, False]) }}"
     result: [0, 1, 2]
-  - test: "{{ complex.a|ansible.utils.index_of('integer') }}"
-    result: "3"
-  - test: "{{ lookup('ansible.utils.index_of', complex.a, 'integer') }}"
-    result: "3"
+  # These are commented out due to jinja < 2.11 w/ 2.9, 'integer' not avaialable
+  # can be enabled at a later date
+  # - test: "{{ complex.a|ansible.utils.index_of('integer') }}"
+  #   result: "3"
+  # - test: "{{ lookup('ansible.utils.index_of', complex.a, 'integer') }}"
+  #   result: "3"
 
   - test: "{{ complex.b|ansible.utils.index_of('==', 1, 'b1') }}"
     result: "0"
