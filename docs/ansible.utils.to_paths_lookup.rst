@@ -141,7 +141,7 @@ Examples
 
     # TASK [set_fact] *****************************************************
     # task path: /home/brad/github/dotbracket/site.yaml:17
-    # ok: [localhost] => changed=false 
+    # ok: [localhost] => changed=false
     #   ansible_facts:
     #     as_filter:
     #       b.c.d[0]: 0
@@ -160,7 +160,7 @@ Examples
         as_filter: "{{ a|ansible.utils.to_paths(prepend='a') }}"
 
     # TASK [Use prepend to add the initial variable name] *****************
-    # ok: [nxos101] => changed=false 
+    # ok: [nxos101] => changed=false
     #   ansible_facts:
     #     as_filter:
     #       a.b.c.d[0]: 0
@@ -192,7 +192,7 @@ Examples
         flattened: "{{ result.json|ansible.utils.to_paths }}"
 
     # TASK [Flatten the complex object] ********************
-    # ok: [nxos101] => changed=false 
+    # ok: [nxos101] => changed=false
     #   ansible_facts:
     #     flattened:
     #       interfaces.interface[0].config.enabled: 'true'

@@ -140,7 +140,7 @@ Examples
         path: b.c.d[0]
 
     # TASK [ansible.builtin.set_fact] *************************************
-    # ok: [nxos101] => changed=false 
+    # ok: [nxos101] => changed=false
     #   ansible_facts:
     #     as_filter: '0'
     #     as_lookup: '0'
@@ -157,7 +157,7 @@ Examples
         look_for: a.b.c.d[0]
 
     # TASK [Retrieve a value deep inside all of the host's vars] **********
-    # ok: [nxos101] => changed=false 
+    # ok: [nxos101] => changed=false
     #   ansible_facts:
     #     as_filter: '0'
     #     as_lookup: '0'
@@ -180,7 +180,7 @@ Examples
         value: "{{ vars|ansible.utils.get_path(item) }}"
 
     # TASK [Get the paths for the object] *********************************
-    # ok: [nxos101] => changed=false 
+    # ok: [nxos101] => changed=false
     #   ansible_facts:
     #     paths:
     #       a.b.c.d[0]: 0
@@ -189,13 +189,13 @@ Examples
     #       a.b.c.e[1]: false
 
     # TASK [Retrieve the value of each path from vars] ********************
-    # ok: [nxos101] => (item=a.b.c.d[0]) => 
+    # ok: [nxos101] => (item=a.b.c.d[0]) =>
     #   msg: The value of path a.b.c.d[0] in vars is 0
-    # ok: [nxos101] => (item=a.b.c.d[1]) => 
+    # ok: [nxos101] => (item=a.b.c.d[1]) =>
     #   msg: The value of path a.b.c.d[1] in vars is 1
-    # ok: [nxos101] => (item=a.b.c.e[0]) => 
+    # ok: [nxos101] => (item=a.b.c.e[0]) =>
     #   msg: The value of path a.b.c.e[0] in vars is True
-    # ok: [nxos101] => (item=a.b.c.e[1]) => 
+    # ok: [nxos101] => (item=a.b.c.e[1]) =>
     #   msg: The value of path a.b.c.e[1] in vars is False
 
 
@@ -217,9 +217,9 @@ Examples
       - by_name['Ethernet1/2'].description
 
     # TASK [Get the description of several interfaces] ********************
-    # ok: [nxos101] => (item=by_name['Ethernet1/1'].description) => 
+    # ok: [nxos101] => (item=by_name['Ethernet1/1'].description) =>
     #   msg: Configured by Ansible
-    # ok: [nxos101] => (item=by_name['Ethernet1/2'].description) => 
+    # ok: [nxos101] => (item=by_name['Ethernet1/2'].description) =>
     #   msg: Configured by Ansible Network
 
 
