@@ -31,4 +31,4 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         git checkout $DEFAULT_BRANCH
-        gh pr merge $PR --squash
+        gh pr merge $PR --squash --delete-branch=false
