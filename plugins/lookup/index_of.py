@@ -15,10 +15,11 @@ __metaclass__ = type
 DOCUMENTATION = """
     lookup: index_of
     author: Bradley Thornton (@cidrblock)
-    version_added: "1.4"
+    version_added: "1.0"
     short_description: Find the indicies of items in a list matching some criteria
     description:
-        - This lookup returns a list of indicies of items matching some criteria in a list.
+        - This lookup returns the indicies of items matching some criteria in a list
+        - When working with a list of dictionaries, the key to evaluate can be specified
         - C(index_of) is also available as a C(filter_plugin) for convenience
     options:
       _terms:
@@ -200,9 +201,9 @@ EXAMPLES = r"""
 
 # TASK [Find the index of all firewalls, use in a loop] **********************
 # ok: [sw01] => (item=2) =>
-#   msg: The type of firewall at index 2 has name fw01.
+#   msg: The type of firewall at index 2 has name fw01.example.corp
 # ok: [sw01] => (item=3) =>
-#   msg: The type of firewall at index 3 has name fw02.
+#   msg: The type of firewall at index 3 has name fw02.example.corp
 
 - name: Find the index of all devices with a .corp name, as a lookup
   debug:

@@ -8,7 +8,7 @@ ansible.utils.index_of
 **Find the indicies of items in a list matching some criteria**
 
 
-Version added: 1.4
+Version added: 1.0
 
 .. contents::
    :local:
@@ -17,7 +17,8 @@ Version added: 1.4
 
 Synopsis
 --------
-- This lookup returns a list of indicies of items matching some criteria in a list.
+- This lookup returns the indicies of items matching some criteria in a list
+- When working with a list of dictionaries, the key to evaluate can be specified
 - ``index_of`` is also available as a ``filter_plugin`` for convenience
 
 
@@ -186,8 +187,8 @@ Examples
 
     - name: Find the index of 2, lookup or filter
       set_fact:
-        as_lookup: "{{ lookup('ansible.netcommon.index_of', data, 'eq', 2) }}"
-        as_filter: "{{ data|ansible.netcommon.index_of('eq', 2) }}"
+        as_lookup: "{{ lookup('ansible.utils.index_of', data, 'eq', 2) }}"
+        as_filter: "{{ data|ansible.utils.index_of('eq', 2) }}"
 
     # TASK [Find the index of 2, lookup or filter] *******************************
     # ok: [sw01] => changed=false
@@ -197,8 +198,8 @@ Examples
 
     - name: Any test can be negated using not or !
       set_fact:
-        as_lookup: "{{ lookup('ansible.netcommon.index_of', data, 'not in', [1,2]) }}"
-        as_filter: "{{ data|ansible.netcommon.index_of('!in', [1,2]) }}"
+        as_lookup: "{{ lookup('ansible.utils.index_of', data, 'not in', [1,2]) }}"
+        as_filter: "{{ data|ansible.utils.index_of('!in', [1,2]) }}"
 
     # TASK [Any test can be negated using not or !] ******************************
     # ok: [localhost] => changed=false
@@ -208,9 +209,9 @@ Examples
 
     - name: Find the index of 2, lookup or filter, ensure list is returned
       set_fact:
-        as_query: "{{ query('ansible.netcommon.index_of', data, 'eq', 2) }}"
-        as_lookup: "{{ lookup('ansible.netcommon.index_of', data, 'eq', 2, wantlist=True) }}"
-        as_filter: "{{ data|ansible.netcommon.index_of('eq', 2, wantlist=True) }}"
+        as_query: "{{ query('ansible.utils.index_of', data, 'eq', 2) }}"
+        as_lookup: "{{ lookup('ansible.utils.index_of', data, 'eq', 2, wantlist=True) }}"
+        as_filter: "{{ data|ansible.utils.index_of('eq', 2, wantlist=True) }}"
 
     # TASK [Find the index of 2, lookup or filter, ensure list is returned] ******
     # ok: [sw01] => changed=false
@@ -224,9 +225,9 @@ Examples
 
     - name: Find the index of 3 using the long format
       set_fact:
-        as_query: "{{ query('ansible.netcommon.index_of', data=data, test='eq', value=value) }}"
-        as_lookup: "{{ lookup('ansible.netcommon.index_of', data=data, test='eq',value =value, wantlist=True) }}"
-        as_filter: "{{ data|ansible.netcommon.index_of(test='eq', value=value, wantlist=True) }}"
+        as_query: "{{ query('ansible.utils.index_of', data=data, test='eq', value=value) }}"
+        as_lookup: "{{ lookup('ansible.utils.index_of', data=data, test='eq',value =value, wantlist=True) }}"
+        as_filter: "{{ data|ansible.utils.index_of(test='eq', value=value, wantlist=True) }}"
       vars:
         value: 3
 
@@ -243,7 +244,7 @@ Examples
     - name: Find numbers greater than 1, using loop
       debug:
         msg: "{{ data[item] }} is {{ test }} than {{ value }}"
-      loop: "{{ data|ansible.netcommon.index_of(test, value) }}"
+      loop: "{{ data|ansible.utils.index_of(test, value) }}"
       vars:
         test: '>'
         value: 1
@@ -257,7 +258,7 @@ Examples
     - name: Find numbers greater than 1, using with
       debug:
         msg: "{{ data[item] }} is {{ params.test }} than {{ params.value }}"
-      with_ansible.netcommon.index_of: "{{ params }}"
+      with_ansible.utils.index_of: "{{ params }}"
       vars:
         params:
           data: "{{ data }}"
@@ -287,9 +288,9 @@ Examples
 
     - name: Find the index of all firewalls using the type key
       set_fact:
-        as_query: "{{ query('ansible.netcommon.index_of', data, 'eq', 'firewall', 'type') }}"
-        as_lookup: "{{ lookup('ansible.netcommon.index_of', data, 'eq', 'firewall', 'type') }}"
-        as_filter: "{{ data|ansible.netcommon.index_of('eq', 'firewall', 'type') }}"
+        as_query: "{{ query('ansible.utils.index_of', data, 'eq', 'firewall', 'type') }}"
+        as_lookup: "{{ lookup('ansible.utils.index_of', data, 'eq', 'firewall', 'type') }}"
+        as_filter: "{{ data|ansible.utils.index_of('eq', 'firewall', 'type') }}"
 
     # TASK [Find the index of all firewalls using the type key] ******************
     # ok: [sw01] => changed=false
@@ -307,20 +308,20 @@ Examples
     - name: Find the index of all firewalls, use in a loop, as a filter
       debug:
         msg: "The type of {{ device_type }} at index {{ item }} has name {{ data[item].name }}."
-      loop: "{{ data|ansible.netcommon.index_of('eq', device_type, 'type') }}"
+      loop: "{{ data|ansible.utils.index_of('eq', device_type, 'type') }}"
       vars:
         device_type: firewall
 
     # TASK [Find the index of all firewalls, use in a loop] **********************
     # ok: [sw01] => (item=2) =>
-    #   msg: The type of firewall at index 2 has name fw01.
+    #   msg: The type of firewall at index 2 has name fw01.example.corp
     # ok: [sw01] => (item=3) =>
-    #   msg: The type of firewall at index 3 has name fw02.
+    #   msg: The type of firewall at index 3 has name fw02.example.corp
 
     - name: Find the index of all devices with a .corp name, as a lookup
       debug:
         msg: "The device named {{ data[item].name }} is a {{ data[item].type }}"
-      loop: "{{ lookup('ansible.netcommon.index_of', data, 'regex', regex, 'name') }}"
+      loop: "{{ lookup('ansible.utils.index_of', data, 'regex', regex, 'name') }}"
       vars:
         regex: '\.corp$' # ends with .corp
 
@@ -357,7 +358,7 @@ Examples
       vars:
         found: []
         ip: '192.168.101.'
-        address: "{{ item.1.ipv4|d([])|ansible.netcommon.index_of('search', ip, 'address', wantlist=True) }}"
+        address: "{{ item.1.ipv4|d([])|ansible.utils.index_of('search', ip, 'address', wantlist=True) }}"
         entry:
         - interface_idx: "{{ item.0 }}"
         address_idxs: "{{ address }}"
@@ -445,11 +446,11 @@ Examples
         # retrieve the index in each nested list
         int_idx: |
           {{ data.interfaces.interface|
-               ansible.netcommon.index_of('eq', int_name, 'name') }}
+               ansible.utils.index_of('eq', int_name, 'name') }}
         subint_idx: |
           {{ data.interfaces.interface[int_idx|int]
                .subinterfaces.subinterface|
-                 ansible.netcommon.index_of('eq', sub_index, 'index') }}
+                 ansible.utils.index_of('eq', sub_index, 'index') }}
 
     # TASK [Find the description of loopback111, subinterface index 10] ************
     # ok: [sw01] =>
