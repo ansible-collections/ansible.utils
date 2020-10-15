@@ -102,3 +102,12 @@ def dict_merge(base, other):
         combined[key] = other.get(key)
 
     return combined
+
+
+def to_list(val):
+    if isinstance(val, (list, tuple, set)):
+        return list(val)
+    elif val is not None:
+        return [val]
+    else:
+        return list()
