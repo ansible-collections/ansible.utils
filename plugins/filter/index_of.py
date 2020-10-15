@@ -19,7 +19,7 @@ from jinja2.filters import environmentfilter
 
 @environmentfilter
 def _index_of(*args, **kwargs):
-    """Find items in a list. [See examples](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.netcommon.index_of_lookup.rst)"""
+    """Find the indicies of items in a list matching some criteria. [See examples](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.index_of_lookup.rst)"""
     kwargs["tests"] = args[0].tests
     args = args[1:]
     return index_of(*args, **kwargs)

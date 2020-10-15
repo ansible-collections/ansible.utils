@@ -25,13 +25,13 @@ from jinja2.filters import environmentfilter
 
 
 def _to_paths(*args, **kwargs):
-    """Convert objects to paths. [See examples](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.to_paths_lookup.rst)"""
+    """Flatten a complex object into a dictionary of paths and values. [See examples](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.to_paths_lookup.rst)"""
     return to_paths(*args, **kwargs)
 
 
 @environmentfilter
 def _get_path(*args, **kwargs):
-    """Get value using path. [See examples](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.get_path_lookup.rst)"""
+    """Retrieve the value in a variable using a path. [See examples](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.get_path_lookup.rst)"""
     kwargs["environment"] = args[0]
     args = args[1:]
     return get_path(*args, **kwargs)
