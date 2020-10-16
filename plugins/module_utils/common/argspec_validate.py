@@ -5,7 +5,7 @@
 
 """Use AnsibleModule's argspec validation
 
-def _check_argspec(self, ansible_version):
+def _check_argspec(self):
     aav = AnsibleArgSpecValidator(
         data=self._task.args,
         schema=DOCUMENTATION,
