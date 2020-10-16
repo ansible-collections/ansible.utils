@@ -16,7 +16,7 @@ def _check_argspec(self):
     valid, errors = aav.validate()
     if not valid:
         raise AnsibleActionFail(errors)
-    
+
 """
 from __future__ import absolute_import, division, print_function
 
