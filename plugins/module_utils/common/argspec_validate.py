@@ -32,13 +32,6 @@ from ansible.module_utils.six import iteritems, string_types
 from ansible.module_utils._text import to_bytes
 
 try:
-    from packaging.specifiers import SpecifierSet
-    from packaging.version import Version
-except ImportError:
-    SpecifierSet = None
-    Version = None
-
-try:
     import yaml
 
     try:
