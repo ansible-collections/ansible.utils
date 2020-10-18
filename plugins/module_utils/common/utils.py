@@ -34,8 +34,18 @@ def dict_merge(base, other):
 
     This will create a new dict object that is a combination of the key/value
     pairs from base and other.  When both keys exist, the value will be
-    selected from other.  If the value is a list object, the two lists will
-    be combined and duplicate entries removed.
+    selected from other.  
+    
+    If the value in base is a list, and the value in other is a list
+    the base list will be extended with the values from the other list that were
+    not already present in the base list
+
+    If the value in base is a list, and the value in other is a list
+    and the two have the same entries, the value from other will be
+    used, preserving the order from the other list
+
+    If the value in base is a list, and the value in other is not a list
+    the value from other will be used
 
     :param base: dict object to serve as base
     :param other: dict object to combine with base
@@ -65,10 +75,10 @@ def dict_merge(base, other):
         elif isinstance(value, list):
             if key in other:
                 item = other.get(key)
-                if item is not None:
-                    try:
-                        combined[key] = list(set(chain(value, item)))
-                    except TypeError:
+                if isinstance(item, list):
+                    if sort_list(value) == sort_list(item):
+                        combined[key] = item
+                    else:
                         value.extend([i for i in item if i not in value])
                         combined[key] = value
                 else:
