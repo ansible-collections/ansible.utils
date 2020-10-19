@@ -116,11 +116,11 @@ class TestSortList(unittest.TestCase):
         data = {}
         aav = AnsibleArgSpecValidator(
             data=data,
-            schema={'not_valid': True},
+            schema={"not_valid": True},
             schema_format="argspec",
             name="test_action",
             other_args={"bypass_checks": True},
         )
         valid, errors = aav.validate()
         self.assertFalse(valid)
-        self.assertIn('Invalid keys found: not_valid', errors)
+        self.assertIn("Invalid keys found: not_valid", errors)
