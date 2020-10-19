@@ -35,6 +35,7 @@ from ansible.module_utils._text import to_bytes
 try:
     import yaml
 
+    # use C version if possible for speedup
     try:
         from yaml import CSafeLoader as SafeLoader
     except ImportError:
@@ -43,6 +44,9 @@ try:
 except ImportError:
     HAS_YAML = False
 
+# TODO: Update this to point to functionality being exposed in 2.11
+# ansible-base 2.11 should expose argspec validation outside of the
+# ansiblemodule class
 try:
     from ansible.module_utils.somefile import FutureBaseArgspecValidator
 
@@ -138,6 +142,25 @@ class AnsibleArgSpecValidator:
         name=None,
         other_args=None,
     ):
+        """Validate some data against a schema
+        :param data: The data to valdiate
+        :type data: dict
+        :param schema: A schema in ansible argspec format
+        :type schema: dict
+        :param schema_format: 'doc' (ansible docstring) or 'argspec' (ansible argspec)
+        :type schema: str if doc, dict if argspec
+        :param schema_conditionals: A dict of schema conditionals, ie required_if
+        :type schema_conditionals: dict
+        :param name: the name of the plugin calling this class, used in error messages
+        :type name: str
+        :param other_args: Other valid kv pairs for the argspec, eg no_log, bypass_checks
+        :type other_args: dict
+
+        note:
+        - the schema conditionals can be root conditionals or deeply nested conditionals
+          these get dict_merged into the argspec from the docstring, since the docstring cannot
+          contain them.
+        """
         self._errors = ""
         self._name = name
         self._other_args = other_args
