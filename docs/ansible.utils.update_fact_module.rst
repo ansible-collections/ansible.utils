@@ -99,7 +99,7 @@ Parameters
 Examples
 --------
 
-.. code-block:: yaml+jinja
+.. code-block:: yaml
 
     # Update an exisitng fact, dot or bracket notation
     - name: Set a fact

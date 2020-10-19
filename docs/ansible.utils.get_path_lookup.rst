@@ -119,7 +119,7 @@ Parameters
 Examples
 --------
 
-.. code-block:: yaml+jinja
+.. code-block:: yaml
 
     - ansible.builtin.set_fact:
         a:
