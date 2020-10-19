@@ -59,7 +59,7 @@ EXAMPLES = r"""
         - 2
 
 - name: Update the fact
-  ansible.netcommon.update_fact:
+  ansible.utils.update_fact:
     updates:
     - path: a.b.c.0
       value: 10
@@ -90,7 +90,7 @@ EXAMPLES = r"""
         - 2
 
 - name: Update, add to list, add new key
-  ansible.netcommon.update_fact:
+  ansible.utils.update_fact:
     updates:
     - path: a.b.b1.2
       value: 3
@@ -117,9 +117,11 @@ EXAMPLES = r"""
 #       - 30
 #   changed: true
 
+#####################################################################
 # Update every item in a list of dictionaries
 # build the update list ahead of time using a loop
 # and then apply the changes to the fact
+#####################################################################
 
 - name: Set fact
   set_fact:
@@ -165,7 +167,7 @@ EXAMPLES = r"""
 #     value: '32'
 
 - name: Make the updates
-  ansible.netcommon.update_fact:
+  ansible.utils.update_fact:
     updates: "{{ update_list }}"
   register: updated
 
@@ -191,27 +193,29 @@ EXAMPLES = r"""
 #     changed: true
 #     failed: false
 
+
+#####################################################################
 # Retrieve, update, and apply interface description change
+# use index_of to locate Etherent1/1
+#####################################################################
 
 - name: Get the current interface config
   cisco.nxos.nxos_interfaces:
     state: gathered
-  register: current
-
-- name: Rekey the interface list using the interface name
-  set_fact:
-    current: "{{ current['gathered']|rekey_on_member('name') }}"
+  register: interfaces
 
 - name: Update the description of Ethernet1/1
-  ansible.netcommon.update_fact:
+  ansible.utils.update_fact:
     updates:
-    - path: current.Ethernet1/1.description
+    - path: "interfaces.gathered[{{ index }}].description"
       value: "Configured by ansible"
+  vars:
+    index: "{{ interfaces.gathered|ansible.utils.index_of('eq', 'Ethernet1/1', 'name') }}"
   register: updated
 
 - name: Update the configuration
   cisco.nxos.nxos_interfaces:
-    config: "{{ updated.current.values()|list }}"
+    config: "{{ updated.interfaces.gathered }}"
     state: overridden
   register: result
 
@@ -219,50 +223,37 @@ EXAMPLES = r"""
   debug:
     msg: "{{ result['commands'] }}"
 
-# TASK [Show the commands issued] *********
-# ok: [sw01] =>
-#   msg:
-#   - interface Ethernet1/1
-#   - description Configured by ansible
+# TASK [Show the commands issued] *************************************
+# ok: [nxos101] => {
+#     "msg": [
+#         "interface Ethernet1/1",
+#         "description Configured by ansible"
+#     ]
+# }
 
 
+#####################################################################
 # Retrieve, update, and apply an ipv4 ACL change
+# finding the index of AFI ipv4 acls
+# finding the index of the ACL named 'test1'
+# finding the index of sequence 10
+#####################################################################
 
 - name: Retrieve the current acls
   arista.eos.eos_acls:
     state: gathered
   register: current
 
-- name: Retrieve the index of the ipv4 acls
-  set_fact:
-    afi_index: "{{ idx }}"
-  loop: "{{ current.gathered }}"
-  loop_control:
-    index_var: idx
-  when: item.afi == 'ipv4'
-
-- name: Retrieve the index of the test1 acl
-  set_fact:
-    acl_index: "{{ idx }}"
-  loop: "{{ current.gathered[afi_index].acls }}"
-  loop_control:
-    index_var: idx
-  when: item.name == 'test1'
-
-- name: Retrieve the index of sequence 10
-  set_fact:
-    ace_index: "{{ idx }}"
-  loop: "{{ current.gathered[afi_index].acls[acl_index].aces }}"
-  loop_control:
-    index_var: idx
-  when: item.sequence == 10
-
-- name: Update the fact
-  ansible.netcommon.update_fact:
+- name: Update the source of sequenmce 10 in the IPv4 ACL named test1
+  ansible.utils.update_fact:
     updates:
-    - path: current.gathered[{{ afi_index }}].acls[{{ acl_index }}].aces[{{ ace_index }}].source
+    - path: current.gathered[{{ afi }}].acls[{{ acl }}].aces[{{ ace }}].source
       value:
-        subnet_address: "192.168.1.0/24"
+        subnet_address: "192.168.2.0/24"
+  vars:
+    afi: "{{ current.gathered|ansible.utils.index_of('eq', 'ipv4', 'afi') }}"
+    acl: "{{ current.gathered[afi|int].acls|ansible.utils.index_of('eq', 'test1', 'name') }}"
+    ace: "{{ current.gathered[afi|int].acls[acl|int].aces|ansible.utils.index_of('eq', 10, 'sequence') }}"
   register: updated
 
 - name: Apply the changes
@@ -273,71 +264,80 @@ EXAMPLES = r"""
 
 - name: Show the commands issued
   debug:
-    var: changes.commands
+    msg: "{{ changes['commands'] }}"
 
-# TASK [Show the commands issued] ***************
-# ok: [eos101] =>
-#   changes.commands:
-#   - ip access-list test1
-#   - no 10
-#   - ip access-list test1
-#   - 10 permit ip 192.168.20.0/24 host 10.1.1.2
+# TASK [Show the commands issued] *************************************
+# ok: [eos101] => {
+#     "msg": [
+#         "ip access-list test1",
+#         "no 10",
+#         "10 permit ip 192.168.2.0/24 host 10.1.1.2"
+#     ]
+# }
 
 
+#####################################################################
 # Disable ip redirects on any layer3 interface
+# find the layer 3 interfaces
+# use each name to find their index in l3 interface
+# build an 'update' list and apply the updates
+#####################################################################
 
-- name: Get the current interface config
+- name: Get the current interface and L3 interface configuration
   cisco.nxos.nxos_facts:
+    gather_subset: min
     gather_network_resources:
     - interfaces
     - l3_interfaces
 
-- name: Rekey the l3 interface lists using the interface name
+- name: Build the list of updates to make
   set_fact:
-    l3_interfaces: "{{ ansible_network_resources['l3_interfaces']|rekey_on_member('name') }}"
-
-- name: Build the update list for any layer3 interface
-  set_fact:
-    update_list: "{{ update_list + update }}"
-  loop: "{{ ansible_network_resources['interfaces'] }}"
+    updates: "{{ updates + [entry] }}"
   vars:
-    update:
-    - path: "l3_interfaces[{{ item['name'] }}]['redirects']"
+    updates: []
+    entry:
+      path: "ansible_network_resources.l3_interfaces[{{ item }}].redirects"
       value: False
-    update_list: []
-  when: item['mode']|default() == 'layer3'
+    w_mode: "{{ ansible_network_resources.interfaces|selectattr('mode', 'defined') }}"
+    m_l3: "{{ w_mode|selectattr('mode', 'eq', 'layer3') }}"
+    names: "{{ m_l3|map(attribute='name')|list }}"
+    l3_indicies: "{{ ansible_network_resources.l3_interfaces|ansible.utils.index_of('in', names, 'name', wantlist=True) }}"
+  loop: "{{ l3_indicies }}"
 
-# TASK [debug] **************************************
-# ok: [nxos101] =>
-#   update_list:
-#   - path: l3_interfaces[Ethernet1/10]['redirects']
-#     value: false
-#   - path: l3_interfaces[Ethernet1/11]['redirects']
-#     value: false
+# TASK [Build the list of updates to make] ****************************
+# ok: [nxos101] => (item=99) => changed=false
+#   ansible_facts:
+#     updates:
+#     - path: ansible_network_resources.l3_interfaces[99].redirects
+#       value: false
+#   ansible_loop_var: item
+#   item: 99
 
-- name: Apply the fact updates
-  ansible.netcommon.update_fact:
-    updates: "{{ update_list }}"
+- name: Update the l3 interfaces
+  ansible.utils.update_fact:
+    updates: "{{ updates }}"
   register: updated
 
-- name: Update the configuration
-  cisco.nxos.nxos_l3_interfaces:
-    config: "{{ updated.l3_interfaces.values()|list }}"
+# TASK [Update the l3 interfaces] *************************************
+# changed: [nxos101] => changed=true
+#   ansible_network_resources:
+#     l3_interfaces:
+#     <...>
+#     - ipv4:
+#       - address: 10.1.1.1/24
+#       name: Ethernet1/100
+#       redirects: false
+
+- name: Apply the configuration changes
+  cisco.nxos.l3_interfaces:
+    config: "{{ updated.ansible_network_resources.l3_interfaces }}"
     state: overridden
-  register: result
-  when: updated['changed']
+  register: changes
 
-- name: Show the commands issued
-  debug:
-    msg: "{{ result['commands'] }}"
-  when: updated['changed']
-
-# TASK [Show the commands issued] *******
-# ok: [sw01] =>
-#   msg:
-#   - interface Ethernet1/10
-#   - no ip redirects
-#   - interface Ethernet1/11
+# TASK [Apply the configuration changes] ******************************
+# changed: [nxos101] => changed=true
+#   commands:
+#   - interface Ethernet1/100
 #   - no ip redirects
 
 """
