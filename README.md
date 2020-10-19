@@ -32,6 +32,11 @@ Name | Description
 [ansible.utils.index_of](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.index_of_lookup.rst)|Find the indicies of items in a list matching some criteria
 [ansible.utils.to_paths](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.to_paths_lookup.rst)|Flatten a complex object into a dictionary of paths and values
 
+### Modules
+Name | Description
+--- | ---
+[ansible.utils.update_fact](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.update_fact_module.rst)|Update currently set facts
+
 <!--end collection content-->
 
 ## Installing this collection
