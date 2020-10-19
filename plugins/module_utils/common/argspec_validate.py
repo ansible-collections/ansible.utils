@@ -11,6 +11,7 @@ def _check_argspec(self):
         schema=DOCUMENTATION,
         schema_format="doc",
         schema_conditionals={},
+        other_args={},
         name=self._task.action,
     )
     valid, errors = aav.validate()
@@ -72,6 +73,7 @@ OPTION_CONDITIONALS = (
 )
 
 VALID_ANSIBLEMODULE_ARGS = (
+    "argument_spec",
     "bypass_checks",
     "no_log",
     "add_file_common_args",
@@ -128,11 +130,17 @@ class MonkeyModule(AnsibleModule):
 
 class AnsibleArgSpecValidator:
     def __init__(
-        self, data, schema, schema_format, schema_conditionals=None, name=None
+        self,
+        data,
+        schema,
+        schema_format,
+        schema_conditionals=None,
+        name=None,
+        other_args=None,
     ):
         self._errors = ""
-        self._valid = True
         self._name = name
+        self._other_args = other_args
         self._schema = schema
         self._schema_format = schema_format
         self._schema_conditionals = schema_conditionals
@@ -167,9 +175,6 @@ class AnsibleArgSpecValidator:
         temp_schema = {}
         self._extract_schema_from_doc(doc_obj, temp_schema)
         self._schema = {"argument_spec": temp_schema}
-        for item in doc_obj:
-            if item in VALID_ANSIBLEMODULE_ARGS:
-                self._schema.update({item: doc_obj[item]})
 
     def _validate(self):
         """Validate the data gainst the schema
@@ -178,11 +183,23 @@ class AnsibleArgSpecValidator:
         if self._schema_format == "doc":
             self._convert_doc_to_schema()
         if self._schema_conditionals is not None:
-            self.schema = dict_merge(self._schema, self._schema_conditionals)
-        mm = MonkeyModule(
-            data=self._data, schema=self._schema, name=self._name
-        )
-        return mm.validate()
+            self._schema = dict_merge(self._schema, self._schema_conditionals)
+        if self._other_args is not None:
+            self._schema = dict_merge(self._schema, self._other_args)
+        invalid_keys = [
+            k for k in self._schema.keys() if k not in VALID_ANSIBLEMODULE_ARGS
+        ]
+        if invalid_keys:
+            valid = False
+            errors = "Invalid schema. Invalid keys found: {ikeys}".format(
+                ikeys=",".join(invalid_keys)
+            )
+        else:
+            mm = MonkeyModule(
+                data=self._data, schema=self._schema, name=self._name
+            )
+            valid, errors = mm.validate()
+        return valid, errors
 
     def validate(self):
         """The public validate method
