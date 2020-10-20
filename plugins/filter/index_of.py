@@ -49,7 +49,8 @@ def _index_of(*args, **kwargs):
     valid, errors, updated_data = aav.validate()
     if not valid:
         raise AnsibleFilterError(errors)
-    return index_of(**updated_data, tests=environment.tests)
+    updated_data['tests'] = environment.tests
+    return index_of(**updated_data)
 
 
 class FilterModule(object):

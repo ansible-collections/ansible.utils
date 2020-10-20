@@ -384,5 +384,6 @@ class LookupModule(LookupBase):
         if not valid:
             raise AnsibleLookupError(errors)
         updated_data["wantlist"] = True
-        res = index_of(**updated_data, tests=self._templar.environment.tests)
+        updated_data["tests"] = self._templar.environment.tests
+        res = index_of(**updated_data)
         return res

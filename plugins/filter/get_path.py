@@ -29,11 +29,11 @@ from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_valid
 def _get_path(*args, **kwargs):
     """Retrieve the value in a variable using a path. [See examples](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.get_path_lookup.rst)"""
     keys = ["environment", "var", "path"]
-    spec = dict(zip(keys, args))
-    spec.update(kwargs)
-    environment = spec.pop("environment")
+    data = dict(zip(keys, args))
+    data.update(kwargs)
+    environment = data.pop("environment")
     aav = AnsibleArgSpecValidator(
-        data=spec,
+        data=data,
         schema=DOCUMENTATION,
         schema_format="doc",
         name="get_path",
@@ -41,7 +41,8 @@ def _get_path(*args, **kwargs):
     valid, errors, updated_data = aav.validate()
     if not valid:
         raise AnsibleFilterError(errors)
-    return get_path(**updated_data, environment=environment)
+    updated_data['environment'] = environment
+    return get_path(**updated_data)
 
 
 class FilterModule(object):

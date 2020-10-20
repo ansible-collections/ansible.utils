@@ -178,5 +178,6 @@ class LookupModule(LookupBase):
         if not valid:
             raise AnsibleLookupError(errors)
         updated_data["wantlist"] = True
-        res = get_path(**updated_data, environment=self._templar.environment)
+        updated_data['environment'] = self._templar.environment
+        res = get_path(**updated_data)
         return res
