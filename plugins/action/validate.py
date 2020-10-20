@@ -4,22 +4,14 @@
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 """
-The action plugin file for cli_parse
+The action plugin file for validate
 """
 from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-import json
-from importlib import import_module
-
 from ansible.errors import AnsibleActionFail
 from ansible.module_utils._text import to_native, to_text, to_bytes
-from ansible.module_utils import basic
-from ansible.module_utils.connection import (
-    Connection,
-    ConnectionError as AnsibleConnectionError,
-)
 from ansible.plugins.action import ActionBase
 
 from ansible_collections.ansible.utils.plugins.modules.validate import (
@@ -34,7 +26,7 @@ from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_valid
 
 ARGSPEC_CONDITIONALS = {}
 
-import epdb
+
 class ActionModule(ActionBase):
     """ action module
     """
