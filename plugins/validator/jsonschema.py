@@ -19,16 +19,35 @@ from ansible.module_utils.six import string_types
 from ansible_collections.ansible.utils.plugins.validator import (
     ValditorBase,
 )
-from ansible_collections.ansible.utils.plugins.module_utils.validator.jsonschema import (
-    validate_jsonschema,
+
+from ansible_collections.ansible.utils.plugins.module_utils.common.utils import (
+    to_list,
 )
 
 try:
-    import jsonschema
+    from jsonschema import Draft7Validator
+    from jsonschema.exceptions import ValidationError
+
     HAS_JSONSCHEMA = True
 except ImportError:
     HAS_JSONSCHEMA = False
+
 import epdb
+
+
+def to_path(fpath):
+    return ".".join(str(index) for index in fpath)
+
+
+def json_path(absolute_path):
+    path = '$'
+    for elem in absolute_path:
+        if isinstance(elem, int):
+            path += '[' + str(elem) + ']'
+        else:
+            path += '.' + elem
+    return path
+
 
 class Validator(ValditorBase):
 
@@ -52,32 +71,33 @@ class Validator(ValditorBase):
         """
         errors = []
         try:
-            data = self._task_args["data"]
-            if isinstance(data, dict):
-                self._task_args["data"] = json.loads(json.dumps(data))
-            elif isinstance(data, string_types):
-                self._task_args["data"] = json.loads(data)
+            if isinstance(self._data, dict):
+                self._data = json.loads(json.dumps(self._data))
+            elif isinstance(self._data, string_types):
+                self._data = json.loads(self._data)
             else:
-                errors.append("Expected value of 'data' option is either dict or str, received type '%s'" % type(data))
+                errors.append("Expected value of 'data' option is either dict or str, received type '%s'" % type(self._data))
         except TypeError as exe:
             errors.append("'data' option value is invalid. Failed to read with error '%s'" %
                           to_text(exe, errors="surrogate_then_replace"))
 
         try:
-            criteria = self._task_args["criteria"]
-            if isinstance(criteria, dict):
-                self._task_args["criteria"] = json.loads(json.dumps(criteria))
-            elif isinstance(criteria, string_types):
-                self._task_args["criteria"] = json.loads(criteria)
-            else:
-                errors.append("Expected value of 'criteria' option is either dict or str, received type '%s'" % type(criteria))
+            criteria = []
+            for item in to_list(self._criteria):
+                if isinstance(item, dict):
+                    criteria.append(json.loads(json.dumps(self._criteria)))
+                elif isinstance(self._criteria, string_types):
+                    criteria.append(json.loads(self._criteria))
+                else:
+                    errors.append("Expected value of 'criteria' option is either list of dict/str or dict or str, received type '%s'" % type(criteria))
+            self._criteria = criteria
         except TypeError as exe:
             errors.append("'criteria' option value is invalid. Failed to read with error '%s'" %
                           to_text(exe, errors="surrogate_then_replace"))
 
         return errors
 
-    def validate(self, *args, **kwargs):
+    def validate(self):
         """ Std entry point for a validate execution
 
         :return: Errors or parsed text as structured data
@@ -97,10 +117,47 @@ class Validator(ValditorBase):
             return {"errors": errors}
 
         try:
-            self._result = validate_jsonschema(
-                schema=self._task_args["criteria"], data=self._task_args["data"]
-            )
+            self._validate_jsonschema()
         except Exception as exc:
             return {"errors": to_text(exc, errors="surrogate_then_replace")}
 
         return self._result
+
+    def _validate_jsonschema(self):
+        error_messages = None
+        #epdb.st()
+        for criteria in self._criteria:
+            validator = Draft7Validator(criteria)
+            validation_errors = sorted(
+                validator.iter_errors(self._data), key=lambda e: e.path
+            )
+
+            if validation_errors:
+                if "errors" not in self._result:
+                    self._result["errors"] = []
+
+                error_messages = []
+                for validation_error in validation_errors:
+                    if isinstance(validation_error, ValidationError):
+                        error = {
+                            "message": validation_error.message,
+                            "data_path": to_path(
+                                validation_error.absolute_path
+                            ),
+                            "json_path": json_path(validation_error.absolute_path),
+                            "schema_path": to_path(
+                                validation_error.relative_schema_path
+                            ),
+                            "relative_schema": validation_error.schema,
+                            "expected": validation_error.validator_value,
+                            "validator": validation_error.validator,
+                            "found": validation_error.instance,
+                        }
+                        self._result["errors"].append(error)
+                        error_message = "At '{schema_path}' {message}. ".format(
+                            schema_path=error["schema_path"], message=error["message"]
+                        )
+                        error_messages.append(error_message)
+        if error_messages:
+            if "msg" not in self._result:
+                self._result["msg"] = "\n".join(error_messages)

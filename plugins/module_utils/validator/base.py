@@ -5,56 +5,44 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-from ansible.utils.display import Display
+from importlib import import_module
+from ansible.module_utils._text import to_native
 
 
-class ValditorBase(object):
-    """ The base class for data validators
-    Provides a  _debug function to normalize debug output
+def load_validator(engine, data, criteria, plugin_vars, cls_name="Validator", **kwargs):
     """
+    Load the validator from engine name
+    :param engine: Name of the validator engine in format <org-name>.<collection-name>.<validator-plugin>
+    :param vars: Variables for validate plugins. The variable information for each validate plugins can
+                 be referred in individual plugin documentation.
+    :param cls_name: Base class name for validator plugin. Defaults to ``Validator``.
+    :param kwargs: The base name of the class for validator plugin
+    :return:
+    """
+    result = {}
+    if len(engine.split(".")) != 3:
+        result["failed"] = True
+        result["msg"] = "Parser name should be provided as a full name including collection"
+        return None, result
 
-    def __init__(self, args, vars, debug=None):
-        self._debug = debug
-        self._args = args
-        self._vars = vars
-
-    def _extended_check_argspec(self):
-        """ Check additional requirements for the argspec
-        that cannot be covered using stnd techniques
-        """
-        errors = []
-        if len(self._task.args["engine"].split(".")) != 3:
-            msg = "Parser name should be provided as a full name including collection"
-            errors.append(msg)
-        if errors:
-            self._result["failed"] = True
-            self._result["msg"] = " ".join(errors)
-
-    def _load_validator(self, task_vars):
-        """ Load a validator from the fs
-
-        :param task_vars: The vars provided when the task was run
-        :type task_vars: dict
-        :return: An instance of class Validator
-        :rtype: Validator
-        """
-        cref = dict(
-            zip(["corg", "cname", "plugin"], self._task.args["engine"].split("."))
+    cref = dict(
+        zip(["corg", "cname", "plugin"], engine.split("."))
+    )
+    validatorlib = "ansible_collections.{corg}.{cname}.plugins.validator.{plugin}".format(
+        **cref
+    )
+    try:
+        validatorcls = getattr(import_module(validatorlib), cls_name)
+        validator = validatorcls(
+            data=data,
+            criteria=criteria,
+            plugin_vars=plugin_vars,
+            kwargs=kwargs
         )
-        validatorlib = "ansible_collections.{corg}.{cname}.plugins.validator.{plugin}".format(
-            **cref
+        return validator,  result
+    except Exception as exc:
+        result["failed"] = True
+        result["msg"] = "Error loading validator: {err}".format(
+            err=to_native(exc)
         )
-        try:
-            validatorcls = getattr(import_module(validatorlib), self.VALIDATOR_CLS_NAME)
-            validator = validatorcls(
-                task_args=self._task.args,
-                task_vars=task_vars,
-                debug=self._debug,
-            )
-            return validator
-        except Exception as exc:
-            self._result["failed"] = True
-            self._result["msg"] = "Error loading validator: {err}".format(
-                err=to_native(exc)
-            )
-            return None
+        return None, result

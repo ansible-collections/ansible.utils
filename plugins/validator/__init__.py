@@ -11,7 +11,9 @@ class ValditorBase(object):
     Provides a  _debug function to normalize debug output
     """
 
-    def __init__(self, task_args, task_vars, debug):
-        self._debug = debug
-        self._task_args = task_args
-        self._task_vars = task_vars
+    def __init__(self, data, criteria, plugin_vars={}, **kwargs):
+        self._data = data
+        self._criteria = criteria
+        self._plugin_vars = plugin_vars
+        self._result = {}
+        self._kwargs = kwargs

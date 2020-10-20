@@ -23,14 +23,12 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-import json
 import re
 from ansible.module_utils.basic import AnsibleModule
 from ansible_collections.ansible.utils.plugins.module_utils.common.utils import (
     dict_merge,
 )
 from ansible.module_utils.six import iteritems, string_types
-from ansible.module_utils._text import to_bytes
 
 try:
     import yaml
@@ -243,3 +241,21 @@ class AnsibleArgSpecValidator:
             return self._validate()
         else:
             return self._validate()
+
+
+def check_argspec(schema, name, schema_format="doc", schema_conditionals={}, **args):
+    aav = AnsibleArgSpecValidator(
+        data=args,
+        schema=schema,
+        schema_format=schema_format,
+        schema_conditionals=schema_conditionals,
+        name=name,
+    )
+    result = {}
+    valid, errors, updated_params = aav.validate()
+    if not valid:
+        result['errors'] = errors
+        result["failed"] = True
+        result["msg"] = "argspec validation failed for plugin {name}".format(name=name)
+
+    return result, updated_params
