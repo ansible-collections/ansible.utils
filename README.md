@@ -60,9 +60,21 @@ The most common use case for this collection is when complex data structures are
 
 ## Contributing to this collection
 
+This collection is intended for plugins that are not platform or discipline specific. Simple plugin examples should be generic in nature, more complex examples can include real world platform module to demonstrate the utility of the plugin in a playbook.
+
 We welcome community contributions to this collection. If you find problems, please open an issue or create a PR against the [ansible.utils collection repository](https://github.com/ansible-collections/ansible.utils). See [Contributing to Ansible-maintained collections](https://docs.ansible.com/ansible/devel/community/contributing_maintained_collections.html#contributing-maintained-collections) for complete details.
 
 See the [Ansible Community Guide](https://docs.ansible.com/ansible/latest/community/index.html) for details on contributing to Ansible.
+
+### Developer notes
+
+- 100% code coverage is the goal, although it's not always possible. Please include unit and integration tests with all PRs. PRs should not cause a decrease in code coverage.
+- filter plugins should be 1 per file, with an included DOCUMENTATION string/or reference a lookup plugin with the same name.
+- action, filter and lookup plugins should use argspec validation, see AnsibleArgSpecValidator
+- This collection should not depend on other collections for imported code
+- Use of the latest version of black is required for formatting (black -l79)
+- The README contains a table of plugins, the collection_prep utilities make this easy to maintain
+
 
 ### Code of Conduct
 This collection follows the Ansible project's
