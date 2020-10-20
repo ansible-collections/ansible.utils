@@ -107,7 +107,9 @@ class MonkeyModule(AnsibleModule):
         """
         if self.name:
             msg = re.sub(
-                r"\(basic\.pyc?\)", "'{name}'".format(name=self.name), msg,
+                r"\(basic\.pyc?\)",
+                "'{name}'".format(name=self.name),
+                msg,
             )
         self._valid = False
         self._errors = msg

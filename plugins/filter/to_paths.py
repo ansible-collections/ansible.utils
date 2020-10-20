@@ -30,7 +30,10 @@ def _to_paths(*args, **kwargs):
     data = dict(zip(keys, args))
     data.update(kwargs)
     aav = AnsibleArgSpecValidator(
-        data=data, schema=DOCUMENTATION, schema_format="doc", name="to_paths",
+        data=data,
+        schema=DOCUMENTATION,
+        schema_format="doc",
+        name="to_paths",
     )
     valid, errors, updated_data = aav.validate()
     if not valid:
