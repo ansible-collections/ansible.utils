@@ -32,4 +32,7 @@ options:
                 type: dict
                 description:
                 - A dict suboption
+    param_default:
+        type: bool
+        default: True
 """

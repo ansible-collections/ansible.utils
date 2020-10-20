@@ -129,7 +129,7 @@ class MonkeyModule(AnsibleModule):
         :rtype errors: str
         """
         super(MonkeyModule, self).__init__(**self._schema)
-        return self._valid, self._errors
+        return self._valid, self._errors, self.params
 
 
 class AnsibleArgSpecValidator:
@@ -217,12 +217,13 @@ class AnsibleArgSpecValidator:
             errors = "Invalid schema. Invalid keys found: {ikeys}".format(
                 ikeys=",".join(invalid_keys)
             )
+            updated_data = {}
         else:
             mm = MonkeyModule(
                 data=self._data, schema=self._schema, name=self._name
             )
-            valid, errors = mm.validate()
-        return valid, errors
+            valid, errors, updated_data = mm.validate()
+        return valid, errors, updated_data
 
     def validate(self):
         """The public validate method
