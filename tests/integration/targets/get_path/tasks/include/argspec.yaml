@@ -23,9 +23,9 @@
   ignore_errors: True
   register: result
 
-- debug:
-    var: result
 - assert:
-    that: "{{ msg in result.msg }}"
-  vars:
-    msg: "missing required arguments: path, var"
+    that: "{{ item in result.msg }}"
+  loop:
+  - "missing required arguments:"
+  - path
+  - var
