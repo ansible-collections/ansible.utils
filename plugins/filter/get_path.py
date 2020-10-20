@@ -33,15 +33,12 @@ def _get_path(*args, **kwargs):
     data.update(kwargs)
     environment = data.pop("environment")
     aav = AnsibleArgSpecValidator(
-        data=data,
-        schema=DOCUMENTATION,
-        schema_format="doc",
-        name="get_path",
+        data=data, schema=DOCUMENTATION, schema_format="doc", name="get_path",
     )
     valid, errors, updated_data = aav.validate()
     if not valid:
         raise AnsibleFilterError(errors)
-    updated_data['environment'] = environment
+    updated_data["environment"] = environment
     return get_path(**updated_data)
 
 
