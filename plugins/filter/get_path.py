@@ -5,7 +5,7 @@
 
 
 """
-The index_of filter plugin
+flatten a complex object to dot bracket notation
 """
 from __future__ import absolute_import, division, print_function
 
@@ -13,10 +13,11 @@ __metaclass__ = type
 
 from ansible.errors import AnsibleFilterError
 from jinja2.filters import environmentfilter
-from ansible_collections.ansible.utils.plugins.module_utils.common.index_of import (
-    index_of,
+
+from ansible_collections.ansible.utils.plugins.module_utils.common.get_path import (
+    get_path,
 )
-from ansible_collections.ansible.utils.plugins.lookup.index_of import (
+from ansible_collections.ansible.utils.plugins.lookup.get_path import (
     DOCUMENTATION,
 )
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
@@ -25,18 +26,9 @@ from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_valid
 
 
 @environmentfilter
-def _index_of(*args, **kwargs):
-    """Find the indicies of items in a list matching some criteria. [See examples](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.index_of_lookup.rst)"""
-
-    keys = [
-        "environment",
-        "data",
-        "test",
-        "value",
-        "key",
-        "fail_on_missing",
-        "wantlist",
-    ]
+def _get_path(*args, **kwargs):
+    """Retrieve the value in a variable using a path. [See examples](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.get_path_lookup.rst)"""
+    keys = ["environment", "var", "path"]
     data = dict(zip(keys, args))
     data.update(kwargs)
     environment = data.pop("environment")
@@ -44,18 +36,17 @@ def _index_of(*args, **kwargs):
         data=data,
         schema=DOCUMENTATION,
         schema_format="doc",
-        name="index_of",
+        name="get_path",
     )
     valid, errors, updated_data = aav.validate()
     if not valid:
         raise AnsibleFilterError(errors)
-    updated_data["tests"] = environment.tests
-    return index_of(**updated_data)
+    updated_data["environment"] = environment
+    return get_path(**updated_data)
 
 
 class FilterModule(object):
-    """ index_of  """
+    """ path filters """
 
     def filters(self):
-        """a mapping of filter names to functions"""
-        return {"index_of": _index_of}
+        return {"get_path": _get_path}

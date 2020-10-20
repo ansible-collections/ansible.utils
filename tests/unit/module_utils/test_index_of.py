@@ -30,23 +30,6 @@ class TestIndexOfFilter(unittest.TestCase):
             index_of(obj, test, value, key, tests=self._tests)
         self.assertIn("the test '@@' was not found", str(exc.exception))
 
-    def test_fail_not_a_list(self):
-        obj, test, value = True, "==", 1
-        with self.assertRaises(Exception) as exc:
-            index_of(obj, test, value, tests=self._tests)
-        self.assertIn(
-            "a list is required, was passed a 'bool'", str(exc.exception)
-        )
-
-    def test_fail_wantlist_not_a_bool(self):
-        obj, test, value = [1, 2], "==", 1
-        with self.assertRaises(Exception) as exc:
-            index_of(obj, test, value, wantlist=42, tests=self._tests)
-        self.assertIn(
-            "'wantlist' is required to be a bool, was passed a 'int'",
-            str(exc.exception),
-        )
-
     def test_fail_mixed_list(self):
         obj, test, value, key = [{"a": "b"}, True, 1, "a"], "==", "b", "a"
         with self.assertRaises(Exception) as exc:
@@ -74,6 +57,7 @@ class TestIndexOfFilter(unittest.TestCase):
             # ([False], "not false", []),
             # ([False, 5], "boolean", 0),
             # ([0, False], "false", 1),
+            ([3, 4], "not even", 0),
             ([3, 4], "even", 1),
             ([3, 3], "even", []),
             ([3, 3, 3, 4], "odd", [0, 1, 2]),

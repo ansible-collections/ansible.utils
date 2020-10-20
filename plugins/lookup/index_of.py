@@ -22,9 +22,6 @@ DOCUMENTATION = """
         - When working with a list of dictionaries, the key to evaluate can be specified
         - C(index_of) is also available as a C(filter_plugin) for convenience
     options:
-      _terms:
-        description: The values below provided in the order C(test), C(value), C(key).
-        required: True
       data:
         description: A list of items to enumerate and test against
         type: list
@@ -354,20 +351,39 @@ RETURN = """
       - See C(wantlist) if a list is always required
 """
 
+from ansible.errors import AnsibleLookupError
 from ansible.plugins.lookup import LookupBase
 from ansible_collections.ansible.utils.plugins.module_utils.common.index_of import (
     index_of,
+)
+from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
+    AnsibleArgSpecValidator,
 )
 
 
 class LookupModule(LookupBase):
     def run(self, terms, variables, **kwargs):
-        kwargs["tests"] = self._templar.environment.tests
-        if isinstance(terms, dict):
-            terms.update(kwargs)
-            res = index_of(**terms)
-        else:
-            res = index_of(*terms, **kwargs)
-        if not isinstance(res, list):
-            return [res]
+        if isinstance(terms, list):
+            keys = [
+                "data",
+                "test",
+                "value",
+                "key",
+                "fail_on_missing",
+                "wantlist",
+            ]
+            terms = dict(zip(keys, terms))
+        terms.update(kwargs)
+        aav = AnsibleArgSpecValidator(
+            data=terms,
+            schema=DOCUMENTATION,
+            schema_format="doc",
+            name="index_of",
+        )
+        valid, errors, updated_data = aav.validate()
+        if not valid:
+            raise AnsibleLookupError(errors)
+        updated_data["wantlist"] = True
+        updated_data["tests"] = self._templar.environment.tests
+        res = index_of(**updated_data)
         return res
