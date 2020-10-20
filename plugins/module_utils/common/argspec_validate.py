@@ -14,7 +14,7 @@ def _check_argspec(self):
         other_args={},
         name=self._task.action,
     )
-    valid, errors = aav.validate()
+    valid, errors, updated_data = aav.validate()
     if not valid:
         raise AnsibleActionFail(errors)
 
@@ -127,6 +127,8 @@ class MonkeyModule(AnsibleModule):
         :rtype valid: bool
         :return errors: errors reported during validation
         :rtype errors: str
+        :return params: The original data updated with defaults
+        :rtype params: dict
         """
         super(MonkeyModule, self).__init__(**self._schema)
         return self._valid, self._errors, self.params
@@ -202,6 +204,13 @@ class AnsibleArgSpecValidator:
     def _validate(self):
         """Validate the data gainst the schema
         convert doc string in argspec if necessary
+
+        :return valid: if the data passed
+        :rtype valid: bool
+        :return errors: errors reported during validation
+        :rtype errors: str
+        :return params: The original data updated with defaults
+        :rtype params: dict
         """
         if self._schema_format == "doc":
             self._convert_doc_to_schema()
