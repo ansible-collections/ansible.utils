@@ -26,7 +26,7 @@ options:
     description:
       - The second fact to be used in the comparison
     type: raw
-    required: True  
+    required: True
 
 notes:
 
@@ -36,21 +36,21 @@ author:
 
 EXAMPLES = r"""
 
-  - set_fact:
-      left:
-        a:
-          b:
-            c:
-              d:
-              - 0
-              - 1
-      right:
-        a:
-          b:
-            c:
-              d:
-              - 2
-              - 3
+- set_fact:
+    left:
+      a:
+        b:
+          c:
+            d:
+            - 0
+            - 1
+    right:
+      a:
+        b:
+          c:
+            d:
+            - 2
+            - 3
 
 - name: Show the difference in json format
   ansible.utils.fact_diff:
