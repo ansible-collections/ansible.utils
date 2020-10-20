@@ -11,18 +11,45 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
+from ansible.errors import AnsibleFilterError
+from jinja2.filters import environmentfilter
 from ansible_collections.ansible.utils.plugins.module_utils.common.index_of import (
     index_of,
 )
-from jinja2.filters import environmentfilter
+from ansible_collections.ansible.utils.plugins.lookup.index_of import (
+    DOCUMENTATION,
+)
+from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
+    AnsibleArgSpecValidator,
+)
 
 
 @environmentfilter
 def _index_of(*args, **kwargs):
     """Find the indicies of items in a list matching some criteria. [See examples](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.index_of_lookup.rst)"""
-    kwargs["tests"] = args[0].tests
-    args = args[1:]
-    return index_of(*args, **kwargs)
+
+    keys = [
+        "environment",
+        "data",
+        "test",
+        "value",
+        "key",
+        "fail_on_missing",
+        "wantlist",
+    ]
+    data = dict(zip(keys, args))
+    data.update(kwargs)
+    environment = data.pop("environment")
+    aav = AnsibleArgSpecValidator(
+        data=data,
+        schema=DOCUMENTATION,
+        schema_format="doc",
+        name="index_of",
+    )
+    valid, errors, updated_data = aav.validate()
+    if not valid:
+        raise AnsibleFilterError(errors)
+    return index_of(**updated_data, tests=environment.tests)
 
 
 class FilterModule(object):

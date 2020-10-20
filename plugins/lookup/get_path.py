@@ -21,9 +21,6 @@ DOCUMENTATION = """
         - Use a C(path) to retreive a nested value from a C(var)
         - C(get_path) is also available as a C(filter_plugin) for convenience
     options:
-      _terms:
-        description: The values below provided in the order C(var), C(path), C(wantlist=).
-        required: True
       var:
         description: The variable from which the value should be extraced
         type: raw
@@ -155,20 +152,31 @@ RETURN = """
       - See C(wantlist) if a list is always required
 """
 
+from ansible.errors import AnsibleLookupError
 from ansible.plugins.lookup import LookupBase
-from ansible_collections.ansible.utils.plugins.module_utils.common.path import (
+from ansible_collections.ansible.utils.plugins.module_utils.common.get_path import (
     get_path,
+)
+from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
+    AnsibleArgSpecValidator,
 )
 
 
 class LookupModule(LookupBase):
     def run(self, terms, variables, **kwargs):
-        kwargs["environment"] = self._templar.environment
-        if isinstance(terms, dict):
-            terms.update(kwargs)
-            res = get_path(**terms)
-        else:
-            res = get_path(*terms, **kwargs)
-        if not isinstance(res, list):
-            return [res]
+        if isinstance(terms, list):
+            keys = ["var", "path"]
+            terms = dict(zip(keys, terms))
+        terms.update(kwargs)
+        aav = AnsibleArgSpecValidator(
+            data=terms,
+            schema=DOCUMENTATION,
+            schema_format="doc",
+            name="get_path",
+        )
+        valid, errors, updated_data = aav.validate()
+        if not valid:
+            raise AnsibleLookupError(errors)
+        updated_data["wantlist"] = True
+        res = get_path(**updated_data, environment=self._templar.environment)
         return res

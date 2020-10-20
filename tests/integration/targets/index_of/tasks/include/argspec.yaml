@@ -1,0 +1,55 @@
+- set_fact:
+    complex:
+      a:
+        b:
+          c:
+            d:
+            - e0: 0
+              e1: ansible
+              e2: True
+            - e0: 1
+              e1: redhat
+
+- name: Check argspec validation with filter (not a list)
+  set_fact:
+    _result: "{{ complex|ansible.utils.index_of() }}"
+  ignore_errors: True
+  register: result
+
+- assert:
+    that: "{{ msg in result.msg }}"
+  vars:
+    msg: "cannot be converted to a list"
+
+- name: Check argspec validation with filter (missing params)
+  set_fact:
+    _result: "{{ complex.a.b.c.d|ansible.utils.index_of() }}"
+  ignore_errors: True
+  register: result
+
+- assert:
+    that: "{{ msg in result.msg }}"
+  vars:
+    msg: "missing required arguments: test"
+
+- name: Check argspec validation with lookup (not a list)
+  set_fact:
+    _result: "{{ lookup('ansible.utils.index_of', complex) }}"
+  ignore_errors: True
+  register: result
+
+- assert:
+    that: "{{ msg in result.msg }}"
+  vars:
+    msg: "cannot be converted to a list"
+
+- name: Check argspec validation with lookup (missing params)
+  set_fact:
+    _result: "{{ lookup('ansible.utils.index_of') }}"
+  ignore_errors: True
+  register: result
+
+- assert:
+    that: "{{ msg in result.msg }}"
+  vars:
+    msg: "missing required arguments: data, test"

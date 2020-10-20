@@ -23,9 +23,6 @@ DOCUMENTATION = """
         - Brakets are used for list indicies and keys that contain special characters
         - C(to_paths) is also available as a filter plugin
     options:
-      _terms:
-        description: The values below provided in the order C(var), C(prepend=), C(wantlist=).
-        required: True
       var:
         description: The value of C(var) will be will be used.
         type: raw
@@ -139,19 +136,31 @@ RETURN = """
       - The value is the value
 """
 
+from ansible.errors import AnsibleLookupError
 from ansible.plugins.lookup import LookupBase
-from ansible_collections.ansible.utils.plugins.module_utils.common.path import (
+from ansible_collections.ansible.utils.plugins.module_utils.common.to_paths import (
     to_paths,
+)
+from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
+    AnsibleArgSpecValidator,
 )
 
 
 class LookupModule(LookupBase):
     def run(self, terms, variables, **kwargs):
-        if isinstance(terms, dict):
-            terms.update(kwargs)
-            res = to_paths(**terms)
-        else:
-            res = to_paths(*terms, **kwargs)
-        if not isinstance(res, list):
-            return [res]
+        if isinstance(terms, list):
+            keys = ["var", "prepend"]
+            terms = dict(zip(keys, terms))
+        terms.update(kwargs)
+        aav = AnsibleArgSpecValidator(
+            data=terms,
+            schema=DOCUMENTATION,
+            schema_format="doc",
+            name="to_paths",
+        )
+        valid, errors, updated_data = aav.validate()
+        if not valid:
+            raise AnsibleLookupError(errors)
+        updated_data["wantlist"] = True
+        res = to_paths(**updated_data)
         return res

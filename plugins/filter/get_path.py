@@ -12,37 +12,40 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 from ansible.errors import AnsibleFilterError
-
-from ansible_collections.ansible.utils.plugins.module_utils.common.path import (
-    get_path,
-)
 from jinja2.filters import environmentfilter
 
-
-from ansible_collections.ansible.utils.plugins.lookup.get_path import DOCUMENTATION
-from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import AnsibleArgSpecValidator
+from ansible_collections.ansible.utils.plugins.module_utils.common.get_path import (
+    get_path,
+)
+from ansible_collections.ansible.utils.plugins.lookup.get_path import (
+    DOCUMENTATION,
+)
+from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
+    AnsibleArgSpecValidator,
+)
 
 
 @environmentfilter
 def _get_path(*args, **kwargs):
     """Retrieve the value in a variable using a path. [See examples](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.get_path_lookup.rst)"""
-    keys = ['environment', 'var', 'path']
+    keys = ["environment", "var", "path"]
     spec = dict(zip(keys, args))
     spec.update(kwargs)
+    environment = spec.pop("environment")
     aav = AnsibleArgSpecValidator(
         data=spec,
         schema=DOCUMENTATION,
         schema_format="doc",
-        name='get_path',
+        name="get_path",
     )
-    valid, errors = aav.validate()
+    valid, errors, updated_data = aav.validate()
     if not valid:
         raise AnsibleFilterError(errors)
-    return get_path(**spec)
+    return get_path(**updated_data, environment=environment)
 
 
 class FilterModule(object):
     """ path filters """
 
     def filters(self):
-        return {"to_paths": _to_paths, "get_path": _get_path}
+        return {"get_path": _get_path}

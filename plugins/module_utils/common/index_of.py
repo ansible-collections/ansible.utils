@@ -59,27 +59,6 @@ def _to_well_known_type(obj):
     return json.loads(json.dumps(obj))
 
 
-def _check_reqs(obj, wantlist):
-    """Check the args passed, ensure given a list
-
-    :param obj: The object passed to the filter plugin
-    :type obj: unknown
-    """
-    errors = []
-    if not is_sequence(obj):
-        msg = "a list is required, was passed a '{type}'.".format(
-            type=type(_to_well_known_type(obj)).__name__
-        )
-        errors.append(msg)
-    if not isinstance(wantlist, bool):
-        msg = "'wantlist' is required to be a bool, was passed a '{type}'.".format(
-            type=type(_to_well_known_type(wantlist)).__name__
-        )
-        errors.append(msg)
-    if errors:
-        _raise_error(" ".join(errors))
-
-
 def _run_test(entry, test, right, tests):
     """Run a test
 
@@ -167,7 +146,6 @@ def index_of(
     :param tests: The jinja tests from the current environment
     :type tests: ansible.template.JinjaPluginIntercept
     """
-    _check_reqs(data, wantlist)
     res = list()
     if key is None:
         for idx, entry in enumerate(data):

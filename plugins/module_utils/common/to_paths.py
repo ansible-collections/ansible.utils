@@ -17,38 +17,9 @@ from ansible.module_utils.common._collections_compat import (
     MutableMapping,
 )
 
-# Note, this file can only be used on the control node
-# where ansible is installed
-# limit imports to filter and lookup plugins
-try:
-    from ansible.errors import AnsibleError
-except ImportError:
-    pass
 
-
-def get_path(var, path, environment, wantlist=False):
-    """Get the value of a path within an object
-
-    :param var: The var from which the value is retrieved
-    :type var: should be dict or list, but jinja can sort that out
-    :param path: The path to get
-    :type path: should be a string but jinja can sort that out
-    :param environment: The jinja Environment
-    :type environment: Environment
-    :return: The result of the jinja evaluation
-    :rtype: any
-    """
-    string_to_variable = "{{ %s }}" % path
-    result = environment.from_string(string_to_variable).render(**var)
-    if wantlist:
-        return list(result)
-    return result
-
-
-def to_paths(var, prepend=False, wantlist=False):
+def to_paths(var, prepend, wantlist):
     if prepend:
-        if not isinstance(prepend, str):
-            raise AnsibleError("The value of 'prepend' must be a string.")
         var = {prepend: var}
 
     out = {}
