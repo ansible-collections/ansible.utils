@@ -45,7 +45,7 @@ class ActionModule(ActionBase):
             schema_format="doc",
             name=self._task.action,
         )
-        valid, errors = aav.validate()
+        valid, errors, self._task.args = aav.validate()
         if not valid:
             raise AnsibleActionFail(errors)
 
