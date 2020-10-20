@@ -35,6 +35,7 @@ Name | Description
 ### Modules
 Name | Description
 --- | ---
+[ansible.utils.fact_diff](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.fact_diff_module.rst)|Find the difference between currently set facts
 [ansible.utils.update_fact](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.update_fact_module.rst)|Update currently set facts
 
 <!--end collection content-->
