@@ -25,9 +25,29 @@ class TestSortList(unittest.TestCase):
             schema_conditionals={},
             name="test_action",
         )
-        valid, errors = aav.validate()
+        valid, errors, _updated_data = aav.validate()
         self.assertTrue(valid)
         self.assertEqual(errors, None)
+
+    def test_simple_defaults(self):
+        data = {"param_str": "string"}
+        aav = AnsibleArgSpecValidator(
+            data=data,
+            schema=DOCUMENTATION,
+            schema_format="doc",
+            schema_conditionals={},
+            name="test_action",
+        )
+        expected = {
+            "param_str": "string",
+            "param_default": True,
+            "params_bool": None,
+            "params_dict": None,
+        }
+        valid, errors, updated_data = aav.validate()
+        self.assertTrue(valid)
+        self.assertEqual(errors, None)
+        self.assertEqual(expected, updated_data)
 
     def test_simple_fail(self):
         data = {}
@@ -38,7 +58,7 @@ class TestSortList(unittest.TestCase):
             schema_conditionals={},
             name="test_action",
         )
-        valid, errors = aav.validate()
+        valid, errors, _updated_data = aav.validate()
         self.assertFalse(valid)
         self.assertIn("missing required arguments: param_str", errors)
 
@@ -50,7 +70,7 @@ class TestSortList(unittest.TestCase):
             schema_format="doc",
             schema_conditionals={},
         )
-        valid, errors = aav.validate()
+        valid, errors, _updated_data = aav.validate()
         self.assertFalse(valid)
         self.assertIn("missing required arguments: param_str", errors)
 
@@ -62,7 +82,7 @@ class TestSortList(unittest.TestCase):
             schema_format="argspec",
             name="test_action",
         )
-        valid, errors = aav.validate()
+        valid, errors, _updated_data = aav.validate()
         self.assertTrue(valid)
         self.assertEqual(errors, None)
 
@@ -77,7 +97,7 @@ class TestSortList(unittest.TestCase):
             },
             name="test_action",
         )
-        valid, errors = aav.validate()
+        valid, errors, _updated_data = aav.validate()
         self.assertFalse(valid)
         self.assertIn(
             "parameters are required together: param_str, param_bool", errors
@@ -92,7 +112,7 @@ class TestSortList(unittest.TestCase):
             name="test_action",
             # other_args={'bypass_checks': True},
         )
-        valid, errors = aav.validate()
+        valid, errors, _updated_data = aav.validate()
         self.assertFalse(valid)
         self.assertIn(
             "Unsupported parameters for 'test_action' module: not_valid",
@@ -108,7 +128,7 @@ class TestSortList(unittest.TestCase):
             name="test_action",
             other_args={"bypass_checks": True},
         )
-        valid, errors = aav.validate()
+        valid, errors, _updated_data = aav.validate()
         self.assertTrue(valid)
         self.assertIsNone(errors)
 
@@ -121,6 +141,6 @@ class TestSortList(unittest.TestCase):
             name="test_action",
             other_args={"bypass_checks": True},
         )
-        valid, errors = aav.validate()
+        valid, errors, _updated_data = aav.validate()
         self.assertFalse(valid)
         self.assertIn("Invalid keys found: not_valid", errors)

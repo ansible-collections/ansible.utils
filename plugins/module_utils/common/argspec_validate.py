@@ -14,7 +14,7 @@ def _check_argspec(self):
         other_args={},
         name=self._task.action,
     )
-    valid, errors = aav.validate()
+    valid, errors, updated_data = aav.validate()
     if not valid:
         raise AnsibleActionFail(errors)
 
@@ -127,9 +127,11 @@ class MonkeyModule(AnsibleModule):
         :rtype valid: bool
         :return errors: errors reported during validation
         :rtype errors: str
+        :return params: The original data updated with defaults
+        :rtype params: dict
         """
         super(MonkeyModule, self).__init__(**self._schema)
-        return self._valid, self._errors
+        return self._valid, self._errors, self.params
 
 
 class AnsibleArgSpecValidator:
@@ -202,6 +204,13 @@ class AnsibleArgSpecValidator:
     def _validate(self):
         """Validate the data gainst the schema
         convert doc string in argspec if necessary
+
+        :return valid: if the data passed
+        :rtype valid: bool
+        :return errors: errors reported during validation
+        :rtype errors: str
+        :return params: The original data updated with defaults
+        :rtype params: dict
         """
         if self._schema_format == "doc":
             self._convert_doc_to_schema()
@@ -217,12 +226,13 @@ class AnsibleArgSpecValidator:
             errors = "Invalid schema. Invalid keys found: {ikeys}".format(
                 ikeys=",".join(invalid_keys)
             )
+            updated_data = {}
         else:
             mm = MonkeyModule(
                 data=self._data, schema=self._schema, name=self._name
             )
-            valid, errors = mm.validate()
-        return valid, errors
+            valid, errors, updated_data = mm.validate()
+        return valid, errors, updated_data
 
     def validate(self):
         """The public validate method
