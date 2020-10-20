@@ -110,8 +110,4 @@ def to_list(val):
     elif val is not None:
         return [val]
     else:
-<<<<<<< HEAD
         return list()
-=======
-        return list()
->>>>>>> Add validate lookup/filter/test plugin
