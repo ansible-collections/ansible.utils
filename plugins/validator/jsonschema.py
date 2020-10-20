@@ -32,8 +32,6 @@ try:
 except ImportError:
     HAS_JSONSCHEMA = False
 
-import epdb
-
 
 def to_path(fpath):
     return ".".join(str(index) for index in fpath)
@@ -110,7 +108,6 @@ class Validator(ValditorBase):
         or
         {"parsed": obj}
         """
-        #epdb.st()
         errors = self._check_reqs()
         errors.extend(self._check_args())
         if errors:
