@@ -65,6 +65,24 @@ Parameters
                         <div>The first fact to be used in the comparison</div>
                 </td>
             </tr>
+            <tr>
+                <td colspan="1">
+                    <div class="ansibleOptionAnchor" id="parameter-"></div>
+                    <b>skip_lines</b>
+                    <a class="ansibleOptionLink" href="#parameter-" title="Permalink to this option"></a>
+                    <div style="font-size: small">
+                        <span style="color: purple">list</span>
+                    </div>
+                </td>
+                <td>
+                </td>
+                <td>
+                        <div>Skip lines matching these regular expressions</div>
+                        <div>Matches will be removed prior to the diff</div>
+                        <div>If the provided <em>before</em> and <em>after</em> are a string, they will be split</div>
+                        <div>Each entry in each list will be cast to a string for the comparison</div>
+                </td>
+            </tr>
     </table>
     <br/>
 
