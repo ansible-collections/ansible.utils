@@ -35,7 +35,6 @@ def _get_path(*args, **kwargs):
     aav = AnsibleArgSpecValidator(
         data=data,
         schema=DOCUMENTATION,
-        schema_format="doc",
         name="get_path",
     )
     valid, errors, updated_data = aav.validate()

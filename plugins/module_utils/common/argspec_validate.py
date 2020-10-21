@@ -139,7 +139,7 @@ class AnsibleArgSpecValidator:
         self,
         data,
         schema,
-        schema_format,
+        schema_format="doc",
         schema_conditionals=None,
         name=None,
         other_args=None,
