@@ -99,4 +99,3 @@
 #   msg: CONFIGURED BY ANSIBLE
 # ok: [nxos101] => (item=by_name['Ethernet1/3'].description|default('')) => changed=false 
 #   msg: ''
-
