@@ -24,7 +24,7 @@ DOCUMENTATION = """
         - C(to_paths) is also available as a C(lookup plugin) for convenience
     options:
       var:
-        description: 
+        description:
         - The value of C(var) will be will be used.
         - This option represents the value that is passed to filter plugin in pipe format.
         - For example I(config_data|ansible.utils.to_paths()), in this case I(config_data) represents this option.
@@ -63,7 +63,7 @@ EXAMPLES = r"""
     paths: "{{ a|ansible.utils.to_paths }}"
 
 # TASK [ansible.builtin.set_fact] ********************************************
-# ok: [nxos101] => changed=false 
+# ok: [nxos101] => changed=false
 #   ansible_facts:
 #     paths:
 #       b.c.d[0]: 0
@@ -76,7 +76,7 @@ EXAMPLES = r"""
     paths: "{{ a|ansible.utils.to_paths(prepend='a') }}"
 
 # TASK [Use prepend to add the initial variable name] **************************
-# ok: [nxos101] => changed=false 
+# ok: [nxos101] => changed=false
 #   ansible_facts:
 #     paths:
 #       a.b.c.d[0]: 0
@@ -103,7 +103,7 @@ EXAMPLES = r"""
     paths: "{{ result.json|ansible.utils.to_paths }}"
 
 # TASK [Flatten the complex object] ******************************************
-# ok: [nxos101] => changed=false 
+# ok: [nxos101] => changed=false
 #   ansible_facts:
 #     paths:
 #       interfaces.interface[0].config.enabled: 'true'
