@@ -19,7 +19,7 @@ DOCUMENTATION = """
     short_description: Retrieve the value in a variable using a path
     description:
         - Use a C(path) to retreive a nested value from a C(var)
-        - C(get_path) is also available as a C(filter_plugin) for convenience
+        - C(get_path) is also available as a C(filter plugin) for convenience
     options:
       var:
         description: The variable from which the value should be extraced
