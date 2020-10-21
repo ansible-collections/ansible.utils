@@ -57,19 +57,12 @@ EXAMPLES = r"""
           - False
 
 - ansible.builtin.set_fact:
-    as_lookup: "{{ lookup('ansible.utils.to_paths', a) }}"
-    as_filter: "{{ a|ansible.utils.to_paths }}"
+    paths: "{{ lookup('ansible.utils.to_paths', a) }}"
 
-# TASK [set_fact] *****************************************************
-# task path: /home/brad/github/dotbracket/site.yaml:17
-# ok: [localhost] => changed=false
+# TASK [ansible.builtin.set_fact] ********************************************
+# ok: [nxos101] => changed=false
 #   ansible_facts:
-#     as_filter:
-#       b.c.d[0]: 0
-#       b.c.d[1]: 1
-#       b.c.e[0]: true
-#       b.c.e[1]: false
-#     as_lookup:
+#     paths:
 #       b.c.d[0]: 0
 #       b.c.d[1]: 1
 #       b.c.e[0]: true
@@ -77,18 +70,12 @@ EXAMPLES = r"""
 
 - name: Use prepend to add the initial variable name
   ansible.builtin.set_fact:
-    as_lookup: "{{ lookup('ansible.utils.to_paths', a, prepend=('a')) }}"
-    as_filter: "{{ a|ansible.utils.to_paths(prepend='a') }}"
+    paths: "{{ lookup('ansible.utils.to_paths', a, prepend='a') }}"
 
-# TASK [Use prepend to add the initial variable name] *****************
+# TASK [Use prepend to add the initial variable name] **************************
 # ok: [nxos101] => changed=false
 #   ansible_facts:
-#     as_filter:
-#       a.b.c.d[0]: 0
-#       a.b.c.d[1]: 1
-#       a.b.c.e[0]: true
-#       a.b.c.e[1]: false
-#     as_lookup:
+#     paths:
 #       a.b.c.d[0]: 0
 #       a.b.c.d[1]: 1
 #       a.b.c.e[0]: true
@@ -110,12 +97,12 @@ EXAMPLES = r"""
 
 - name: Flatten the complex object
   set_fact:
-    flattened: "{{ result.json|ansible.utils.to_paths }}"
+    paths: "{{ lookup('ansible.utils.to_paths', result.json) }}"
 
-# TASK [Flatten the complex object] ********************
+# TASK [Flatten the complex object] ******************************************
 # ok: [nxos101] => changed=false
 #   ansible_facts:
-#     flattened:
+#     paths:
 #       interfaces.interface[0].config.enabled: 'true'
 #       interfaces.interface[0].config.mtu: '1500'
 #       interfaces.interface[0].config.name: eth1/71
@@ -124,7 +111,8 @@ EXAMPLES = r"""
 #       interfaces.interface[0].ethernet.state.counters['in-crc-errors']: '0'
 #       interfaces.interface[0].ethernet.state.counters['in-fragment-frames']: '0'
 #       interfaces.interface[0].ethernet.state.counters['in-jabber-frames']: '0'
-
+#       interfaces.interface[0].ethernet.state.counters['in-mac-control-frames']: '0'
+#       <...>
 
 """
 
