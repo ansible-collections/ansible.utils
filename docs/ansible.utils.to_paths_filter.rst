@@ -1,4 +1,4 @@
-.. _ansible.utils.to_paths_lookup:
+.. _ansible.utils.to_paths_filter:
 
 
 **********************
@@ -20,8 +20,8 @@ Synopsis
 - Flatten a complex object into a dictionary of paths and values.
 - Paths are dot delimited whenever possible
 - Brakets are used for list indicies and keys that contain special characters
-- ``to_paths`` is also available as a filter plugin
-- Using the parameters below- ``lookup('ansible.utils.to_paths', var, prepend, wantlist``)
+- ``to_paths`` is also available as a ``lookup plugin`` for convenience
+- Using the parameters below- ``var|ansible.utils.to_paths(prepend, wantlist``)
 
 
 
@@ -71,6 +71,8 @@ Parameters
                     </td>
                 <td>
                         <div>The value of <code>var</code> will be will be used.</div>
+                        <div>This option represents the value that is passed to filter plugin in pipe format.</div>
+                        <div>For example <em>config_data|ansible.utils.to_paths(</em>), in this case <em>config_data</em> represents this option.</div>
                 </td>
             </tr>
             <tr>
@@ -91,7 +93,7 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>If set to <code>True</code>, the return value will always be a list. This can also be accomplished using <code>query</code> or <code>q</code> instead of <code>lookup</code>. <a href='https://docs.ansible.com/ansible/latest/plugins/lookup.html'>https://docs.ansible.com/ansible/latest/plugins/lookup.html</a></div>
+                        <div>If set to <code>True</code>, the return value will always be a list.</div>
                 </td>
             </tr>
     </table>
@@ -119,7 +121,7 @@ Examples
               - False
 
     - ansible.builtin.set_fact:
-        paths: "{{ lookup('ansible.utils.to_paths', a) }}"
+        paths: "{{ a|ansible.utils.to_paths }}"
 
     # TASK [ansible.builtin.set_fact] ********************************************
     # ok: [nxos101] => changed=false
@@ -132,7 +134,7 @@ Examples
 
     - name: Use prepend to add the initial variable name
       ansible.builtin.set_fact:
-        paths: "{{ lookup('ansible.utils.to_paths', a, prepend='a') }}"
+        paths: "{{ a|ansible.utils.to_paths(prepend='a') }}"
 
     # TASK [Use prepend to add the initial variable name] **************************
     # ok: [nxos101] => changed=false
@@ -159,7 +161,7 @@ Examples
 
     - name: Flatten the complex object
       set_fact:
-        paths: "{{ lookup('ansible.utils.to_paths', result.json) }}"
+        paths: "{{ result.json|ansible.utils.to_paths }}"
 
     # TASK [Flatten the complex object] ******************************************
     # ok: [nxos101] => changed=false
@@ -177,38 +179,6 @@ Examples
     #       <...>
 
 
-
-Return Values
--------------
-Common return values are documented `here <https://docs.ansible.com/ansible/latest/reference_appendices/common_return_values.html#common-return-values>`_, the following are the fields unique to this lookup:
-
-.. raw:: html
-
-    <table border=0 cellpadding=0 class="documentation-table">
-        <tr>
-            <th colspan="1">Key</th>
-            <th>Returned</th>
-            <th width="100%">Description</th>
-        </tr>
-            <tr>
-                <td colspan="1">
-                    <div class="ansibleOptionAnchor" id="return-"></div>
-                    <b>_raw</b>
-                    <a class="ansibleOptionLink" href="#return-" title="Permalink to this return value"></a>
-                    <div style="font-size: small">
-                      <span style="color: purple">-</span>
-                    </div>
-                </td>
-                <td></td>
-                <td>
-                            <div>A dictionary of key value pairs</div>
-                            <div>The key is the path</div>
-                            <div>The value is the value</div>
-                    <br/>
-                </td>
-            </tr>
-    </table>
-    <br/><br/>
 
 
 Status

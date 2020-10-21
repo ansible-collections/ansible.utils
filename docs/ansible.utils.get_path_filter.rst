@@ -1,4 +1,4 @@
-.. _ansible.utils.get_path_lookup:
+.. _ansible.utils.get_path_filter:
 
 
 **********************
@@ -18,8 +18,8 @@ Version added: 1.0
 Synopsis
 --------
 - Use a ``path`` to retreive a nested value from a ``var``
-- ``get_path`` is also available as a ``filter plugin`` for convenience
-- Using the parameters below- ``lookup('ansible.utils.get_path', var, path, wantlist``)
+- ``get_path`` is also available as a ``lookup plugin`` for convenience
+- Using the parameters below- ``var|ansible.utils.get_path(path, wantlist``)
 
 
 
@@ -51,7 +51,8 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>The <code>path</code> in the <code>var</code> to retrieve the value of. The <code>path</code> needs to a be a valid jinja path</div>
+                        <div>The <code>path</code> in the <code>var</code> to retrieve the value of.</div>
+                        <div>The <code>path</code> needs to a be a valid jinja path</div>
                 </td>
             </tr>
             <tr>
@@ -70,6 +71,8 @@ Parameters
                     </td>
                 <td>
                         <div>The variable from which the value should be extraced</div>
+                        <div>This option represents the value that is passed to filter plugin in pipe format.</div>
+                        <div>For example <em>config_data|ansible.utils.get_path(</em>), in this case <em>config_data</em> represents this option.</div>
                 </td>
             </tr>
             <tr>
@@ -90,7 +93,7 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>If set to <code>True</code>, the return value will always be a list This can also be accomplished using <code>query</code> or <code>q</code> instead of <code>lookup</code> <a href='https://docs.ansible.com/ansible/latest/plugins/lookup.html'>https://docs.ansible.com/ansible/latest/plugins/lookup.html</a></div>
+                        <div>If set to <code>True</code>, the return value will always be a list</div>
                 </td>
             </tr>
     </table>
@@ -117,7 +120,7 @@ Examples
 
     - name: Retrieve a value deep inside a using a path
       ansible.builtin.set_fact:
-        value: "{{ lookup('ansible.utils.get_path', a, path) }}"
+        value: "{{ a|ansible.utils.get_path(path) }}"
       vars:
         path: b.c.d[0]
 
@@ -131,7 +134,7 @@ Examples
 
     - name: Retrieve a value deep inside all of the host's vars
       ansible.builtin.set_fact:
-        value: "{{ lookup('ansible.utils.get_path', look_in, look_for) }}"
+        value: "{{ look_in|ansible.utils.get_path(look_for) }}"
       vars:
         look_in: "{{ hostvars[inventory_hostname] }}"
         look_for: a.b.c.d[0]
@@ -147,7 +150,7 @@ Examples
 
     - name: Get the paths for the object
       ansible.builtin.set_fact:
-        paths: "{{ lookup('ansible.utils.to_paths', a, prepend='a') }}"
+        paths: "{{ a|ansible.utils.to_paths(prepend='a') }}"
 
     - name: Retrieve the value of each path from vars
       ansible.builtin.debug:
@@ -157,7 +160,7 @@ Examples
         label: "{{ item }}"
       vars:
         path: "{{ item }}"
-        value: "{{ lookup('ansible.utils.get_path', hostvars[inventory_hostname], item) }}"
+        value: "{{ vars|ansible.utils.get_path(item) }}"
 
     # TASK [Get the paths for the object] *******************************
     # ok: [nxos101] => changed=false
@@ -188,7 +191,7 @@ Examples
 
     - name: Get the description of several interfaces
       ansible.builtin.debug:
-        msg: "{{ lookup('ansible.utils.get_path', rekeyed, item) }}"
+        msg: "{{ rekeyed|ansible.utils.get_path(item) }}"
       vars:
         rekeyed:
           by_name: "{{ interfaces.gathered|ansible.builtin.rekey_on_member('name') }}"
@@ -207,37 +210,6 @@ Examples
     #   msg: ''
 
 
-
-Return Values
--------------
-Common return values are documented `here <https://docs.ansible.com/ansible/latest/reference_appendices/common_return_values.html#common-return-values>`_, the following are the fields unique to this lookup:
-
-.. raw:: html
-
-    <table border=0 cellpadding=0 class="documentation-table">
-        <tr>
-            <th colspan="1">Key</th>
-            <th>Returned</th>
-            <th width="100%">Description</th>
-        </tr>
-            <tr>
-                <td colspan="1">
-                    <div class="ansibleOptionAnchor" id="return-"></div>
-                    <b>_raw</b>
-                    <a class="ansibleOptionLink" href="#return-" title="Permalink to this return value"></a>
-                    <div style="font-size: small">
-                      <span style="color: purple">-</span>
-                    </div>
-                </td>
-                <td></td>
-                <td>
-                            <div>One or more zero-based indicies of the matching list items</div>
-                            <div>See <code>wantlist</code> if a list is always required</div>
-                    <br/>
-                </td>
-            </tr>
-    </table>
-    <br/><br/>
 
 
 Status
