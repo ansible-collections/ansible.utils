@@ -19,10 +19,7 @@ Synopsis
 --------
 - Use a ``path`` to retreive a nested value from a ``var``
 - ``get_path`` is also available as a ``filter plugin`` for convenience
-<<<<<<< HEAD
 - Using the parameters below- ``lookup('ansible.utils.get_path', var, path, wantlist``)
-=======
->>>>>>> 3c42f13b30e364557784603964931df494a36f4b
 
 
 

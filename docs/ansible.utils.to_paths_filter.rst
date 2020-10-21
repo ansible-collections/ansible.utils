@@ -21,10 +21,7 @@ Synopsis
 - Paths are dot delimited whenever possible
 - Brakets are used for list indicies and keys that contain special characters
 - ``to_paths`` is also available as a ``lookup plugin`` for convenience
-<<<<<<< HEAD
 - Using the parameters below- ``var|ansible.utils.to_paths(prepend, wantlist``)
-=======
->>>>>>> 3c42f13b30e364557784603964931df494a36f4b
 
 
 
