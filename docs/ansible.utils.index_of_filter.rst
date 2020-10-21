@@ -1,4 +1,4 @@
-.. _ansible.utils.index_of_lookup:
+.. _ansible.utils.index_of_filter:
 
 
 **********************
@@ -19,7 +19,7 @@ Synopsis
 --------
 - This plugin returns the indicies of items matching some criteria in a list
 - When working with a list of dictionaries, the key to evaluate can be specified
-- ``index_of`` is also available as a ``filter plugin`` for convenience
+- ``index_of`` is also available as a ``lookup plugin`` for convenience
 
 
 
@@ -52,6 +52,8 @@ Parameters
                     </td>
                 <td>
                         <div>A list of items to enumerate and test against</div>
+                        <div>This option represents the value that is passed to filter plugin in pipe format.</div>
+                        <div>For example <em>config_data|ansible.utils.index_of(&#x27;x&#x27;</em>), in this case <em>config_data</em> represents this option.</div>
                 </td>
             </tr>
             <tr>
@@ -89,7 +91,9 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>When the data provided is a list of dictionaries, run the test againt this dictionary key When using a <code>key</code>, the <code>data</code> must only contain dictionaries See <code>fail_on_missing</code> below to determine the behaviour when the <code>key</code> is missing from a dictionary in the <code>data</code></div>
+                        <div>When the data provided is a list of dictionaries, run the test againt this dictionary key</div>
+                        <div>When using a <code>key</code>, the <code>data</code> must only contain dictionaries</div>
+                        <div>See <code>fail_on_missing</code> below to determine the behaviour when the <code>key</code> is missing from a dictionary in the <code>data</code></div>
                 </td>
             </tr>
             <tr>
@@ -107,7 +111,9 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>The name of the test to run against the list, a valid jinja2 test or ansible test plugin. Jinja2 includes the following tests <a href='http://jinja.palletsprojects.com/templates/#builtin-tests'>http://jinja.palletsprojects.com/templates/#builtin-tests</a>. An overview of tests included in ansible <a href='https://docs.ansible.com/ansible/latest/user_guide/playbooks_tests.html'>https://docs.ansible.com/ansible/latest/user_guide/playbooks_tests.html</a></div>
+                        <div>The name of the test to run against the list, a valid jinja2 test or ansible test plugin.</div>
+                        <div>Jinja2 includes the following tests <a href='http://jinja.palletsprojects.com/templates/#builtin-tests'>http://jinja.palletsprojects.com/templates/#builtin-tests</a>.</div>
+                        <div>An overview of tests included in ansible <a href='https://docs.ansible.com/ansible/latest/user_guide/playbooks_tests.html'>https://docs.ansible.com/ansible/latest/user_guide/playbooks_tests.html</a></div>
                 </td>
             </tr>
             <tr>
@@ -124,7 +130,9 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>The value used to test each list item against Not required for simple tests (eg: <code>true</code>, <code>false</code>, <code>even</code>, <code>odd</code>) May be a <code>string</code>, <code>boolean</code>, <code>number</code>, <code>regular expesion</code> <code>dict</code> etc, depending on the <code>test</code> used</div>
+                        <div>The value used to test each list item against</div>
+                        <div>{&#x27;Not required for simple tests (eg&#x27;: &#x27;<code>true</code>, <code>false</code>, <code>even</code>, <code>odd</code>)&#x27;}</div>
+                        <div>May be a <code>string</code>, <code>boolean</code>, <code>number</code>, <code>regular expesion</code> <code>dict</code> etc, depending on the <code>test</code> used</div>
                 </td>
             </tr>
             <tr>
@@ -145,7 +153,8 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>When only a single entry in the <code>data</code> is matched, that entries index is returned as an integer If set to <code>True</code>, the return value will always be a list, even if only a single entry is matched This can also be accomplised using <code>query</code> or <code>q</code> instead of <code>lookup</code> <a href='https://docs.ansible.com/ansible/latest/plugins/lookup.html'>https://docs.ansible.com/ansible/latest/plugins/lookup.html</a></div>
+                        <div>When only a single entry in the <code>data</code> is matched, that entries index is returned as an integer</div>
+                        <div>If set to <code>True</code>, the return value will always be a list, even if only a single entry is matched</div>
                 </td>
             </tr>
     </table>
@@ -169,16 +178,17 @@ Examples
 
     - name: Find the index of 2
       set_fact:
-        indices: "{{ lookup('ansible.utils.index_of', data, 'eq', 2) }}"
+        indices: "{{ data|ansible.utils.index_of('eq', 2) }}"
 
     # TASK [Find the index of 2] *************************************************
     # ok: [nxos101] => changed=false
     #   ansible_facts:
     #     indices: '1'
 
+
     - name: Find the index of 2, ensure list is returned
       set_fact:
-        indices: "{{ lookup('ansible.utils.index_of', data, 'eq', 2, wantlist=True) }}"
+        indices: "{{ data|ansible.utils.index_of('eq', 2, wantlist=True) }}"
 
     # TASK [Find the index of 2, ensure list is returned] ************************
     # ok: [nxos101] => changed=false
@@ -186,9 +196,10 @@ Examples
     #     indices:
     #     - 1
 
+
     - name: Find the index of 3 using the long format
       set_fact:
-        indices: "{{ lookup('ansible.utils.index_of', data=data, test='eq', value=value, wantlist=True) }}"
+        indices: "{{ data|ansible.utils.index_of(test='eq', value=value, wantlist=True) }}"
       vars:
         value: 3
 
@@ -198,10 +209,11 @@ Examples
     #     indices:
     #     - 2
 
+
     - name: Find numbers greater than 1, using loop
       debug:
         msg: "{{ data[item] }} is {{ test }} than {{ value }}"
-      loop: "{{ lookup('ansible.utils.index_of', data, test, value) }}"
+      loop: "{{ data|ansible.utils.index_of(test, value) }}"
       vars:
         test: '>'
         value: 1
@@ -210,22 +222,6 @@ Examples
     # ok: [sw01] => (item=1) =>
     #   msg: 2 is > than 1
     # ok: [sw01] => (item=2) =>
-    #   msg: 3 is > than 1
-
-    - name: Find numbers greater than 1, using with
-      debug:
-        msg: "{{ data[item] }} is {{ params.test }} than {{ params.value }}"
-      with_ansible.utils.index_of: "{{ params }}"
-      vars:
-        params:
-          data: "{{ data }}"
-          test: '>'
-          value: 1
-
-    # TASK [Find numbers greater than 1, using with] *****************************
-    # ok: [nxos101] => (item=1) =>
-    #   msg: 2 is > than 1
-    # ok: [nxos101] => (item=2) =>
     #   msg: 3 is > than 1
 
 
@@ -244,7 +240,7 @@ Examples
 
     - name: Find the index of all firewalls using the type key
       set_fact:
-        firewalls: "{{ lookup('ansible.utils.index_of', data, 'eq', 'firewall', 'type') }}"
+        firewalls: "{{ data|ansible.utils.index_of('eq', 'firewall', 'type') }}"
 
     # TASK [Find the index of all firewalls using the type key] ******************
     # ok: [nxos101] => changed=false
@@ -256,7 +252,7 @@ Examples
     - name: Find the index of all firewalls, use in a loop
       debug:
         msg: "The type of {{ device_type }} at index {{ item }} has name {{ data[item].name }}."
-      loop: "{{ lookup('ansible.utils.index_of', data, 'eq', device_type, 'type') }}"
+      loop: "{{ data|ansible.utils.index_of('eq', device_type, 'type') }}"
       vars:
         device_type: firewall
 
@@ -269,7 +265,7 @@ Examples
     - name: Find the index of all devices with a .corp name
       debug:
         msg: "The device named {{ data[item].name }} is a {{ data[item].type }}"
-      loop: "{{ lookup('ansible.utils.index_of', data, 'regex', expression, 'name') }}"
+      loop: "{{ data|ansible.utils.index_of('regex', expression, 'name') }}"
       vars:
         expression: '\.corp$' # ends with .corp
 
@@ -305,7 +301,7 @@ Examples
       vars:
         found: []
         ip: '192.168.101.'
-        address: "{{ lookup('ansible.utils.index_of', item.1.ipv4|d([]), 'search', ip, 'address', wantlist=True) }}"
+        address: "{{ item.1.ipv4|d([])|ansible.utils.index_of('search', ip, 'address', wantlist=True) }}"
         entry:
         - interface_idx: "{{ item.0 }}"
           address_idxs: "{{ address }}"
@@ -391,50 +387,18 @@ Examples
         sub_index: 10
         # retrieve the index in each nested list
         int_idx: |
-          {{ lookup('ansible.utils.index_of',
-                 data.interfaces.interface,
-                     'eq', int_name, 'name') }}
+          {{ data.interfaces.interface|
+                ansible.utils.index_of('eq', int_name, 'name') }}
         subint_idx: |
-          {{ lookup('ansible.utils.index_of',
-                 data.interfaces.interface[int_idx|int].subinterfaces.subinterface,
-                     'eq', sub_index, 'index') }}
+          {{ data.interfaces.interface[int_idx|int]
+                .subinterfaces.subinterface|
+                    ansible.utils.index_of('eq', sub_index, 'index') }}
 
     # TASK [Find the description of loopback111, subinterface index 10] ************
     # ok: [sw01] =>
     #   msg: subinterface configured by Ansible - 3
 
 
-
-Return Values
--------------
-Common return values are documented `here <https://docs.ansible.com/ansible/latest/reference_appendices/common_return_values.html#common-return-values>`_, the following are the fields unique to this lookup:
-
-.. raw:: html
-
-    <table border=0 cellpadding=0 class="documentation-table">
-        <tr>
-            <th colspan="1">Key</th>
-            <th>Returned</th>
-            <th width="100%">Description</th>
-        </tr>
-            <tr>
-                <td colspan="1">
-                    <div class="ansibleOptionAnchor" id="return-"></div>
-                    <b>_raw</b>
-                    <a class="ansibleOptionLink" href="#return-" title="Permalink to this return value"></a>
-                    <div style="font-size: small">
-                      <span style="color: purple">-</span>
-                    </div>
-                </td>
-                <td></td>
-                <td>
-                            <div>One or more zero-based indicies of the matching list items</div>
-                            <div>See <code>wantlist</code> if a list is always required</div>
-                    <br/>
-                </td>
-            </tr>
-    </table>
-    <br/><br/>
 
 
 Status
