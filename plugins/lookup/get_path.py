@@ -19,7 +19,7 @@ DOCUMENTATION = """
     short_description: Retrieve the value in a variable using a path
     description:
         - Use a C(path) to retreive a nested value from a C(var)
-        - C(get_path) is also available as a C(filter_plugin) for convenience
+        - C(get_path) is also available as a C(filter plugin) for convenience
     options:
       var:
         description: The variable from which the value should be extraced
@@ -55,29 +55,26 @@ EXAMPLES = r"""
 
 - name: Retrieve a value deep inside a using a path
   ansible.builtin.set_fact:
-    as_lookup: "{{ lookup('ansible.utils.get_path', a, path) }}"
-    as_filter: "{{ a|ansible.utils.get_path(path) }}"
+    value: "{{ lookup('ansible.utils.get_path', a, path) }}"
   vars:
     path: b.c.d[0]
 
-# TASK [ansible.builtin.set_fact] *************************************
-# ok: [nxos101] => changed=false
+# TASK [Retrieve a value deep inside a using a path] ******************
+# ok: [localhost] => changed=false
 #   ansible_facts:
-#     as_filter: '0'
-#     as_lookup: '0'
+#     value: '0'
 
 
 #### Working with hostvars
 
 - name: Retrieve a value deep inside all of the host's vars
   ansible.builtin.set_fact:
-    as_lookup: "{{ lookup('ansible.utils.get_path', look_in, look_for) }}"
-    as_filter: "{{ look_in|ansible.utils.get_path(look_for) }}"
+    value: "{{ lookup('ansible.utils.get_path', look_in, look_for) }}"
   vars:
     look_in: "{{ hostvars[inventory_hostname] }}"
     look_for: a.b.c.d[0]
 
-# TASK [Retrieve a value deep inside all of the host's vars] **********
+# TASK [Retrieve a value deep inside all of the host's vars] ********
 # ok: [nxos101] => changed=false
 #   ansible_facts:
 #     as_filter: '0'
@@ -88,7 +85,7 @@ EXAMPLES = r"""
 
 - name: Get the paths for the object
   ansible.builtin.set_fact:
-    paths: "{{ a|ansible.utils.to_paths(prepend='a') }}"
+    paths: "{{ lookup('ansible.utils.to_paths', a, prepend='a') }}"
 
 - name: Retrieve the value of each path from vars
   ansible.builtin.debug:
@@ -98,9 +95,9 @@ EXAMPLES = r"""
     label: "{{ item }}"
   vars:
     path: "{{ item }}"
-    value: "{{ vars|ansible.utils.get_path(item) }}"
+    value: "{{ lookup('ansible.utils.get_path', hostvars[inventory_hostname], item) }}"
 
-# TASK [Get the paths for the object] *********************************
+# TASK [Get the paths for the object] *******************************
 # ok: [nxos101] => changed=false
 #   ansible_facts:
 #     paths:
@@ -109,7 +106,7 @@ EXAMPLES = r"""
 #       a.b.c.e[0]: true
 #       a.b.c.e[1]: false
 
-# TASK [Retrieve the value of each path from vars] ********************
+# TASK [Retrieve the value of each path from vars] ******************
 # ok: [nxos101] => (item=a.b.c.d[0]) =>
 #   msg: The value of path a.b.c.d[0] in vars is 0
 # ok: [nxos101] => (item=a.b.c.d[1]) =>
@@ -120,7 +117,7 @@ EXAMPLES = r"""
 #   msg: The value of path a.b.c.e[1] in vars is False
 
 
-#### Working with complex structures
+#### Working with complex structures and transforming results
 
 - name: Retrieve the current interface config
   cisco.nxos.nxos_interfaces:
@@ -129,19 +126,23 @@ EXAMPLES = r"""
 
 - name: Get the description of several interfaces
   ansible.builtin.debug:
-    msg: "{{ rekeyed|ansible.utils.get_path(item) }}"
+    msg: "{{ lookup('ansible.utils.get_path', rekeyed, item) }}"
   vars:
     rekeyed:
       by_name: "{{ interfaces.gathered|ansible.builtin.rekey_on_member('name') }}"
   loop:
   - by_name['Ethernet1/1'].description
-  - by_name['Ethernet1/2'].description
+  - by_name['Ethernet1/2'].description|upper
+  - by_name['Ethernet1/3'].description|default('')
 
-# TASK [Get the description of several interfaces] ********************
-# ok: [nxos101] => (item=by_name['Ethernet1/1'].description) =>
-#   msg: Configured by Ansible
-# ok: [nxos101] => (item=by_name['Ethernet1/2'].description) =>
-#   msg: Configured by Ansible Network
+
+# TASK [Get the description of several interfaces] ******************
+# ok: [nxos101] => (item=by_name['Ethernet1/1'].description) => changed=false
+#   msg: Configured by ansible
+# ok: [nxos101] => (item=by_name['Ethernet1/2'].description|upper) => changed=false
+#   msg: CONFIGURED BY ANSIBLE
+# ok: [nxos101] => (item=by_name['Ethernet1/3'].description|default('')) => changed=false
+#   msg: ''
 
 """
 
