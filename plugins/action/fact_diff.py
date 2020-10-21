@@ -40,11 +40,23 @@ class ActionModule(ActionBase):
 
     def _set_vars(self):
         self._before = self._task.args.get("before")
-        if isinstance(self._before, list):
-            self._before = {"before": self._before}
         self._after = self._task.args.get("after")
+        if self._task.args["skip_lines"]:
+            if isinstance(self._before, str):
+                self._before = self._before.splitlines()
+            if isinstance(self._after, str):
+                self._before = self._after.splitlines()
+            all_re = '(?:%s)' % '|'.join(self._task.args["skip_lines"])
+            self._before = [
+                l for l in self._before if not re.match(all_re, str(l))
+            ]
+            self._after = [
+                l for l in self._after if not re.match(all_re, str(l))
+            ]
+        if isinstance(self._before, list):
+            self._before = "\n".join(map(str, self._before)) + "\n"
         if isinstance(self._after, list):
-            self._after = {"after": self._after}
+            self._after = "\n".join(map(str, self._after)) + "\n"
 
     def run(self, tmp=None, task_vars=None):
         self._task.diff = True

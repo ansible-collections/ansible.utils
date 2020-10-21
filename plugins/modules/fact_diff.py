@@ -27,6 +27,13 @@ options:
       - The second fact to be used in the comparison
     type: raw
     required: True
+  skip_lines:
+    description:
+      - Skip lines matching these regular expressions
+      - Matches will be removed prior to the diff
+      - If the provided I(before) and I(after) are a string, they will be split
+      - Each entry in each list will be cast to a string for the comparison
+    type: list
 
 notes:
 
