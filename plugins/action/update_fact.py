@@ -42,7 +42,6 @@ class ActionModule(ActionBase):
         aav = AnsibleArgSpecValidator(
             data=self._task.args,
             schema=DOCUMENTATION,
-            schema_format="doc",
             name=self._task.action,
         )
         valid, errors, self._task.args = aav.validate()

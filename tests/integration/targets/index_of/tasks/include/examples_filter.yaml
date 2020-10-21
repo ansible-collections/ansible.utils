@@ -1,7 +1,4 @@
-# These are the examples for the lookup plugin
-# here for future use if needed
-# Note: the cisco example has been commented out
-# to eliminate a cross collection dependancy
+#### Simple examples
 
 - set_fact:
     data:
@@ -9,49 +6,35 @@
     - 2
     - 3
 
-- name: Find the index of 2, lookup or filter
+- name: Find the index of 2
   set_fact:
-    as_lookup: "{{ lookup('ansible.utils.index_of', data, 'eq', 2) }}"
-    as_filter: "{{ data|ansible.utils.index_of('eq', 2) }}"
+    indices: "{{ data|ansible.utils.index_of('eq', 2) }}"
 
-# TASK [Find the index of 2, lookup or filter] *******************************
-# ok: [sw01] => changed=false 
+# TASK [Find the index of 2] *************************************************
+# ok: [nxos101] => changed=false 
 #   ansible_facts:
-#     as_filter: '1'
-#     as_lookup: '1'
+#     indices: '1'
 
-- name: Find the index of 2, lookup or filter, ensure list is returned
+- name: Find the index of 2, ensure list is returned
   set_fact:
-    as_query: "{{ query('ansible.utils.index_of', data, 'eq', 2) }}"
-    as_lookup: "{{ lookup('ansible.utils.index_of', data, 'eq', 2, wantlist=True) }}"
-    as_filter: "{{ data|ansible.utils.index_of('eq', 2, wantlist=True) }}"
+    indices: "{{ data|ansible.utils.index_of('eq', 2, wantlist=True) }}"
 
-# TASK [Find the index of 2, lookup or filter, ensure list is returned] ******
-# ok: [sw01] => changed=false 
+# TASK [Find the index of 2, ensure list is returned] ************************
+# ok: [nxos101] => changed=false 
 #   ansible_facts:
-#     as_filter:
-#     - 1
-#     as_lookup:
-#     - 1
-#     as_query:
+#     indices:
 #     - 1
 
 - name: Find the index of 3 using the long format
   set_fact:
-    as_query: "{{ query('ansible.utils.index_of', data=data, test='eq', value=value) }}"
-    as_lookup: "{{ lookup('ansible.utils.index_of', data=data, test='eq',value =value, wantlist=True) }}"
-    as_filter: "{{ data|ansible.utils.index_of(test='eq', value=value, wantlist=True) }}"
+    indices: "{{ data|ansible.utils.index_of(test='eq', value=value, wantlist=True) }}"
   vars:
     value: 3
 
 # TASK [Find the index of 3 using the long format] ***************************
-# ok: [sw01] => changed=false 
+# ok: [nxos101] => changed=false 
 #   ansible_facts:
-#     as_filter:
-#     - 2
-#     as_lookup:
-#     - 2
-#     as_query:
+#     indices:
 #     - 2
 
 - name: Find numbers greater than 1, using loop
@@ -68,16 +51,8 @@
 # ok: [sw01] => (item=2) => 
 #   msg: 3 is > than 1
 
-- name: Find numbers greater than 1, using with
-  debug:
-    msg: "{{ data[item] }} is {{ params.test }} than {{ params.value }}"
-  with_ansible.utils.index_of: "{{ params }}"
-  vars:
-    params:
-      data: "{{ data }}"
-      test: '>'
-      value: 1
 
+#### Working with lists of dictionaries
 
 - set_fact:
     data:
@@ -92,49 +67,43 @@
 
 - name: Find the index of all firewalls using the type key
   set_fact:
-    as_query: "{{ query('ansible.utils.index_of', data, 'eq', 'firewall', 'type') }}"
-    as_lookup: "{{ lookup('ansible.utils.index_of', data, 'eq', 'firewall', 'type') }}"
-    as_filter: "{{ data|ansible.utils.index_of('eq', 'firewall', 'type') }}"
+    firewalls: "{{ data|ansible.utils.index_of('eq', 'firewall', 'type') }}"
 
 # TASK [Find the index of all firewalls using the type key] ******************
-# ok: [sw01] => changed=false 
+# ok: [nxos101] => changed=false 
 #   ansible_facts:
-#     as_filter:
-#     - 2
-#     - 3
-#     as_lookup:
-#     - 2
-#     - 3
-#     as_query:
+#     firewalls:
 #     - 2
 #     - 3
 
-- name: Find the index of all firewalls, use in a loop, as a filter
+- name: Find the index of all firewalls, use in a loop
   debug:
     msg: "The type of {{ device_type }} at index {{ item }} has name {{ data[item].name }}."
   loop: "{{ data|ansible.utils.index_of('eq', device_type, 'type') }}"
   vars:
     device_type: firewall
 
-# TASK [Find the index of all firewalls, use in a loop] **********************
-# ok: [sw01] => (item=2) => 
-#   msg: The type of firewall at index 2 has name fw01.
-# ok: [sw01] => (item=3) => 
-#   msg: The type of firewall at index 3 has name fw02.
+# TASK [Find the index of all firewalls, use in a loop, as a filter] *********
+# ok: [nxos101] => (item=2) => 
+#   msg: The type of firewall at index 2 has name fw01.example.corp.
+# ok: [nxos101] => (item=3) => 
+#   msg: The type of firewall at index 3 has name fw02.example.corp.
 
-
-- name: Find the index of all devices with a .corp name, as a lookup
+- name: Find the index of all devices with a .corp name
   debug:
     msg: "The device named {{ data[item].name }} is a {{ data[item].type }}"
-  loop: "{{ lookup('ansible.utils.index_of', data, 'regex', regex, 'name') }}"
+  loop: "{{ data|ansible.utils.index_of('regex', expression, 'name') }}"
   vars:
-    regex: '\.corp$' # ends with .corp
+    expression: '\.corp$' # ends with .corp
 
-# TASK [Find the index of all devices with a .corp name, as a lookup] **********
-# ok: [sw01] => (item=2) => 
+# TASK [Find the index of all devices with a .corp name] *********************
+# ok: [nxos101] => (item=2) => 
 #   msg: The device named fw01.example.corp is a firewall
-# ok: [sw01] => (item=3) => 
+# ok: [nxos101] => (item=3) => 
 #   msg: The device named fw02.example.corp is a firewall
+
+
+#### Working with complex structures from resource modules
 
 # - name: Retrieve the current L3 interface configuration
 #   cisco.nxos.nxos_l3_interfaces:
@@ -152,7 +121,7 @@
 #     - address: 192.168.101.14/24
 #     name: mgmt0
 
-# - name: Find the index of the interface and address with a 192.168.101.xx ip address
+# - name: Find the indices interfaces with a 192.168.101.xx ip address
 #   set_fact: 
 #     found: "{{ found + entry }}"
 #   with_indexed_items: "{{ current_l3.gathered }}"
@@ -180,9 +149,12 @@
 #     interface: "{{ current_l3.gathered[item.0.interface_idx|int] }}"
 #     address: "{{ interface.ipv4[item.1].address }}"
 
-# TASK [debug] ***************************************************************
-# ok: [sw01] => (item=[{'interface_idx': '128', 'address_idx': [0]}, 0]) => 
+# TASK [Show all interfaces and their address] *******************************
+# ok: [nxos101] => (item=[{'interface_idx': '128', 'address_idxs': [0]}, 0]) => 
 #   msg: mgmt0 has ip 192.168.101.14/24
+
+
+#### Working with deeply nested data
 
 - set_fact:
     data:
