@@ -22,6 +22,7 @@ DOCUMENTATION = """
         - Paths are dot delimited whenever possible
         - Brakets are used for list indicies and keys that contain special characters
         - C(to_paths) is also available as a filter plugin
+        - Using the parameters below- C(lookup('ansible.utils.to_paths', var, prepend, wantlist))
     options:
       var:
         description: The value of C(var) will be will be used.
