@@ -43,7 +43,6 @@ def _index_of(*args, **kwargs):
     aav = AnsibleArgSpecValidator(
         data=data,
         schema=DOCUMENTATION,
-        schema_format="doc",
         name="index_of",
     )
     valid, errors, updated_data = aav.validate()

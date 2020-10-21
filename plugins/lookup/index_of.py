@@ -377,7 +377,6 @@ class LookupModule(LookupBase):
         aav = AnsibleArgSpecValidator(
             data=terms,
             schema=DOCUMENTATION,
-            schema_format="doc",
             name="index_of",
         )
         valid, errors, updated_data = aav.validate()
