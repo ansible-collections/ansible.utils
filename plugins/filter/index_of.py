@@ -20,6 +20,7 @@ DOCUMENTATION = """
         - This plugin returns the indicies of items matching some criteria in a list
         - When working with a list of dictionaries, the key to evaluate can be specified
         - C(index_of) is also available as a C(lookup plugin) for convenience
+        - Using the parameters below- C(data|ansible.utils.index_of(test, value, key, fail_on_missing, wantlist))
     options:
       data:
         description:

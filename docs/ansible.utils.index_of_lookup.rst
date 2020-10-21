@@ -20,6 +20,7 @@ Synopsis
 - This plugin returns the indicies of items matching some criteria in a list
 - When working with a list of dictionaries, the key to evaluate can be specified
 - ``index_of`` is also available as a ``filter plugin`` for convenience
+- Using the parameters below- ``lookup('ansible.utils.index_of', data, test, value, key, fail_on_missing, wantlist``)
 
 
 

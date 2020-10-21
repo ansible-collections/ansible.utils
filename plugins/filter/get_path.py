@@ -19,6 +19,7 @@ DOCUMENTATION = """
     description:
         - Use a C(path) to retreive a nested value from a C(var)
         - C(get_path) is also available as a C(lookup plugin) for convenience
+        - Using the parameters below- C(var|ansible.utils.get_path(path, wantlist))
     options:
       var:
         description:
