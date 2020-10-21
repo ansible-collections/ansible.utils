@@ -92,7 +92,7 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>If set to <code>True</code>, the return value will always be a list. This can also be accomplished using <code>query</code> or <code>q</code> instead of <code>lookup</code>. <a href='https://docs.ansible.com/ansible/latest/plugins/lookup.html'>https://docs.ansible.com/ansible/latest/plugins/lookup.html</a></div>
+                        <div>If set to <code>True</code>, the return value will always be a list.</div>
                 </td>
             </tr>
     </table>
@@ -123,7 +123,7 @@ Examples
         paths: "{{ a|ansible.utils.to_paths }}"
 
     # TASK [ansible.builtin.set_fact] ********************************************
-    # ok: [nxos101] => changed=false 
+    # ok: [nxos101] => changed=false
     #   ansible_facts:
     #     paths:
     #       b.c.d[0]: 0
@@ -136,7 +136,7 @@ Examples
         paths: "{{ a|ansible.utils.to_paths(prepend='a') }}"
 
     # TASK [Use prepend to add the initial variable name] **************************
-    # ok: [nxos101] => changed=false 
+    # ok: [nxos101] => changed=false
     #   ansible_facts:
     #     paths:
     #       a.b.c.d[0]: 0
@@ -163,7 +163,7 @@ Examples
         paths: "{{ result.json|ansible.utils.to_paths }}"
 
     # TASK [Flatten the complex object] ******************************************
-    # ok: [nxos101] => changed=false 
+    # ok: [nxos101] => changed=false
     #   ansible_facts:
     #     paths:
     #       interfaces.interface[0].config.enabled: 'true'

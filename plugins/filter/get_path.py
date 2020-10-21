@@ -34,10 +34,8 @@ DOCUMENTATION = """
         type: str
         required: True
       wantlist:
-        description: >
-            If set to C(True), the return value will always be a list
-            This can also be accomplished using C(query) or C(q) instead of C(lookup)
-            U(https://docs.ansible.com/ansible/latest/plugins/lookup.html)
+        description:
+        - If set to C(True), the return value will always be a list
         type: bool
 
     notes:
