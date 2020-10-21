@@ -46,7 +46,7 @@ class ActionModule(ActionBase):
                 self._before = self._before.splitlines()
             if isinstance(self._after, str):
                 self._before = self._after.splitlines()
-            all_re = '(?:%s)' % '|'.join(self._task.args["skip_lines"])
+            all_re = "(?:%s)" % "|".join(self._task.args["skip_lines"])
             self._before = [
                 l for l in self._before if not re.match(all_re, str(l))
             ]
