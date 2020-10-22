@@ -80,7 +80,7 @@
 #  ansible_httpapi_validate_certs: False
 #  ansible_network_os: ansible.netcommon.restconf
 
-# - name: Get the current interface config prior ro changes
+# - name: Get the current interface config prior to changes
 #   ansible.netcommon.restconf_get:
 #     content: config
 #     path: /data/Cisco-NX-OS-device:System/intf-items/phys-items
