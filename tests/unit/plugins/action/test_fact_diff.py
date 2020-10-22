@@ -36,12 +36,13 @@ class TestUpdate_Fact(unittest.TestCase):
             shared_loader_obj=None,
         )
         self._plugin._task.action = "fact_diff"
+        self._task_vars = {"inventory_hostname": "mockdevice"}
 
     def test_argspec_no_updates(self):
         """Check passing invalid argspec"""
         self._plugin._task.args = {"before": True}
         with self.assertRaises(Exception) as error:
-            self._plugin.run(task_vars=None)
+            self._plugin.run(task_vars=self._task_vars)
         self.assertIn(
             "missing required arguments: after",
             str(error.exception),
@@ -51,7 +52,7 @@ class TestUpdate_Fact(unittest.TestCase):
         before = "Lorem ipsum dolor sit amet"
         after = before
         self._plugin._task.args = {"before": before, "after": after}
-        result = self._plugin.run()
+        result = self._plugin.run(task_vars=self._task_vars)
         self.assertFalse(result["changed"])
         self.assertEqual([], result["diff_lines"])
         self.assertEqual("", result["diff_text"])
@@ -60,7 +61,7 @@ class TestUpdate_Fact(unittest.TestCase):
         before = "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
         after = "Lorem ipsum dolor sit amet, AAA consectetur adipiscing elit"
         self._plugin._task.args = {"before": before, "after": after}
-        result = self._plugin.run()
+        result = self._plugin.run(task_vars=self._task_vars)
         self.assertTrue(result["changed"])
         self.assertIn("-" + before, result["diff_lines"])
         self.assertIn("-" + before, result["diff_text"])
@@ -73,9 +74,9 @@ class TestUpdate_Fact(unittest.TestCase):
         self._plugin._task.args = {
             "before": before,
             "after": after,
-            "skip_lines": "^Lorem",
+            "vars": {"skip_lines": "^Lorem"},
         }
-        result = self._plugin.run()
+        result = self._plugin.run(task_vars=self._task_vars)
         self.assertFalse(result["changed"])
         self.assertEqual([], result["diff_lines"])
         self.assertEqual("", result["diff_text"])
@@ -84,7 +85,7 @@ class TestUpdate_Fact(unittest.TestCase):
         before = [0, 1, 2, 3]
         after = before
         self._plugin._task.args = {"before": before, "after": after}
-        result = self._plugin.run()
+        result = self._plugin.run(task_vars=self._task_vars)
         self.assertFalse(result["changed"])
         self.assertEqual([], result["diff_lines"])
         self.assertEqual("", result["diff_text"])
@@ -95,9 +96,9 @@ class TestUpdate_Fact(unittest.TestCase):
         self._plugin._task.args = {
             "before": before,
             "after": after,
-            "skip_lines": "3",
+            "vars": {"skip_lines": "3"},
         }
-        result = self._plugin.run()
+        result = self._plugin.run(task_vars=self._task_vars)
         self.assertFalse(result["changed"])
         self.assertEqual([], result["diff_lines"])
         self.assertEqual("", result["diff_text"])
@@ -106,7 +107,7 @@ class TestUpdate_Fact(unittest.TestCase):
         before = [0, 1, 2, 3]
         after = [0, 1, 2, 4]
         self._plugin._task.args = {"before": before, "after": after}
-        result = self._plugin.run()
+        result = self._plugin.run(task_vars=self._task_vars)
         self.assertTrue(result["changed"])
         self.assertIn("-3", result["diff_lines"])
         self.assertIn("-3", result["diff_text"])
@@ -117,7 +118,7 @@ class TestUpdate_Fact(unittest.TestCase):
         before = {"a": {"b": {"c": {"d": [0, 1, 2]}}}}
         after = before
         self._plugin._task.args = {"before": before, "after": after}
-        result = self._plugin.run()
+        result = self._plugin.run(task_vars=self._task_vars)
         self.assertFalse(result["changed"])
         self.assertEqual([], result["diff_lines"])
         self.assertEqual("", result["diff_text"])
@@ -128,9 +129,9 @@ class TestUpdate_Fact(unittest.TestCase):
         self._plugin._task.args = {
             "before": before,
             "after": after,
-            "skip_lines": "3",
+            "vars": {"skip_lines": "3"},
         }
-        result = self._plugin.run()
+        result = self._plugin.run(task_vars=self._task_vars)
         self.assertFalse(result["changed"])
         self.assertEqual([], result["diff_lines"])
         self.assertEqual("", result["diff_text"])
@@ -139,7 +140,7 @@ class TestUpdate_Fact(unittest.TestCase):
         before = {"a": {"b": {"c": {"d": [0, 1, 2, 3]}}}}
         after = {"a": {"b": {"c": {"d": [0, 1, 2, 4]}}}}
         self._plugin._task.args = {"before": before, "after": after}
-        result = self._plugin.run()
+        result = self._plugin.run(task_vars=self._task_vars)
         self.assertTrue(result["changed"])
         mlines = [l for l in result["diff_lines"] if re.match(r"^-\s+3$", l)]
         self.assertEqual(1, len(mlines))

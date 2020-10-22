@@ -7,9 +7,10 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 import re
+from importlib import import_module
 from ansible.plugins.action import ActionBase
 from ansible.errors import AnsibleActionFail
-from ansible.plugins.callback import CallbackBase
+from ansible.module_utils._text import to_native
 from ansible_collections.ansible.utils.plugins.modules.fact_diff import (
     DOCUMENTATION,
 )
@@ -24,9 +25,7 @@ class ActionModule(ActionBase):
     def __init__(self, *args, **kwargs):
         super(ActionModule, self).__init__(*args, **kwargs)
         self._supports_async = True
-        self._before = None
-        self._after = None
-        self._result = None
+        self._task_vars = None
 
     def _check_argspec(self):
         aav = AnsibleArgSpecValidator(
@@ -39,41 +38,74 @@ class ActionModule(ActionBase):
         if not valid:
             raise AnsibleActionFail(errors)
 
-    def _set_vars(self):
-        self._before = self._task.args.get("before")
-        self._after = self._task.args.get("after")
-        if self._task.args["skip_lines"]:
-            if isinstance(self._before, str):
-                self._before = self._before.splitlines()
-            if isinstance(self._after, str):
-                self._after = self._after.splitlines()
-            all_re = "(?:%s)" % "|".join(self._task.args["skip_lines"])
-            self._before = [
-                l for l in self._before if not re.match(all_re, str(l))
-            ]
-            self._after = [
-                l for l in self._after if not re.match(all_re, str(l))
-            ]
-        if isinstance(self._before, list):
-            self._before = "\n".join(map(str, self._before)) + "\n"
-        if isinstance(self._after, list):
-            self._after = "\n".join(map(str, self._after)) + "\n"
+    def _debug(self, msg):
+        """Output text using ansible's display
+
+        :param msg: The message
+        :type msg: str
+        """
+        msg = "<{phost}> [fact_diff] {msg}".format(
+            phost=self._playhost, msg=msg
+        )
+        self._display.vvvv(msg)
+
+    def _load_plugin(self, plugin, directory, class_name):
+        """Load a plugin from the fs
+
+        :param plugin: The name of the plugin in collection format
+        :type plugin: string
+        :param directory: The name of the plugin directory to use
+        :type directory: string
+        :param class_name: The name of the class to load from the plugin
+        :type class_name: string
+        :return: An instance of class class_name
+        :rtype: class_name
+        """
+        cref = dict(zip(["corg", "cname", "plugin"], plugin.split(".")))
+        cref.update(directory=directory)
+        parserlib = "ansible_collections.{corg}.{cname}.plugins.{directory}.{plugin}".format(
+            **cref
+        )
+        try:
+            class_obj = getattr(import_module(parserlib), class_name)
+            class_instance = class_obj(
+                task_args=self._task.args,
+                task_vars=self._task_vars,
+                debug=self._debug,
+            )
+            return class_instance
+        except Exception as exc:
+            self._result["failed"] = True
+            self._result[
+                "msg"
+            ] = "Error loading plugin '{plugin}': {err}".format(
+                plugin=plugin, err=to_native(exc)
+            )
+            return None
 
     def run(self, tmp=None, task_vars=None):
         self._task.diff = True
         self._result = super(ActionModule, self).run(tmp, task_vars)
+        self._task_vars = task_vars
+        self._playhost = task_vars.get("inventory_hostname")
+
         self._check_argspec()
-        self._set_vars()
-        diff_dict = {"before": self._before, "after": self._after}
-
-        diff_text = CallbackBase()._get_diff(diff_dict)
+        class_instance = self._load_plugin(
+            self._task.args["diff_engine"], "fact_diff", "FactDiff"
+        )
+        if self._result.get("failed"):
+            return self._result
+        result = class_instance.diff()
+        if "errors" in result:
+            self._result["failed"] = True
+            self._result["msg"] = result["errors"]
+            return self._result
         ansi_escape = re.compile(r"\x1B[@-_][0-?]*[ -/]*[@-~]")
-        diff_text = ansi_escape.sub("", diff_text)
-
+        diff_text = ansi_escape.sub("", result["diff"])
         self._result.update(
             {
-                "diff": diff_dict,
-                "changed": bool(diff_text),
+                "diff": {"prepared": result["diff"]},
+                "changed": bool(result["diff"]),
                 "diff_lines": diff_text.splitlines(),
                 "diff_text": diff_text,
             }

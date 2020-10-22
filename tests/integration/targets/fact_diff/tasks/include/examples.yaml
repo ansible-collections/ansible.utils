@@ -1,0 +1,79 @@
+- set_fact:
+    before:
+      a:
+        b:
+          c:
+            d:
+            - 0
+            - 1
+    after:
+      a:
+        b:
+          c:
+            d:
+            - 2
+            - 3
+
+- name: Show the difference in json format
+  ansible.utils.fact_diff:
+    before: "{{ before }}"
+    after: "{{ after }}"
+
+# TASK [ansible.utils.fact_diff] **************************************
+# --- before
+# +++ after
+# @@ -3,8 +3,8 @@
+#          "b": {
+#              "c": {
+#                  "d": [
+# -                    0,
+# -                    1
+# +                    2,
+# +                    3
+#                  ]
+#              }
+#          }
+#
+# changed: [localhost]
+
+- name: Show the difference in path format
+  ansible.utils.fact_diff:
+    before: "{{ before|ansible.utils.to_paths }}"
+    after: "{{ after|ansible.utils.to_paths }}"
+
+# TASK [ansible.utils.fact_diff] **************************************
+# --- before
+# +++ after
+# @@ -1,4 +1,4 @@
+#  {
+# -    "a.b.c.d[0]": 0,
+# -    "a.b.c.d[1]": 1
+# +    "a.b.c.d[0]": 2,
+# +    "a.b.c.d[1]": 3
+#  }
+#
+# changed: [localhost]
+
+- name: Show the difference in yaml format
+  ansible.utils.fact_diff:
+    before: "{{ before|to_nice_yaml }}"
+    after: "{{ after|to_nice_yaml }}"
+
+# TASK [ansible.utils.fact_diff] **************************************
+# --- before
+# +++ after
+# @@ -2,5 +2,5 @@
+#      b:
+#          c:
+#              d:
+# -            - 0
+# -            - 1
+# +            - 2
+# +            - 3
+
+# changed: [localhost]
+
+- name: Show the difference in yaml format
+  ansible.utils.fact_diff:
+    before: "{{ before }}"
+    after: "{{ before }}"
