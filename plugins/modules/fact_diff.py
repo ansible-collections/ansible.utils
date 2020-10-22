@@ -59,16 +59,15 @@ author:
 """
 
 EXAMPLES = r"""
-
 - set_fact:
-    left:
+    before:
       a:
         b:
           c:
             d:
             - 0
             - 1
-    right:
+    after:
       a:
         b:
           c:
@@ -78,8 +77,8 @@ EXAMPLES = r"""
 
 - name: Show the difference in json format
   ansible.utils.fact_diff:
-    before: "{{ left }}"
-    after: "{{ right }}"
+    before: "{{ before }}"
+    after: "{{ after }}"
 
 # TASK [ansible.utils.fact_diff] **************************************
 # --- before
@@ -100,8 +99,8 @@ EXAMPLES = r"""
 
 - name: Show the difference in path format
   ansible.utils.fact_diff:
-    before: "{{ left|ansible.utils.to_paths }}"
-    after: "{{ right|ansible.utils.to_paths }}"
+    before: "{{ before|ansible.utils.to_paths }}"
+    after: "{{ after|ansible.utils.to_paths }}"
 
 # TASK [ansible.utils.fact_diff] **************************************
 # --- before
@@ -118,8 +117,8 @@ EXAMPLES = r"""
 
 - name: Show the difference in yaml format
   ansible.utils.fact_diff:
-    before: "{{ left|to_nice_yaml }}"
-    after: "{{ right|to_nice_yaml }}"
+    before: "{{ before|to_nice_yaml }}"
+    after: "{{ after|to_nice_yaml }}"
 
 # TASK [ansible.utils.fact_diff] **************************************
 # --- before
@@ -135,6 +134,11 @@ EXAMPLES = r"""
 
 # changed: [localhost]
 
+- name: Show the difference in yaml format
+  ansible.utils.fact_diff:
+    before: "{{ before }}"
+    after: "{{ before }}"
+
 
 #### Show the difference between complex object using restconf
 #  ansible_connection: ansible.netcommon.httpapi
@@ -142,7 +146,7 @@ EXAMPLES = r"""
 #  ansible_httpapi_validate_certs: False
 #  ansible_network_os: ansible.netcommon.restconf
 
-- name: Get the current interface config
+- name: Get the current interface config prior ro changes
   ansible.netcommon.restconf_get:
     content: config
     path: /data/Cisco-NX-OS-device:System/intf-items/phys-items
@@ -163,7 +167,7 @@ EXAMPLES = r"""
     content: "{{ updated.pre.response}}"
     method: patch
 
-- name: Get the current interface config
+- name: Get the current interface config after changes
   ansible.netcommon.restconf_get:
     content: config
     path: /data/Cisco-NX-OS-device:System/intf-items/phys-items
@@ -188,6 +192,7 @@ EXAMPLES = r"""
 #      "phys-items['PhysIf-list'][37].id": "eth1/100",
 
 # changed: [nxos101]
+
 """
 
 
