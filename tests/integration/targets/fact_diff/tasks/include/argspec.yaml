@@ -16,9 +16,10 @@
   ansible.utils.fact_diff:
     before: hostvars[inventory_hostname]
     after: hostvars[inventory_hostname]
-    vars:
-      skip_lines:
-        a_dict: False
+    plugin:
+      vars:
+        skip_lines:
+          a_dict: False
   ignore_errors: True
   register: result
 
