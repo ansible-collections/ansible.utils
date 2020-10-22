@@ -23,6 +23,7 @@ class ActionModule(ActionBase):
 
     def __init__(self, *args, **kwargs):
         super(ActionModule, self).__init__(*args, **kwargs)
+        self._supports_async = True
         self._before = None
         self._after = None
         self._result = None
