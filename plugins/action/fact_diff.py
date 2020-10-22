@@ -103,11 +103,22 @@ class ActionModule(ActionBase):
         )
         if self._result.get("failed"):
             return self._result
-        result = class_instance.diff()
-        if "errors" in result:
+
+        try:
+            result = class_instance.diff()
+            if "errors" in result:
+                self._result["failed"] = True
+                self._result["msg"] = result["errors"]
+                return self._result
+
+        except Exception as exc:
+            msg = "Unhandled exception from plugin '{plugin}'. Error: {err}".format(
+                plugin=self._task.args["plugin"]["name"], err=to_native(exc)
+            )
             self._result["failed"] = True
-            self._result["msg"] = result["errors"]
+            self._result["msg"] = msg
             return self._result
+
         ansi_escape = re.compile(r"\x1B[@-_][0-?]*[ -/]*[@-~]")
         diff_text = ansi_escape.sub("", result["diff"])
         self._result.update(
