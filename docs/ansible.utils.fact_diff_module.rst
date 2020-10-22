@@ -224,6 +224,105 @@ Examples
     # changed: [localhost]
 
 
+    #### Show the difference between complex object using restconf
+    #  ansible_connection: ansible.netcommon.httpapi
+    #  ansible_httpapi_use_ssl: True
+    #  ansible_httpapi_validate_certs: False
+    #  ansible_network_os: ansible.netcommon.restconf
+
+    - name: Get the current interface config
+      ansible.netcommon.restconf_get:
+        content: config
+        path: /data/Cisco-NX-OS-device:System/intf-items/phys-items
+      register: pre
+
+    - name: Update the description of eth1/100
+      ansible.utils.update_fact:
+        updates:
+        - path: "pre['response']['phys-items']['PhysIf-list'][{{ index }}]['descr']"
+          value: "Configured by ansible {{ 100 | random }}"
+      vars:
+        index: "{{ pre['response']['phys-items']['PhysIf-list']|ansible.utils.index_of('eq', 'eth1/100', 'id') }}"
+      register: updated
+
+    - name: Apply the configuration
+      ansible.netcommon.restconf_config:
+        path: 'data/Cisco-NX-OS-device:System/intf-items/'
+        content: "{{ updated.pre.response}}"
+        method: patch
+
+    - name: Get the current interface config
+      ansible.netcommon.restconf_get:
+        content: config
+        path: /data/Cisco-NX-OS-device:System/intf-items/phys-items
+      register: post
+
+    - name: Show the difference
+      ansible.utils.fact_diff:
+        before: "{{ pre.response|ansible.utils.to_paths }}"
+        after: "{{ post.response|ansible.utils.to_paths }}"
+
+    # TASK [ansible.utils.fact_diff] *********************************************
+    # --- before
+    # +++ after
+    # @@ -3604,7 +3604,7 @@
+    #      "phys-items['PhysIf-list'][37].bw": "0",
+    #      "phys-items['PhysIf-list'][37].controllerId": "",
+    #      "phys-items['PhysIf-list'][37].delay": "1",
+    # -    "phys-items['PhysIf-list'][37].descr": "Configured by ansible 95",
+    # +    "phys-items['PhysIf-list'][37].descr": "Configured by ansible 20",
+    #      "phys-items['PhysIf-list'][37].dot1qEtherType": "0x8100",
+    #      "phys-items['PhysIf-list'][37].duplex": "auto",
+    #      "phys-items['PhysIf-list'][37].id": "eth1/100",
+
+    # changed: [nxos101]
+
+
+
+Return Values
+-------------
+Common return values are documented `here <https://docs.ansible.com/ansible/latest/reference_appendices/common_return_values.html#common-return-values>`_, the following are the fields unique to this module:
+
+.. raw:: html
+
+    <table border=0 cellpadding=0 class="documentation-table">
+        <tr>
+            <th colspan="1">Key</th>
+            <th>Returned</th>
+            <th width="100%">Description</th>
+        </tr>
+            <tr>
+                <td colspan="1">
+                    <div class="ansibleOptionAnchor" id="return-"></div>
+                    <b>diff_lines</b>
+                    <a class="ansibleOptionLink" href="#return-" title="Permalink to this return value"></a>
+                    <div style="font-size: small">
+                      <span style="color: purple">list</span>
+                    </div>
+                </td>
+                <td>always</td>
+                <td>
+                            <div>The <code>diff_text</code> split into lines</div>
+                    <br/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="1">
+                    <div class="ansibleOptionAnchor" id="return-"></div>
+                    <b>diff_text</b>
+                    <a class="ansibleOptionLink" href="#return-" title="Permalink to this return value"></a>
+                    <div style="font-size: small">
+                      <span style="color: purple">string</span>
+                    </div>
+                </td>
+                <td>always</td>
+                <td>
+                            <div>The diff in text format</div>
+                    <br/>
+                </td>
+            </tr>
+    </table>
+    <br/><br/>
 
 
 Status

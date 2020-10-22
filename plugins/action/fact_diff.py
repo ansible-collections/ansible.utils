@@ -45,8 +45,8 @@ class ActionModule(ActionBase):
         :param msg: The message
         :type msg: str
         """
-        msg = "<{phost}> [fact_diff] {msg}".format(
-            phost=self._playhost, msg=msg
+        msg = "<{phost}> [fact_diff][{plugin}] {msg}".format(
+            phost=self._playhost, plugin=self._plugin, msg=msg
         )
         self._display.vvvv(msg)
 
@@ -115,8 +115,9 @@ class ActionModule(ActionBase):
         if self._result.get("failed"):
             return self._result
 
+        self._plugin = self._task.args["plugin"]["name"]
         plugin_instance = self._load_plugin(
-            self._task.args["plugin"]["name"], "fact_diff", "FactDiff"
+            self._plugin, "fact_diff", "FactDiff"
         )
         if self._result.get("failed"):
             return self._result

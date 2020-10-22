@@ -17,7 +17,7 @@ from ansible_collections.ansible.utils.plugins.module_utils.base_classes.fact_di
 class FactDiff(FactDiffBase):
     def _check_valid_regexes(self):
         if self._skip_lines:
-            self._debug("Checking regex in 'split_lines' for validity")
+            self.debug("Checking regex in 'split_lines' for validity")
             for idx, regex in enumerate(self._skip_lines):
                 try:
                     self._skip_lines[idx] = re.compile(regex)
