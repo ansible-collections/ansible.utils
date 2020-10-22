@@ -2,9 +2,10 @@
   ansible.utils.fact_diff:
     before: [0, 1, 2]
     after: [0, 1, 2, 3]
-    vars:
-      skip_lines:
-      - '+'
+    plugin:
+      vars:
+        skip_lines:
+        - '+'
   ignore_errors: True
   register: result
 
