@@ -89,27 +89,13 @@ class ActionModule(ActionBase):
             )
             return None
 
-    def run(self, tmp=None, task_vars=None):
-        self._task.diff = True
-        self._result = super(ActionModule, self).run(tmp, task_vars)
-        self._task_vars = task_vars
-        self._playhost = task_vars.get("inventory_hostname")
-        self._check_argspec()
-        if self._result.get("failed"):
-            return self._result
-
-        class_instance = self._load_plugin(
-            self._task.args["plugin"]["name"], "fact_diff", "FactDiff"
-        )
-        if self._result.get("failed"):
-            return self._result
-
+    def _run_diff(self, plugin_instance):
         try:
-            result = class_instance.diff()
+            result = plugin_instance.diff()
             if "errors" in result:
                 self._result["failed"] = True
                 self._result["msg"] = result["errors"]
-                return self._result
+            return result
 
         except Exception as exc:
             msg = "Unhandled exception from plugin '{plugin}'. Error: {err}".format(
@@ -117,6 +103,26 @@ class ActionModule(ActionBase):
             )
             self._result["failed"] = True
             self._result["msg"] = msg
+            return None
+
+    def run(self, tmp=None, task_vars=None):
+        self._task.diff = True
+        self._result = super(ActionModule, self).run(tmp, task_vars)
+        self._task_vars = task_vars
+        self._playhost = task_vars.get("inventory_hostname")
+
+        self._check_argspec()
+        if self._result.get("failed"):
+            return self._result
+
+        plugin_instance = self._load_plugin(
+            self._task.args["plugin"]["name"], "fact_diff", "FactDiff"
+        )
+        if self._result.get("failed"):
+            return self._result
+
+        result = self._run_diff(plugin_instance)
+        if self._result.get("failed"):
             return self._result
 
         ansi_escape = re.compile(r"\x1B[@-_][0-?]*[ -/]*[@-~]")

@@ -49,6 +49,7 @@ class TestUpdate_Fact(unittest.TestCase):
         )
 
     def test_same(self):
+        """Ensure two equal string don't create a diff"""
         before = "Lorem ipsum dolor sit amet"
         after = before
         self._plugin._task.args = {"before": before, "after": after}
@@ -58,6 +59,7 @@ class TestUpdate_Fact(unittest.TestCase):
         self.assertEqual("", result["diff_text"])
 
     def test_string(self):
+        """Compare two strings"""
         before = "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
         after = "Lorem ipsum dolor sit amet, AAA consectetur adipiscing elit"
         self._plugin._task.args = {"before": before, "after": after}
@@ -69,6 +71,7 @@ class TestUpdate_Fact(unittest.TestCase):
         self.assertIn("+" + after, result["diff_text"])
 
     def test_string_skip_lines(self):
+        """Compare two string, with skip_lines"""
         before = "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
         after = "Lorem ipsum dolor sit amet, AAA consectetur adipiscing elit"
         self._plugin._task.args = {
@@ -82,6 +85,7 @@ class TestUpdate_Fact(unittest.TestCase):
         self.assertEqual("", result["diff_text"])
 
     def test_same_list(self):
+        """Compare two lists that are the same"""
         before = [0, 1, 2, 3]
         after = before
         self._plugin._task.args = {"before": before, "after": after}
@@ -91,6 +95,7 @@ class TestUpdate_Fact(unittest.TestCase):
         self.assertEqual("", result["diff_text"])
 
     def test_diff_list_skip_lines(self):
+        """Compare two lists, with skip_lines"""
         before = [0, 1, 2]
         after = [0, 1, 2, 3]
         self._plugin._task.args = {
@@ -104,6 +109,7 @@ class TestUpdate_Fact(unittest.TestCase):
         self.assertEqual("", result["diff_text"])
 
     def test_diff_list(self):
+        """Compare two lists with differences"""
         before = [0, 1, 2, 3]
         after = [0, 1, 2, 4]
         self._plugin._task.args = {"before": before, "after": after}
@@ -115,6 +121,7 @@ class TestUpdate_Fact(unittest.TestCase):
         self.assertIn("+4", result["diff_text"])
 
     def test_same_dict(self):
+        """Compare two dicts that are the same"""
         before = {"a": {"b": {"c": {"d": [0, 1, 2]}}}}
         after = before
         self._plugin._task.args = {"before": before, "after": after}
@@ -124,6 +131,7 @@ class TestUpdate_Fact(unittest.TestCase):
         self.assertEqual("", result["diff_text"])
 
     def test_diff_dict_skip_lines(self):
+        """Compare two dicts, with skip_lines"""
         before = {"a": {"b": {"c": {"d": [0, 1, 2]}}}}
         after = {"a": {"b": {"c": {"d": [0, 1, 2, 3]}}}}
         self._plugin._task.args = {
@@ -137,6 +145,7 @@ class TestUpdate_Fact(unittest.TestCase):
         self.assertEqual("", result["diff_text"])
 
     def test_diff_dict(self):
+        """Compare two dicts that are different"""
         before = {"a": {"b": {"c": {"d": [0, 1, 2, 3]}}}}
         after = {"a": {"b": {"c": {"d": [0, 1, 2, 4]}}}}
         self._plugin._task.args = {"before": before, "after": after}
@@ -176,6 +185,7 @@ class TestUpdate_Fact(unittest.TestCase):
         )
 
     def test_invalid_regex(self):
+        """Check with invalid regex"""
         before = True
         after = False
         self._plugin._task.args = {
@@ -188,4 +198,15 @@ class TestUpdate_Fact(unittest.TestCase):
         self.assertIn(
             "The regex '+', is not valid",
             result["msg"],
+        )
+
+    def test_fail_plugin(self):
+        """Simulate a diff plugin failure"""
+        self._plugin._result = {}
+        result = self._plugin._run_diff(None)
+        self.assertIsNone(result)
+        self.assertTrue(self._plugin._result["failed"])
+        self.assertIn(
+            "'NoneType' object has no attribute 'diff'",
+            self._plugin._result["msg"],
         )
