@@ -41,11 +41,11 @@ class TestUpdate_Fact(unittest.TestCase):
     def test_argspec_no_updates(self):
         """Check passing invalid argspec"""
         self._plugin._task.args = {"before": True}
-        with self.assertRaises(Exception) as error:
-            self._plugin.run(task_vars=self._task_vars)
+        result = self._plugin.run(task_vars=self._task_vars)
+        self.assertTrue(result["failed"])
         self.assertIn(
             "missing required arguments: after",
-            str(error.exception),
+            result["msg"],
         )
 
     def test_same(self):
@@ -74,7 +74,7 @@ class TestUpdate_Fact(unittest.TestCase):
         self._plugin._task.args = {
             "before": before,
             "after": after,
-            "vars": {"skip_lines": "^Lorem"},
+            "plugin": {"vars": {"skip_lines": "^Lorem"}},
         }
         result = self._plugin.run(task_vars=self._task_vars)
         self.assertFalse(result["changed"])
@@ -96,7 +96,7 @@ class TestUpdate_Fact(unittest.TestCase):
         self._plugin._task.args = {
             "before": before,
             "after": after,
-            "vars": {"skip_lines": "3"},
+            "plugin": {"vars": {"skip_lines": "3"}},
         }
         result = self._plugin.run(task_vars=self._task_vars)
         self.assertFalse(result["changed"])
@@ -129,7 +129,7 @@ class TestUpdate_Fact(unittest.TestCase):
         self._plugin._task.args = {
             "before": before,
             "after": after,
-            "vars": {"skip_lines": "3"},
+            "plugin": {"vars": {"skip_lines": "3"}},
         }
         result = self._plugin.run(task_vars=self._task_vars)
         self.assertFalse(result["changed"])
@@ -146,3 +146,46 @@ class TestUpdate_Fact(unittest.TestCase):
         self.assertEqual(1, len(mlines))
         mlines = [l for l in result["diff_lines"] if re.match(r"^\+\s+4$", l)]
         self.assertEqual(1, len(mlines))
+
+    def test_invalid_diff_engine_not_collection(self):
+        """Check passing invalid argspec"""
+        self._plugin._task.args = {
+            "before": True,
+            "after": True,
+            "plugin": {"name": "a"},
+        }
+        result = self._plugin.run(task_vars=self._task_vars)
+        self.assertTrue(result["failed"])
+        self.assertIn(
+            "Plugin name should be provided as a full name including collection",
+            result["msg"],
+        )
+
+    def test_invalid_diff_engine_not_valid(self):
+        """Check passing invalid argspec"""
+        self._plugin._task.args = {
+            "before": True,
+            "after": True,
+            "plugin": {"name": "a.b.c"},
+        }
+        result = self._plugin.run(task_vars=self._task_vars)
+        self.assertTrue(result["failed"])
+        self.assertIn(
+            "Error loading plugin 'a.b.c'",
+            result["msg"],
+        )
+
+    def test_invalid_regex(self):
+        before = True
+        after = False
+        self._plugin._task.args = {
+            "before": before,
+            "after": after,
+            "plugin": {"vars": {"skip_lines": "+"}},
+        }
+        result = self._plugin.run(task_vars=self._task_vars)
+        self.assertTrue(result["failed"])
+        self.assertIn(
+            "The regex '+', is not valid",
+            result["msg"],
+        )

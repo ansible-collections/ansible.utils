@@ -27,23 +27,30 @@ options:
       - The second fact to be used in the comparison
     type: raw
     required: True
-  vars:
+  plugin:
     description:
-      - Additional parameters passed to the diff engine
+      - Configure and specify the diff plugin to use
     type: dict
+    default: {}
     suboptions:
-      skip_lines:
+      name:
         description:
-          - Skip lines matching these regular expressions
-          - Matches will be removed prior to the diff
-          - If the provided I(before) and I(after) are a string, they will be split
-          - Each entry in each list will be cast to a string for the comparison
-        type: list
-  diff_engine:
-    description:
-    - The diff engine to use in collection format
-    default: ansible.utils.native
-    type: str
+        - The diff plugin to use, in collection format
+        default: ansible.utils.native
+        type: str
+      vars:
+        description:
+        - Parameters passed to the diff plugin
+        type: dict
+        default: {}
+        suboptions:
+          skip_lines:
+            description:
+              - Skip lines matching these regular expressions
+              - Matches will be removed prior to the diff
+              - If the provided I(before) and I(after) are a string, they will be split
+              - Each entry in each list will be cast to a string for the comparison
+            type: list
 
 notes:
 

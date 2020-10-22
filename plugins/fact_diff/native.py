@@ -56,9 +56,7 @@ class FactDiff(FactDiffBase):
         self._after = self._task_args["after"]
         self._before = self._task_args["before"]
         self._errors = []
-        self._skip_lines = (self._task_args.get("vars") or {}).get(
-            "skip_lines"
-        )
+        self._skip_lines = self._task_args["plugin"]["vars"].get("skip_lines")
         self._check_valid_regexes()
         if self._errors:
             return {"errors": " ".join(self._errors)}

@@ -36,7 +36,8 @@ class ActionModule(ActionBase):
         )
         valid, errors, self._task.args = aav.validate()
         if not valid:
-            raise AnsibleActionFail(errors)
+            self._result["failed"] = True
+            self._result["msg"] = errors
 
     def _debug(self, msg):
         """Output text using ansible's display
@@ -61,6 +62,11 @@ class ActionModule(ActionBase):
         :return: An instance of class class_name
         :rtype: class_name
         """
+        if len(plugin.split(".")) != 3:
+            msg = "Plugin name should be provided as a full name including collection"
+            self._result["failed"] = True
+            self._result["msg"] = msg
+            return None
         cref = dict(zip(["corg", "cname", "plugin"], plugin.split(".")))
         cref.update(directory=directory)
         parserlib = "ansible_collections.{corg}.{cname}.plugins.{directory}.{plugin}".format(
@@ -88,10 +94,12 @@ class ActionModule(ActionBase):
         self._result = super(ActionModule, self).run(tmp, task_vars)
         self._task_vars = task_vars
         self._playhost = task_vars.get("inventory_hostname")
-
         self._check_argspec()
+        if self._result.get("failed"):
+            return self._result
+
         class_instance = self._load_plugin(
-            self._task.args["diff_engine"], "fact_diff", "FactDiff"
+            self._task.args["plugin"]["name"], "fact_diff", "FactDiff"
         )
         if self._result.get("failed"):
             return self._result
