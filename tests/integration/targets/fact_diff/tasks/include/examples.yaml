@@ -79,7 +79,7 @@
     after: "{{ before }}"
 
 
-#### Show the difference between complex object
+#### Show the difference between complex object using restconf
 #  ansible_connection: ansible.netcommon.httpapi
 #  ansible_httpapi_use_ssl: True
 #  ansible_httpapi_validate_certs: False
