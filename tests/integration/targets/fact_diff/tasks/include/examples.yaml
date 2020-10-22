@@ -73,11 +73,6 @@
 
 # changed: [localhost]
 
-- name: Show the difference in yaml format
-  ansible.utils.fact_diff:
-    before: "{{ before }}"
-    after: "{{ before }}"
-
 
 #### Show the difference between complex object using restconf
 #  ansible_connection: ansible.netcommon.httpapi
