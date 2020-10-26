@@ -79,7 +79,7 @@ def json_path(absolute_path):
 class Validate(ValidateBase):
     @staticmethod
     def _check_reqs():
-        """ Check the prerequisites are installed for jsonschema
+        """Check the prerequisites are installed for jsonschema
 
         :return dict: A dict with a list of errors
         """
@@ -90,7 +90,7 @@ class Validate(ValidateBase):
         return errors
 
     def _check_args(self):
-        """ Ensure specific args are set
+        """Ensure specific args are set
 
         :return: A dict with a list of errors
         :rtype: dict
@@ -138,7 +138,7 @@ class Validate(ValidateBase):
         return errors
 
     def validate(self):
-        """ Std entry point for a validate execution
+        """Std entry point for a validate execution
 
         :return: Errors or parsed text as structured data
         :rtype: dict
@@ -207,9 +207,11 @@ class Validate(ValidateBase):
                             "found": validation_error.instance,
                         }
                         self._result["errors"].append(error)
-                        error_message = "At '{schema_path}' {message}. ".format(
-                            schema_path=error["schema_path"],
-                            message=error["message"],
+                        error_message = (
+                            "At '{schema_path}' {message}. ".format(
+                                schema_path=error["schema_path"],
+                                message=error["message"],
+                            )
                         )
                         error_messages.append(error_message)
         if error_messages:

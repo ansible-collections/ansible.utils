@@ -34,7 +34,7 @@ except ImportError:
 
 
 class ValidateBase(object):
-    """ The base class for data validators
+    """The base class for data validators
     Provides a  _debug function to normalize debug output
     """
 

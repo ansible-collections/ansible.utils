@@ -28,8 +28,7 @@ ARGSPEC_CONDITIONALS = {}
 
 
 class ActionModule(ActionBase):
-    """ action module
-    """
+    """action module"""
 
     VALIDATE_CLS_NAME = "Validate"
 
@@ -39,7 +38,7 @@ class ActionModule(ActionBase):
         self._result = {}
 
     def _debug(self, name, msg):
-        """ Output text using ansible's display
+        """Output text using ansible's display
 
         :param msg: The message
         :type msg: str
@@ -50,7 +49,7 @@ class ActionModule(ActionBase):
         self._display.vvvv(msg)
 
     def run(self, tmp=None, task_vars=None):
-        """ The std execution entry pt for an action plugin
+        """The std execution entry pt for an action plugin
 
         :param tmp: no longer used
         :type tmp: none
