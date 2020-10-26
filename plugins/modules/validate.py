@@ -11,10 +11,10 @@ __metaclass__ = type
 
 DOCUMENTATION = """
 module: validate
-author: 
+author:
 - Bradley Thornton (@cidrblock)
 - Ganesh Nalawade (@ganeshrn)
-short_description: Validate data with provided criteria 
+short_description: Validate data with provided criteria
 description:
 - Validate data with provided criteria based on the validation engine.
 version_added: 1.0.0
@@ -22,27 +22,31 @@ options:
     data:
         type: raw
         description:
-        - A data that will be validated against C(criteria). 
-          For the type of data refer documentation of individual
-          validator plugins
+        - A data that will be validated against C(criteria). For the type of data refer
+          documentation of individual validate plugins
         required: True
     engine:
         type: str
         description:
-        - The name of the validator to use. The engine value should  follow
-          the fully qualified collection name foramt that is
-          <org-name>.<collection-name>.<validator-plugin-name>.
+        - The name of the validate plugin to use. The engine value should  follow
+          the fully qualified collection name format that is
+          <org-name>.<collection-name>.<validate-plugin-name>.
         default: ansible.utils.jsonschema
     criteria:
         type: raw
         description:
         - The criteria used for validation of C(data). For the type of criteria refer
-          documentation of individual validator plugins.
+          documentation of individual validate plugins.
         required: True
 Notes:
-- 
+- For the type of options C(data) and C(criteria) refer the individual C(validate) plugin
+  documentation that is represented in the value of C(engine) option.
+- For additional plugin configuration options refer the individual C(validate) plugin
+  documentation that is represented by the value of C(engine) option.
+- The plugin configuration option can be either passed as task or environment variables.
+- The precedence the C(validate) plugin configurable option is task variables followed
+  by the environment variables.
 """
-
 
 EXAMPLES = r"""
 - name: set facts for data and criteria
@@ -50,7 +54,7 @@ EXAMPLES = r"""
     data: "{{ lookup('file', './validate/data/show_interfaces_iosxr.json')}}"
     criteria: "{{ lookup('file', './validate/criteria/jsonschema/show_interfaces_iosxr.json')}}"
 
-- name: validate data in using jsonschema engine with validate module
+- name: validate data in with jsonschema engine (by passing task vars as configurable plugin options)
   ansible.utils.validate:
     data: "{{ data }}"
     criteria: "{{ criteria }}"
@@ -61,11 +65,11 @@ EXAMPLES = r"""
 
 RETURN = r"""
 msg:
-  description: 
+  description:
   - The msg indicates if the C(data) is valid as per the C(criteria).
   - In case data is valid return success message I(all checks passed)
   - In case data is invalid return error message I(Validation errors were found)
-    along with more information on error is available 
+    along with more information on error is available.
   returned: always
   type: str
 errors:

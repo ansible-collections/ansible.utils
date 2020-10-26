@@ -1,3 +1,4 @@
+---
 # README FIRST
 # 1. replace "NAMESPACE/COLLECTION_NAME" with the correct name, ie "community/zabbix"
 # 2. If you don't have unit tests remove that section
@@ -7,8 +8,8 @@
 name: CI
 on:
 # Run CI against all pushes (direct commits) and Pull Requests
-- push
-- pull_request
+  - push
+  - pull_request
 
 jobs:
 

@@ -11,13 +11,13 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 from ansible.errors import AnsibleActionFail
-from ansible.module_utils._text import to_native, to_text, to_bytes
+from ansible.module_utils._text import to_native
 from ansible.plugins.action import ActionBase
 
 from ansible_collections.ansible.utils.plugins.modules.validate import (
     DOCUMENTATION,
 )
-from ansible_collections.ansible.utils.plugins.module_utils.validator.base import (
+from ansible_collections.ansible.utils.plugins.module_utils.validate.base import (
     load_validator,
 )
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
@@ -31,7 +31,7 @@ class ActionModule(ActionBase):
     """ action module
     """
 
-    VALIDATOR_CLS_NAME = "Validator"
+    VALIDATE_CLS_NAME = "Validate"
 
     def __init__(self, *args, **kwargs):
         super(ActionModule, self).__init__(*args, **kwargs)
@@ -49,7 +49,6 @@ class ActionModule(ActionBase):
         )
         self._display.vvvv(msg)
 
-
     def run(self, tmp=None, task_vars=None):
         """ The std execution entry pt for an action plugin
 
@@ -60,18 +59,24 @@ class ActionModule(ActionBase):
         :return: The results from the parser
         :rtype: dict
         """
-        argspec_result, updated_params = check_argspec(DOCUMENTATION, "action", schema_conditionals=ARGSPEC_CONDITIONALS, **self._task.args)
+        argspec_result, updated_params = check_argspec(
+            DOCUMENTATION,
+            "action",
+            schema_conditionals=ARGSPEC_CONDITIONALS,
+            **self._task.args
+        )
         if argspec_result.get("failed"):
             return self._result
 
         self._task_vars = task_vars
         self._playhost = task_vars.get("inventory_hostname")
 
-        self._validator_engine, validator_result = load_validator(engine=updated_params["engine"],
-                                                data=updated_params["data"],
-                                                criteria=updated_params["criteria"],
-                                                plugin_vars=task_vars,
-                                                )
+        self._validator_engine, validator_result = load_validator(
+            engine=updated_params["engine"],
+            data=updated_params["data"],
+            criteria=updated_params["criteria"],
+            plugin_vars=task_vars,
+        )
         if validator_result.get("failed"):
             return validator_result
 
@@ -88,7 +93,9 @@ class ActionModule(ActionBase):
             self._result["errors"] = result["errors"]
             self._result.update({"failed": True})
             if "msg" in result:
-                self._result["msg"] = "Validation errors were found.\n" + result["msg"]
+                self._result["msg"] = (
+                    "Validation errors were found.\n" + result["msg"]
+                )
             else:
                 self._result["msg"] = "Validation errors were found."
         else:

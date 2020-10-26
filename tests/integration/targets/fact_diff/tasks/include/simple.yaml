@@ -1,3 +1,4 @@
+---
 - name: Check for graceful fail of invalid regex
   ansible.utils.fact_diff:
     before: [0, 1, 2]
@@ -5,8 +6,8 @@
     plugin:
       vars:
         skip_lines:
-        - '+'
-  ignore_errors: True
+          - '+'
+  ignore_errors: true
   register: result
 
 - assert:

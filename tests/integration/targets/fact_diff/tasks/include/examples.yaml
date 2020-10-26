@@ -1,18 +1,19 @@
+---
 - set_fact:
     before:
       a:
         b:
           c:
             d:
-            - 0
-            - 1
+              - 0
+              - 1
     after:
       a:
         b:
           c:
             d:
-            - 2
-            - 3
+              - 2
+              - 3
 
 - name: Show the difference in json format
   ansible.utils.fact_diff:
@@ -111,7 +112,7 @@
 #   ansible.utils.fact_diff:
 #     before: "{{ pre.response|ansible.utils.to_paths }}"
 #     after: "{{ post.response|ansible.utils.to_paths }}"
- 
+
 # TASK [ansible.utils.fact_diff] *********************************************
 # --- before
 # +++ after

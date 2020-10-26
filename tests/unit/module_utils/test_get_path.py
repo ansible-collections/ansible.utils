@@ -8,9 +8,6 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-import json
-import heapq
-import os
 import unittest
 from ansible_collections.ansible.utils.plugins.module_utils.common.get_path import (
     get_path,

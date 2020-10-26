@@ -7,7 +7,6 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-import copy
 import re
 import unittest
 from mock import MagicMock
@@ -43,10 +42,7 @@ class TestUpdate_Fact(unittest.TestCase):
         self._plugin._task.args = {"before": True}
         result = self._plugin.run(task_vars=self._task_vars)
         self.assertTrue(result["failed"])
-        self.assertIn(
-            "missing required arguments: after",
-            result["msg"],
-        )
+        self.assertIn("missing required arguments: after", result["msg"])
 
     def test_same(self):
         """Ensure two equal string don't create a diff"""
@@ -151,9 +147,15 @@ class TestUpdate_Fact(unittest.TestCase):
         self._plugin._task.args = {"before": before, "after": after}
         result = self._plugin.run(task_vars=self._task_vars)
         self.assertTrue(result["changed"])
-        mlines = [l for l in result["diff_lines"] if re.match(r"^-\s+3$", l)]
+        mlines = [
+            line for line in result["diff_lines"] if re.match(r"^-\s+3$", line)
+        ]
         self.assertEqual(1, len(mlines))
-        mlines = [l for l in result["diff_lines"] if re.match(r"^\+\s+4$", l)]
+        mlines = [
+            line
+            for line in result["diff_lines"]
+            if re.match(r"^\+\s+4$", line)
+        ]
         self.assertEqual(1, len(mlines))
 
     def test_invalid_diff_engine_not_collection(self):
@@ -179,10 +181,7 @@ class TestUpdate_Fact(unittest.TestCase):
         }
         result = self._plugin.run(task_vars=self._task_vars)
         self.assertTrue(result["failed"])
-        self.assertIn(
-            "Error loading plugin 'a.b.c'",
-            result["msg"],
-        )
+        self.assertIn("Error loading plugin 'a.b.c'", result["msg"])
 
     def test_invalid_regex(self):
         """Check with invalid regex"""
@@ -195,10 +194,7 @@ class TestUpdate_Fact(unittest.TestCase):
         }
         result = self._plugin.run(task_vars=self._task_vars)
         self.assertTrue(result["failed"])
-        self.assertIn(
-            "The regex '+', is not valid",
-            result["msg"],
-        )
+        self.assertIn("The regex '+', is not valid", result["msg"])
 
     def test_fail_plugin(self):
         """Simulate a diff plugin failure"""

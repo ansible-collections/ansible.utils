@@ -321,9 +321,7 @@ def _index_of(*args, **kwargs):
     data.update(kwargs)
     environment = data.pop("environment")
     aav = AnsibleArgSpecValidator(
-        data=data,
-        schema=DOCUMENTATION,
-        name="index_of",
+        data=data, schema=DOCUMENTATION, name="index_of"
     )
     valid, errors, updated_data = aav.validate()
     if not valid:

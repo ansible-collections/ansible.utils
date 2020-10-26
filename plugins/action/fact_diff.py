@@ -6,10 +6,10 @@
 from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
+
 import re
 from importlib import import_module
 from ansible.plugins.action import ActionBase
-from ansible.errors import AnsibleActionFail
 from ansible.module_utils._text import to_native
 from ansible_collections.ansible.utils.plugins.modules.fact_diff import (
     DOCUMENTATION,

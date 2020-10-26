@@ -8,10 +8,9 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 from copy import deepcopy
-from itertools import chain
 
 from ansible.module_utils.common._collections_compat import Mapping
-from ansible.module_utils.six import iteritems, string_types
+from ansible.module_utils.six import iteritems
 
 
 def sort_list(val):
