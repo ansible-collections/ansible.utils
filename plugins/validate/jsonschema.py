@@ -207,9 +207,11 @@ class Validate(ValidateBase):
                             "found": validation_error.instance,
                         }
                         self._result["errors"].append(error)
-                        error_message = "At '{schema_path}' {message}. ".format(
-                            schema_path=error["schema_path"],
-                            message=error["message"],
+                        error_message = (
+                            "At '{schema_path}' {message}. ".format(
+                                schema_path=error["schema_path"],
+                                message=error["message"],
+                            )
                         )
                         error_messages.append(error_message)
         if error_messages:
