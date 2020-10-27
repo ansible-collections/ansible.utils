@@ -1,4 +1,3 @@
----
 # README FIRST
 # 1. replace "NAMESPACE/COLLECTION_NAME" with the correct name, ie "community/zabbix"
 # 2. If you don't have unit tests remove that section
@@ -8,8 +7,8 @@
 name: CI
 on:
 # Run CI against all pushes (direct commits) and Pull Requests
-  - push
-  - pull_request
+- push
+- pull_request
 
 jobs:
 
@@ -176,3 +175,29 @@ jobs:
       - uses: codecov/codecov-action@v1
         with:
           fail_ci_if_error: false
+
+
+##
+# Formatting with black
+# Require all code be formatted with black
+# with line length 79  
+
+  black:
+    name: Black (formatting)
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+      with:
+        path: ansible_collections/ansible/utils
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+    
+    - name: Install Black
+      run: pip install black
+
+    - name: Run black --check
+      run: black -l79 --diff --check ansible_collections/ansible/utils
