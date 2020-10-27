@@ -38,7 +38,7 @@ options:
         - The criteria used for validation of C(data). For the type of criteria refer
           documentation of individual validate plugins.
         required: True
-Notes:
+notes:
 - For the type of options C(data) and C(criteria) refer the individual C(validate) plugin
   documentation that is represented in the value of C(engine) option.
 - For additional plugin configuration options refer the individual C(validate) plugin

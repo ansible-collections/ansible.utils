@@ -39,7 +39,7 @@ DOCUMENTATION = """
         - The value should be in fully qualified collection name format that is
           I(<org-name>.<collection-name>.<validator-plugin-name>).
         default: ansible.utils.jsonschema
-    Notes:
+    notes:
     - For the type of options C(data) and C(criteria) refer the individual C(validate) plugin
       documentation that is represented in the value of C(engine) option.
     - For additional plugin configuration options refer the individual C(validate) plugin
