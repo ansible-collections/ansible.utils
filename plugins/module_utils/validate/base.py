@@ -5,7 +5,11 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-from importlib import import_module
+try:
+    from importlib import import_module
+except ImportError:
+    pass
+
 from ansible.module_utils._text import to_native
 
 
@@ -30,10 +34,8 @@ def load_validator(
         return None, result
 
     cref = dict(zip(["corg", "cname", "plugin"], engine.split(".")))
-    validatorlib = (
-            "ansible_collections.{corg}.{cname}.plugins.validate.{plugin}".format(
-                ** cref
-            )
+    validatorlib = "ansible_collections.{corg}.{cname}.plugins.validate.{plugin}".format(
+        **cref
     )
     try:
         validatorcls = getattr(import_module(validatorlib), cls_name)
