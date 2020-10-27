@@ -244,8 +244,11 @@ class AnsibleArgSpecValidator:
 
 
 def check_argspec(
-    schema, name, schema_format="doc", schema_conditionals={}, **args
+    schema, name, schema_format="doc", schema_conditionals=None, **args
 ):
+    if schema_conditionals is None:
+        schema_conditionals = {}
+
     aav = AnsibleArgSpecValidator(
         data=args,
         schema=schema,

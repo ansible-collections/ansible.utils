@@ -14,7 +14,7 @@ from ansible.module_utils._text import to_native
 
 
 def load_validator(
-    engine, data, criteria, plugin_vars={}, cls_name="Validate", kwargs={}
+    engine, data, criteria, plugin_vars=None, cls_name="Validate", kwargs=None
 ):
     """
     Load the validate plugin from engine name
@@ -26,6 +26,12 @@ def load_validator(
     :return:
     """
     result = {}
+    if plugin_vars is None:
+        plugin_vars = {}
+
+    if kwargs is None:
+        kwargs = {}
+
     if len(engine.split(".")) != 3:
         result["failed"] = True
         result[

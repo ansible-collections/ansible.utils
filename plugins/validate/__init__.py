@@ -38,13 +38,13 @@ class ValidateBase(object):
     Provides a  _debug function to normalize debug output
     """
 
-    def __init__(self, data, criteria, engine, plugin_vars={}, kwargs={}):
+    def __init__(self, data, criteria, engine, plugin_vars=None, kwargs=None):
         self._data = data
         self._criteria = criteria
         self._engine = engine
-        self._plugin_vars = plugin_vars
+        self._plugin_vars = plugin_vars if plugin_vars is not None else {}
         self._result = {}
-        self._kwargs = kwargs
+        self._kwargs = kwargs if kwargs is not None else {}
         self._sub_plugin_options = {}
 
         cref = dict(zip(["corg", "cname", "plugin"], engine.split(".")))
