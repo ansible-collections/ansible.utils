@@ -101,8 +101,8 @@ class LookupModule(LookupBase):
     def run(self, terms, variables, **kwargs):
         if len(terms) < 2:
             raise AnsibleLookupError(
-                "Missing either 'data' or 'criteria' value in lookup input,"
-                "refer ansible.utils.validate lookup plugin documentation for details"
+                "missing either 'data' or 'criteria' value in lookup input,"
+                " refer ansible.utils.validate lookup plugin documentation for details"
             )
 
         params = {"data": terms[0], "criteria": terms[1]}

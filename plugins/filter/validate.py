@@ -88,7 +88,7 @@ def validate(*args, **kwargs):
     if len(args) < 2:
         raise AnsibleFilterError(
             "Missing either 'data' or 'criteria' value in filter input,"
-            "refer 'ansible.utils.validate' filter plugin documentation for details"
+            " refer 'ansible.utils.validate' filter plugin documentation for details"
         )
 
     params = {"data": args[0], "criteria": args[1]}
