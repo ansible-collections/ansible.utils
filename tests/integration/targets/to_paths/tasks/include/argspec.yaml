@@ -1,14 +1,15 @@
+---
 - set_fact:
     a:
       b:
         c:
           d:
-          - 0
+            - 0
 
 - name: Check argspec validation with lookup
   set_fact:
     _result: "{{ a|ansible.utils.to_paths(wantlist=5) }}"
-  ignore_errors: True
+  ignore_errors: true
   register: result
 
 - debug:
@@ -22,7 +23,7 @@
 - name: Check argspec validation with lookup
   set_fact:
     _result: "{{ lookup('ansible.utils.to_paths') }}"
-  ignore_errors: True
+  ignore_errors: true
   register: result
 
 - debug:

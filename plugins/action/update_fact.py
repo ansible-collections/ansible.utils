@@ -6,18 +6,17 @@
 from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
+
 import ast
-import json
 import re
 from ansible.plugins.action import ActionBase
-from ansible.errors import AnsibleActionFail
 
 from ansible.module_utils.common._collections_compat import (
     MutableMapping,
     MutableSequence,
 )
-from ansible.module_utils import basic
-from ansible.module_utils._text import to_bytes, to_native
+
+from ansible.module_utils._text import to_native
 from jinja2 import Template, TemplateSyntaxError
 from ansible_collections.ansible.utils.plugins.modules.update_fact import (
     DOCUMENTATION,
@@ -40,9 +39,7 @@ class ActionModule(ActionBase):
 
     def _check_argspec(self):
         aav = AnsibleArgSpecValidator(
-            data=self._task.args,
-            schema=DOCUMENTATION,
-            name=self._task.action,
+            data=self._task.args, schema=DOCUMENTATION, name=self._task.action
         )
         valid, errors, self._task.args = aav.validate()
         if not valid:

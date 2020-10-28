@@ -338,9 +338,7 @@ class LookupModule(LookupBase):
             terms = dict(zip(keys, terms))
         terms.update(kwargs)
         aav = AnsibleArgSpecValidator(
-            data=terms,
-            schema=DOCUMENTATION,
-            name="index_of",
+            data=terms, schema=DOCUMENTATION, name="index_of"
         )
         valid, errors, updated_data = aav.validate()
         if not valid:

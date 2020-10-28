@@ -97,8 +97,7 @@ class TestUpdate_Fact(unittest.TestCase):
         with self.assertRaises(Exception) as error:
             self._plugin.run(task_vars=None)
         self.assertIn(
-            "missing required arguments: updates",
-            str(error.exception),
+            "missing required arguments: updates", str(error.exception)
         )
 
     def test_argspec_none(self):

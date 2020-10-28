@@ -1,8 +1,9 @@
+---
 name: Publish
 on:
   release:
     types:
-    - created
+      - created
 
 jobs:
   publish:
@@ -11,7 +12,7 @@ jobs:
     steps:
     - name: Check out code
       uses: actions/checkout@v2
-   
+
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
@@ -31,5 +32,5 @@ jobs:
     #   env:
     #     ANSIBLE_GALAXY_API_KEY: ${{ secrets.ANSIBLE_GALAXY_API_KEY }}
     #   run: |
-    #     ansible-galaxy collection build 
+    #     ansible-galaxy collection build
     #     ansible-galaxy collection publish *.tar.gz --api-key $ANSIBLE_GALAXY_API_KEY

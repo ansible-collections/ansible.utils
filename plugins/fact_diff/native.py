@@ -36,14 +36,18 @@ class FactDiff(FactDiffBase):
                 self._debug("'after' is a string, splitting lines")
                 self._after = self._after.splitlines()
             self._before = [
-                l
-                for l in self._before
-                if not any(regex.match(str(l)) for regex in self._skip_lines)
+                line
+                for line in self._before
+                if not any(
+                    regex.match(str(line)) for regex in self._skip_lines
+                )
             ]
             self._after = [
-                l
-                for l in self._after
-                if not any(regex.match(str(l)) for regex in self._skip_lines)
+                line
+                for line in self._after
+                if not any(
+                    regex.match(str(line)) for regex in self._skip_lines
+                )
             ]
         if isinstance(self._before, list):
             self._debug("'before' is a list, joining with \n")

@@ -1,0 +1,9 @@
+black==19.3b0 ; python_version > '3.5'
+coverage==4.5.4
+flake8
+mock ; python_version < '3.5'
+pytest-xdist
+yamllint
+# The follow are 3rd party libs for valiate
+jsonschema
+# /valiate

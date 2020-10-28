@@ -8,10 +8,9 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 from copy import deepcopy
-from itertools import chain
 
 from ansible.module_utils.common._collections_compat import Mapping
-from ansible.module_utils.six import iteritems, string_types
+from ansible.module_utils.six import iteritems
 
 
 def sort_list(val):
@@ -102,3 +101,12 @@ def dict_merge(base, other):
         combined[key] = other.get(key)
 
     return combined
+
+
+def to_list(val):
+    if isinstance(val, (list, tuple, set)):
+        return list(val)
+    elif val is not None:
+        return [val]
+    else:
+        return list()

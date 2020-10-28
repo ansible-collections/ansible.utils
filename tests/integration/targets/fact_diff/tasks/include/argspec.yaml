@@ -1,14 +1,15 @@
-- name: Check argspec validation 
+---
+- name: Check argspec validation
   ansible.utils.fact_diff:
-  ignore_errors: True
+  ignore_errors: true
   register: result
 
 - assert:
     that: "{{ string in result.msg }}"
   loop:
-  - "missing required arguments:"
-  - before
-  - after
+    - "missing required arguments:"
+    - before
+    - after
   loop_control:
     loop_var: string
 
@@ -19,8 +20,8 @@
     plugin:
       vars:
         skip_lines:
-          a_dict: False
-  ignore_errors: True
+          a_dict: false
+  ignore_errors: true
   register: result
 
 - assert:

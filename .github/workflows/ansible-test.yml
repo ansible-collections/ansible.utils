@@ -95,10 +95,10 @@ jobs:
       - name: Install ansible-base (${{ matrix.ansible }})
         run: pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible }}.tar.gz --disable-pip-version-check
 
-      # OPTIONAL If your unit test requires Python libraries from other collections
-      # Install them like this
-      # - name: Install collection dependencies
-      #   run: ansible-galaxy collection install ansible.netcommon -p .
+       # OPTIONAL If your unit test requires Python libraries from other collections
+       # Install them like this
+       - name: Install collection dependencies
+         run: ansible-galaxy collection install ansible.utils -p .
 
       # Run the unit tests
       - name: Run unit test
@@ -156,10 +156,16 @@ jobs:
       - name: Install ansible-base (${{ matrix.ansible }})
         run: pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible }}.tar.gz --disable-pip-version-check
 
+#      - name: Install collection dependencies
+#        run: |
+#          python -m pip install --upgrade pip
+#          pip install -r requirements.txt
+#        working-directory: ./ansible_collections/ansible/utils
+
       # OPTIONAL If your integration test requires Python libraries or modules from other collections
       # Install them like this
-      # - name: Install collection dependencies
-      #   run: ansible-galaxy collection install ansible.netcommon -p .
+      - name: Install collection dependencies
+        run: ansible-galaxy collection install ansible.utils -p .
 
       # Run the integration tests
       - name: Run integration test
