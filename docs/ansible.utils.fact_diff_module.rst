@@ -223,11 +223,6 @@ Examples
 
     # changed: [localhost]
 
-    - name: Show the difference in yaml format
-      ansible.utils.fact_diff:
-        before: "{{ before }}"
-        after: "{{ before }}"
-
 
     #### Show the difference between complex object using restconf
     #  ansible_connection: ansible.netcommon.httpapi
@@ -235,7 +230,7 @@ Examples
     #  ansible_httpapi_validate_certs: False
     #  ansible_network_os: ansible.netcommon.restconf
 
-    - name: Get the current interface config prior ro changes
+    - name: Get the current interface config prior to changes
       ansible.netcommon.restconf_get:
         content: config
         path: /data/Cisco-NX-OS-device:System/intf-items/phys-items
