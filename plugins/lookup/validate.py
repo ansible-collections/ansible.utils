@@ -3,14 +3,9 @@
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
-
-"""
-The get_path lookup plugin
-"""
 from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
-
 
 DOCUMENTATION = """
     lookup: validate
@@ -85,10 +80,8 @@ RETURN = """
       - If data is invalid returns list of errors in data
 """
 
-from copy import deepcopy
-
-from ansible.errors import AnsibleError
-from ansible.module_utils._text import to_native
+from ansible.errors import AnsibleError, AnsibleLookupError
+from ansible.module_utils._text import to_text
 from ansible.plugins.lookup import LookupBase
 from ansible_collections.ansible.utils.plugins.module_utils.validate.base import (
     load_validator,
@@ -100,16 +93,6 @@ from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_valid
     check_argspec,
 )
 
-try:
-    import yaml
-
-    try:
-        from yaml import CSafeLoader as SafeLoader
-    except ImportError:
-        from yaml import SafeLoader
-    HAS_YAML = True
-except ImportError:
-    HAS_YAML = False
 
 ARGSPEC_CONDITIONALS = {}
 
@@ -117,29 +100,27 @@ ARGSPEC_CONDITIONALS = {}
 class LookupModule(LookupBase):
     def run(self, terms, variables, **kwargs):
         if len(terms) < 2:
-            raise AnsibleError(
+            raise AnsibleLookupError(
                 "Missing either 'data' or 'criteria' value in lookup input,"
-                "refer ansible.utils.validate lookup plugin documentation for detials"
+                "refer ansible.utils.validate lookup plugin documentation for details"
             )
 
         params = {"data": terms[0], "criteria": terms[1]}
         if kwargs.get("engine"):
             params.update({"engine": kwargs["engine"]})
 
-        argspec = deepcopy(DOCUMENTATION)
-        argspec_obj = yaml.load(argspec, SafeLoader)
-        argspec_obj["options"].pop("_terms", None)
-
-        argspec_result, updated_params = check_argspec(
-            yaml.dump(argspec_obj),
+        valid, argspec_result, updated_params = check_argspec(
+            DOCUMENTATION,
             "lookup",
             schema_conditionals=ARGSPEC_CONDITIONALS,
             **params
         )
-        if argspec_result.get("failed"):
-            raise AnsibleError(
-                "%s with errors: %s"
-                % (argspec_result.get("msg"), argspec_result.get("errors"))
+        if not valid:
+            raise AnsibleLookupError(
+                "{argspec_result} with errors: {argspec_errors}".format(
+                    argspec_result=argspec_result.get("msg"),
+                    argspec_errors=argspec_result.get("errors"),
+                )
             )
 
         validator_engine, validator_result = load_validator(
@@ -150,17 +131,23 @@ class LookupModule(LookupBase):
             kwargs=kwargs,
         )
         if validator_result.get("failed"):
-            raise AnsibleError(
-                "validate lookup plugin failed with errors: %s"
-                % validator_result.get("msg")
+            raise AnsibleLookupError(
+                "validate lookup plugin failed with errors: {validator_result}".format(
+                    validator_result=validator_result.get("msg")
+                )
             )
 
         try:
             result = validator_engine.validate()
+        except AnsibleError as exc:
+            raise AnsibleLookupError(
+                to_text(exc, errors="surrogate_then_replace")
+            )
         except Exception as exc:
-            raise AnsibleError(
+            raise AnsibleLookupError(
                 "Unhandled exception from validator '{validator}'. Error: {err}".format(
-                    validator=updated_params["engine"], err=to_native(exc)
+                    validator=updated_params["engine"],
+                    err=to_text(exc, errors="surrogate_then_replace"),
                 )
             )
 

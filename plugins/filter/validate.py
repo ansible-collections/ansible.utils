@@ -68,10 +68,8 @@ RETURN = """
       - If data is invalid returns list of errors in data
 """
 
-from copy import deepcopy
-
-from ansible.errors import AnsibleError
-from ansible.module_utils._text import to_native
+from ansible.errors import AnsibleError, AnsibleFilterError
+from ansible.module_utils._text import to_text
 from ansible_collections.ansible.utils.plugins.module_utils.validate.base import (
     load_validator,
 )
@@ -82,44 +80,33 @@ from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_valid
     check_argspec,
 )
 
-try:
-    import yaml
-
-    try:
-        from yaml import CSafeLoader as SafeLoader
-    except ImportError:
-        from yaml import SafeLoader
-    HAS_YAML = True
-except ImportError:
-    HAS_YAML = False
 
 ARGSPEC_CONDITIONALS = {}
 
 
 def validate(*args, **kwargs):
     if len(args) < 2:
-        raise AnsibleError(
+        raise AnsibleFilterError(
             "Missing either 'data' or 'criteria' value in filter input,"
-            "refer ansible.utils.validate filter plugin documentation for detials"
+            "refer 'ansible.utils.validate' filter plugin documentation for details"
         )
 
     params = {"data": args[0], "criteria": args[1]}
     if kwargs.get("engine"):
         params.update({"engine": kwargs["engine"]})
 
-    argspec = deepcopy(DOCUMENTATION)
-    argspec_obj = yaml.load(argspec, SafeLoader)
-
-    argspec_result, updated_params = check_argspec(
-        yaml.dump(argspec_obj),
-        "action",
+    valid, argspec_result, updated_params = check_argspec(
+        DOCUMENTATION,
+        "filter",
         schema_conditionals=ARGSPEC_CONDITIONALS,
         **params
     )
-    if argspec_result.get("failed"):
-        raise AnsibleError(
-            "%s with errors: %s"
-            % (argspec_result.get("msg"), argspec_result.get("errors"))
+    if not valid:
+        raise AnsibleFilterError(
+            "{argspec_result} with errors: {argspec_errors}".format(
+                argspec_result=argspec_result.get("msg"),
+                argspec_errors=argspec_result.get("errors"),
+            )
         )
 
     validator_engine, validator_result = load_validator(
@@ -129,17 +116,21 @@ def validate(*args, **kwargs):
         kwargs=kwargs,
     )
     if validator_result.get("failed"):
-        raise AnsibleError(
-            "validate lookup plugin failed with errors: %s"
-            % validator_result.get("msg")
+        raise AnsibleFilterError(
+            "validate lookup plugin failed with errors: {msg}".format(
+                msg=validator_result.get("msg")
+            )
         )
 
     try:
         result = validator_engine.validate()
+    except AnsibleError as exc:
+        raise AnsibleFilterError(to_text(exc, errors="surrogate_then_replace"))
     except Exception as exc:
-        raise AnsibleError(
+        raise AnsibleFilterError(
             "Unhandled exception from validator '{validator}'. Error: {err}".format(
-                validator=updated_params["engine"], err=to_native(exc)
+                validator=updated_params["engine"],
+                err=to_text(exc, errors="surrogate_then_replace"),
             )
         )
 

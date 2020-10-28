@@ -265,4 +265,4 @@ def check_argspec(
             name=name
         )
 
-    return result, updated_params
+    return valid, result, updated_params

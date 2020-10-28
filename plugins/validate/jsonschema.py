@@ -3,9 +3,6 @@
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
-"""
-The action plugin file for cli_parse
-"""
 from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
@@ -35,17 +32,18 @@ DOCUMENTATION = """
         - name: ANSIBLE_VALIDATE_JSONSCHEMA_DRAFT
         vars:
         - name: ansible_validate_jsonschema_draft
-Notes:
-- The value of C(data) option should be either of type I(dict) or I(strings) which should be
-  a valid I(dict) when read in python.
-- The value of C(criteria) should be I(list) of I(dict) or I(list) of I(strings) and each
-  I(string) within the I(list) entry should be a valid I(dict) when read in python.
+    notes:
+    - The value of C(data) option should be either of type I(dict) or I(strings) which should be
+      a valid I(dict) when read in python.
+    - The value of C(criteria) should be I(list) of I(dict) or I(list) of I(strings) and each
+      I(string) within the I(list) entry should be a valid I(dict) when read in python.
 """
 
 import json
 
 from ansible.module_utils._text import to_text
 from ansible.module_utils.basic import missing_required_lib
+from ansible.errors import AnsibleError
 from ansible.module_utils.six import string_types
 
 from ansible_collections.ansible.utils.plugins.validate import ValidateBase
@@ -81,61 +79,58 @@ class Validate(ValidateBase):
     def _check_reqs():
         """Check the prerequisites are installed for jsonschema
 
-        :return dict: A dict with a list of errors
+        :return None: In case all prerequisites are satisfised
         """
-        errors = []
         if not HAS_JSONSCHEMA:
-            errors.append(missing_required_lib("jsonschema"))
-
-        return errors
+            raise AnsibleError(missing_required_lib("jsonschema"))
 
     def _check_args(self):
         """Ensure specific args are set
 
-        :return: A dict with a list of errors
-        :rtype: dict
+        :return: None: In case all arguments passed are valid
         """
-        errors = []
         try:
             if isinstance(self._data, dict):
                 self._data = json.loads(json.dumps(self._data))
             elif isinstance(self._data, string_types):
                 self._data = json.loads(self._data)
             else:
-                errors.append(
-                    "Expected value of 'data' option is either dict or str, received type '%s'"
-                    % type(self._data)
+                msg = "Expected value of 'data' option is either dict or str, received type '{data_type}'".format(
+                    data_type=type(self._data)
                 )
-        except TypeError as exe:
-            errors.append(
-                "'data' option value is invalid. Failed to read with error '%s'"
-                % to_text(exe, errors="surrogate_then_replace")
+                raise AnsibleError(msg)
+
+        except (TypeError, json.decoder.JSONDecodeError) as exe:
+            msg = (
+                "'data' option value is invalid, value should of type dict or str format of dict."
+                " Failed to read with error '{err}'".format(
+                    err=to_text(exe, errors="surrogate_then_replace")
+                )
             )
+            raise AnsibleError(msg)
 
         try:
             criteria = []
             for item in to_list(self._criteria):
                 if isinstance(item, dict):
-                    criteria.append(json.loads(json.dumps(self._criteria)))
+                    criteria.append(json.loads(json.dumps(item)))
                 elif isinstance(self._criteria, string_types):
-                    criteria.append(json.loads(self._criteria))
+                    criteria.append(json.loads(item))
                 else:
-                    errors.append(
-                        "Expected value of 'criteria' option is either list of dict/str or dict or str, received type '%s'"
-                        % type(criteria)
+                    msg = "Expected value of 'criteria' option is either list of dict/str or dict or str, received type '{criteria_type}'".format(
+                        criteria_type=type(criteria)
                     )
+                    raise AnsibleError(msg)
+
             self._criteria = criteria
-        except TypeError as exe:
-            errors.append(
-                "'criteria' option value is invalid. Failed to read with error '%s'"
-                % to_text(exe, errors="surrogate_then_replace")
+        except (TypeError, json.decoder.JSONDecodeError) as exe:
+            msg = (
+                "'criteria' option value is invalid, value should of type dict or str format of dict."
+                " Failed to read with error '{err}'".format(
+                    err=to_text(exe, errors="surrogate_then_replace")
+                )
             )
-
-        # set jsonschema plugin options
-        if not self._sub_plugin_options:
-            self._set_sub_plugin_options(DOCUMENTATION)
-
-        return errors
+            raise AnsibleError(msg)
 
     def validate(self):
         """Std entry point for a validate execution
@@ -150,10 +145,8 @@ class Validate(ValidateBase):
         or
         {"parsed": obj}
         """
-        errors = self._check_reqs()
-        errors.extend(self._check_args())
-        if errors:
-            return {"errors": errors}
+        self._check_reqs()
+        self._check_args()
 
         try:
             self._validate_jsonschema()
@@ -166,6 +159,7 @@ class Validate(ValidateBase):
         error_messages = None
 
         draft = self._get_sub_plugin_options("draft")
+        error_messages = []
 
         for criteria in self._criteria:
             if draft == "draft3":
@@ -185,7 +179,6 @@ class Validate(ValidateBase):
                 if "errors" not in self._result:
                     self._result["errors"] = []
 
-                error_messages = []
                 for validation_error in validation_errors:
                     if isinstance(
                         validation_error, jsonschema.ValidationError
@@ -207,13 +200,13 @@ class Validate(ValidateBase):
                             "found": validation_error.instance,
                         }
                         self._result["errors"].append(error)
-                        error_message = (
-                            "At '{schema_path}' {message}. ".format(
-                                schema_path=error["schema_path"],
-                                message=error["message"],
-                            )
+                        error_message = "At '{schema_path}' {message}. ".format(
+                            schema_path=error["schema_path"],
+                            message=error["message"],
                         )
                         error_messages.append(error_message)
         if error_messages:
             if "msg" not in self._result:
                 self._result["msg"] = "\n".join(error_messages)
+            else:
+                self._result["msg"] += "\n".join(error_messages)

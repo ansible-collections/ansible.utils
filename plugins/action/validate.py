@@ -10,8 +10,8 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-from ansible.errors import AnsibleActionFail
-from ansible.module_utils._text import to_native
+from ansible.errors import AnsibleActionFail, AnsibleError
+from ansible.module_utils._text import to_text
 from ansible.plugins.action import ActionBase
 
 from ansible_collections.ansible.utils.plugins.modules.validate import (
@@ -58,13 +58,13 @@ class ActionModule(ActionBase):
         :return: The results from the parser
         :rtype: dict
         """
-        argspec_result, updated_params = check_argspec(
+        valid, argspec_result, updated_params = check_argspec(
             DOCUMENTATION,
             "action",
             schema_conditionals=ARGSPEC_CONDITIONALS,
             **self._task.args
         )
-        if argspec_result.get("failed"):
+        if not valid:
             return self._result
 
         self._task_vars = task_vars
@@ -81,10 +81,15 @@ class ActionModule(ActionBase):
 
         try:
             result = self._validator_engine.validate()
+        except AnsibleError as exc:
+            raise AnsibleActionFail(
+                to_text(exc, errors="surrogate_then_replace")
+            )
         except Exception as exc:
             raise AnsibleActionFail(
                 "Unhandled exception from validator '{validator}'. Error: {err}".format(
-                    validator=self._validator_engine, err=to_native(exc)
+                    validator=self._validator_engine,
+                    err=to_text(exc, errors="surrogate_then_replace"),
                 )
             )
 

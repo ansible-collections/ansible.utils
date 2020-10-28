@@ -40,10 +40,8 @@ def load_validator(
         return None, result
 
     cref = dict(zip(["corg", "cname", "plugin"], engine.split(".")))
-    validatorlib = (
-        "ansible_collections.{corg}.{cname}.plugins.validate.{plugin}".format(
-            ** cref
-        )
+    validatorlib = "ansible_collections.{corg}.{cname}.plugins.validate.{plugin}".format(
+        **cref
     )
     try:
         validatorcls = getattr(import_module(validatorlib), cls_name)
@@ -57,8 +55,9 @@ def load_validator(
         return validator, result
     except Exception as exc:
         result["failed"] = True
-        result["msg"] = (
-            "For engine '%s' error loading the corresponding validate plugin: %s"
-            % (engine, to_native(exc))
+        result[
+            "msg"
+        ] = "For engine '{engine}' error loading the corresponding validate plugin: {err}".format(
+            engine=engine, err=to_native(exc)
         )
         return None, result
