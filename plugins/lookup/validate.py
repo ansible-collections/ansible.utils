@@ -111,7 +111,7 @@ class LookupModule(LookupBase):
 
         valid, argspec_result, updated_params = check_argspec(
             DOCUMENTATION,
-            "lookup",
+            "validate lookup",
             schema_conditionals=ARGSPEC_CONDITIONALS,
             **params
         )

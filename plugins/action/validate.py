@@ -60,15 +60,15 @@ class ActionModule(ActionBase):
         """
         valid, argspec_result, updated_params = check_argspec(
             DOCUMENTATION,
-            "action",
+            "validate module",
             schema_conditionals=ARGSPEC_CONDITIONALS,
             **self._task.args
         )
         if not valid:
-            return self._result
+            return argspec_result
 
         self._task_vars = task_vars
-        self._playhost = task_vars.get("inventory_hostname")
+        self._playhost = task_vars.get("inventory_hostname") if task_vars else None
 
         self._validator_engine, validator_result = load_validator(
             engine=updated_params["engine"],

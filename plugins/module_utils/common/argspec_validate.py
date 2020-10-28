@@ -261,7 +261,7 @@ def check_argspec(
     if not valid:
         result["errors"] = errors
         result["failed"] = True
-        result["msg"] = "argspec validation failed for plugin {name}".format(
+        result["msg"] = "argspec validation failed for {name} plugin".format(
             name=name
         )
 

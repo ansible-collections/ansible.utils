@@ -97,7 +97,7 @@ def validate(*args, **kwargs):
 
     valid, argspec_result, updated_params = check_argspec(
         DOCUMENTATION,
-        "filter",
+        "validate filter",
         schema_conditionals=ARGSPEC_CONDITIONALS,
         **params
     )
