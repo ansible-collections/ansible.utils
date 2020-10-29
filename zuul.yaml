@@ -1,5 +1,6 @@
 ---
 - project:
     templates:
+          - build-ansible-collection
           - system-required
           - ansible-collections-ansible-utils-units
