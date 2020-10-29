@@ -1,5 +1,0 @@
----
-- project:
-    templates:
-          - ansible-collections-ansible-utils-units
-          - ansible-collections-ansible-utils
