@@ -7,9 +7,7 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-import copy
 import unittest
-from jinja2 import Template, TemplateSyntaxError
 from mock import MagicMock
 from ansible.playbook.task import Task
 from ansible.template import Templar
