@@ -13,90 +13,69 @@ from ansible.errors import AnsibleError
 from ansible_collections.ansible.utils.plugins.test.validate import validate
 
 DATA = {
-  "GigabitEthernet0/0/0/0": {
-    "auto_negotiate": False,
-    "counters": {
-      "in_crc_errors": 0,
-      "in_errors": 0,
-      "rate": {
-        "in_rate": 0,
-        "out_rate": 0
-      }
+    "GigabitEthernet0/0/0/0": {
+        "auto_negotiate": False,
+        "counters": {
+            "in_crc_errors": 0,
+            "in_errors": 0,
+            "rate": {"in_rate": 0, "out_rate": 0},
+        },
+        "description": "configured using Ansible",
+        "duplex_mode": "full",
+        "enabled": True,
+        "line_protocol": "up",
+        "mtu": 1514,
+        "oper_status": "down",
+        "type": "GigabitEthernet",
     },
-    "description": "configured using Ansible",
-    "duplex_mode": "full",
-    "enabled": True,
-    "line_protocol": "up",
-    "mtu": 1514,
-    "oper_status": "down",
-    "type": "GigabitEthernet"
-  },
-  "GigabitEthernet0/0/0/1": {
-    "auto_negotiate": False,
-    "counters": {
-      "in_crc_errors": 10,
-      "in_errors": 0,
-      "rate": {
-        "in_rate": 0,
-        "out_rate": 0
-      }
+    "GigabitEthernet0/0/0/1": {
+        "auto_negotiate": False,
+        "counters": {
+            "in_crc_errors": 10,
+            "in_errors": 0,
+            "rate": {"in_rate": 0, "out_rate": 0},
+        },
+        "description": "# interface is configures with Ansible",
+        "duplex_mode": "full",
+        "enabled": False,
+        "line_protocol": "up",
+        "mtu": 1514,
+        "oper_status": "up",
+        "type": "GigabitEthernet",
     },
-    "description": "# interface is configures with Ansible",
-    "duplex_mode": "full",
-    "enabled": False,
-    "line_protocol": "up",
-    "mtu": 1514,
-    "oper_status": "up",
-    "type": "GigabitEthernet"
-  }
 }
 
 CRITERIA_CRC_ERROR_CHECK = {
-    "type" : "object",
+    "type": "object",
     "patternProperties": {
         "^.*": {
             "type": "object",
             "properties": {
                 "counters": {
                     "properties": {
-                        "in_crc_errors": {
-                            "type": "number",
-                            "maximum": 0
-                        }
+                        "in_crc_errors": {"type": "number", "maximum": 0}
                     }
                 }
-            }
+            },
         }
-    }
+    },
 }
 
 CRITERIA_ENABLED_CHECK = {
-    "type" : "object",
+    "type": "object",
     "patternProperties": {
-        "^.*": {
-            "type": "object",
-            "properties": {
-                "enabled": {
-                    "enum": [True]
-                }
-            }
-        }
-    }
+        "^.*": {"type": "object", "properties": {"enabled": {"enum": [True]}}}
+    },
 }
 
 CRITERIA_OPER_STATUS_UP_CHECK = {
-    "type" : "object",
+    "type": "object",
     "patternProperties": {
         "^.*": {
             "type": "object",
-            "properties": {
-                "oper_status": {
-                    "type": "string",
-                    "pattern": "up"
-                }
-            }
+            "properties": {"oper_status": {"type": "string", "pattern": "up"}},
         }
-    }
+    },
 }
 
 CRITERIA_IN_RATE_CHECK = {
@@ -108,18 +87,15 @@ CRITERIA_IN_RATE_CHECK = {
                 "counters": {
                     "properties": {
                         "rate": {
-                          "properties": {
-                            "in_rate": {
-                              "type": "number",
-                              "maximum": 0
+                            "properties": {
+                                "in_rate": {"type": "number", "maximum": 0}
                             }
-                          }
                         }
                     }
                 }
-            }
+            },
         }
-    }
+    },
 }
 
 
@@ -139,23 +115,31 @@ class TestValidate(unittest.TestCase):
             "missing required arguments: criteria", str(error.exception)
         )
 
-        kwargs = {'criteria': CRITERIA_IN_RATE_CHECK, 'engine': 'ansible.utils.sample'}
+        kwargs = {
+            "criteria": CRITERIA_IN_RATE_CHECK,
+            "engine": "ansible.utils.sample",
+        }
         with self.assertRaises(AnsibleError) as error:
             validate(*args, **kwargs)
         self.assertIn(
-            "For engine 'ansible.utils.sample' error loading", str(error.exception)
+            "For engine 'ansible.utils.sample' error loading",
+            str(error.exception),
         )
 
         args = ["invalid data"]
-        kwargs = {'criteria': [CRITERIA_IN_RATE_CHECK], 'engine': 'ansible.utils.jsonschema'}
+        kwargs = {
+            "criteria": [CRITERIA_IN_RATE_CHECK],
+            "engine": "ansible.utils.jsonschema",
+        }
         with self.assertRaises(AnsibleError) as error:
             validate(*args, **kwargs)
-        self.assertIn(
-            "'data' option value is invalid", str(error.exception)
-        )
+        self.assertIn("'data' option value is invalid", str(error.exception))
 
         args = [DATA]
-        kwargs = {'criteria': 'invalid criteria', 'engine': 'ansible.utils.jsonschema'}
+        kwargs = {
+            "criteria": "invalid criteria",
+            "engine": "ansible.utils.jsonschema",
+        }
         with self.assertRaises(AnsibleError) as error:
             validate(*args, **kwargs)
         self.assertIn(
@@ -165,24 +149,39 @@ class TestValidate(unittest.TestCase):
     def test_invalid_validate_plugin_config_options(self):
         """Check passing invalid validate plugin options"""
         args = [DATA]
-        kwargs = {'criteria': 'invalid criteria', 'engine': 'ansible.utils.jsonschema', 'draft': 'draft0'}
+        kwargs = {
+            "criteria": "invalid criteria",
+            "engine": "ansible.utils.jsonschema",
+            "draft": "draft0",
+        }
 
         with self.assertRaises(AnsibleError) as error:
             validate(*args, **kwargs)
         self.assertIn(
-            "value of draft must be one of: draft3, draft4, draft6, draft7, got: draft0", str(error.exception)
+            "value of draft must be one of: draft3, draft4, draft6, draft7, got: draft0",
+            str(error.exception),
         )
 
     def test_invalid_data(self):
         """Check passing invalid data as per criteria"""
         args = [DATA]
-        kwargs = {'criteria': [CRITERIA_ENABLED_CHECK, CRITERIA_OPER_STATUS_UP_CHECK, CRITERIA_CRC_ERROR_CHECK], 'engine': 'ansible.utils.jsonschema'}
+        kwargs = {
+            "criteria": [
+                CRITERIA_ENABLED_CHECK,
+                CRITERIA_OPER_STATUS_UP_CHECK,
+                CRITERIA_CRC_ERROR_CHECK,
+            ],
+            "engine": "ansible.utils.jsonschema",
+        }
         result = validate(*args, **kwargs)
         self.assertEqual(result, False)
 
     def test_valid_data(self):
         """Check passing valid data as per criteria"""
         args = [DATA]
-        kwargs = {'criteria': CRITERIA_IN_RATE_CHECK, 'engine': 'ansible.utils.jsonschema'}
+        kwargs = {
+            "criteria": CRITERIA_IN_RATE_CHECK,
+            "engine": "ansible.utils.jsonschema",
+        }
         result = validate(*args, **kwargs)
         self.assertEqual(result, True)

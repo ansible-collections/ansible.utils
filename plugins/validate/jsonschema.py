@@ -46,7 +46,9 @@ from ansible.module_utils.basic import missing_required_lib
 from ansible.errors import AnsibleError
 from ansible.module_utils.six import string_types
 
-from ansible_collections.ansible.utils.plugins.validate._base import ValidateBase
+from ansible_collections.ansible.utils.plugins.validate._base import (
+    ValidateBase,
+)
 
 from ansible_collections.ansible.utils.plugins.module_utils.common.utils import (
     to_list,
@@ -200,11 +202,9 @@ class Validate(ValidateBase):
                             "found": validation_error.instance,
                         }
                         self._result["errors"].append(error)
-                        error_message = (
-                            "At '{schema_path}' {message}. ".format(
-                                schema_path=error["schema_path"],
-                                message=error["message"],
-                            )
+                        error_message = "At '{schema_path}' {message}. ".format(
+                            schema_path=error["schema_path"],
+                            message=error["message"],
                         )
                         error_messages.append(error_message)
         if error_messages:

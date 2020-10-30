@@ -20,90 +20,69 @@ from ansible_collections.ansible.utils.plugins.action.validate import (
 )
 
 DATA = {
-  "GigabitEthernet0/0/0/0": {
-    "auto_negotiate": False,
-    "counters": {
-      "in_crc_errors": 0,
-      "in_errors": 0,
-      "rate": {
-        "in_rate": 0,
-        "out_rate": 0
-      }
+    "GigabitEthernet0/0/0/0": {
+        "auto_negotiate": False,
+        "counters": {
+            "in_crc_errors": 0,
+            "in_errors": 0,
+            "rate": {"in_rate": 0, "out_rate": 0},
+        },
+        "description": "configured using Ansible",
+        "duplex_mode": "full",
+        "enabled": True,
+        "line_protocol": "up",
+        "mtu": 1514,
+        "oper_status": "down",
+        "type": "GigabitEthernet",
     },
-    "description": "configured using Ansible",
-    "duplex_mode": "full",
-    "enabled": True,
-    "line_protocol": "up",
-    "mtu": 1514,
-    "oper_status": "down",
-    "type": "GigabitEthernet"
-  },
-  "GigabitEthernet0/0/0/1": {
-    "auto_negotiate": False,
-    "counters": {
-      "in_crc_errors": 10,
-      "in_errors": 0,
-      "rate": {
-        "in_rate": 0,
-        "out_rate": 0
-      }
+    "GigabitEthernet0/0/0/1": {
+        "auto_negotiate": False,
+        "counters": {
+            "in_crc_errors": 10,
+            "in_errors": 0,
+            "rate": {"in_rate": 0, "out_rate": 0},
+        },
+        "description": "# interface is configures with Ansible",
+        "duplex_mode": "full",
+        "enabled": False,
+        "line_protocol": "up",
+        "mtu": 1514,
+        "oper_status": "up",
+        "type": "GigabitEthernet",
     },
-    "description": "# interface is configures with Ansible",
-    "duplex_mode": "full",
-    "enabled": False,
-    "line_protocol": "up",
-    "mtu": 1514,
-    "oper_status": "up",
-    "type": "GigabitEthernet"
-  }
 }
 
 CRITERIA_CRC_ERROR_CHECK = {
-    "type" : "object",
+    "type": "object",
     "patternProperties": {
         "^.*": {
             "type": "object",
             "properties": {
                 "counters": {
                     "properties": {
-                        "in_crc_errors": {
-                            "type": "number",
-                            "maximum": 0
-                        }
+                        "in_crc_errors": {"type": "number", "maximum": 0}
                     }
                 }
-            }
+            },
         }
-    }
+    },
 }
 
 CRITERIA_ENABLED_CHECK = {
-    "type" : "object",
+    "type": "object",
     "patternProperties": {
-        "^.*": {
-            "type": "object",
-            "properties": {
-                "enabled": {
-                    "enum": [True]
-                }
-            }
-        }
-    }
+        "^.*": {"type": "object", "properties": {"enabled": {"enum": [True]}}}
+    },
 }
 
 CRITERIA_OPER_STATUS_UP_CHECK = {
-    "type" : "object",
+    "type": "object",
     "patternProperties": {
         "^.*": {
             "type": "object",
-            "properties": {
-                "oper_status": {
-                    "type": "string",
-                    "pattern": "up"
-                }
-            }
+            "properties": {"oper_status": {"type": "string", "pattern": "up"}},
         }
-    }
+    },
 }
 
 CRITERIA_IN_RATE_CHECK = {
@@ -115,18 +94,15 @@ CRITERIA_IN_RATE_CHECK = {
                 "counters": {
                     "properties": {
                         "rate": {
-                          "properties": {
-                            "in_rate": {
-                              "type": "number",
-                              "maximum": 0
+                            "properties": {
+                                "in_rate": {"type": "number", "maximum": 0}
                             }
-                          }
                         }
                     }
                 }
-            }
+            },
         }
-    }
+    },
 }
 
 
@@ -160,35 +136,40 @@ class TestValidate(unittest.TestCase):
         self._plugin._task.args = {
             "engine": "ansible.utils.sample",
             "data": DATA,
-            "criteria": CRITERIA_OPER_STATUS_UP_CHECK
+            "criteria": CRITERIA_OPER_STATUS_UP_CHECK,
         }
         result = self._plugin.run(task_vars=None)
-        self.assertIn("For engine 'ansible.utils.sample' error loading the corresponding validate plugin", result["msg"])
+        self.assertIn(
+            "For engine 'ansible.utils.sample' error loading the corresponding validate plugin",
+            result["msg"],
+        )
 
         # invalid data option value
         self._plugin._task.args = {
             "engine": "ansible.utils.jsonschema",
             "data": "invalid data",
-            "criteria": CRITERIA_OPER_STATUS_UP_CHECK
+            "criteria": CRITERIA_OPER_STATUS_UP_CHECK,
         }
 
         with self.assertRaises(AnsibleActionFail) as error:
             self._plugin.run(task_vars=None)
         self.assertIn(
-            "'data' option value is invalid, value should of type dict or str format of dict", str(error.exception)
+            "'data' option value is invalid, value should of type dict or str format of dict",
+            str(error.exception),
         )
 
         # invalid criteria option value
         self._plugin._task.args = {
             "engine": "ansible.utils.jsonschema",
             "data": DATA,
-            "criteria": "invalid criteria"
+            "criteria": "invalid criteria",
         }
 
         with self.assertRaises(AnsibleActionFail) as error:
             self._plugin.run(task_vars=None)
         self.assertIn(
-            "'criteria' option value is invalid, value should of type dict or str format of dict", str(error.exception)
+            "'criteria' option value is invalid, value should of type dict or str format of dict",
+            str(error.exception),
         )
 
     def test_invalid_validate_plugin_config_options(self):
@@ -197,11 +178,16 @@ class TestValidate(unittest.TestCase):
         self._plugin._task.args = {
             "engine": "ansible.utils.jsonschema",
             "data": DATA,
-            "criteria": CRITERIA_IN_RATE_CHECK
+            "criteria": CRITERIA_IN_RATE_CHECK,
         }
 
-        result = self._plugin.run(task_vars={'ansible_validate_jsonschema_draft': 'draft0'})
-        self.assertIn("value of draft must be one of: draft3, draft4, draft6, draft7, got: draft0", result["msg"])
+        result = self._plugin.run(
+            task_vars={"ansible_validate_jsonschema_draft": "draft0"}
+        )
+        self.assertIn(
+            "value of draft must be one of: draft3, draft4, draft6, draft7, got: draft0",
+            result["msg"],
+        )
 
     def test_invalid_data(self):
         """Check passing invalid data as per criteria"""
@@ -209,13 +195,25 @@ class TestValidate(unittest.TestCase):
         self._plugin._task.args = {
             "engine": "ansible.utils.jsonschema",
             "data": DATA,
-            "criteria": [CRITERIA_CRC_ERROR_CHECK, CRITERIA_ENABLED_CHECK, CRITERIA_OPER_STATUS_UP_CHECK]
+            "criteria": [
+                CRITERIA_CRC_ERROR_CHECK,
+                CRITERIA_ENABLED_CHECK,
+                CRITERIA_OPER_STATUS_UP_CHECK,
+            ],
         }
 
         result = self._plugin.run(task_vars=None)
-        self.assertIn("patternProperties.^.*.properties.counters.properties.in_crc_errors.maximum", result["msg"])
-        self.assertIn("patternProperties.^.*.properties.enabled.enum", result["msg"])
-        self.assertIn("'patternProperties.^.*.properties.oper_status.pattern", result["msg"])
+        self.assertIn(
+            "patternProperties.^.*.properties.counters.properties.in_crc_errors.maximum",
+            result["msg"],
+        )
+        self.assertIn(
+            "patternProperties.^.*.properties.enabled.enum", result["msg"]
+        )
+        self.assertIn(
+            "'patternProperties.^.*.properties.oper_status.pattern",
+            result["msg"],
+        )
 
     def test_valid_data(self):
         """Check passing valid data as per criteria"""
@@ -223,7 +221,7 @@ class TestValidate(unittest.TestCase):
         self._plugin._task.args = {
             "engine": "ansible.utils.jsonschema",
             "data": DATA,
-            "criteria": CRITERIA_IN_RATE_CHECK
+            "criteria": CRITERIA_IN_RATE_CHECK,
         }
 
         result = self._plugin.run(task_vars=None)

@@ -147,6 +147,7 @@ def validate(*args, **kwargs):
 
 class TestModule(object):
     """data validation test"""
+
     test_map = {"validate": validate}
 
     def tests(self):

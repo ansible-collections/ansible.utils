@@ -68,7 +68,9 @@ class ActionModule(ActionBase):
             return argspec_result
 
         self._task_vars = task_vars
-        self._playhost = task_vars.get("inventory_hostname") if task_vars else None
+        self._playhost = (
+            task_vars.get("inventory_hostname") if task_vars else None
+        )
 
         self._validator_engine, validator_result = load_validator(
             engine=updated_params["engine"],
