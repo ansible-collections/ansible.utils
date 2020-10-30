@@ -8,7 +8,6 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 import unittest
-from mock import MagicMock
 from ansible.playbook.task import Task
 from ansible.template import Templar
 from ansible.errors import AnsibleActionFail
@@ -16,6 +15,12 @@ from ansible.errors import AnsibleActionFail
 from ansible_collections.ansible.utils.plugins.action.validate import (
     ActionModule,
 )
+
+try:
+    from unittest.mock import MagicMock  # pylint:disable=syntax-error
+except ImportError:
+    from mock import MagicMock
+
 
 DATA = {
     "GigabitEthernet0/0/0/0": {

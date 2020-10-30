@@ -10,13 +10,18 @@ __metaclass__ = type
 import copy
 import unittest
 from jinja2 import Template, TemplateSyntaxError
-from mock import MagicMock
 from ansible.playbook.task import Task
 from ansible.template import Templar
 
 from ansible_collections.ansible.utils.plugins.action.update_fact import (
     ActionModule,
 )
+
+try:
+    from unittest.mock import MagicMock  # pylint:disable=syntax-error
+except ImportError:
+    from mock import MagicMock
+
 
 VALID_DATA = {
     "a": {
