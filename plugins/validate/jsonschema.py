@@ -131,7 +131,7 @@ class Validate(ValidateBase):
                     raise AnsibleError(msg)
 
             self._criteria = criteria
-        except (TypeError, json.decoder.JSONDecodeError) as exe:
+        except (TypeError, JSONDecodeError) as exe:
             msg = (
                 "'criteria' option value is invalid, value should of type dict or str format of dict."
                 " Failed to read with error '{err}'".format(
