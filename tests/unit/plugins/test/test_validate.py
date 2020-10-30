@@ -111,9 +111,9 @@ class TestValidate(unittest.TestCase):
         kwargs = {}
         with self.assertRaises(AnsibleError) as error:
             validate(*args, **kwargs)
-        msg = "missing required arguments: criteria data"
-        self.assertEqual(
-            sorted(msg.split()), sorted(str(error.exception).split())
+        msg = "missing required arguments: criteria"
+        self.assertTrue(
+            set(str(error.exception).split()).issuperset(set(msg.split()))
         )
 
         kwargs = {
