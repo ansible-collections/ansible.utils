@@ -112,7 +112,9 @@ class TestValidate(unittest.TestCase):
         with self.assertRaises(AnsibleError) as error:
             validate(*args, **kwargs)
         msg = "missing required arguments: criteria data"
-        self.assertItemsEqual(msg.split(), str(error.exception).split())
+        self.assertEqual(
+            sorted(msg.split()), sorted(str(error.exception).split())
+        )
 
         kwargs = {
             "criteria": CRITERIA_IN_RATE_CHECK,
