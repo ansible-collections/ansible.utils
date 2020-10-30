@@ -54,6 +54,12 @@ from ansible_collections.ansible.utils.plugins.module_utils.common.utils import 
     to_list,
 )
 
+# PY2 compatiblilty for JSONDecodeError
+try:
+    from json.decoder import JSONDecodeError
+except ImportError:
+    JSONDecodeError = ValueError
+
 try:
     import jsonschema
 
@@ -102,7 +108,7 @@ class Validate(ValidateBase):
                 )
                 raise AnsibleError(msg)
 
-        except (TypeError, json.decoder.JSONDecodeError) as exe:
+        except (TypeError, JSONDecodeError) as exe:
             msg = (
                 "'data' option value is invalid, value should of type dict or str format of dict."
                 " Failed to read with error '{err}'".format(
