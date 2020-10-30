@@ -46,11 +46,19 @@ from ansible.module_utils.basic import missing_required_lib
 from ansible.errors import AnsibleError
 from ansible.module_utils.six import string_types
 
-from ansible_collections.ansible.utils.plugins.validate._base import ValidateBase
+from ansible_collections.ansible.utils.plugins.validate._base import (
+    ValidateBase,
+)
 
 from ansible_collections.ansible.utils.plugins.module_utils.common.utils import (
     to_list,
 )
+
+# PY2 compatiblilty for JSONDecodeError
+try:
+    from json.decoder import JSONDecodeError
+except ImportError:
+    JSONDecodeError = ValueError
 
 try:
     import jsonschema
@@ -100,7 +108,7 @@ class Validate(ValidateBase):
                 )
                 raise AnsibleError(msg)
 
-        except (TypeError, json.decoder.JSONDecodeError) as exe:
+        except (TypeError, JSONDecodeError) as exe:
             msg = (
                 "'data' option value is invalid, value should of type dict or str format of dict."
                 " Failed to read with error '{err}'".format(
@@ -123,7 +131,7 @@ class Validate(ValidateBase):
                     raise AnsibleError(msg)
 
             self._criteria = criteria
-        except (TypeError, json.decoder.JSONDecodeError) as exe:
+        except (TypeError, JSONDecodeError) as exe:
             msg = (
                 "'criteria' option value is invalid, value should of type dict or str format of dict."
                 " Failed to read with error '{err}'".format(
@@ -200,11 +208,9 @@ class Validate(ValidateBase):
                             "found": validation_error.instance,
                         }
                         self._result["errors"].append(error)
-                        error_message = (
-                            "At '{schema_path}' {message}. ".format(
-                                schema_path=error["schema_path"],
-                                message=error["message"],
-                            )
+                        error_message = "At '{schema_path}' {message}. ".format(
+                            schema_path=error["schema_path"],
+                            message=error["message"],
                         )
                         error_messages.append(error_message)
         if error_messages:

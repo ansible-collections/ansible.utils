@@ -9,13 +9,17 @@ __metaclass__ = type
 
 import re
 import unittest
-from mock import MagicMock
 from ansible.playbook.task import Task
 from ansible.template import Templar
 
 from ansible_collections.ansible.utils.plugins.action.fact_diff import (
     ActionModule,
 )
+
+try:
+    from unittest.mock import MagicMock  # pylint:disable=syntax-error
+except ImportError:
+    from mock import MagicMock
 
 
 class TestUpdate_Fact(unittest.TestCase):
