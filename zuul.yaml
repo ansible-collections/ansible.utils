@@ -1,4 +1,4 @@
 ---
 - project:
     templates:
-      - ansible-collections-arista-ansible-utils
+      - ansible-collections-ansible-ansible-utils
