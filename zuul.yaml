@@ -1,4 +1,4 @@
 ---
 - project:
     templates:
-      - ansible-test-network-integration-ansible-utils-python36
+      - ansible-collections-arista-ansible-utils
