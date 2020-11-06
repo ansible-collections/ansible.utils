@@ -1,4 +1,3 @@
-ansible
 # The follow are 3rd party libs for validate
 jsonschema
 # /valiate
