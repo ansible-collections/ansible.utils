@@ -15,17 +15,17 @@ DOCUMENTATION = """
     filter: index_of
     author: Bradley Thornton (@cidrblock)
     version_added: "1.0"
-    short_description: Find the indicies of items in a list matching some criteria
+    short_description: Find the indices of items in a list matching some criteria
     description:
-        - This plugin returns the indicies of items matching some criteria in a list
-        - When working with a list of dictionaries, the key to evaluate can be specified
-        - C(index_of) is also available as a C(lookup plugin) for convenience
+        - This plugin returns the indices of items matching some criteria in a list.
+        - When working with a list of dictionaries, the key to evaluate can be specified.
+        - C(index_of) is also available as a C(lookup plugin) for convenience.
         - Using the parameters below- C(data|ansible.utils.index_of(test, value, key, fail_on_missing, wantlist))
     options:
       data:
         description:
-        - A list of items to enumerate and test against
-        - This option represents the value that is passed to filter plugin in pipe format.
+        - A list of items to enumerate and test against.
+        - This option represents the value that is passed to the filter plugin in pipe format.
         - For example I(config_data|ansible.utils.index_of('x')), in this case I(config_data) represents this option.
         type: list
         required: True
@@ -38,23 +38,23 @@ DOCUMENTATION = """
         required: True
       value:
         description:
-        - The value used to test each list item against
+        - The value used to test each list item against.
         - Not required for simple tests (eg: C(true), C(false), C(even), C(odd))
         - May be a C(string), C(boolean), C(number), C(regular expesion) C(dict) etc, depending on the C(test) used
         type: raw
       key:
         description:
-        - When the data provided is a list of dictionaries, run the test againt this dictionary key
-        - When using a C(key), the C(data) must only contain dictionaries
-        - See C(fail_on_missing) below to determine the behaviour when the C(key) is missing from a dictionary in the C(data)
+        - When the data provided is a list of dictionaries, run the test against this dictionary key.
+        - When using a C(key), the C(data) must only contain dictionaries.
+        - See C(fail_on_missing) below to determine the behavior when the C(key) is missing from a dictionary in the C(data).
         type: str
       fail_on_missing:
-        description: When provided a list of dictionaries, fail if the key is missing from one or more of the dictionaries
+        description: When provided a list of dictionaries, fail if the key is missing from one or more of the dictionaries.
         type: bool
       wantlist:
         description:
-        - When only a single entry in the C(data) is matched, that entries index is returned as an integer
-        - If set to C(True), the return value will always be a list, even if only a single entry is matched
+        - When only a single entry in the C(data) is matched, the index of that entry is returned as an integer.
+        - If set to C(True), the return value will always be a list, even if only a single entry is matched.
         type: bool
 
     notes:

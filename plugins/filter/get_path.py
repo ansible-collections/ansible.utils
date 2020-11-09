@@ -17,26 +17,26 @@ DOCUMENTATION = """
     version_added: "1.0"
     short_description: Retrieve the value in a variable using a path
     description:
-        - Use a C(path) to retreive a nested value from a C(var)
-        - C(get_path) is also available as a C(lookup plugin) for convenience
+        - Use a C(path) to retreive a nested value from a C(var).
+        - C(get_path) is also available as a C(lookup plugin) for convenience.
         - Using the parameters below- C(var|ansible.utils.get_path(path, wantlist))
     options:
       var:
         description:
-        - The variable from which the value should be extraced
-        - This option represents the value that is passed to filter plugin in pipe format.
+        - The variable from which the value should be extraced.
+        - This option represents the value that is passed to the filter plugin in pipe format.
         - For example I(config_data|ansible.utils.get_path()), in this case I(config_data) represents this option.
         type: raw
         required: True
       path:
         description:
         - The C(path) in the C(var) to retrieve the value of.
-        - The C(path) needs to a be a valid jinja path
+        - The C(path) needs to be a valid jinja path.
         type: str
         required: True
       wantlist:
         description:
-        - If set to C(True), the return value will always be a list
+        - If set to C(True), the return value will always be a list.
         type: bool
 
     notes:
@@ -104,8 +104,8 @@ EXAMPLES = r"""
 #     paths:
 #       a.b.c.d[0]: 0
 #       a.b.c.d[1]: 1
-#       a.b.c.e[0]: true
-#       a.b.c.e[1]: false
+#       a.b.c.e[0]: True
+#       a.b.c.e[1]: False
 
 # TASK [Retrieve the value of each path from vars] ******************
 # ok: [nxos101] => (item=a.b.c.d[0]) =>

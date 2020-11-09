@@ -63,7 +63,7 @@ collections:
 ```
 ## Using this collection
 
-The most common use case for this collection is when you want to work with the complex data structures present in an Ansible playbook, inventory, or returned from modules.
+The most common use case for this collection is when you want to work with the complex data structures present in an Ansible playbook, inventory, or returned from modules. See each plugin documentation page for detailed examples for how these utilities can be used in tasks.
 
 
 **NOTE**: For Ansible 2.9, you may not see deprecation warnings when you run your playbooks with this collection. Use this documentation to track when a module is deprecated.
