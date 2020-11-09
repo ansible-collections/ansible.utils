@@ -23,20 +23,20 @@ DOCUMENTATION = """
         - Using the parameters below- C(lookup('ansible.utils.get_path', var, path, wantlist))
     options:
       var:
-        description: The variable from which the value should be extraced
+        description: The variable from which the value should be extraced.
         type: raw
         required: True
       path:
         description: >
             The C(path) in the C(var) to retrieve the value of.
-            The C(path) needs to a be a valid jinja path
+            The C(path) needs to a be a valid jinja path.
         type: str
         required: True
       wantlist:
         description: >
-            If set to C(True), the return value will always be a list
-            This can also be accomplished using C(query) or C(q) instead of C(lookup)
-            U(https://docs.ansible.com/ansible/latest/plugins/lookup.html)
+            If set to C(True), the return value will always be a list.
+            This can also be accomplished using C(query) or C(q) instead of C(lookup).
+            U(https://docs.ansible.com/ansible/latest/plugins/lookup.html).
         type: bool
 
     notes:
@@ -104,8 +104,8 @@ EXAMPLES = r"""
 #     paths:
 #       a.b.c.d[0]: 0
 #       a.b.c.d[1]: 1
-#       a.b.c.e[0]: true
-#       a.b.c.e[1]: false
+#       a.b.c.e[0]: True
+#       a.b.c.e[1]: False
 
 # TASK [Retrieve the value of each path from vars] ******************
 # ok: [nxos101] => (item=a.b.c.d[0]) =>
@@ -150,8 +150,8 @@ EXAMPLES = r"""
 RETURN = """
   _raw:
     description:
-      - One or more zero-based indicies of the matching list items
-      - See C(wantlist) if a list is always required
+      - One or more zero-based indices of the matching list items.
+      - See C(wantlist) if a list is always required.
 """
 
 from ansible.errors import AnsibleLookupError

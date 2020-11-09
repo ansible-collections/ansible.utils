@@ -18,27 +18,27 @@ DOCUMENTATION = """
       data:
         type: raw
         description:
-        - A data that will be validated against C(criteria).
-        - This option represents the value that is passed to lookup plugin as first argument.
+        - Data that will be validated against C(criteria).
+        - This option represents the value that is passed to the lookup plugin as the first argument.
           For example I(lookup(config_data, config_criteria, engine='ansible.utils.jsonschema')),
           in this case I(config_data) represents this option.
-        - For the type of C(data) that represents this value refer documentation of individual validate plugins.
+        - For the type of C(data) that represents this value refer to the documentation of individual validate plugins.
         required: True
       criteria:
         type: raw
         description:
-        - The criteria used for validation of value that represents C(data) options.
+        - The criteria used for validation of value that represents C(data). options.
         - This option represents the second argument passed in the lookup plugin
           For example I(lookup(config_data, config_criteria, engine='ansible.utils.jsonschema')),
           in this case the value of I(config_criteria) represents this option.
-        - For the type of C(criteria) that represents this value refer documentation of individual
+        - For the type of C(criteria) that represents this value refer to the  documentation of individual
           validate plugins.
         required: True
       engine:
         type: str
         description:
         - The name of the validate plugin to use.
-        - This option can be passed in lookup plugin as a key, value pair
+        - This option can be passed in lookup plugin as a key, value pair.
           For example I(lookup(config_data, config_criteria, engine='ansible.utils.jsonschema')), in
           this case the value I(ansible.utils.jsonschema) represents the engine to be use for data valdiation.
           If the value is not provided the default value that is I(ansible.uitls.jsonschema) will be used.
@@ -46,9 +46,9 @@ DOCUMENTATION = """
           I(<org-name>.<collection-name>.<validate-plugin-name>).
         default: ansible.utils.jsonschema
     notes:
-    - For the type of options C(data) and C(criteria) refer the individual C(validate) plugin
+    - For the type of options C(data) and C(criteria) refer to the individual C(validate) plugin
       documentation that is represented in the value of C(engine) option.
-    - For additional plugin configuration options refer the individual C(validate) plugin
+    - For additional plugin configuration options refer to the individual C(validate) plugin
       documentation that is represented by the value of C(engine) option.
     - The plugin configuration option can be either passed as I(key=value) pairs within lookup plugin
       or task or environment variables.
@@ -76,8 +76,8 @@ EXAMPLES = r"""
 RETURN = """
   _raw:
     description:
-      - If data is valid returns empty list
-      - If data is invalid returns list of errors in data
+      - If data is valid returns empty list.
+      - If data is invalid returns list of errors in data.
 """
 
 from ansible.errors import AnsibleError, AnsibleLookupError
