@@ -15,7 +15,7 @@ __metaclass__ = type
 DOCUMENTATION = """
     filter: to_paths
     author: Bradley Thornton (@cidrblock)
-    version_added: "1.0"
+    version_added: "1.0.0"
     short_description: Flatten a complex object into a dictionary of paths and values
     description:
         - Flatten a complex object into a dictionary of paths and values.

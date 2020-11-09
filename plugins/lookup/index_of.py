@@ -15,7 +15,7 @@ __metaclass__ = type
 DOCUMENTATION = """
     lookup: index_of
     author: Bradley Thornton (@cidrblock)
-    version_added: "1.0"
+    version_added: "1.0.0"
     short_description: Find the indices of items in a list matching some criteria
     description:
         - This plugin returns the indices of items matching some criteria in a list.
