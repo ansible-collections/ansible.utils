@@ -19,7 +19,7 @@ Synopsis
 --------
 - This module allows updating existing variables.
 - Variables are updated on a host-by-host basis.
-- Variable are not modified in place, instead they are returned by the module
+- Variable are not modified in place, instead they are returned by the module.
 
 
 
@@ -49,7 +49,7 @@ Parameters
                 <td>
                 </td>
                 <td>
-                        <div>A list of dictionaries, each a desired update to make</div>
+                        <div>A list of dictionaries, each a desired update to make.</div>
                 </td>
             </tr>
                                 <tr>
@@ -66,9 +66,9 @@ Parameters
                 <td>
                 </td>
                 <td>
-                        <div>The path in a currently set variable to update</div>
-                        <div>The path can be in dot or bracket notation</div>
-                        <div>It should be a valid jinja reference</div>
+                        <div>The path in a currently set variable to update.</div>
+                        <div>The path can be in dot or bracket notation.</div>
+                        <div>It should be a valid jinja reference.</div>
                 </td>
             </tr>
             <tr>
@@ -85,8 +85,8 @@ Parameters
                 <td>
                 </td>
                 <td>
-                        <div>The value to be set at the path</div>
-                        <div>Can be a simple or complex data structure</div>
+                        <div>The value to be set at the path.</div>
+                        <div>Can be a simple or complex data structure.</div>
                 </td>
             </tr>
 
@@ -296,7 +296,7 @@ Examples
         state: gathered
       register: current
 
-    - name: Update the source of sequenmce 10 in the IPv4 ACL named test1
+    - name: Update the source of sequence 10 in the IPv4 ACL named test1
       ansible.utils.update_fact:
         updates:
         - path: current.gathered[{{ afi }}].acls[{{ acl }}].aces[{{ ace }}].source

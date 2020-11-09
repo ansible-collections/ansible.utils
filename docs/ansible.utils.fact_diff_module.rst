@@ -17,7 +17,7 @@ Version added: 1.0.0
 
 Synopsis
 --------
-- Compare two facts or variables and get a diff
+- Compare two facts or variables and get a diff.
 
 
 
@@ -46,7 +46,7 @@ Parameters
                 <td>
                 </td>
                 <td>
-                        <div>The second fact to be used in the comparison</div>
+                        <div>The second fact to be used in the comparison.</div>
                 </td>
             </tr>
             <tr>
@@ -62,7 +62,7 @@ Parameters
                 <td>
                 </td>
                 <td>
-                        <div>The first fact to be used in the comparison</div>
+                        <div>The first fact to be used in the comparison.</div>
                 </td>
             </tr>
             <tr>
@@ -95,7 +95,7 @@ Parameters
                         <b>Default:</b><br/><div style="color: blue">"ansible.utils.native"</div>
                 </td>
                 <td>
-                        <div>The diff plugin to use, in collection format</div>
+                        <div>The diff plugin to use, in fully qualified collection name format.</div>
                 </td>
             </tr>
             <tr>
@@ -112,7 +112,7 @@ Parameters
                         <b>Default:</b><br/><div style="color: blue">{}</div>
                 </td>
                 <td>
-                        <div>Parameters passed to the diff plugin</div>
+                        <div>Parameters passed to the diff plugin.</div>
                 </td>
             </tr>
                                 <tr>
@@ -129,9 +129,9 @@ Parameters
                 <td>
                 </td>
                 <td>
-                        <div>Skip lines matching these regular expressions</div>
-                        <div>Matches will be removed prior to the diff</div>
-                        <div>If the provided <em>before</em> and <em>after</em> are a string, they will be split</div>
+                        <div>Skip lines matching these regular expressions.</div>
+                        <div>Matches will be removed prior to the diff.</div>
+                        <div>If the provided <em>before</em> and <em>after</em> are a string, they will be split.</div>
                         <div>Each entry in each list will be cast to a string for the comparison</div>
                 </td>
             </tr>
@@ -302,7 +302,7 @@ Common return values are documented `here <https://docs.ansible.com/ansible/late
                 </td>
                 <td>always</td>
                 <td>
-                            <div>The <code>diff_text</code> split into lines</div>
+                            <div>The <code>diff_text</code> split into lines.</div>
                     <br/>
                 </td>
             </tr>
@@ -317,7 +317,7 @@ Common return values are documented `here <https://docs.ansible.com/ansible/late
                 </td>
                 <td>always</td>
                 <td>
-                            <div>The diff in text format</div>
+                            <div>The diff in text format.</div>
                     <br/>
                 </td>
             </tr>

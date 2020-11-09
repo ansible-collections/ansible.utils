@@ -8,7 +8,7 @@ ansible.utils.to_paths
 **Flatten a complex object into a dictionary of paths and values**
 
 
-Version added: 1.0
+Version added: 1.0.0
 
 .. contents::
    :local:
@@ -18,9 +18,9 @@ Version added: 1.0
 Synopsis
 --------
 - Flatten a complex object into a dictionary of paths and values.
-- Paths are dot delimited whenever possible
-- Brakets are used for list indicies and keys that contain special characters
-- ``to_paths`` is also available as a filter plugin
+- Paths are dot delimited whenever possible.
+- Brackets are used for list indices and keys that contain special characters.
+- ``to_paths`` is also available as a filter plugin.
 - Using the parameters below- ``lookup('ansible.utils.to_paths', var, prepend, wantlist``)
 
 
@@ -52,7 +52,7 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>Prepend each path entry. Useful to add the initial <code>var</code> name.</div>
+                        <div>Prepend each path entry. Useful to add the initial <code>var</code>. name.</div>
                 </td>
             </tr>
             <tr>
@@ -127,8 +127,8 @@ Examples
     #     paths:
     #       b.c.d[0]: 0
     #       b.c.d[1]: 1
-    #       b.c.e[0]: true
-    #       b.c.e[1]: false
+    #       b.c.e[0]: True
+    #       b.c.e[1]: False
 
     - name: Use prepend to add the initial variable name
       ansible.builtin.set_fact:
@@ -140,8 +140,8 @@ Examples
     #     paths:
     #       a.b.c.d[0]: 0
     #       a.b.c.d[1]: 1
-    #       a.b.c.e[0]: true
-    #       a.b.c.e[1]: false
+    #       a.b.c.e[0]: True
+    #       a.b.c.e[1]: False
 
 
     #### Using a complex object
@@ -201,9 +201,9 @@ Common return values are documented `here <https://docs.ansible.com/ansible/late
                 </td>
                 <td></td>
                 <td>
-                            <div>A dictionary of key value pairs</div>
-                            <div>The key is the path</div>
-                            <div>The value is the value</div>
+                            <div>A dictionary of key value pairs.</div>
+                            <div>The key is the path.</div>
+                            <div>The value is the value.</div>
                     <br/>
                 </td>
             </tr>
