@@ -21,10 +21,10 @@ PEP440 is the schema used to describe the versions of Ansible.
 ### Filter plugins
 Name | Description
 --- | ---
-ansible.utils.get_path|Retrieve the value in a variable using a path.
-ansible.utils.index_of|Find the indicies of items in a list matching some criteria.
-ansible.utils.to_paths|Flatten a complex object into a dictionary of paths and values.
-ansible.utils.validate|ansible.utils validate filter plugin
+[ansible.utils.get_path](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.get_path_filter.rst)|Retrieve the value in a variable using a path
+[ansible.utils.index_of](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.index_of_filter.rst)|Find the indices of items in a list matching some criteria
+[ansible.utils.to_paths](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.to_paths_filter.rst)|Flatten a complex object into a dictionary of paths and values
+[ansible.utils.validate](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.validate_filter.rst)|Validate data with provided criteria
 
 ### Lookup plugins
 Name | Description
@@ -44,7 +44,12 @@ Name | Description
 ### Test plugins
 Name | Description
 --- | ---
-ansible.utils.validate|ansible.utils validate test plugin
+[ansible.utils.validate](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.validate_test.rst)|Validate data with provided criteria
+
+### Validate plugins
+Name | Description
+--- | ---
+[ansible.utils.jsonschema](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.jsonschema_validate.rst)|Define configurable options for jsonschema validate plugin
 
 <!--end collection content-->
 
