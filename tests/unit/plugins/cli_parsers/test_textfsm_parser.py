@@ -64,7 +64,7 @@ class TestTextfsmParser(unittest.TestCase):
         parser = CliParser(task_args=task_args, task_vars=[], debug=False)
         result = parser.parse()
         error = {
-            "error": '[Errno 2] No such file or directory: "{0}"'.format(
+            "error": "error while reading template_path file {0}".format(
                 fake_path
             )
         }

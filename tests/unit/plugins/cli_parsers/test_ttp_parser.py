@@ -18,7 +18,7 @@ textfsm = pytest.importorskip("ttp")
 
 
 class TestTextfsmParser(unittest.TestCase):
-    def test_textfsm_parser(self):
+    def test_ttp_parser(self):
         nxos_cfg_path = os.path.join(
             os.path.dirname(__file__), "fixtures", "nxos_show_version.cfg"
         )
@@ -64,7 +64,7 @@ class TestTextfsmParser(unittest.TestCase):
         parser = CliParser(task_args=task_args, task_vars=[], debug=False)
         result = parser.parse()
         error = {
-            "error": '[Errno 2] No such file or directory: "{0}"'.format(
+            "error": "error while reading template_path file {0}".format(
                 fake_path
             )
         }

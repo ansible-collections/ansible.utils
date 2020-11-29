@@ -8,6 +8,8 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
+import os
+
 from ansible.module_utils._text import to_native
 from ansible.module_utils.basic import missing_required_lib
 from ansible_collections.ansible.utils.plugins.cli_parsers._base import (
@@ -61,6 +63,13 @@ class CliParser(CliParserBase):
         if res.get("errors"):
             return {"errors": res.get("errors")}
 
+        template_path = self._task_args.get("parser").get("template_path")
+        if template_path and not os.path.isfile(template_path):
+            return {
+                "error": "error while reading template_path file {file}".format(
+                    file=template_path
+                )
+            }
         try:
             template = open(self._task_args.get("parser").get("template_path"))
         except IOError as exc:
