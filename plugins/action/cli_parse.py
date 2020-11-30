@@ -81,10 +81,15 @@ class ActionModule(ActionBase):
         that cannot be covered using stnd techniques
         """
         errors = []
-        if len(self._task.args.get("parser").get("name").split(".")) != 3:
+        requested_parser = self._task.args.get("parser").get("name")
+        if len(requested_parser.split(".")) != 3:
             msg = "Parser name should be provided as a full name including collection"
             errors.append(msg)
-        if self._task.args.get("text"):
+
+        if self._task.args.get("text") and requested_parser not in [
+            "ansible.utils.json",
+            "ansible.utils.xml",
+        ]:
             if not (
                 self._task.args.get("parser").get("command")
                 or self._task.args.get("parser").get("template_path")

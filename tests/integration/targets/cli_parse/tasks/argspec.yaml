@@ -11,7 +11,7 @@
 
 - name: "{{ parser }} Check argspec fail"
   assert:
-    that: "argfail['msg'] == 'parameters are mutually exclusive: command|template_path found in parser'"
+    that: "argfail['errors'] == 'parameters are mutually exclusive: command|template_path found in parser'"
 
 - name: "{{ parser }} validate argspec"
   ansible.utils.cli_parse:
@@ -25,7 +25,7 @@
 
 - name: "{{ parser }} Check argspec fail"
   assert:
-    that: "argfail['msg'] == 'parameters are mutually exclusive: command|text'"
+    that: "argfail['errors'] == 'parameters are mutually exclusive: command|text'"
 
 - name: "{{ parser }} validate argspec"
   ansible.utils.cli_parse:
@@ -37,7 +37,7 @@
 
 - name: "{{ parser }} Check argspec fail"
   assert:
-    that: "argfail['msg'] == 'one of the following is required: command, text'"
+    that: "argfail['errors'] == 'one of the following is required: command, text'"
 
 
 - name: "{{ parser }} validate argspec"

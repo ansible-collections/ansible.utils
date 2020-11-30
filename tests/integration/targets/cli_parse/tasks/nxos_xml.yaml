@@ -7,7 +7,6 @@
     text: "{{ lookup('file', '{{ role_path }}/files/nxos_show_interface.xml') }}"
     parser:
       name: ansible.utils.xml
-      command: "show interface | xml"
       os: nxos
   register: nxos_xml_text
 

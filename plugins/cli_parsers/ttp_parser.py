@@ -58,12 +58,17 @@ class CliParser(CliParserBase):
         or
         {"parsed": obj}
         """
-        cli_output = self._task_args.get("text")
+        cli_output = to_native(
+            self._task_args.get("text"), errors="surrogate_then_replace"
+        )
         res = self._check_reqs()
         if res.get("errors"):
             return {"errors": res.get("errors")}
 
-        template_path = self._task_args.get("parser").get("template_path")
+        template_path = to_native(
+            self._task_args.get("parser").get("template_path"),
+            errors="surrogate_then_replace",
+        )
         if template_path and not os.path.isfile(template_path):
             return {
                 "error": "error while reading template_path file {file}".format(

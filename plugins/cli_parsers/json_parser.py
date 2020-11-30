@@ -10,6 +10,7 @@ __metaclass__ = type
 import json
 
 from ansible.module_utils._text import to_native
+from ansible.module_utils.six import string_types
 from ansible_collections.ansible.utils.plugins.cli_parsers._base import (
     CliParserBase,
 )
@@ -38,6 +39,8 @@ class CliParser(CliParserBase):
         """
         text = self._task_args.get("text")
         try:
+            if not isinstance(text, string_types):
+                text = json.dumps(text)
             parsed = json.loads(text)
         except Exception as exc:
             return {"errors": [to_native(exc)]}

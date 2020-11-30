@@ -1,15 +1,10 @@
 ---
-- name: "{{ parser }} Run command and parse with json"
-  ansible.utils.cli_parse:
-    command: "show version | json"
-    parser:
-      name: ansible.utils.json
-  register: nxos_json_command
+- set_fact:
+    nxos_json_text_parsed: "{{ lookup('file', '{{ role_path }}/output/nxos_show_interface_json_text.txt') }}"
 
 - name: "{{ parser }} Run command and parse with json"
   ansible.utils.cli_parse:
-    # the leading space here is critical so it's not converted on the way in
-    text: "{{ nxos_json_command['stdout'] }}"
+    text: "{{ lookup('file', '{{ role_path }}/output/nxos_show_interface_json_text.txt') }}"
     parser:
       name: ansible.utils.json
   register: nxos_json_text
@@ -18,8 +13,6 @@
   assert:
     that: "{{ item }}"
   with_items:
-    - "{{ nxos_json_command['stdout'] is defined }}"
-    - "{{ nxos_json_command['stdout_lines'] is defined }}"
-    - "{{ nxos_json_command['parsed'] is defined }}"
-    - "{{ nxos_json_command['parsed']['header_str'] is defined }}"
-    - "{{ nxos_json_command['parsed'] == nxos_json_text['parsed'] }}"
+    - "{{ nxos_json_text['parsed'] is defined }}"
+    - "{{ nxos_json_text['parsed'][0][0][0]['admin_state'] is defined }}"
+    - "{{ nxos_json_text['parsed'] == nxos_json_text_parsed }}"

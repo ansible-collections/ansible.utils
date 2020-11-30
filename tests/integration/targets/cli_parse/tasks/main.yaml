@@ -70,10 +70,9 @@
   tags:
     - textfsm
 
-#- include_tasks: "ubuntu_ttp.yaml"
-#  vars:
-#    parser: "(ubuntu/ttp)"
-#  #when: inventory_hostname == 'localhost' and os == 'ubuntu'
-#  when: os == 'ubuntu'
-#  tags:
-#    - ttp
+- include_tasks: "ubuntu_ttp.yaml"
+  vars:
+    parser: "(ubuntu/ttp)"
+  when: os == 'ubuntu'
+  tags:
+    - ttp
