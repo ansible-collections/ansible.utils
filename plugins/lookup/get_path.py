@@ -23,7 +23,7 @@ DOCUMENTATION = """
         - Using the parameters below- C(lookup('ansible.utils.get_path', var, path, wantlist))
     options:
       var:
-        description: The variable from which the value should be extraced.
+        description: The variable from which the value should be extracted.
         type: raw
         required: True
       path:

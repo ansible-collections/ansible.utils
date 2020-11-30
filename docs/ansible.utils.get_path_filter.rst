@@ -70,7 +70,7 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>The variable from which the value should be extraced.</div>
+                        <div>The variable from which the value should be extracted.</div>
                         <div>This option represents the value that is passed to the filter plugin in pipe format.</div>
                         <div>For example <em>config_data|ansible.utils.get_path(</em>), in this case <em>config_data</em> represents this option.</div>
                 </td>

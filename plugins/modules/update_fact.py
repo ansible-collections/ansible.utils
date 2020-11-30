@@ -17,7 +17,7 @@ version_added: "1.0.0"
 description:
     - This module allows updating existing variables.
     - Variables are updated on a host-by-host basis.
-    - Variable are not modified in place, instead they are returned by the module.
+    - Variables are not modified in place, instead they are returned by the module.
 options:
   updates:
     description:

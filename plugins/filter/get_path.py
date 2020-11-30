@@ -23,7 +23,7 @@ DOCUMENTATION = """
     options:
       var:
         description:
-        - The variable from which the value should be extraced.
+        - The variable from which the value should be extracted.
         - This option represents the value that is passed to the filter plugin in pipe format.
         - For example I(config_data|ansible.utils.get_path()), in this case I(config_data) represents this option.
         type: raw

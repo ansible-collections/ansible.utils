@@ -49,7 +49,7 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>The criteria used for validation of value that represents <code>data</code>. options.</div>
+                        <div>The criteria used for validation of value that represents <code>data</code> options.</div>
                         <div>This option represents the second argument passed in the lookup plugin For example <em>lookup(config_data, config_criteria, engine=&#x27;ansible.utils.jsonschema&#x27;</em>), in this case the value of <em>config_criteria</em> represents this option.</div>
                         <div>For the type of <code>criteria</code> that represents this value refer to the  documentation of individual validate plugins.</div>
                 </td>

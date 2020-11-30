@@ -20,7 +20,7 @@ DOCUMENTATION = """
     description:
         - Flatten a complex object into a dictionary of paths and values.
         - Paths are dot delimited whenever possible.
-        - Brakets are used for list indicies and keys that contain special characters.
+        - Brakets are used for list indices and keys that contain special characters.
         - C(to_paths) is also available as a C(lookup plugin) for convenience.
         - Using the parameters below- C(var|ansible.utils.to_paths(prepend, wantlist))
     options:
@@ -32,7 +32,7 @@ DOCUMENTATION = """
         type: raw
         required: True
       prepend:
-        description: Prepend each path entry. Useful to add the initial C(var). name.
+        description: Prepend each path entry. Useful to add the initial C(var) name.
         type: str
         required: False
       wantlist:

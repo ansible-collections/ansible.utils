@@ -22,7 +22,7 @@ DOCUMENTATION = """
       criteria:
         type: raw
         description:
-        - The criteria used for validation of value that represents C(data). options.
+        - The criteria used for validation of value that represents C(data) options.
         - This option represents the first argument passed in the filter plugin.
           For example I(config_data|ansible.utils.validate(config_criteria)), in
           this case the value of I(config_criteria) represents this option.

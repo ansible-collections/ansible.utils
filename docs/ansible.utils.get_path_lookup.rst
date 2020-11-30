@@ -69,7 +69,7 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>The variable from which the value should be extraced.</div>
+                        <div>The variable from which the value should be extracted.</div>
                 </td>
             </tr>
             <tr>

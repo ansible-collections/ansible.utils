@@ -19,7 +19,7 @@ Synopsis
 --------
 - This module allows updating existing variables.
 - Variables are updated on a host-by-host basis.
-- Variable are not modified in place, instead they are returned by the module.
+- Variables are not modified in place, instead they are returned by the module.
 
 
 

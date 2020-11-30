@@ -27,7 +27,7 @@ DOCUMENTATION = """
       criteria:
         type: raw
         description:
-        - The criteria used for validation of value that represents C(data). options.
+        - The criteria used for validation of value that represents C(data) options.
         - This option represents the second argument passed in the lookup plugin
           For example I(lookup(config_data, config_criteria, engine='ansible.utils.jsonschema')),
           in this case the value of I(config_criteria) represents this option.

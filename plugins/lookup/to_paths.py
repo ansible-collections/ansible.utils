@@ -29,7 +29,7 @@ DOCUMENTATION = """
         type: raw
         required: True
       prepend:
-        description: Prepend each path entry. Useful to add the initial C(var). name.
+        description: Prepend each path entry. Useful to add the initial C(var) name.
         type: str
         required: False
       wantlist:

@@ -52,7 +52,7 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>Prepend each path entry. Useful to add the initial <code>var</code>. name.</div>
+                        <div>Prepend each path entry. Useful to add the initial <code>var</code> name.</div>
                 </td>
             </tr>
             <tr>
