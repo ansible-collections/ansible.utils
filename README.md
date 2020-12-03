@@ -1,9 +1,9 @@
 
 
-# Ansible Utilities Collection 
+# Ansible Utilities Collection
 [![Codecov](https://img.shields.io/codecov/c/github/ansible-collections/ansible.utils)](https://codecov.io/gh/ansible-collections/ansible.utils)
 
-The Ansible ``ansible.utils`` collection includes a variety of plugins that aid in the management, manupulation and visibility of data for the Ansible playbook developer.
+The Ansible ``ansible.utils`` collection includes a variety of plugins that aid in the management, manipulation and visibility of data for the Ansible playbook developer.
 
 <!--start requires_ansible-->
 ## Ansible version compatibility
@@ -22,7 +22,7 @@ PEP440 is the schema used to describe the versions of Ansible.
 Name | Description
 --- | ---
 [ansible.utils.get_path](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.get_path_filter.rst)|Retrieve the value in a variable using a path
-[ansible.utils.index_of](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.index_of_filter.rst)|Find the indicies of items in a list matching some criteria
+[ansible.utils.index_of](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.index_of_filter.rst)|Find the indices of items in a list matching some criteria
 [ansible.utils.to_paths](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.to_paths_filter.rst)|Flatten a complex object into a dictionary of paths and values
 [ansible.utils.validate](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.validate_filter.rst)|Validate data with provided criteria
 
@@ -30,7 +30,7 @@ Name | Description
 Name | Description
 --- | ---
 [ansible.utils.get_path](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.get_path_lookup.rst)|Retrieve the value in a variable using a path
-[ansible.utils.index_of](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.index_of_lookup.rst)|Find the indicies of items in a list matching some criteria
+[ansible.utils.index_of](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.index_of_lookup.rst)|Find the indices of items in a list matching some criteria
 [ansible.utils.to_paths](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.to_paths_lookup.rst)|Flatten a complex object into a dictionary of paths and values
 [ansible.utils.validate](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.validate_lookup.rst)|Validate data with provided criteria
 
@@ -45,6 +45,11 @@ Name | Description
 Name | Description
 --- | ---
 [ansible.utils.validate](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.validate_test.rst)|Validate data with provided criteria
+
+### Validate plugins
+Name | Description
+--- | ---
+[ansible.utils.jsonschema](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.jsonschema_validate.rst)|Define configurable options for jsonschema validate plugin
 
 <!--end collection content-->
 
@@ -63,18 +68,18 @@ collections:
 ```
 ## Using this collection
 
-The most common use case for this collection is when complex data structures are present in an Ansible playbook, inventory, or returned from modules are worked with.
+The most common use case for this collection is when you want to work with the complex data structures present in an Ansible playbook, inventory, or returned from modules. See each plugin documentation page for detailed examples for how these utilities can be used in tasks.
 
 
 **NOTE**: For Ansible 2.9, you may not see deprecation warnings when you run your playbooks with this collection. Use this documentation to track when a module is deprecated.
 
 ### See Also:
 
-* [Ansible Using collections](https://docs.ansible.com/ansible/latest/user_guide/collections_using.html) for more details.
+* [Using collections](https://docs.ansible.com/ansible/latest/user_guide/collections_using.html) in the Ansible documentation for more details.
 
 ## Contributing to this collection
 
-This collection is intended for plugins that are not platform or discipline specific. Simple plugin examples should be generic in nature, more complex examples can include real world platform module to demonstrate the utility of the plugin in a playbook.
+This collection is intended for plugins that are not platform or discipline specific. Simple plugin examples should be generic in nature. More complex examples can include real world platform modules to demonstrate the utility of the plugin in a playbook.
 
 We welcome community contributions to this collection. If you find problems, please open an issue or create a PR against the [ansible.utils collection repository](https://github.com/ansible-collections/ansible.utils). See [Contributing to Ansible-maintained collections](https://docs.ansible.com/ansible/devel/community/contributing_maintained_collections.html#contributing-maintained-collections) for complete details.
 
@@ -83,11 +88,11 @@ See the [Ansible Community Guide](https://docs.ansible.com/ansible/latest/commun
 ### Developer notes
 
 - 100% code coverage is the goal, although it's not always possible. Please include unit and integration tests with all PRs. PRs should not cause a decrease in code coverage.
-- filter plugins should be 1 per file, with an included DOCUMENTATION string/or reference a lookup plugin with the same name.
-- action, filter and lookup plugins should use argspec validation, see AnsibleArgSpecValidator
+- Filter plugins should be 1 per file, with an included DOCUMENTATION string, or reference a lookup plugin with the same name.
+- Action, filter, and lookup plugins should use argspec validation. See [AnsibleArgSpecValidator](https://github.com/ansible-collections/ansible.utils/blob/main/plugins/module_utils/common/argspec_validate.py).
 - This collection should not depend on other collections for imported code
 - Use of the latest version of black is required for formatting (black -l79)
-- The README contains a table of plugins, the collection_prep utilities make this easy to maintain
+- The README contains a table of plugins. Use the [collection_prep](https://github.com/ansible-network/collection_prep) utilities to maintain this.
 
 
 ### Code of Conduct

@@ -8,7 +8,7 @@ ansible.utils.to_paths
 **Flatten a complex object into a dictionary of paths and values**
 
 
-Version added: 1.0
+Version added: 1.0.0
 
 .. contents::
    :local:
@@ -18,9 +18,9 @@ Version added: 1.0
 Synopsis
 --------
 - Flatten a complex object into a dictionary of paths and values.
-- Paths are dot delimited whenever possible
-- Brakets are used for list indicies and keys that contain special characters
-- ``to_paths`` is also available as a ``lookup plugin`` for convenience
+- Paths are dot delimited whenever possible.
+- Brakets are used for list indices and keys that contain special characters.
+- ``to_paths`` is also available as a ``lookup plugin`` for convenience.
 - Using the parameters below- ``var|ansible.utils.to_paths(prepend, wantlist``)
 
 
@@ -71,7 +71,7 @@ Parameters
                     </td>
                 <td>
                         <div>The value of <code>var</code> will be will be used.</div>
-                        <div>This option represents the value that is passed to filter plugin in pipe format.</div>
+                        <div>This option represents the value that is passed to the filter plugin in pipe format.</div>
                         <div>For example <em>config_data|ansible.utils.to_paths(</em>), in this case <em>config_data</em> represents this option.</div>
                 </td>
             </tr>
@@ -129,8 +129,8 @@ Examples
     #     paths:
     #       b.c.d[0]: 0
     #       b.c.d[1]: 1
-    #       b.c.e[0]: true
-    #       b.c.e[1]: false
+    #       b.c.e[0]: True
+    #       b.c.e[1]: False
 
     - name: Use prepend to add the initial variable name
       ansible.builtin.set_fact:
@@ -142,8 +142,8 @@ Examples
     #     paths:
     #       a.b.c.d[0]: 0
     #       a.b.c.d[1]: 1
-    #       a.b.c.e[0]: true
-    #       a.b.c.e[1]: false
+    #       a.b.c.e[0]: True
+    #       a.b.c.e[1]: False
 
 
     #### Using a complex object

@@ -15,45 +15,45 @@ __metaclass__ = type
 DOCUMENTATION = """
     lookup: index_of
     author: Bradley Thornton (@cidrblock)
-    version_added: "1.0"
-    short_description: Find the indicies of items in a list matching some criteria
+    version_added: "1.0.0"
+    short_description: Find the indices of items in a list matching some criteria
     description:
-        - This plugin returns the indicies of items matching some criteria in a list
-        - When working with a list of dictionaries, the key to evaluate can be specified
-        - C(index_of) is also available as a C(filter plugin) for convenience
-        - Using the parameters below- C(lookup('ansible.utils.index_of', data, test, value, key, fail_on_missing, wantlist))
+        - This plugin returns the indices of items matching some criteria in a list.
+        - When working with a list of dictionaries, the key to evaluate can be specified.
+        - C(index_of) is also available as a C(filter plugin) for convenience.
+        - Using the parameters below- C(lookup('ansible.utils.index_of', data, test, value, key, fail_on_missing, wantlist)).
     options:
       data:
-        description: A list of items to enumerate and test against
+        description: A list of items to enumerate and test against.
         type: list
         required: True
       test:
         description: >
             The name of the test to run against the list, a valid jinja2 test or ansible test plugin.
             Jinja2 includes the following tests U(http://jinja.palletsprojects.com/templates/#builtin-tests).
-            An overview of tests included in ansible U(https://docs.ansible.com/ansible/latest/user_guide/playbooks_tests.html)
+            An overview of tests included in ansible U(https://docs.ansible.com/ansible/latest/user_guide/playbooks_tests.html).
         type: str
         required: True
       value:
         description: >
-            The value used to test each list item against
+            The value used to test each list item against.
             Not required for simple tests (eg: C(true), C(false), C(even), C(odd))
-            May be a C(string), C(boolean), C(number), C(regular expesion) C(dict) etc, depending on the C(test) used
+            May be a C(string), C(boolean), C(number), C(regular expesion) C(dict) etc, depending on the C(test) used.
         type: raw
       key:
         description: >
-            When the data provided is a list of dictionaries, run the test againt this dictionary key
-            When using a C(key), the C(data) must only contain dictionaries
-            See C(fail_on_missing) below to determine the behaviour when the C(key) is missing from a dictionary in the C(data)
+            When the data provided is a list of dictionaries, run the test against this dictionary key.
+            When using a C(key), the C(data) must only contain dictionaries.
+            See C(fail_on_missing) below to determine the behaviour when the C(key) is missing from a dictionary in the C(data).
         type: str
       fail_on_missing:
-        description: When provided a list of dictionaries, fail if the key is missing from one or more of the dictionaries
+        description: When provided a list of dictionaries, fail if the key is missing from one or more of the dictionaries.
         type: bool
       wantlist:
         description: >
-            When only a single entry in the C(data) is matched, that entries index is returned as an integer
-            If set to C(True), the return value will always be a list, even if only a single entry is matched
-            This can also be accomplised using C(query) or C(q) instead of C(lookup)
+            When only a single entry in the C(data) is matched, the index of that entry is returned as an integer.
+            If set to C(True), the return value will always be a list, even if only a single entry is matched.
+            This can also be accomplised using C(query) or C(q) instead of C(lookup).
             U(https://docs.ansible.com/ansible/latest/plugins/lookup.html)
         type: bool
 
@@ -310,8 +310,8 @@ EXAMPLES = r"""
 RETURN = """
   _raw:
     description:
-      - One or more zero-based indicies of the matching list items
-      - See C(wantlist) if a list is always required
+      - One or more zero-based indicies of the matching list items.
+      - See C(wantlist) if a list is always required.
 """
 
 from ansible.errors import AnsibleLookupError

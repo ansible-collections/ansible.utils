@@ -5,7 +5,7 @@
 ansible.utils.jsonschema
 ************************
 
-**Define configurable options for jsonschema validate sub-plugin (engine).**
+**Define configurable options for jsonschema validate plugin**
 
 
 Version added: 1.0.0
@@ -17,7 +17,7 @@ Version added: 1.0.0
 
 Synopsis
 --------
-- This plugin documentation provides the configurable options when *ansible.utils.jsonschema* is used as a value for ``engine`` option within ``validate`` plugins. Refer individual ``validate`` plugin docs ``engine`` option for more details.
+- This plugin documentation provides the configurable options that can be passed to the validate plugins when *ansible.utils.json* is used as a value for engine option.
 
 
 
@@ -67,7 +67,6 @@ Notes
 -----
 
 .. note::
-   - This sub-plugin is not a standalone pluign and works only when used with ``validate`` plugins. This plugin will be used when ``engine`` option of ``validate`` plugin is set to *ansible.utils.jsonschema*.
    - The value of ``data`` option should be either of type *dict* or *strings* which should be a valid *dict* when read in python.
    - The value of ``criteria`` should be *list* of *dict* or *list* of *strings* and each *string* within the *list* entry should be a valid *dict* when read in python.
 

@@ -17,26 +17,26 @@ version_added: "1.0.0"
 description:
     - This module allows updating existing variables.
     - Variables are updated on a host-by-host basis.
-    - Variable are not modified in place, instead they are returned by the module
+    - Variables are not modified in place, instead they are returned by the module.
 options:
   updates:
     description:
-      - A list of dictionaries, each a desired update to make
+      - A list of dictionaries, each a desired update to make.
     type: list
     elements: dict
     required: True
     suboptions:
       path:
         description:
-        - The path in a currently set variable to update
-        - The path can be in dot or bracket notation
-        - It should be a valid jinja reference
+        - The path in a currently set variable to update.
+        - The path can be in dot or bracket notation.
+        - It should be a valid jinja reference.
         type: str
         required: True
       value:
         description:
-        - The value to be set at the path
-        - Can be a simple or complex data structure
+        - The value to be set at the path.
+        - Can be a simple or complex data structure.
         type: raw
         required: True
 
@@ -244,7 +244,7 @@ EXAMPLES = r"""
     state: gathered
   register: current
 
-- name: Update the source of sequenmce 10 in the IPv4 ACL named test1
+- name: Update the source of sequence 10 in the IPv4 ACL named test1
   ansible.utils.update_fact:
     updates:
     - path: current.gathered[{{ afi }}].acls[{{ acl }}].aces[{{ ace }}].source

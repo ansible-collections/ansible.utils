@@ -13,26 +13,26 @@ DOCUMENTATION = """
       data:
         type: raw
         description:
-        - A data that will be validated against C(criteria).
-        - This option represents the value that is passed to filter plugin in pipe format.
+        - Data that will be validated against C(criteria).
+        - This option represents the value that is passed to the filter plugin in pipe format.
           For example I(config_data|ansible.utils.validate()), in this case I(config_data)
           represents this option.
-        - For the type of C(data) that represents this value refer documentation of individual validator plugins.
+        - For the type of C(data) that represents this value refer to the documentation of individual validator plugins.
         required: True
       criteria:
         type: raw
         description:
         - The criteria used for validation of value that represents C(data) options.
-        - This option represents the first argument passed in the filter plugin
+        - This option represents the first argument passed in the filter plugin.
           For example I(config_data|ansible.utils.validate(config_criteria)), in
           this case the value of I(config_criteria) represents this option.
-        - For the type of C(criteria) that represents this value refer documentation of individual validator plugins.
+        - For the type of C(criteria) that represents this value refer to the  documentation of individual validator plugins.
         required: True
       engine:
         type: str
         description:
         - The name of the validator plugin to use.
-        - This option can be passed in lookup plugin as a key, value pair
+        - This option can be passed in lookup plugin as a key, value pair.
           For example I(config_data|ansible.utils.validate(config_criteria, engine='ansible.utils.jsonschema')), in
           this case the value I(ansible.utils.jsonschema) represents the engine to be use for data valdiation.
           If the value is not provided the default value that is I(ansible.uitls.jsonschema) will be used.
@@ -40,9 +40,9 @@ DOCUMENTATION = """
           I(<org-name>.<collection-name>.<validator-plugin-name>).
         default: ansible.utils.jsonschema
     notes:
-    - For the type of options C(data) and C(criteria) refer the individual C(validate) plugin
+    - For the type of options C(data) and C(criteria) refer to the individual C(validate) plugin
       documentation that is represented in the value of C(engine) option.
-    - For additional plugin configuration options refer the individual C(validate) plugin
+    - For additional plugin configuration options refer to the individual C(validate) plugin
       documentation that is represented by the value of C(engine) option.
     - The plugin configuration option can be either passed as I(key=value) pairs within filter plugin
       or environment variables.
@@ -56,7 +56,7 @@ EXAMPLES = r"""
     data: "{{ lookup('file', './validate/data/show_interfaces_iosxr.json')}}"
     criteria: "{{ lookup('file', './validate/criteria/jsonschema/show_interfaces_iosxr.json')}}"
 
-- name: validate data in json format using jsonschema with by passing plugin configuration variable as key/value pairs
+- name: validate data in json format using jsonschema by passing plugin configuration variable as key/value pairs
   ansible.builtin.set_fact:
     data_validilty: "{{ data|ansible.utils.validate(criteria, engine='ansible.utils.jsonschema', draft='draft7') }}"
 """

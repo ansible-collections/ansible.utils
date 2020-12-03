@@ -5,10 +5,10 @@
 ansible.utils.index_of
 **********************
 
-**Find the indicies of items in a list matching some criteria**
+**Find the indices of items in a list matching some criteria**
 
 
-Version added: 1.0
+Version added: 1.0.0
 
 .. contents::
    :local:
@@ -17,10 +17,10 @@ Version added: 1.0
 
 Synopsis
 --------
-- This plugin returns the indicies of items matching some criteria in a list
-- When working with a list of dictionaries, the key to evaluate can be specified
-- ``index_of`` is also available as a ``filter plugin`` for convenience
-- Using the parameters below- ``lookup('ansible.utils.index_of', data, test, value, key, fail_on_missing, wantlist``)
+- This plugin returns the indices of items matching some criteria in a list.
+- When working with a list of dictionaries, the key to evaluate can be specified.
+- ``index_of`` is also available as a ``filter plugin`` for convenience.
+- Using the parameters below- ``lookup('ansible.utils.index_of', data, test, value, key, fail_on_missing, wantlist``).
 
 
 
@@ -52,7 +52,7 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>A list of items to enumerate and test against</div>
+                        <div>A list of items to enumerate and test against.</div>
                 </td>
             </tr>
             <tr>
@@ -73,7 +73,7 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>When provided a list of dictionaries, fail if the key is missing from one or more of the dictionaries</div>
+                        <div>When provided a list of dictionaries, fail if the key is missing from one or more of the dictionaries.</div>
                 </td>
             </tr>
             <tr>
@@ -90,7 +90,7 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>When the data provided is a list of dictionaries, run the test againt this dictionary key When using a <code>key</code>, the <code>data</code> must only contain dictionaries See <code>fail_on_missing</code> below to determine the behaviour when the <code>key</code> is missing from a dictionary in the <code>data</code></div>
+                        <div>When the data provided is a list of dictionaries, run the test against this dictionary key. When using a <code>key</code>, the <code>data</code> must only contain dictionaries. See <code>fail_on_missing</code> below to determine the behaviour when the <code>key</code> is missing from a dictionary in the <code>data</code>.</div>
                 </td>
             </tr>
             <tr>
@@ -108,7 +108,7 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>The name of the test to run against the list, a valid jinja2 test or ansible test plugin. Jinja2 includes the following tests <a href='http://jinja.palletsprojects.com/templates/#builtin-tests'>http://jinja.palletsprojects.com/templates/#builtin-tests</a>. An overview of tests included in ansible <a href='https://docs.ansible.com/ansible/latest/user_guide/playbooks_tests.html'>https://docs.ansible.com/ansible/latest/user_guide/playbooks_tests.html</a></div>
+                        <div>The name of the test to run against the list, a valid jinja2 test or ansible test plugin. Jinja2 includes the following tests <a href='http://jinja.palletsprojects.com/templates/#builtin-tests'>http://jinja.palletsprojects.com/templates/#builtin-tests</a>. An overview of tests included in ansible <a href='https://docs.ansible.com/ansible/latest/user_guide/playbooks_tests.html'>https://docs.ansible.com/ansible/latest/user_guide/playbooks_tests.html</a>.</div>
                 </td>
             </tr>
             <tr>
@@ -125,7 +125,7 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>The value used to test each list item against Not required for simple tests (eg: <code>true</code>, <code>false</code>, <code>even</code>, <code>odd</code>) May be a <code>string</code>, <code>boolean</code>, <code>number</code>, <code>regular expesion</code> <code>dict</code> etc, depending on the <code>test</code> used</div>
+                        <div>The value used to test each list item against. Not required for simple tests (eg: <code>true</code>, <code>false</code>, <code>even</code>, <code>odd</code>) May be a <code>string</code>, <code>boolean</code>, <code>number</code>, <code>regular expesion</code> <code>dict</code> etc, depending on the <code>test</code> used.</div>
                 </td>
             </tr>
             <tr>
@@ -146,7 +146,7 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>When only a single entry in the <code>data</code> is matched, that entries index is returned as an integer If set to <code>True</code>, the return value will always be a list, even if only a single entry is matched This can also be accomplised using <code>query</code> or <code>q</code> instead of <code>lookup</code> <a href='https://docs.ansible.com/ansible/latest/plugins/lookup.html'>https://docs.ansible.com/ansible/latest/plugins/lookup.html</a></div>
+                        <div>When only a single entry in the <code>data</code> is matched, the index of that entry is returned as an integer. If set to <code>True</code>, the return value will always be a list, even if only a single entry is matched. This can also be accomplised using <code>query</code> or <code>q</code> instead of <code>lookup</code>. <a href='https://docs.ansible.com/ansible/latest/plugins/lookup.html'>https://docs.ansible.com/ansible/latest/plugins/lookup.html</a></div>
                 </td>
             </tr>
     </table>
@@ -429,8 +429,8 @@ Common return values are documented `here <https://docs.ansible.com/ansible/late
                 </td>
                 <td></td>
                 <td>
-                            <div>One or more zero-based indicies of the matching list items</div>
-                            <div>See <code>wantlist</code> if a list is always required</div>
+                            <div>One or more zero-based indicies of the matching list items.</div>
+                            <div>See <code>wantlist</code> if a list is always required.</div>
                     <br/>
                 </td>
             </tr>

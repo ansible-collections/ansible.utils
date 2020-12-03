@@ -8,7 +8,7 @@ ansible.utils.get_path
 **Retrieve the value in a variable using a path**
 
 
-Version added: 1.0
+Version added: 1.0.0
 
 .. contents::
    :local:
@@ -17,7 +17,7 @@ Version added: 1.0
 
 Synopsis
 --------
-- Use a ``path`` to retreive a nested value from a ``var``
+- Use a ``path`` to retrieve a nested value from a ``var``
 - ``get_path`` is also available as a ``filter plugin`` for convenience
 - Using the parameters below- ``lookup('ansible.utils.get_path', var, path, wantlist``)
 
@@ -51,7 +51,7 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>The <code>path</code> in the <code>var</code> to retrieve the value of. The <code>path</code> needs to a be a valid jinja path</div>
+                        <div>The <code>path</code> in the <code>var</code> to retrieve the value of. The <code>path</code> needs to a be a valid jinja path.</div>
                 </td>
             </tr>
             <tr>
@@ -69,7 +69,7 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>The variable from which the value should be extraced</div>
+                        <div>The variable from which the value should be extracted.</div>
                 </td>
             </tr>
             <tr>
@@ -90,7 +90,7 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>If set to <code>True</code>, the return value will always be a list This can also be accomplished using <code>query</code> or <code>q</code> instead of <code>lookup</code> <a href='https://docs.ansible.com/ansible/latest/plugins/lookup.html'>https://docs.ansible.com/ansible/latest/plugins/lookup.html</a></div>
+                        <div>If set to <code>True</code>, the return value will always be a list. This can also be accomplished using <code>query</code> or <code>q</code> instead of <code>lookup</code>. <a href='https://docs.ansible.com/ansible/latest/plugins/lookup.html'>https://docs.ansible.com/ansible/latest/plugins/lookup.html</a>.</div>
                 </td>
             </tr>
     </table>
@@ -165,8 +165,8 @@ Examples
     #     paths:
     #       a.b.c.d[0]: 0
     #       a.b.c.d[1]: 1
-    #       a.b.c.e[0]: true
-    #       a.b.c.e[1]: false
+    #       a.b.c.e[0]: True
+    #       a.b.c.e[1]: False
 
     # TASK [Retrieve the value of each path from vars] ******************
     # ok: [nxos101] => (item=a.b.c.d[0]) =>
@@ -231,8 +231,8 @@ Common return values are documented `here <https://docs.ansible.com/ansible/late
                 </td>
                 <td></td>
                 <td>
-                            <div>One or more zero-based indicies of the matching list items</div>
-                            <div>See <code>wantlist</code> if a list is always required</div>
+                            <div>One or more zero-based indices of the matching list items.</div>
+                            <div>See <code>wantlist</code> if a list is always required.</div>
                     <br/>
                 </td>
             </tr>

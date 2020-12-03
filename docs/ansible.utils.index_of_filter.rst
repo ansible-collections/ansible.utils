@@ -5,10 +5,10 @@
 ansible.utils.index_of
 **********************
 
-**Find the indicies of items in a list matching some criteria**
+**Find the indices of items in a list matching some criteria**
 
 
-Version added: 1.0
+Version added: 1.0.0
 
 .. contents::
    :local:
@@ -17,9 +17,9 @@ Version added: 1.0
 
 Synopsis
 --------
-- This plugin returns the indicies of items matching some criteria in a list
-- When working with a list of dictionaries, the key to evaluate can be specified
-- ``index_of`` is also available as a ``lookup plugin`` for convenience
+- This plugin returns the indices of items matching some criteria in a list.
+- When working with a list of dictionaries, the key to evaluate can be specified.
+- ``index_of`` is also available as a ``lookup plugin`` for convenience.
 - Using the parameters below- ``data|ansible.utils.index_of(test, value, key, fail_on_missing, wantlist``)
 
 
@@ -52,8 +52,8 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>A list of items to enumerate and test against</div>
-                        <div>This option represents the value that is passed to filter plugin in pipe format.</div>
+                        <div>A list of items to enumerate and test against.</div>
+                        <div>This option represents the value that is passed to the filter plugin in pipe format.</div>
                         <div>For example <em>config_data|ansible.utils.index_of(&#x27;x&#x27;</em>), in this case <em>config_data</em> represents this option.</div>
                 </td>
             </tr>
@@ -75,7 +75,7 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>When provided a list of dictionaries, fail if the key is missing from one or more of the dictionaries</div>
+                        <div>When provided a list of dictionaries, fail if the key is missing from one or more of the dictionaries.</div>
                 </td>
             </tr>
             <tr>
@@ -92,9 +92,9 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>When the data provided is a list of dictionaries, run the test againt this dictionary key</div>
-                        <div>When using a <code>key</code>, the <code>data</code> must only contain dictionaries</div>
-                        <div>See <code>fail_on_missing</code> below to determine the behaviour when the <code>key</code> is missing from a dictionary in the <code>data</code></div>
+                        <div>When the data provided is a list of dictionaries, run the test against this dictionary key.</div>
+                        <div>When using a <code>key</code>, the <code>data</code> must only contain dictionaries.</div>
+                        <div>See <code>fail_on_missing</code> below to determine the behavior when the <code>key</code> is missing from a dictionary in the <code>data</code>.</div>
                 </td>
             </tr>
             <tr>
@@ -131,7 +131,7 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>The value used to test each list item against</div>
+                        <div>The value used to test each list item against.</div>
                         <div>{&#x27;Not required for simple tests (eg&#x27;: &#x27;<code>true</code>, <code>false</code>, <code>even</code>, <code>odd</code>)&#x27;}</div>
                         <div>May be a <code>string</code>, <code>boolean</code>, <code>number</code>, <code>regular expesion</code> <code>dict</code> etc, depending on the <code>test</code> used</div>
                 </td>
@@ -154,8 +154,8 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>When only a single entry in the <code>data</code> is matched, that entries index is returned as an integer</div>
-                        <div>If set to <code>True</code>, the return value will always be a list, even if only a single entry is matched</div>
+                        <div>When only a single entry in the <code>data</code> is matched, the index of that entry is returned as an integer.</div>
+                        <div>If set to <code>True</code>, the return value will always be a list, even if only a single entry is matched.</div>
                 </td>
             </tr>
     </table>

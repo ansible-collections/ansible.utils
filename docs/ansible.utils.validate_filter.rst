@@ -50,8 +50,8 @@ Parameters
                     </td>
                 <td>
                         <div>The criteria used for validation of value that represents <code>data</code> options.</div>
-                        <div>This option represents the first argument passed in the filter plugin For example <em>config_data|ansible.utils.validate(config_criteria</em>), in this case the value of <em>config_criteria</em> represents this option.</div>
-                        <div>For the type of <code>criteria</code> that represents this value refer documentation of individual validator plugins.</div>
+                        <div>This option represents the first argument passed in the filter plugin. For example <em>config_data|ansible.utils.validate(config_criteria</em>), in this case the value of <em>config_criteria</em> represents this option.</div>
+                        <div>For the type of <code>criteria</code> that represents this value refer to the  documentation of individual validator plugins.</div>
                 </td>
             </tr>
             <tr>
@@ -69,9 +69,9 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>A data that will be validated against <code>criteria</code>.</div>
-                        <div>This option represents the value that is passed to filter plugin in pipe format. For example <em>config_data|ansible.utils.validate(</em>), in this case <em>config_data</em> represents this option.</div>
-                        <div>For the type of <code>data</code> that represents this value refer documentation of individual validator plugins.</div>
+                        <div>Data that will be validated against <code>criteria</code>.</div>
+                        <div>This option represents the value that is passed to the filter plugin in pipe format. For example <em>config_data|ansible.utils.validate(</em>), in this case <em>config_data</em> represents this option.</div>
+                        <div>For the type of <code>data</code> that represents this value refer to the documentation of individual validator plugins.</div>
                 </td>
             </tr>
             <tr>
@@ -90,7 +90,7 @@ Parameters
                     </td>
                 <td>
                         <div>The name of the validator plugin to use.</div>
-                        <div>This option can be passed in lookup plugin as a key, value pair For example <em>config_data|ansible.utils.validate(config_criteria, engine=&#x27;ansible.utils.jsonschema&#x27;</em>), in this case the value <em>ansible.utils.jsonschema</em> represents the engine to be use for data valdiation. If the value is not provided the default value that is <em>ansible.uitls.jsonschema</em> will be used.</div>
+                        <div>This option can be passed in lookup plugin as a key, value pair. For example <em>config_data|ansible.utils.validate(config_criteria, engine=&#x27;ansible.utils.jsonschema&#x27;</em>), in this case the value <em>ansible.utils.jsonschema</em> represents the engine to be use for data valdiation. If the value is not provided the default value that is <em>ansible.uitls.jsonschema</em> will be used.</div>
                         <div>The value should be in fully qualified collection name format that is <em>&lt;org-name&gt;.&lt;collection-name&gt;.&lt;validator-plugin-name&gt;</em>.</div>
                 </td>
             </tr>
@@ -102,8 +102,8 @@ Notes
 -----
 
 .. note::
-   - For the type of options ``data`` and ``criteria`` refer the individual ``validate`` plugin documentation that is represented in the value of ``engine`` option.
-   - For additional plugin configuration options refer the individual ``validate`` plugin documentation that is represented by the value of ``engine`` option.
+   - For the type of options ``data`` and ``criteria`` refer to the individual ``validate`` plugin documentation that is represented in the value of ``engine`` option.
+   - For additional plugin configuration options refer to the individual ``validate`` plugin documentation that is represented by the value of ``engine`` option.
    - The plugin configuration option can be either passed as *key=value* pairs within filter plugin or environment variables.
    - The precedence of the ``validate`` plugin configurable option is the variable passed within filter plugin as *key=value* pairs followed by the environment variables.
 
@@ -119,7 +119,7 @@ Examples
         data: "{{ lookup('file', './validate/data/show_interfaces_iosxr.json')}}"
         criteria: "{{ lookup('file', './validate/criteria/jsonschema/show_interfaces_iosxr.json')}}"
 
-    - name: validate data in json format using jsonschema with by passing plugin configuration variable as key/value pairs
+    - name: validate data in json format using jsonschema by passing plugin configuration variable as key/value pairs
       ansible.builtin.set_fact:
         data_validilty: "{{ data|ansible.utils.validate(criteria, engine='ansible.utils.jsonschema', draft='draft7') }}"
 

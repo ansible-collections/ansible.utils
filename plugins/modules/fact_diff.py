@@ -15,16 +15,16 @@ module: fact_diff
 short_description: Find the difference between currently set facts
 version_added: "1.0.0"
 description:
-    - Compare two facts or variables and get a diff
+    - Compare two facts or variables and get a diff.
 options:
   before:
     description:
-      - The first fact to be used in the comparison
+      - The first fact to be used in the comparison.
     type: raw
     required: True
   after:
     description:
-      - The second fact to be used in the comparison
+      - The second fact to be used in the comparison.
     type: raw
     required: True
   plugin:
@@ -35,20 +35,20 @@ options:
     suboptions:
       name:
         description:
-        - The diff plugin to use, in collection format
+        - The diff plugin to use, in fully qualified collection name format.
         default: ansible.utils.native
         type: str
       vars:
         description:
-        - Parameters passed to the diff plugin
+        - Parameters passed to the diff plugin.
         type: dict
         default: {}
         suboptions:
           skip_lines:
             description:
-              - Skip lines matching these regular expressions
-              - Matches will be removed prior to the diff
-              - If the provided I(before) and I(after) are a string, they will be split
+              - Skip lines matching these regular expressions.
+              - Matches will be removed prior to the diff.
+              - If the provided I(before) and I(after) are a string, they will be split.
               - Each entry in each list will be cast to a string for the comparison
             type: list
 
@@ -194,11 +194,11 @@ EXAMPLES = r"""
 RETURN = """
 
 diff_text:
-  description: The diff in text format
+  description: The diff in text format.
   returned: always
   type: str
 diff_lines:
-  description: The C(diff_text) split into lines
+  description: The C(diff_text) split into lines.
   returned: always
   type: list
 

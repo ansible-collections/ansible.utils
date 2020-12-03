@@ -15,13 +15,13 @@ __metaclass__ = type
 DOCUMENTATION = """
     lookup: to_paths
     author: Bradley Thornton (@cidrblock)
-    version_added: "1.0"
+    version_added: "1.0.0"
     short_description: Flatten a complex object into a dictionary of paths and values
     description:
         - Flatten a complex object into a dictionary of paths and values.
-        - Paths are dot delimited whenever possible
-        - Brakets are used for list indicies and keys that contain special characters
-        - C(to_paths) is also available as a filter plugin
+        - Paths are dot delimited whenever possible.
+        - Brackets are used for list indices and keys that contain special characters.
+        - C(to_paths) is also available as a filter plugin.
         - Using the parameters below- C(lookup('ansible.utils.to_paths', var, prepend, wantlist))
     options:
       var:
@@ -66,8 +66,8 @@ EXAMPLES = r"""
 #     paths:
 #       b.c.d[0]: 0
 #       b.c.d[1]: 1
-#       b.c.e[0]: true
-#       b.c.e[1]: false
+#       b.c.e[0]: True
+#       b.c.e[1]: False
 
 - name: Use prepend to add the initial variable name
   ansible.builtin.set_fact:
@@ -79,8 +79,8 @@ EXAMPLES = r"""
 #     paths:
 #       a.b.c.d[0]: 0
 #       a.b.c.d[1]: 1
-#       a.b.c.e[0]: true
-#       a.b.c.e[1]: false
+#       a.b.c.e[0]: True
+#       a.b.c.e[1]: False
 
 
 #### Using a complex object
@@ -120,9 +120,9 @@ EXAMPLES = r"""
 RETURN = """
   _raw:
     description:
-      - A dictionary of key value pairs
-      - The key is the path
-      - The value is the value
+      - A dictionary of key value pairs.
+      - The key is the path.
+      - The value is the value.
 """
 
 from ansible.errors import AnsibleLookupError

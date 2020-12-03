@@ -8,7 +8,7 @@ ansible.utils.get_path
 **Retrieve the value in a variable using a path**
 
 
-Version added: 1.0
+Version added: 1.0.0
 
 .. contents::
    :local:
@@ -17,8 +17,8 @@ Version added: 1.0
 
 Synopsis
 --------
-- Use a ``path`` to retreive a nested value from a ``var``
-- ``get_path`` is also available as a ``lookup plugin`` for convenience
+- Use a ``path`` to retrieve a nested value from a ``var``.
+- ``get_path`` is also available as a ``lookup plugin`` for convenience.
 - Using the parameters below- ``var|ansible.utils.get_path(path, wantlist``)
 
 
@@ -52,7 +52,7 @@ Parameters
                     </td>
                 <td>
                         <div>The <code>path</code> in the <code>var</code> to retrieve the value of.</div>
-                        <div>The <code>path</code> needs to a be a valid jinja path</div>
+                        <div>The <code>path</code> needs to be a valid jinja path.</div>
                 </td>
             </tr>
             <tr>
@@ -70,8 +70,8 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>The variable from which the value should be extraced</div>
-                        <div>This option represents the value that is passed to filter plugin in pipe format.</div>
+                        <div>The variable from which the value should be extracted.</div>
+                        <div>This option represents the value that is passed to the filter plugin in pipe format.</div>
                         <div>For example <em>config_data|ansible.utils.get_path(</em>), in this case <em>config_data</em> represents this option.</div>
                 </td>
             </tr>
@@ -93,7 +93,7 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>If set to <code>True</code>, the return value will always be a list</div>
+                        <div>If set to <code>True</code>, the return value will always be a list.</div>
                 </td>
             </tr>
     </table>
@@ -168,8 +168,8 @@ Examples
     #     paths:
     #       a.b.c.d[0]: 0
     #       a.b.c.d[1]: 1
-    #       a.b.c.e[0]: true
-    #       a.b.c.e[1]: false
+    #       a.b.c.e[0]: True
+    #       a.b.c.e[1]: False
 
     # TASK [Retrieve the value of each path from vars] ******************
     # ok: [nxos101] => (item=a.b.c.d[0]) =>

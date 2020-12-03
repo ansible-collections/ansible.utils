@@ -46,7 +46,7 @@ Parameters
                 <td>
                 </td>
                 <td>
-                        <div>The criteria used for validation of <code>data</code>. For the type of criteria refer documentation of individual validate plugins.</div>
+                        <div>The criteria used for validation of <code>data</code>. For the type of criteria refer to the documentation of individual validate plugins.</div>
                 </td>
             </tr>
             <tr>
@@ -62,7 +62,7 @@ Parameters
                 <td>
                 </td>
                 <td>
-                        <div>A data that will be validated against <code>criteria</code>. For the type of data refer documentation of individual validate plugins</div>
+                        <div>Data that will be validated against <code>criteria</code>. For the type of data refer to the documentation of individual validate plugins.</div>
                 </td>
             </tr>
             <tr>
@@ -78,7 +78,7 @@ Parameters
                         <b>Default:</b><br/><div style="color: blue">"ansible.utils.jsonschema"</div>
                 </td>
                 <td>
-                        <div>The name of the validate plugin to use. The engine value should  follow the fully qualified collection name format that is &lt;org-name&gt;.&lt;collection-name&gt;.&lt;validate-plugin-name&gt;.</div>
+                        <div>The name of the validate plugin to use. The engine value should follow the fully qualified collection name format, that is &lt;org-name&gt;.&lt;collection-name&gt;.&lt;validate-plugin-name&gt;.</div>
                 </td>
             </tr>
     </table>
@@ -89,10 +89,10 @@ Notes
 -----
 
 .. note::
-   - For the type of options ``data`` and ``criteria`` refer the individual ``validate`` plugin documentation that is represented in the value of ``engine`` option.
-   - For additional plugin configuration options refer the individual ``validate`` plugin documentation that is represented by the value of ``engine`` option.
+   - For the type of options ``data`` and ``criteria`` refer to the individual ``validate`` plugin documentation that is represented in the value of ``engine`` option.
+   - For additional plugin configuration options refer to the individual ``validate`` plugin documentation that is represented by the value of ``engine`` option.
    - The plugin configuration option can be either passed as task or environment variables.
-   - The precedence the ``validate`` plugin configurable option is task variables followed by the environment variables.
+   - The precedence of the ``validate`` plugin configurable option is task variables followed by the environment variables.
 
 
 
@@ -155,7 +155,7 @@ Common return values are documented `here <https://docs.ansible.com/ansible/late
                 <td>always</td>
                 <td>
                             <div>The msg indicates if the <code>data</code> is valid as per the <code>criteria</code>.</div>
-                            <div>In case data is valid return success message <em>all checks passed</em></div>
+                            <div>In case data is valid return success message <em>all checks passed</em>.</div>
                             <div>In case data is invalid return error message <em>Validation errors were found</em> along with more information on error is available.</div>
                     <br/>
                 </td>
