@@ -8,6 +8,34 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
+DOCUMENTATION = """
+    author: Bradley Thornton (@cidrblock)
+    name: ttp
+    short_description: Define configurable options for C(ttp) sub-plugin of C(cli_parse) module
+    description:
+    - This plugin documentation provides the configurable options that can be passed
+      to the I(ansible.utils.cli_parse) plugins when I(ansible.utils.ttp) is used as a value for
+      I(name) option.
+    version_added: 1.0.0
+"""
+
+EXAMPLES = r"""
+- name: "Run command and parse with textfsm"
+  ansible.utils.cli_parse:
+    command: "show version"
+    parser:
+      name: ansible.utils.ttp
+  register: nxos_ttp_command
+
+- name: "Pass text and command"
+  ansible.utils.cli_parse:
+    text: "{{ lookup('file', '/home/user/files/nxos_show_version.txt') }}"
+    parser:
+      name: ansible.utils.textfsm
+      template_path: "/home/user/templates/nxos_show_version.ttp"
+  register: nxos_ttp_text
+"""
+
 import os
 
 from ansible.module_utils._text import to_native

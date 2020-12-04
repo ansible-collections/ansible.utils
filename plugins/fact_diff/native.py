@@ -7,6 +7,26 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
+DOCUMENTATION = """
+    author: Bradley Thornton (@cidrblock)
+    name: native
+    short_description: Define configurable options for C(native) sub-plugin of C(fact_diff) module
+    description:
+    - This plugin documentation provides the configurable options that can be passed
+      to the I(ansible.utils.fact_diff) plugins when I(ansible.utils.native) is used as a value for
+      I(name) option of the module.
+    version_added: 1.0.0
+"""
+
+EXAMPLES = r"""
+- name: Show the difference in json format
+  ansible.utils.fact_diff:
+    before: "{{ before }}"
+    after: "{{ after }}"
+    plugin:
+      name: ansible.utils.native
+"""
+
 import re
 from ansible.plugins.callback import CallbackBase
 from ansible_collections.ansible.utils.plugins.module_utils.base_classes.fact_diff import (

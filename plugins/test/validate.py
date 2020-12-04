@@ -7,7 +7,7 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 DOCUMENTATION = """
-    test: validate
+    name: validate
     author: Ganesh Nalawade (@ganeshrn)
     version_added: "1.0.0"
     short_description: Validate data with provided criteria
