@@ -25,7 +25,5 @@ sections:
   - Bugfixes
 - - known_issues
   - Known Issues
-- - doc_changes
-  - Documentation Changes
 title: CHANGE THIS IN changelogs/config.yaml!
 trivial_section_name: trivial

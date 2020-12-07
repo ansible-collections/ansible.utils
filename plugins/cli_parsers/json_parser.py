@@ -13,7 +13,7 @@ DOCUMENTATION = """
     short_description: Define configurable options for C(json) sub-plugin of C(cli_parse) module
     description:
     - This plugin documentation provides the configurable options that can be passed
-      to the cli_parse plugins when I(ansible.utils.json) is used as a value for
+      to the I(ansible.utils.cli_parse) plugins when I(ansible.utils.json) is used as a value for
       I(name) option.
     version_added: 1.0.0
 """
