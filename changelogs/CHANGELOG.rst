@@ -5,6 +5,14 @@ Ansible Utils Collection Release Notes
 .. contents:: Topics
 
 
+v1.0.1
+======
+
+Minor Changes
+-------------
+
+- Move CHANGELOG.rst file under changelogs folder as required
+
 v1.0.0
 ======
 
