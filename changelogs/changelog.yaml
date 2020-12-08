@@ -1,1 +1,46 @@
-releases: {}
+ancestor: null
+releases:
+  1.0.0:
+    changes:
+      bugfixes:
+      - linting and formatting for CI
+      minor_changes:
+      - Add cli_parse module and plugins (https://github.com/ansible-collections/ansible.utils/pull/28)
+      - Added fact_diff plugin and sub plugin
+      - Added validate module/lookup/filter/test plugin to validate data based on
+        given criteria
+    fragments:
+    - 23 linting and formatting.yaml
+    - 28_cli_parse_plugins_add.yaml
+    - 29-add_docs_for_Cli_parse.yaml
+    - add_fact_diff.yaml
+    - docs_copyedit.yaml
+    - validate.yaml
+    modules:
+    - description: Parse cli output or text using a variety of parsers
+      name: cli_parse
+      namespace: ''
+    - description: Find the difference between currently set facts
+      name: fact_diff
+      namespace: ''
+    - description: Update currently set facts
+      name: update_fact
+      namespace: ''
+    - description: Validate data with provided criteria
+      name: validate
+      namespace: ''
+    plugins:
+      lookup:
+      - description: Retrieve the value in a variable using a path
+        name: get_path
+        namespace: null
+      - description: Find the indices of items in a list matching some criteria
+        name: index_of
+        namespace: null
+      - description: Flatten a complex object into a dictionary of paths and values
+        name: to_paths
+        namespace: null
+      - description: Validate data with provided criteria
+        name: validate
+        namespace: null
+    release_date: '2020-12-08'
