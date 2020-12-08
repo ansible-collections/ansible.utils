@@ -7,6 +7,33 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
+DOCUMENTATION = """
+    author: Bradley Thornton (@cidrblock)
+    name: json
+    short_description: Define configurable options for C(json) sub-plugin of C(cli_parse) module
+    description:
+    - This plugin documentation provides the configurable options that can be passed
+      to the I(ansible.utils.cli_parse) plugins when I(ansible.utils.json) is used as a value for
+      I(name) option.
+    version_added: 1.0.0
+"""
+
+EXAMPLES = r"""
+- name: "Run command and parse with json"
+  ansible.utils.cli_parse:
+    command: "show version | json"
+    parser:
+      name: ansible.utils.json
+  register: nxos_json_command
+
+- name: "Load text and parse with json"
+  ansible.utils.cli_parse:
+    text: "{{ lookup('file', './nxos_show_interface_json_text.txt') }}"
+    parser:
+      name: ansible.utils.json
+  register: nxos_json_text
+"""
+
 import json
 
 from ansible.module_utils._text import to_native

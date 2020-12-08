@@ -1,0 +1,3 @@
+---
+trivial:
+  - Add docs for cli_parse and fact_diff (https://github.com/ansible-collections/ansible.utils/pull/29)

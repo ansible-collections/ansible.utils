@@ -12,7 +12,7 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 DOCUMENTATION = """
-    filter: get_path
+    name: get_path
     author: Bradley Thornton (@cidrblock)
     version_added: "1.0.0"
     short_description: Retrieve the value in a variable using a path

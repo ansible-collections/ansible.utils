@@ -9,7 +9,7 @@ __metaclass__ = type
 
 DOCUMENTATION = """
     author: Ganesh Nalawade (@ganeshrn)
-    validate: jsonschema
+    name: jsonschema
     short_description: Define configurable options for jsonschema validate plugin
     description:
     - This plugin documentation provides the configurable options that can be passed
