@@ -1,3 +1,0 @@
----
-minor_changes:
-  - Add cli_parse module and plugins (https://github.com/ansible-collections/ansible.utils/pull/28)
