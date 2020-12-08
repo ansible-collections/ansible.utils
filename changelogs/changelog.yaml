@@ -44,3 +44,10 @@ releases:
         name: validate
         namespace: null
     release_date: '2020-12-08'
+  1.0.1:
+    changes:
+      minor_changes:
+      - Move CHANGELOG.rst file under changelogs folder as required
+    fragments:
+    - fix_changelog_file_location.yaml
+    release_date: '2020-12-08'
