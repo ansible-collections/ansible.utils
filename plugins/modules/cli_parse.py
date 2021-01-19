@@ -276,5 +276,6 @@ stdout_lines:
   description: The output of the command run split into lines
   returned: when provided a command
   type: list
+  elements: str
   sample:
 """

@@ -21,21 +21,21 @@ DOCUMENTATION = """
         - Flatten a complex object into a dictionary of paths and values.
         - Paths are dot delimited whenever possible.
         - Brackets are used for list indices and keys that contain special characters.
-        - C(to_paths) is also available as a filter plugin.
-        - Using the parameters below- C(lookup('ansible.utils.to_paths', var, prepend, wantlist))
+        - B(to_paths) is also available as a filter plugin.
+        - Using the parameters below- B(lookup('ansible.utils.to_paths', var, prepend, wantlist))
     options:
       var:
-        description: The value of C(var) will be will be used.
+        description: The value of I(var) will be will be used.
         type: raw
         required: True
       prepend:
-        description: Prepend each path entry. Useful to add the initial C(var) name.
+        description: Prepend each path entry. Useful to add the initial I(var) name.
         type: str
         required: False
       wantlist:
         description: >
             If set to C(True), the return value will always be a list.
-            This can also be accomplished using C(query) or C(q) instead of C(lookup).
+            This can also be accomplished using B(query) or B(q) instead of B(lookup).
             U(https://docs.ansible.com/ansible/latest/plugins/lookup.html)
         type: bool
 
@@ -86,7 +86,7 @@ EXAMPLES = r"""
 #### Using a complex object
 
 - name: Make an API call
-  uri:
+  ansible.builtin.uri:
     url: "https://nxos101/restconf/data/openconfig-interfaces:interfaces"
     headers:
       accept: "application/yang.data+json"
@@ -97,7 +97,7 @@ EXAMPLES = r"""
   delegate_to: localhost
 
 - name: Flatten the complex object
-  set_fact:
+  ansible.builtin.set_fact:
     paths: "{{ lookup('ansible.utils.to_paths', result.json) }}"
 
 # TASK [Flatten the complex object] ******************************************

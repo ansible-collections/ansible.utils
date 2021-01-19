@@ -1,5 +1,5 @@
 ---
-- set_fact:
+- ansible.builtin.set_fact:
     complex:
       a:
         - true
@@ -58,7 +58,7 @@
       result: [0, 1]
 
 
-- set_fact:
+- ansible.builtin.set_fact:
     complex:
       a:
         b:

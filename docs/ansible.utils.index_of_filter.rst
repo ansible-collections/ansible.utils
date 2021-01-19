@@ -171,14 +171,14 @@ Examples
 
     #### Simple examples
 
-    - set_fact:
+    - ansible.builtin.set_fact:
         data:
         - 1
         - 2
         - 3
 
     - name: Find the index of 2
-      set_fact:
+      ansible.builtin.set_fact:
         indices: "{{ data|ansible.utils.index_of('eq', 2) }}"
 
     # TASK [Find the index of 2] *************************************************
@@ -188,7 +188,7 @@ Examples
 
 
     - name: Find the index of 2, ensure list is returned
-      set_fact:
+      ansible.builtin.set_fact:
         indices: "{{ data|ansible.utils.index_of('eq', 2, wantlist=True) }}"
 
     # TASK [Find the index of 2, ensure list is returned] ************************
@@ -199,7 +199,7 @@ Examples
 
 
     - name: Find the index of 3 using the long format
-      set_fact:
+      ansible.builtin.set_fact:
         indices: "{{ data|ansible.utils.index_of(test='eq', value=value, wantlist=True) }}"
       vars:
         value: 3
@@ -228,7 +228,7 @@ Examples
 
     #### Working with lists of dictionaries
 
-    - set_fact:
+    - ansible.builtin.set_fact:
         data:
         - name: sw01.example.lan
           type: switch
@@ -240,7 +240,7 @@ Examples
           type: firewall
 
     - name: Find the index of all firewalls using the type key
-      set_fact:
+      ansible.builtin.set_fact:
         firewalls: "{{ data|ansible.utils.index_of('eq', 'firewall', 'type') }}"
 
     # TASK [Find the index of all firewalls using the type key] ******************
@@ -296,7 +296,7 @@ Examples
     #     name: mgmt0
 
     - name: Find the indices interfaces with a 192.168.101.xx ip address
-      set_fact:
+      ansible.builtin.set_fact:
         found: "{{ found + entry }}"
       with_indexed_items: "{{ current_l3.gathered }}"
       vars:
@@ -330,7 +330,7 @@ Examples
 
     #### Working with deeply nested data
 
-    - set_fact:
+    - ansible.builtin.set_fact:
         data:
           interfaces:
             interface:

@@ -1,5 +1,5 @@
 ---
-- set_fact:
+- ansible.builtin.set_fact:
     a:
       b:
         c:
@@ -8,7 +8,7 @@
             - 1
 
 - name: Check argspec validation with filter
-  set_fact:
+  ansible.builtin.set_fact:
     _result: "{{ a|ansible.utils.get_path() }}"
   ignore_errors: true
   register: result
@@ -19,7 +19,7 @@
     msg: "missing required arguments: path"
 
 - name: Check argspec validation with lookup
-  set_fact:
+  ansible.builtin.set_fact:
     _result: "{{ lookup('ansible.utils.get_path') }}"
   ignore_errors: true
   register: result

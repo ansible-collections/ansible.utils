@@ -107,6 +107,10 @@ Please read and familiarize yourself with this document.
 Release notes are available [here](https://github.com/ansible-collections/ansible.utils/blob/main/changelogs/CHANGELOG.rst)
 
 ## Roadmap
+For information on releasing, versioning and deprecation refer [stratergy document](https://access.redhat.com/articles/4993781)
+
+In general, major versions can contain breaking changes, while minor versions only contain new features (like new plugin addition) and bugfixes.
+The releases will be done on need basis as and when new features and/or bugfixes are done.
 
 <!-- Optional. Include the roadmap for this collection, and the proposed release/versioning strategy so users can anticipate the upgrade/update cycle. -->
 

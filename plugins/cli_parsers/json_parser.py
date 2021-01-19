@@ -10,7 +10,7 @@ __metaclass__ = type
 DOCUMENTATION = """
     author: Bradley Thornton (@cidrblock)
     name: json
-    short_description: Define configurable options for C(json) sub-plugin of C(cli_parse) module
+    short_description: Define configurable options for B(json) sub-plugin of B(cli_parse) module
     description:
     - This plugin documentation provides the configurable options that can be passed
       to the I(ansible.utils.cli_parse) plugins when I(ansible.utils.json) is used as a value for
@@ -28,7 +28,7 @@ EXAMPLES = r"""
 
 - name: "Load text and parse with json"
   ansible.utils.cli_parse:
-    text: "{{ lookup('file', './nxos_show_interface_json_text.txt') }}"
+    text: "{{ lookup('ansible.builtin.file', './nxos_show_interface_json_text.txt') }}"
     parser:
       name: ansible.utils.json
   register: nxos_json_text

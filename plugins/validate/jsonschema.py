@@ -13,15 +13,15 @@ DOCUMENTATION = """
     short_description: Define configurable options for jsonschema validate plugin
     description:
     - This plugin documentation provides the configurable options that can be passed
-      to the validate plugins when I(ansible.utils.json) is used as a value for
+      to the validate plugins when C(ansible.utils.jsonschema) is used as a value for
       engine option.
     version_added: 1.0.0
     options:
       draft:
         description:
         - This option provides the jsonschema specification that should be used
-          for the validating the data. The C(criteria) option in the C(validate)
-          plugin should follow the specifiaction as mentined by this option
+          for the validating the data. The I(criteria) option in the validate
+          plugin should follow the specification as mentioned by this option
         default: draft7
         choices:
         - draft3
@@ -33,10 +33,10 @@ DOCUMENTATION = """
         vars:
         - name: ansible_validate_jsonschema_draft
     notes:
-    - The value of C(data) option should be either of type I(dict) or I(strings) which should be
-      a valid I(dict) when read in python.
-    - The value of C(criteria) should be I(list) of I(dict) or I(list) of I(strings) and each
-      I(string) within the I(list) entry should be a valid I(dict) when read in python.
+    - The value of I(data) option should be either of type B(dict) or B(strings) which should be
+      a valid B(dict) when read in python.
+    - The value of I(criteria) should be B(list) of B(dict) or B(list) of B(strings) and each
+      B(string) within the B(list) entry should be a valid B(dict) when read in python.
 """
 
 import json

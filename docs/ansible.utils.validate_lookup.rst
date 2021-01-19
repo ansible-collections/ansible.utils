@@ -115,9 +115,9 @@ Examples
 .. code-block:: yaml
 
     - name: set facts for data and criteria
-      set_fact:
-        data: "{{ lookup('file', './validate/data/show_interfaces_iosxr.json')}}"
-        criteria: "{{ lookup('file', './validate/criteria/jsonschema/show_interfaces_iosxr.json')}}"
+      ansible.builtinset_fact:
+        data: "{{ lookup('ansible.builtin.file', './validate/data/show_interfaces_iosxr.json')}}"
+        criteria: "{{ lookup('ansible.builtin.file', './validate/criteria/jsonschema/show_interfaces_iosxr.json')}}"
 
     - name: validate data in json format using jsonschema with lookup plugin by passing plugin configuration variable as key/value pairs
       ansible.builtin.set_fact:

@@ -160,7 +160,7 @@ Examples
       delegate_to: localhost
 
     - name: Flatten the complex object
-      set_fact:
+      ansible.builtin.set_fact:
         paths: "{{ result.json|ansible.utils.to_paths }}"
 
     # TASK [Flatten the complex object] ******************************************
