@@ -67,7 +67,7 @@ RETURN = r"""
 msg:
   description:
   - The msg indicates if the I(data) is valid as per the I(criteria).
-  - In case data is valid return success message Ball checks passed).
+  - In case data is valid return success message B(all checks passed).
   - In case data is invalid return error message B(Validation errors were found)
     along with more information on error is available.
   returned: always

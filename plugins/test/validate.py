@@ -44,7 +44,7 @@ DOCUMENTATION = """
           B(<org-name>.<collection-name>.<validate-plugin-name>).
         default: ansible.utils.jsonschema
     notes:
-    - For the type of options Idata) and I(criteria) refer the individual validate plugin
+    - For the type of options I(data) and I(criteria) refer the individual validate plugin
       documentation that is represented in the value of I(engine) option.
     - For additional plugin configuration options refer the individual validate plugin
       documentation that is represented by the value of I(engine) option.
@@ -56,8 +56,8 @@ DOCUMENTATION = """
 
 EXAMPLES = r"""
 - name: set facts for data and criteria
- ansible.builtin.set_fact
-    data: "{{ lookup('ansible.builtin.', './validate/data/show_interfaces_iosxr.json')}}"
+  ansible.builtin.set_fact:
+    data: "{{ lookup('ansible.builtin.file', './validate/data/show_interfaces_iosxr.json')}}"
     criteria: "{{ lookup('ansible.builtin.file', './validate/criteria/jsonschema/show_interfaces_iosxr.json')}}"
 
 - name: validate data in json format using jsonschema with test plugin
@@ -68,8 +68,8 @@ EXAMPLES = r"""
 RETURN = """
   _raw:
     description:
-      - If data is valid return C(True)
-      - If data is invalid return C(False)
+      - If data is valid return C(true)
+      - If data is invalid return C(false)
 """
 
 from ansible.errors import AnsibleError

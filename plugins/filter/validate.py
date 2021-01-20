@@ -44,7 +44,7 @@ DOCUMENTATION = """
       documentation that is represented in the value of I(engine) option.
     - For additional plugin configuration options refer to the individual validate plugin
       documentation that is represented by the value of I(engine) option.
-    - The plugin configuration option can be either passed as CBkey=value) pairs within filter plugin
+    - The plugin configuration option can be either passed as B(key=value) pairs within filter plugin
       or environment variables.
     - The precedence of the I(validate) plugin configurable option is the variable passed within filter plugin
       as B(key=value) pairs followed by the environment variables.
