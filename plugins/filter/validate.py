@@ -15,7 +15,7 @@ DOCUMENTATION = """
         description:
         - Data that will be validated against I(criteria).
         - This option represents the value that is passed to the filter plugin in pipe format.
-          For example B(config_data|ansible.utils.validate()), in this case B(config_data)
+          For example C(config_data|ansible.utils.validate()), in this case B(config_data)
           represents this option.
         - For the type of I(data) that represents this value refer to the documentation of individual validator plugins.
         required: True
@@ -24,7 +24,7 @@ DOCUMENTATION = """
         description:
         - The criteria used for validation of value that represents I(data) options.
         - This option represents the first argument passed in the filter plugin.
-          For example B(config_data|ansible.utils.validate(config_criteria)), in
+          For example C(config_data|ansible.utils.validate(config_criteria)), in
           this case the value of B(config_criteria) represents this option.
         - For the type of I(criteria) that represents this value refer to the  documentation of individual validator plugins.
         required: True
