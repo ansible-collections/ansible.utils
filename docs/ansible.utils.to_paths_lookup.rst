@@ -147,7 +147,7 @@ Examples
     #### Using a complex object
 
     - name: Make an API call
-      uri:
+      ansible.builtin.uri:
         url: "https://nxos101/restconf/data/openconfig-interfaces:interfaces"
         headers:
           accept: "application/yang.data+json"
@@ -158,7 +158,7 @@ Examples
       delegate_to: localhost
 
     - name: Flatten the complex object
-      set_fact:
+      ansible.builtin.set_fact:
         paths: "{{ lookup('ansible.utils.to_paths', result.json) }}"
 
     # TASK [Flatten the complex object] ******************************************

@@ -19,7 +19,7 @@ Synopsis
 --------
 - Flatten a complex object into a dictionary of paths and values.
 - Paths are dot delimited whenever possible.
-- Brakets are used for list indices and keys that contain special characters.
+- Brackets are used for list indices and keys that contain special characters.
 - ``to_paths`` is also available as a ``lookup plugin`` for convenience.
 - Using the parameters below- ``var|ansible.utils.to_paths(prepend, wantlist``)
 
@@ -160,7 +160,7 @@ Examples
       delegate_to: localhost
 
     - name: Flatten the complex object
-      set_fact:
+      ansible.builtin.set_fact:
         paths: "{{ result.json|ansible.utils.to_paths }}"
 
     # TASK [Flatten the complex object] ******************************************

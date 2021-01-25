@@ -20,19 +20,19 @@ DOCUMENTATION = """
     description:
         - Flatten a complex object into a dictionary of paths and values.
         - Paths are dot delimited whenever possible.
-        - Brakets are used for list indices and keys that contain special characters.
-        - C(to_paths) is also available as a C(lookup plugin) for convenience.
+        - Brackets are used for list indices and keys that contain special characters.
+        - B(to_paths) is also available as a B(lookup plugin) for convenience.
         - Using the parameters below- C(var|ansible.utils.to_paths(prepend, wantlist))
     options:
       var:
         description:
-        - The value of C(var) will be will be used.
+        - The value of I(var) will be will be used.
         - This option represents the value that is passed to the filter plugin in pipe format.
-        - For example I(config_data|ansible.utils.to_paths()), in this case I(config_data) represents this option.
+        - For example C(config_data|ansible.utils.to_paths()), in this case B(config_data) represents this option.
         type: raw
         required: True
       prepend:
-        description: Prepend each path entry. Useful to add the initial C(var) name.
+        description: Prepend each path entry. Useful to add the initial I(var) name.
         type: str
         required: False
       wantlist:
@@ -98,7 +98,7 @@ EXAMPLES = r"""
   delegate_to: localhost
 
 - name: Flatten the complex object
-  set_fact:
+  ansible.builtin.set_fact:
     paths: "{{ result.json|ansible.utils.to_paths }}"
 
 # TASK [Flatten the complex object] ******************************************

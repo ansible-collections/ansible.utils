@@ -148,7 +148,7 @@ Examples
 
 .. code-block:: yaml
 
-    - set_fact:
+    - ansible.builtin.set_fact:
         before:
           a:
             b:

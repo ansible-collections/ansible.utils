@@ -1,5 +1,5 @@
 ---
-- set_fact:
+- ansible.builtin.set_fact:
     complex:
       a:
         b:
@@ -12,7 +12,7 @@
                 e1: redhat
 
 - name: Check argspec validation with filter (not a list)
-  set_fact:
+  ansible.builtin.set_fact:
     _result: "{{ complex|ansible.utils.index_of() }}"
   ignore_errors: true
   register: result
@@ -23,7 +23,7 @@
     msg: "cannot be converted to a list"
 
 - name: Check argspec validation with filter (missing params)
-  set_fact:
+  ansible.builtin.set_fact:
     _result: "{{ complex.a.b.c.d|ansible.utils.index_of() }}"
   ignore_errors: true
   register: result
@@ -34,7 +34,7 @@
     msg: "missing required arguments: test"
 
 - name: Check argspec validation with lookup (not a list)
-  set_fact:
+  ansible.builtin.set_fact:
     _result: "{{ lookup('ansible.utils.index_of', complex) }}"
   ignore_errors: true
   register: result
@@ -45,7 +45,7 @@
     msg: "cannot be converted to a list"
 
 - name: Check argspec validation with lookup (missing params)
-  set_fact:
+  ansible.builtin.set_fact:
     _result: "{{ lookup('ansible.utils.index_of') }}"
   ignore_errors: true
   register: result

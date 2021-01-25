@@ -1,5 +1,5 @@
 ---
-- set_fact:
+- ansible.builtin.set_fact:
     a:
       b:
         c:
@@ -28,7 +28,7 @@
         a.b.c.d[0]: 0
         a.b.c.d[1]: 1
 
-- set_fact:
+- ansible.builtin.set_fact:
     a:
       b:
         c:

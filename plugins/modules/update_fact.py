@@ -51,7 +51,7 @@ EXAMPLES = r"""
 
 # Update an exisitng fact, dot or bracket notation
 - name: Set a fact
-  set_fact:
+  ansible.builtin.set_fact:
     a:
       b:
         c:
@@ -82,7 +82,7 @@ EXAMPLES = r"""
 # Lists can be appended, new keys added to dictionaries
 
 - name: Set a fact
-  set_fact:
+  ansible.builtin.set_fact:
     a:
       b:
         b1:
@@ -124,7 +124,7 @@ EXAMPLES = r"""
 #####################################################################
 
 - name: Set fact
-  set_fact:
+  ansible.builtin.set_fact:
     addresses:
     - raw: 10.1.1.0/255.255.255.0
       name: servers
@@ -134,7 +134,7 @@ EXAMPLES = r"""
       name: dns
 
 - name: Build a list of updates
-  set_fact:
+  ansible.builtin.set_fact:
     update_list: "{{ update_list + update }}"
   loop: "{{ addresses }}"
   loop_control:
@@ -291,7 +291,7 @@ EXAMPLES = r"""
     - l3_interfaces
 
 - name: Build the list of updates to make
-  set_fact:
+  ansible.builtin.set_fact:
     updates: "{{ updates + [entry] }}"
   vars:
     updates: []

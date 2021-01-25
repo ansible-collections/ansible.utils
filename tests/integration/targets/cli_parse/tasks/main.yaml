@@ -1,6 +1,6 @@
 ---
 - name: Set a short name
-  set_fact:
+  ansible.builtin.set_fact:
     os: "{{ ansible_distribution|d }}"
 
 - include_tasks: argspec.yaml

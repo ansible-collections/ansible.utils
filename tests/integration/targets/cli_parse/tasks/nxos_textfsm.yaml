@@ -1,10 +1,10 @@
 ---
-- set_fact:
-    nxos_textfsm_text_parsed: "{{ lookup('file', '{{ role_path }}/output/nxos_show_version_textfsm_parsed.json') | from_json }}"
+- ansible.builtin.set_fact:
+    nxos_textfsm_text_parsed: "{{ lookup('ansible.builtin.file', '{{ role_path }}/output/nxos_show_version_textfsm_parsed.json') | from_json }}"
 
 - name: "{{ parser }} Pass text and command"
   ansible.utils.cli_parse:
-    text: "{{ lookup('file', '{{ role_path }}/files/nxos_show_version.txt') }}"
+    text: "{{ lookup('ansible.builtin.file', '{{ role_path }}/files/nxos_show_version.txt') }}"
     parser:
       name: ansible.utils.textfsm
       template_path: "{{ role_path }}/templates/nxos_show_version.textfsm"

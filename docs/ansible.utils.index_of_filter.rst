@@ -133,7 +133,7 @@ Parameters
                 <td>
                         <div>The value used to test each list item against.</div>
                         <div>{&#x27;Not required for simple tests (eg&#x27;: &#x27;<code>true</code>, <code>false</code>, <code>even</code>, <code>odd</code>)&#x27;}</div>
-                        <div>May be a <code>string</code>, <code>boolean</code>, <code>number</code>, <code>regular expesion</code> <code>dict</code> etc, depending on the <code>test</code> used</div>
+                        <div>May be a <code>string</code>, <code>boolean</code>, <code>number</code>, <code>regular expression</code> <code>dict</code> and so on, depending on the <code>test</code> used</div>
                 </td>
             </tr>
             <tr>
@@ -171,14 +171,15 @@ Examples
 
     #### Simple examples
 
-    - set_fact:
+    - name: Define a list
+      ansible.builtin.set_fact:
         data:
         - 1
         - 2
         - 3
 
     - name: Find the index of 2
-      set_fact:
+      ansible.builtin.set_fact:
         indices: "{{ data|ansible.utils.index_of('eq', 2) }}"
 
     # TASK [Find the index of 2] *************************************************
@@ -188,7 +189,7 @@ Examples
 
 
     - name: Find the index of 2, ensure list is returned
-      set_fact:
+      ansible.builtin.set_fact:
         indices: "{{ data|ansible.utils.index_of('eq', 2, wantlist=True) }}"
 
     # TASK [Find the index of 2, ensure list is returned] ************************
@@ -199,7 +200,7 @@ Examples
 
 
     - name: Find the index of 3 using the long format
-      set_fact:
+      ansible.builtin.set_fact:
         indices: "{{ data|ansible.utils.index_of(test='eq', value=value, wantlist=True) }}"
       vars:
         value: 3
@@ -228,7 +229,8 @@ Examples
 
     #### Working with lists of dictionaries
 
-    - set_fact:
+    - name: Define a list with hostname and type
+      ansible.builtin.set_fact:
         data:
         - name: sw01.example.lan
           type: switch
@@ -240,7 +242,7 @@ Examples
           type: firewall
 
     - name: Find the index of all firewalls using the type key
-      set_fact:
+      ansible.builtin.set_fact:
         firewalls: "{{ data|ansible.utils.index_of('eq', 'firewall', 'type') }}"
 
     # TASK [Find the index of all firewalls using the type key] ******************
@@ -296,7 +298,7 @@ Examples
     #     name: mgmt0
 
     - name: Find the indices interfaces with a 192.168.101.xx ip address
-      set_fact:
+      ansible.builtin.set_fact:
         found: "{{ found + entry }}"
       with_indexed_items: "{{ current_l3.gathered }}"
       vars:
@@ -330,7 +332,8 @@ Examples
 
     #### Working with deeply nested data
 
-    - set_fact:
+    - name: Define interface configuration facts
+      ansible.builtin.set_fact:
         data:
           interfaces:
             interface:

@@ -1,10 +1,10 @@
 ---
-- set_fact:
-    nxos_xml_text_parsed: "{{ lookup('file', '{{ role_path }}/output/nxos_show_interface_xml_parsed.json') | from_json }}"
+- ansible.builtin.set_fact:
+    nxos_xml_text_parsed: "{{ lookup('ansible.builtin.file', '{{ role_path }}/output/nxos_show_interface_xml_parsed.json') | from_json }}"
 
 - name: "{{ parser }} Pass text and parse with xml"
   ansible.utils.cli_parse:
-    text: "{{ lookup('file', '{{ role_path }}/files/nxos_show_interface.xml') }}"
+    text: "{{ lookup('ansible.builtin.file', '{{ role_path }}/files/nxos_show_interface.xml') }}"
     parser:
       name: ansible.utils.xml
       os: nxos

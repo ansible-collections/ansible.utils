@@ -90,7 +90,7 @@ Parameters
                     </td>
                 <td>
                         <div>The name of the validate plugin to use.</div>
-                        <div>This option can be passed in lookup plugin as a key, value pair. For example <em>lookup(config_data, config_criteria, engine=&#x27;ansible.utils.jsonschema&#x27;</em>), in this case the value <em>ansible.utils.jsonschema</em> represents the engine to be use for data valdiation. If the value is not provided the default value that is <em>ansible.uitls.jsonschema</em> will be used.</div>
+                        <div>This option can be passed in lookup plugin as a key, value pair. For example <em>lookup(config_data, config_criteria, engine=&#x27;ansible.utils.jsonschema&#x27;</em>), in this case the value <em>ansible.utils.jsonschema</em> represents the engine to be use for data validation. If the value is not provided the default value that is <em>ansible.uitls.jsonschema</em> will be used.</div>
                         <div>The value should be in fully qualified collection name format that is <em>&lt;org-name&gt;.&lt;collection-name&gt;.&lt;validate-plugin-name&gt;</em>.</div>
                 </td>
             </tr>
@@ -115,9 +115,9 @@ Examples
 .. code-block:: yaml
 
     - name: set facts for data and criteria
-      set_fact:
-        data: "{{ lookup('file', './validate/data/show_interfaces_iosxr.json')}}"
-        criteria: "{{ lookup('file', './validate/criteria/jsonschema/show_interfaces_iosxr.json')}}"
+      ansible.builtinset_fact:
+        data: "{{ lookup('ansible.builtin.file', './validate/data/show_interfaces_iosxr.json')}}"
+        criteria: "{{ lookup('ansible.builtin.file', './validate/criteria/jsonschema/show_interfaces_iosxr.json')}}"
 
     - name: validate data in json format using jsonschema with lookup plugin by passing plugin configuration variable as key/value pairs
       ansible.builtin.set_fact:

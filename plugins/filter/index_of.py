@@ -19,14 +19,14 @@ DOCUMENTATION = """
     description:
         - This plugin returns the indices of items matching some criteria in a list.
         - When working with a list of dictionaries, the key to evaluate can be specified.
-        - C(index_of) is also available as a C(lookup plugin) for convenience.
+        - B(index_of) is also available as a B(lookup plugin) for convenience.
         - Using the parameters below- C(data|ansible.utils.index_of(test, value, key, fail_on_missing, wantlist))
     options:
       data:
         description:
         - A list of items to enumerate and test against.
         - This option represents the value that is passed to the filter plugin in pipe format.
-        - For example I(config_data|ansible.utils.index_of('x')), in this case I(config_data) represents this option.
+        - For example C(config_data|ansible.utils.index_of('x')), in this case B(config_data) represents this option.
         type: list
         required: True
       test:
@@ -40,20 +40,20 @@ DOCUMENTATION = """
         description:
         - The value used to test each list item against.
         - Not required for simple tests (eg: C(true), C(false), C(even), C(odd))
-        - May be a C(string), C(boolean), C(number), C(regular expesion) C(dict) etc, depending on the C(test) used
+        - May be a C(string), C(boolean), C(number), C(regular expression) C(dict) and so on, depending on the C(test) used
         type: raw
       key:
         description:
         - When the data provided is a list of dictionaries, run the test against this dictionary key.
-        - When using a C(key), the C(data) must only contain dictionaries.
-        - See C(fail_on_missing) below to determine the behavior when the C(key) is missing from a dictionary in the C(data).
+        - When using a I(key), the I(data) must only contain dictionaries.
+        - See I(fail_on_missing) below to determine the behavior when the I(key) is missing from a dictionary in the I(data).
         type: str
       fail_on_missing:
         description: When provided a list of dictionaries, fail if the key is missing from one or more of the dictionaries.
         type: bool
       wantlist:
         description:
-        - When only a single entry in the C(data) is matched, the index of that entry is returned as an integer.
+        - When only a single entry in the I(data) is matched, the index of that entry is returned as an integer.
         - If set to C(True), the return value will always be a list, even if only a single entry is matched.
         type: bool
 
@@ -64,14 +64,15 @@ EXAMPLES = r"""
 
 #### Simple examples
 
-- set_fact:
+- name: Define a list
+  ansible.builtin.set_fact:
     data:
     - 1
     - 2
     - 3
 
 - name: Find the index of 2
-  set_fact:
+  ansible.builtin.set_fact:
     indices: "{{ data|ansible.utils.index_of('eq', 2) }}"
 
 # TASK [Find the index of 2] *************************************************
@@ -81,7 +82,7 @@ EXAMPLES = r"""
 
 
 - name: Find the index of 2, ensure list is returned
-  set_fact:
+  ansible.builtin.set_fact:
     indices: "{{ data|ansible.utils.index_of('eq', 2, wantlist=True) }}"
 
 # TASK [Find the index of 2, ensure list is returned] ************************
@@ -92,7 +93,7 @@ EXAMPLES = r"""
 
 
 - name: Find the index of 3 using the long format
-  set_fact:
+  ansible.builtin.set_fact:
     indices: "{{ data|ansible.utils.index_of(test='eq', value=value, wantlist=True) }}"
   vars:
     value: 3
@@ -121,7 +122,8 @@ EXAMPLES = r"""
 
 #### Working with lists of dictionaries
 
-- set_fact:
+- name: Define a list with hostname and type
+  ansible.builtin.set_fact:
     data:
     - name: sw01.example.lan
       type: switch
@@ -133,7 +135,7 @@ EXAMPLES = r"""
       type: firewall
 
 - name: Find the index of all firewalls using the type key
-  set_fact:
+  ansible.builtin.set_fact:
     firewalls: "{{ data|ansible.utils.index_of('eq', 'firewall', 'type') }}"
 
 # TASK [Find the index of all firewalls using the type key] ******************
@@ -189,7 +191,7 @@ EXAMPLES = r"""
 #     name: mgmt0
 
 - name: Find the indices interfaces with a 192.168.101.xx ip address
-  set_fact:
+  ansible.builtin.set_fact:
     found: "{{ found + entry }}"
   with_indexed_items: "{{ current_l3.gathered }}"
   vars:
@@ -223,7 +225,8 @@ EXAMPLES = r"""
 
 #### Working with deeply nested data
 
-- set_fact:
+- name: Define interface configuration facts
+  ansible.builtin.set_fact:
     data:
       interfaces:
         interface:

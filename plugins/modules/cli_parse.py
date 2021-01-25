@@ -71,11 +71,11 @@ notes:
 - The default Ansible search path for the templates directory is used for parser templates as well
 - Some parsers may have additional configuration options available. See the parsers/vars key and the parser's documentation
 - Some parsers require third-party python libraries be installed on the Ansible control node and a specific python version
-- e.g. Pyats requires pyats and genie and requires Python 3
-- e.g. ntc_templates requires ntc_templates
-- e.g. textfsm requires textfsm
-- e.g. ttp requires ttp
-- e.g. xml requires xml_to_dict
+- example Pyats requires pyats and genie and requires Python 3
+- example ntc_templates requires ntc_templates
+- example textfsm requires textfsm
+- example ttp requires ttp
+- example xml requires xml_to_dict
 - Support of 3rd party python libraries is limited to the use of their public APIs as documented
 - "Additional information and examples can be found in the parsing user guide:"
 - https://docs.ansible.com/ansible/latest/network/user_guide/cli_parsing.html
@@ -133,7 +133,7 @@ EXAMPLES = r"""
 # -------------
 # The ntc_templates use 'vendor_platform' for the file name
 # it will be derived from ansible_network_os if not provided
-# e.g. cisco.ios.ios => cisco_ios
+# example cisco.ios.ios => cisco_ios
 
 - name: Run command and parse with ntc_templates
   ansible.utils.cli_parse:
@@ -276,5 +276,6 @@ stdout_lines:
   description: The output of the command run split into lines
   returned: when provided a command
   type: list
+  elements: str
   sample:
 """

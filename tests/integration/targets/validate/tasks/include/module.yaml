@@ -96,11 +96,11 @@
 
 - name: validate data using jsonschema engine (invalid data read from file)
   ansible.utils.validate:
-    data: "{{ lookup('file', 'data/show_interface.json') }}"
+    data: "{{ lookup('ansible.builtin.file', 'data/show_interface.json') }}"
     criteria:
-      - "{{ lookup('file', 'criteria/oper_status_up.json') }}"
-      - "{{ lookup('file', 'criteria/enabled_check.json') }}"
-      - "{{ lookup('file', 'criteria/crc_error_check.json') }}"
+      - "{{ lookup('ansible.builtin.file', 'criteria/oper_status_up.json') }}"
+      - "{{ lookup('ansible.builtin.file', 'criteria/enabled_check.json') }}"
+      - "{{ lookup('ansible.builtin.file', 'criteria/crc_error_check.json') }}"
     engine: ansible.utils.jsonschema
   ignore_errors: true
   register: result
@@ -120,8 +120,8 @@
 
 - name: validate data using jsonschema engine (valid data read from file)
   ansible.utils.validate:
-    data: "{{ lookup('file', 'data/show_interface.json') }}"
-    criteria: "{{ lookup('file', 'criteria/in_rate_check.json') }}"
+    data: "{{ lookup('ansible.builtin.file', 'data/show_interface.json') }}"
+    criteria: "{{ lookup('ansible.builtin.file', 'criteria/in_rate_check.json') }}"
     engine: ansible.utils.jsonschema
   ignore_errors: true
   register: result

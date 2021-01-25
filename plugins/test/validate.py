@@ -12,53 +12,53 @@ DOCUMENTATION = """
     version_added: "1.0.0"
     short_description: Validate data with provided criteria
     description:
-        - Validate C(data) with provided C(criteria) based on the validation C(engine).
+        - Validate I(data) with provided I(criteria) based on the validation I(engine).
     options:
       data:
         type: raw
         description:
-        - A data that will be validated against C(criteria).
+        - A data that will be validated against I(criteria).
         - This option represents the value that is passed to test plugin as check.
-          For example I(config_data is ansible.utils.validate(criteria=criteria), in this case I(config_data)
+          For example C(config_data is ansible.utils.validate(criteria=criteria), in this case B(config_data)
           represents this option.
-        - For the type of C(data) that represents this value refer documentation of individual validate plugins.
+        - For the type of I(data) that represents this value refer documentation of individual validate plugins.
         required: True
       criteria:
         type: raw
         description:
-        - The criteria used for validation of value that represents C(data) options.
+        - The criteria used for validation of value that represents I(data) options.
         - This option is passed to the test plugin as key, value pair
-          For example I(config_data is ansible.utils.validate(criteria=criteria)), in
+          For example C(config_data is ansible.utils.validate(criteria=criteria)), in
           this case the value of I(criteria) key represents this criteria for data validation.
-        - For the type of C(criteria) that represents this value refer documentation of individual validate plugins.
+        - For the type of I(criteria) that represents this value refer documentation of individual validate plugins.
         required: True
       engine:
         type: str
         description:
         - The name of the validate plugin to use.
         - This option can be passed in test plugin as a key, value pair
-          For example I(config_data is ansible.utils.validate(engine='ansible.utils.jsonschema', criteria=criteria)), in
-          this case the value of I(engine) key represents the engine to be use for data valdiation.
-          If the value is not provided the default value that is I(ansible.uitls.jsonschema) will be used.
+          For example C(config_data is ansible.utils.validate(engine='ansible.utils.jsonschema', criteria=criteria)), in
+          this case the value of I(engine) key represents the engine to be use for data validation.
+          If the value is not provided the default value that is B(ansible.uitls.jsonschema) will be used.
         - The value should be in fully qualified collection name format that is
-          I(<org-name>.<collection-name>.<validate-plugin-name>).
+          B(<org-name>.<collection-name>.<validate-plugin-name>).
         default: ansible.utils.jsonschema
     notes:
-    - For the type of options C(data) and C(criteria) refer the individual C(validate) plugin
-      documentation that is represented in the value of C(engine) option.
-    - For additional plugin configuration options refer the individual C(validate) plugin
-      documentation that is represented by the value of C(engine) option.
-    - The plugin configuration option can be either passed as I(key=value) pairs within test plugin
+    - For the type of options I(data) and I(criteria) refer the individual validate plugin
+      documentation that is represented in the value of I(engine) option.
+    - For additional plugin configuration options refer the individual validate plugin
+      documentation that is represented by the value of I(engine) option.
+    - The plugin configuration option can be either passed as B(key=value) pairs within test plugin
       or set as environment variables.
-    - The precedence the C(validate) plugin configurable option is the variable passed within test plugin
-      as I(key=value) pairs followed by task variables followed by environment variables.
+    - The precedence the validate plugin configurable option is the variable passed within test plugin
+      as B(key=value) pairs followed by task variables followed by environment variables.
 """
 
 EXAMPLES = r"""
 - name: set facts for data and criteria
-  set_fact:
-    data: "{{ lookup('file', './validate/data/show_interfaces_iosxr.json')}}"
-    criteria: "{{ lookup('file', './validate/criteria/jsonschema/show_interfaces_iosxr.json')}}"
+  ansible.builtin.set_fact:
+    data: "{{ lookup('ansible.builtin.file', './validate/data/show_interfaces_iosxr.json')}}"
+    criteria: "{{ lookup('ansible.builtin.file', './validate/criteria/jsonschema/show_interfaces_iosxr.json')}}"
 
 - name: validate data in json format using jsonschema with test plugin
   ansible.builtin.set_fact:

@@ -22,7 +22,7 @@ options:
     data:
         type: raw
         description:
-        - Data that will be validated against C(criteria). For the type of data refer to the
+        - Data that will be validated against I(criteria). For the type of data refer to the
           documentation of individual validate plugins.
         required: True
     engine:
@@ -35,24 +35,24 @@ options:
     criteria:
         type: raw
         description:
-        - The criteria used for validation of C(data). For the type of criteria refer to the
+        - The criteria used for validation of I(data). For the type of criteria refer to the
           documentation of individual validate plugins.
         required: True
 notes:
-- For the type of options C(data) and C(criteria) refer to the individual C(validate) plugin
-  documentation that is represented in the value of C(engine) option.
-- For additional plugin configuration options refer to the individual C(validate) plugin
-  documentation that is represented by the value of C(engine) option.
+- For the type of options I(data) and I(criteria) refer to the individual validate plugin
+  documentation that is represented in the value of I(engine) option.
+- For additional plugin configuration options refer to the individual validate plugin
+  documentation that is represented by the value of I(engine) option.
 - The plugin configuration option can be either passed as task or environment variables.
-- The precedence of the C(validate) plugin configurable option is task variables followed
+- The precedence of the validate plugin configurable option is task variables followed
   by the environment variables.
 """
 
 EXAMPLES = r"""
 - name: set facts for data and criteria
-  set_fact:
-    data: "{{ lookup('file', './validate/data/show_interfaces_iosxr.json')}}"
-    criteria: "{{ lookup('file', './validate/criteria/jsonschema/show_interfaces_iosxr.json')}}"
+  ansible.builtin.set_fact:
+    data: "{{ lookup('ansible.builtin.file', './validate/data/show_interfaces_iosxr.json')}}"
+    criteria: "{{ lookup('ansible.builtin.file', './validate/criteria/jsonschema/show_interfaces_iosxr.json')}}"
 
 - name: validate data in with jsonschema engine (by passing task vars as configurable plugin options)
   ansible.utils.validate:
@@ -66,14 +66,15 @@ EXAMPLES = r"""
 RETURN = r"""
 msg:
   description:
-  - The msg indicates if the C(data) is valid as per the C(criteria).
-  - In case data is valid return success message I(all checks passed).
-  - In case data is invalid return error message I(Validation errors were found)
+  - The msg indicates if the I(data) is valid as per the I(criteria).
+  - In case data is valid return success message B(all checks passed).
+  - In case data is invalid return error message B(Validation errors were found)
     along with more information on error is available.
   returned: always
   type: str
 errors:
-  description: The list of errors in C(data) based on the C(criteria).
-  returned: when C(data) value is invalid
+  description: The list of errors in I(data) based on the I(criteria).
+  returned: when I(data) value is invalid
   type: list
+  elements: str
 """

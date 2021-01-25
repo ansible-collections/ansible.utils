@@ -51,6 +51,7 @@ options:
               - If the provided I(before) and I(after) are a string, they will be split.
               - Each entry in each list will be cast to a string for the comparison
             type: list
+            elements: str
 
 notes:
 
@@ -59,7 +60,7 @@ author:
 """
 
 EXAMPLES = r"""
-- set_fact:
+- ansible.builtin.set_fact:
     before:
       a:
         b:
@@ -198,8 +199,9 @@ diff_text:
   returned: always
   type: str
 diff_lines:
-  description: The C(diff_text) split into lines.
+  description: The I(diff_text) split into lines.
   returned: always
   type: list
+  elements: str
 
 """

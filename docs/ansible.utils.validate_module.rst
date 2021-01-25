@@ -102,9 +102,9 @@ Examples
 .. code-block:: yaml
 
     - name: set facts for data and criteria
-      set_fact:
-        data: "{{ lookup('file', './validate/data/show_interfaces_iosxr.json')}}"
-        criteria: "{{ lookup('file', './validate/criteria/jsonschema/show_interfaces_iosxr.json')}}"
+      ansible.builtin.set_fact:
+        data: "{{ lookup('ansible.builtin.file', './validate/data/show_interfaces_iosxr.json')}}"
+        criteria: "{{ lookup('ansible.builtin.file', './validate/criteria/jsonschema/show_interfaces_iosxr.json')}}"
 
     - name: validate data in with jsonschema engine (by passing task vars as configurable plugin options)
       ansible.utils.validate:

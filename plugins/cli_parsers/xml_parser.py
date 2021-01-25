@@ -11,10 +11,10 @@ __metaclass__ = type
 DOCUMENTATION = """
     author: Bradley Thornton (@cidrblock)
     name: xml
-    short_description: Define configurable options for C(xml) sub-plugin of C(cli_parse) module
+    short_description: Define configurable options for C(xml) sub-plugin of B(cli_parse) module
     description:
     - This plugin documentation provides the configurable options that can be passed
-      to the I(ansible.utils.cli_parse) plugins when I(ansible.utils.xml) is used as a value for
+      to the M(ansible.utils.cli_parse) plugins when I(ansible.utils.xml) is used as a value for
       I(name) option.
     version_added: 1.0.0
 """
@@ -29,7 +29,7 @@ EXAMPLES = r"""
 
 - name: "Pass text and parse with xml"
   ansible.utils.cli_parse:
-    text: "{{ lookup('file', '/home/user/files/nxos_show_interface.xml') }}"
+    text: "{{ lookup('ansible.builtin.file', '/home/user/files/nxos_show_interface.xml') }}"
     parser:
       name: ansible.utils.xml
       os: nxos

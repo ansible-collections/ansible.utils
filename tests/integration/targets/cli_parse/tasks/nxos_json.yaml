@@ -1,10 +1,10 @@
 ---
-- set_fact:
-    nxos_json_text_parsed: "{{ lookup('file', '{{ role_path }}/output/nxos_show_interface_json_text.txt') }}"
+- ansible.builtin.set_fact:
+    nxos_json_text_parsed: "{{ lookup('ansible.builtin.file', '{{ role_path }}/output/nxos_show_interface_json_text.txt') }}"
 
 - name: "{{ parser }} Run command and parse with json"
   ansible.utils.cli_parse:
-    text: "{{ lookup('file', '{{ role_path }}/output/nxos_show_interface_json_text.txt') }}"
+    text: "{{ lookup('ansible.builtin.file', '{{ role_path }}/output/nxos_show_interface_json_text.txt') }}"
     parser:
       name: ansible.utils.json
   register: nxos_json_text

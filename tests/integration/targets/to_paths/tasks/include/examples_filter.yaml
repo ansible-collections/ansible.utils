@@ -40,7 +40,7 @@
 #### Using a complex object
 
 # - name: Make an API call
-#   uri:
+#   ansible.builtin.uri:
 #     url: "https://nxos101/restconf/data/openconfig-interfaces:interfaces"
 #     headers:
 #       accept: "application/yang.data+json"
@@ -51,7 +51,7 @@
 #   delegate_to: localhost
 
 # - name: Flatten the complex object
-#   set_fact:
+#   ansible.builtin.set_fact:
 #     paths: "{{ result.json|ansible.utils.to_paths }}"
 
 # TASK [Flatten the complex object] ******************************************

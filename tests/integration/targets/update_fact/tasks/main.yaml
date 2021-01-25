@@ -1,6 +1,6 @@
 ---
 - name: Set a fact
-  set_fact:
+  ansible.builtin.set_fact:
     a:
       b:
         c:

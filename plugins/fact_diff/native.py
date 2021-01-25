@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyafter 2020 Red Hat
+# Copyright 2020 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
@@ -10,7 +10,7 @@ __metaclass__ = type
 DOCUMENTATION = """
     author: Bradley Thornton (@cidrblock)
     name: native
-    short_description: Define configurable options for C(native) sub-plugin of C(fact_diff) module
+    short_description: Define configurable options for C(native) sub-plugin of B(fact_diff) module
     description:
     - This plugin documentation provides the configurable options that can be passed
       to the I(ansible.utils.fact_diff) plugins when I(ansible.utils.native) is used as a value for
