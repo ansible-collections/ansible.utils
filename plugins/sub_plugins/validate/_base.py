@@ -48,7 +48,7 @@ class ValidateBase(object):
         self._sub_plugin_options = {}
 
         cref = dict(zip(["corg", "cname", "plugin"], engine.split(".")))
-        validatorlib = "ansible_collections.{corg}.{cname}.plugins.validate.{plugin}".format(
+        validatorlib = "ansible_collections.{corg}.{cname}.plugins.sub_plugins.validate.{plugin}".format(
             **cref
         )
 

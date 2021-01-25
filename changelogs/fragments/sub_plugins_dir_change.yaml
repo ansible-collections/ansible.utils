@@ -1,0 +1,3 @@
+---
+major_changes:
+  - Move sub plugins cli_parsers, fact_diff and validate to `plugins/sub_plugins folder

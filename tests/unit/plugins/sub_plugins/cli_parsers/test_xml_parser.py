@@ -10,7 +10,7 @@ from collections import OrderedDict
 import pytest
 
 from ansible_collections.ansible.utils.tests.unit.compat import unittest
-from ansible_collections.ansible.utils.plugins.cli_parsers.xml_parser import (
+from ansible_collections.ansible.utils.plugins.sub_plugins.cli_parsers.xml_parser import (
     CliParser,
 )
 

@@ -128,7 +128,7 @@ class ActionModule(ActionBase):
             )
             self._display.warning(msg)
 
-        parserlib = "ansible_collections.{corg}.{cname}.plugins.cli_parsers.{plugin}_parser".format(
+        parserlib = "ansible_collections.{corg}.{cname}.plugins.sub_plugins.cli_parsers.{plugin}_parser".format(
             **cref
         )
         try:

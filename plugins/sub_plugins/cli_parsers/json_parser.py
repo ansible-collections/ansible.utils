@@ -38,7 +38,7 @@ import json
 
 from ansible.module_utils._text import to_native
 from ansible.module_utils.six import string_types
-from ansible_collections.ansible.utils.plugins.cli_parsers._base import (
+from ansible_collections.ansible.utils.plugins.sub_plugins.cli_parsers._base import (
     CliParserBase,
 )
 

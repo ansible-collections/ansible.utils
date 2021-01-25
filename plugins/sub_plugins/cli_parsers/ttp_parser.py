@@ -40,7 +40,7 @@ import os
 
 from ansible.module_utils._text import to_native
 from ansible.module_utils.basic import missing_required_lib
-from ansible_collections.ansible.utils.plugins.cli_parsers._base import (
+from ansible_collections.ansible.utils.plugins.sub_plugins.cli_parsers._base import (
     CliParserBase,
 )
 

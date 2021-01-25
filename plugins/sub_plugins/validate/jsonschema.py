@@ -46,7 +46,7 @@ from ansible.module_utils.basic import missing_required_lib
 from ansible.errors import AnsibleError
 from ansible.module_utils.six import string_types
 
-from ansible_collections.ansible.utils.plugins.validate._base import (
+from ansible_collections.ansible.utils.plugins.sub_plugins.validate._base import (
     ValidateBase,
 )
 

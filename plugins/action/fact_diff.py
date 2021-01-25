@@ -69,7 +69,7 @@ class ActionModule(ActionBase):
             return None
         cref = dict(zip(["corg", "cname", "plugin"], plugin.split(".")))
         cref.update(directory=directory)
-        parserlib = "ansible_collections.{corg}.{cname}.plugins.{directory}.{plugin}".format(
+        parserlib = "ansible_collections.{corg}.{cname}.plugins.sub_plugins.{directory}.{plugin}".format(
             **cref
         )
         try:
