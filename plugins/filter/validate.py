@@ -33,11 +33,11 @@ DOCUMENTATION = """
         description:
         - The name of the validator plugin to use.
         - This option can be passed in lookup plugin as a key, value pair.
-          For example B(config_data|ansible.utils.validate(config_criteria, engine='ansible.utils.jsonschema')), in
-          this case the value C(ansible.utils.jsonschema) represents the engine to be use for data valdiation.
+          For example C(config_data|ansible.utils.validate(config_criteria, engine='ansible.utils.jsonschema')), in
+          this case the value C(ansible.utils.jsonschema) represents the engine to be use for data validation.
           If the value is not provided the default value that is C(ansible.uitls.jsonschema) will be used.
         - The value should be in fully qualified collection name format that is
-          B(<org-name>.<collection-name>.<validator-plugin-name>).
+          C(<org-name>.<collection-name>.<validator-plugin-name>).
         default: ansible.utils.jsonschema
     notes:
     - For the type of options I(data) and I(criteria) refer to the individual validate plugin

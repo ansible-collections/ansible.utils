@@ -20,15 +20,15 @@ DOCUMENTATION = """
     description:
         - Flatten a complex object into a dictionary of paths and values.
         - Paths are dot delimited whenever possible.
-        - Brakets are used for list indices and keys that contain special characters.
+        - Brackets are used for list indices and keys that contain special characters.
         - B(to_paths) is also available as a B(lookup plugin) for convenience.
-        - Using the parameters below- B(var|ansible.utils.to_paths(prepend, wantlist))
+        - Using the parameters below- C(var|ansible.utils.to_paths(prepend, wantlist))
     options:
       var:
         description:
         - The value of I(var) will be will be used.
         - This option represents the value that is passed to the filter plugin in pipe format.
-        - For example B(config_data|ansible.utils.to_paths()), in this case B(config_data) represents this option.
+        - For example C(config_data|ansible.utils.to_paths()), in this case B(config_data) represents this option.
         type: raw
         required: True
       prepend:

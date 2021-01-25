@@ -19,7 +19,7 @@ DOCUMENTATION = """
         description:
         - A data that will be validated against I(criteria).
         - This option represents the value that is passed to test plugin as check.
-          For example B(config_data is ansible.utils.validate(criteria=criteria), in this case B(config_data)
+          For example C(config_data is ansible.utils.validate(criteria=criteria), in this case B(config_data)
           represents this option.
         - For the type of I(data) that represents this value refer documentation of individual validate plugins.
         required: True
@@ -28,7 +28,7 @@ DOCUMENTATION = """
         description:
         - The criteria used for validation of value that represents I(data) options.
         - This option is passed to the test plugin as key, value pair
-          For example B(config_data is ansible.utils.validate(criteria=criteria)), in
+          For example C(config_data is ansible.utils.validate(criteria=criteria)), in
           this case the value of I(criteria) key represents this criteria for data validation.
         - For the type of I(criteria) that represents this value refer documentation of individual validate plugins.
         required: True
@@ -37,8 +37,8 @@ DOCUMENTATION = """
         description:
         - The name of the validate plugin to use.
         - This option can be passed in test plugin as a key, value pair
-          For example B(config_data is ansible.utils.validate(engine='ansible.utils.jsonschema', criteria=criteria)), in
-          this case the value of I(engine) key represents the engine to be use for data valdiation.
+          For example C(config_data is ansible.utils.validate(engine='ansible.utils.jsonschema', criteria=criteria)), in
+          this case the value of I(engine) key represents the engine to be use for data validation.
           If the value is not provided the default value that is B(ansible.uitls.jsonschema) will be used.
         - The value should be in fully qualified collection name format that is
           B(<org-name>.<collection-name>.<validate-plugin-name>).

@@ -90,7 +90,7 @@ Parameters
                     </td>
                 <td>
                         <div>The name of the validate plugin to use.</div>
-                        <div>This option can be passed in test plugin as a key, value pair For example <em>config_data is ansible.utils.validate(engine=&#x27;ansible.utils.jsonschema&#x27;, criteria=criteria</em>), in this case the value of <em>engine</em> key represents the engine to be use for data valdiation. If the value is not provided the default value that is <em>ansible.uitls.jsonschema</em> will be used.</div>
+                        <div>This option can be passed in test plugin as a key, value pair For example <em>config_data is ansible.utils.validate(engine=&#x27;ansible.utils.jsonschema&#x27;, criteria=criteria</em>), in this case the value of <em>engine</em> key represents the engine to be use for data validation. If the value is not provided the default value that is <em>ansible.uitls.jsonschema</em> will be used.</div>
                         <div>The value should be in fully qualified collection name format that is <em>&lt;org-name&gt;.&lt;collection-name&gt;.&lt;validate-plugin-name&gt;</em>.</div>
                 </td>
             </tr>

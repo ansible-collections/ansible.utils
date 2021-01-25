@@ -20,7 +20,7 @@ DOCUMENTATION = """
         description:
         - Data that will be validated against I(criteria).
         - This option represents the value that is passed to the lookup plugin as the first argument.
-          For example B(lookup(config_data, config_criteria, engine='ansible.utils.jsonschema')),
+          For example C(lookup(config_data, config_criteria, engine='ansible.utils.jsonschema')),
           in this case B(config_data) represents this option.
         - For the type of I(data) that represents this value refer to the documentation of individual validate plugins.
         required: True
@@ -29,7 +29,7 @@ DOCUMENTATION = """
         description:
         - The criteria used for validation of value that represents I(data) options.
         - This option represents the second argument passed in the lookup plugin
-          For example B(lookup(config_data, config_criteria, engine='ansible.utils.jsonschema')),
+          For example C(lookup(config_data, config_criteria, engine='ansible.utils.jsonschema')),
           in this case the value of B(config_criteria) represents this option.
         - For the type of I(criteria) that represents this value refer to the documentation of individual
           validate plugins.
@@ -39,11 +39,11 @@ DOCUMENTATION = """
         description:
         - The name of the validate plugin to use.
         - This option can be passed in lookup plugin as a key, value pair.
-          For example B(lookup(config_data, config_criteria, engine='ansible.utils.jsonschema')), in
-          this case the value C(ansible.utils.jsonschema) represents the engine to be use for data valdiation.
+          For example C(lookup(config_data, config_criteria, engine='ansible.utils.jsonschema')), in
+          this case the value C(ansible.utils.jsonschema) represents the engine to be use for data validation.
           If the value is not provided the default value that is C(ansible.uitls.jsonschema) will be used.
         - The value should be in fully qualified collection name format that is
-          B(<org-name>.<collection-name>.<validate-plugin-name>).
+          C(<org-name>.<collection-name>.<validate-plugin-name>).
         default: ansible.utils.jsonschema
     notes:
     - For the type of options I(data) and I(criteria) refer to the individual validate plugin

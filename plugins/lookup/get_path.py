@@ -20,7 +20,7 @@ DOCUMENTATION = """
     description:
         - Use a I(path) to retrieve a nested value from a I(var)
         - B(get_path) is also available as a B(filter plugin) for convenience
-        - Using the parameters below- B(lookup('ansible.utils.get_path', var, path, wantlist))
+        - Using the parameters below- C(lookup('ansible.utils.get_path', var, path, wantlist))
     options:
       var:
         description: The variable from which the value should be extracted.

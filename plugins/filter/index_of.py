@@ -20,13 +20,13 @@ DOCUMENTATION = """
         - This plugin returns the indices of items matching some criteria in a list.
         - When working with a list of dictionaries, the key to evaluate can be specified.
         - B(index_of) is also available as a B(lookup plugin) for convenience.
-        - Using the parameters below- B(data|ansible.utils.index_of(test, value, key, fail_on_missing, wantlist))
+        - Using the parameters below- C(data|ansible.utils.index_of(test, value, key, fail_on_missing, wantlist))
     options:
       data:
         description:
         - A list of items to enumerate and test against.
         - This option represents the value that is passed to the filter plugin in pipe format.
-        - For example B(config_data|ansible.utils.index_of('x')), in this case B(config_data) represents this option.
+        - For example C(config_data|ansible.utils.index_of('x')), in this case B(config_data) represents this option.
         type: list
         required: True
       test:
@@ -40,7 +40,7 @@ DOCUMENTATION = """
         description:
         - The value used to test each list item against.
         - Not required for simple tests (eg: C(true), C(false), C(even), C(odd))
-        - May be a C(string), C(boolean), C(number), C(regular expesion) C(dict) etc, depending on the C(test) used
+        - May be a C(string), C(boolean), C(number), C(regular expression) C(dict) and so on, depending on the C(test) used
         type: raw
       key:
         description:
@@ -64,7 +64,8 @@ EXAMPLES = r"""
 
 #### Simple examples
 
-- ansible.builtin.set_fact:
+- name: Define a list
+  ansible.builtin.set_fact:
     data:
     - 1
     - 2
@@ -121,7 +122,8 @@ EXAMPLES = r"""
 
 #### Working with lists of dictionaries
 
-- ansible.builtin.set_fact:
+- name: Define a list with hostname and type
+  ansible.builtin.set_fact:
     data:
     - name: sw01.example.lan
       type: switch
@@ -223,7 +225,8 @@ EXAMPLES = r"""
 
 #### Working with deeply nested data
 
-- ansible.builtin.set_fact:
+- name: Define interface configuration facts
+  ansible.builtin.set_fact:
     data:
       interfaces:
         interface:

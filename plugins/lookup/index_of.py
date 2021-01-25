@@ -21,7 +21,7 @@ DOCUMENTATION = """
         - This plugin returns the indices of items matching some criteria in a list.
         - When working with a list of dictionaries, the key to evaluate can be specified.
         - B(index_of) is also available as a B(filter plugin) for convenience.
-        - Using the parameters below- B(lookup('ansible.utils.index_of', data, test, value, key, fail_on_missing, wantlist)).
+        - Using the parameters below- C(lookup('ansible.utils.index_of', data, test, value, key, fail_on_missing, wantlist)).
     options:
       data:
         description: A list of items to enumerate and test against.
@@ -38,7 +38,7 @@ DOCUMENTATION = """
         description: >
             The value used to test each list item against.
             Not required for simple tests (eg: C(true), C(false), C(even), C(odd))
-            May be a C(string), C(boolean), C(number), C(regular expesion) C(dict) etc, depending on the B(test) used.
+            May be a C(string), C(boolean), C(number), C(regular expression) C(dict) and so on, depending on the B(test) used.
         type: raw
       key:
         description: >

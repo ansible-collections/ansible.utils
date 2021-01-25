@@ -133,7 +133,7 @@ Parameters
                 <td>
                         <div>The value used to test each list item against.</div>
                         <div>{&#x27;Not required for simple tests (eg&#x27;: &#x27;<code>true</code>, <code>false</code>, <code>even</code>, <code>odd</code>)&#x27;}</div>
-                        <div>May be a <code>string</code>, <code>boolean</code>, <code>number</code>, <code>regular expesion</code> <code>dict</code> etc, depending on the <code>test</code> used</div>
+                        <div>May be a <code>string</code>, <code>boolean</code>, <code>number</code>, <code>regular expression</code> <code>dict</code> and so on, depending on the <code>test</code> used</div>
                 </td>
             </tr>
             <tr>
@@ -171,7 +171,8 @@ Examples
 
     #### Simple examples
 
-    - ansible.builtin.set_fact:
+    - name: Define a list
+      ansible.builtin.set_fact:
         data:
         - 1
         - 2
@@ -228,7 +229,8 @@ Examples
 
     #### Working with lists of dictionaries
 
-    - ansible.builtin.set_fact:
+    - name: Define a list with hostname and type
+      ansible.builtin.set_fact:
         data:
         - name: sw01.example.lan
           type: switch
@@ -330,7 +332,8 @@ Examples
 
     #### Working with deeply nested data
 
-    - ansible.builtin.set_fact:
+    - name: Define interface configuration facts
+      ansible.builtin.set_fact:
         data:
           interfaces:
             interface:

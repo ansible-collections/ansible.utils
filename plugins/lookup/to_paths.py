@@ -22,10 +22,10 @@ DOCUMENTATION = """
         - Paths are dot delimited whenever possible.
         - Brackets are used for list indices and keys that contain special characters.
         - B(to_paths) is also available as a filter plugin.
-        - Using the parameters below- B(lookup('ansible.utils.to_paths', var, prepend, wantlist))
+        - Using the parameters below- C(lookup('ansible.utils.to_paths', var, prepend, wantlist))
     options:
       var:
-        description: The value of I(var) will be will be used.
+        description: The value of I(var) will be used.
         type: raw
         required: True
       prepend:
@@ -34,7 +34,7 @@ DOCUMENTATION = """
         required: False
       wantlist:
         description: >
-            If set to C(True), the return value will always be a list.
+            If set to I(True), the return value will always be a list.
             This can also be accomplished using B(query) or B(q) instead of B(lookup).
             U(https://docs.ansible.com/ansible/latest/plugins/lookup.html)
         type: bool
