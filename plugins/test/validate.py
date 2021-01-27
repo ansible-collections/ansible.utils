@@ -39,7 +39,7 @@ DOCUMENTATION = """
         - This option can be passed in test plugin as a key, value pair
           For example C(config_data is ansible.utils.validate(engine='ansible.utils.jsonschema', criteria=criteria)), in
           this case the value of I(engine) key represents the engine to be use for data validation.
-          If the value is not provided the default value that is B(ansible.uitls.jsonschema) will be used.
+          If the value is not provided the default value that is C(ansible.utils.jsonschema) will be used.
         - The value should be in fully qualified collection name format that is
           B(<org-name>.<collection-name>.<validate-plugin-name>).
         default: ansible.utils.jsonschema
@@ -48,10 +48,10 @@ DOCUMENTATION = """
       documentation that is represented in the value of I(engine) option.
     - For additional plugin configuration options refer the individual validate plugin
       documentation that is represented by the value of I(engine) option.
-    - The plugin configuration option can be either passed as B(key=value) pairs within test plugin
+    - The plugin configuration option can be either passed as C(key=value) pairs within test plugin
       or set as environment variables.
     - The precedence the validate plugin configurable option is the variable passed within test plugin
-      as B(key=value) pairs followed by task variables followed by environment variables.
+      as C(key=value) pairs followed by task variables followed by environment variables.
 """
 
 EXAMPLES = r"""
@@ -74,8 +74,8 @@ RETURN = """
 
 from ansible.errors import AnsibleError
 from ansible.module_utils._text import to_text
-from ansible_collections.ansible.utils.plugins.module_utils.validate.base import (
-    load_validator,
+from ansible_collections.ansible.utils.plugins.plugin_utils.base.validate import (
+    _load_validator,
 )
 from ansible_collections.ansible.utils.plugins.module_utils.common.utils import (
     to_list,
@@ -114,7 +114,7 @@ def validate(*args, **kwargs):
             )
         )
 
-    validator_engine, validator_result = load_validator(
+    validator_engine, validator_result = _load_validator(
         engine=updated_params["engine"],
         data=updated_params["data"],
         criteria=updated_params["criteria"],

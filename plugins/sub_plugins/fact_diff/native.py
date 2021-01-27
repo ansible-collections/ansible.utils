@@ -10,7 +10,7 @@ __metaclass__ = type
 DOCUMENTATION = """
     author: Bradley Thornton (@cidrblock)
     name: native
-    short_description: Define configurable options for C(native) sub-plugin of B(fact_diff) module
+    short_description: Define configurable options for C(native) sub-plugin of M(ansible.utils.fact_diff) module
     description:
     - This plugin documentation provides the configurable options that can be passed
       to the I(ansible.utils.fact_diff) plugins when I(ansible.utils.native) is used as a value for
@@ -29,7 +29,7 @@ EXAMPLES = r"""
 
 import re
 from ansible.plugins.callback import CallbackBase
-from ansible_collections.ansible.utils.plugins.module_utils.base_classes.fact_diff import (
+from ansible_collections.ansible.utils.plugins.plugin_utils.base.fact_diff import (
     FactDiffBase,
 )
 

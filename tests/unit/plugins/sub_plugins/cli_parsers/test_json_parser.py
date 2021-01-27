@@ -8,7 +8,7 @@ __metaclass__ = type
 import json
 
 from ansible_collections.ansible.utils.tests.unit.compat import unittest
-from ansible_collections.ansible.utils.plugins.sub_plugins.cli_parsers.json_parser import (
+from ansible_collections.ansible.utils.plugins.sub_plugins.cli_parser.json_parser import (
     CliParser,
 )
 

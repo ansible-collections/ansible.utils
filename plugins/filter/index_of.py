@@ -26,7 +26,7 @@ DOCUMENTATION = """
         description:
         - A list of items to enumerate and test against.
         - This option represents the value that is passed to the filter plugin in pipe format.
-        - For example C(config_data|ansible.utils.index_of('x')), in this case B(config_data) represents this option.
+        - For example C(config_data|ansible.utils.index_of('x')), in this case C(config_data) represents this option.
         type: list
         required: True
       test:

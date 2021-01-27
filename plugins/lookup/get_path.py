@@ -35,7 +35,7 @@ DOCUMENTATION = """
       wantlist:
         description: >
             If set to C(True), the return value will always be a list.
-            This can also be accomplished using B(query) or B(q) instead of B(lookup).
+            This can also be accomplished using C(query) or C(q) instead of C(lookup).
             U(https://docs.ansible.com/ansible/latest/plugins/lookup.html).
         type: bool
 

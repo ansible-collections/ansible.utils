@@ -12,7 +12,7 @@ DOCUMENTATION = """
     name: jsonschema
     short_description: Define configurable options for jsonschema validate plugin
     description:
-    - This plugin documentation provides the configurable options that can be passed
+    - This sub plugin documentation provides the configurable options that can be passed
       to the validate plugins when C(ansible.utils.jsonschema) is used as a value for
       engine option.
     version_added: 1.0.0
@@ -46,7 +46,7 @@ from ansible.module_utils.basic import missing_required_lib
 from ansible.errors import AnsibleError
 from ansible.module_utils.six import string_types
 
-from ansible_collections.ansible.utils.plugins.sub_plugins.validate._base import (
+from ansible_collections.ansible.utils.plugins.plugin_utils.base.validate import (
     ValidateBase,
 )
 

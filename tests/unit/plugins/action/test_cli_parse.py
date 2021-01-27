@@ -30,7 +30,7 @@ from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_valid
 from ansible_collections.ansible.utils.plugins.action.cli_parse import (
     ARGSPEC_CONDITIONALS,
 )
-from ansible_collections.ansible.utils.plugins.sub_plugins.cli_parsers._base import (
+from ansible_collections.ansible.utils.plugins.plugin_utils.base.cli_parser import (
     CliParserBase,
 )
 from ansible.module_utils.connection import (

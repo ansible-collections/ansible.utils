@@ -10,7 +10,7 @@ import os
 import pytest
 
 from ansible_collections.ansible.utils.tests.unit.compat import unittest
-from ansible_collections.ansible.utils.plugins.sub_plugins.cli_parsers.ttp_parser import (
+from ansible_collections.ansible.utils.plugins.sub_plugins.cli_parser.ttp_parser import (
     CliParser,
 )
 

@@ -1,3 +1,5 @@
 ---
-major_changes:
-  - Move sub plugins cli_parsers, fact_diff and validate to `plugins/sub_plugins folder
+breaking_changes:
+  - Move sub plugins cli_parsers, fact_diff and validate to `plugins/sub_plugins` folder
+  - If added custom sub plugins in your collection move from old location `plugins/<sub-plugin-name>` to the
+    new location `plugins/sub_plugins/<sub-plugin-name>` and update the imports as required

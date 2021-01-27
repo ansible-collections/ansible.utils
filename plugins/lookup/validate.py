@@ -21,7 +21,7 @@ DOCUMENTATION = """
         - Data that will be validated against I(criteria).
         - This option represents the value that is passed to the lookup plugin as the first argument.
           For example C(lookup(config_data, config_criteria, engine='ansible.utils.jsonschema')),
-          in this case B(config_data) represents this option.
+          in this case C(config_data) represents this option.
         - For the type of I(data) that represents this value refer to the documentation of individual validate plugins.
         required: True
       criteria:
@@ -30,7 +30,7 @@ DOCUMENTATION = """
         - The criteria used for validation of value that represents I(data) options.
         - This option represents the second argument passed in the lookup plugin
           For example C(lookup(config_data, config_criteria, engine='ansible.utils.jsonschema')),
-          in this case the value of B(config_criteria) represents this option.
+          in this case the value of C(config_criteria) represents this option.
         - For the type of I(criteria) that represents this value refer to the documentation of individual
           validate plugins.
         required: True
@@ -50,10 +50,10 @@ DOCUMENTATION = """
       documentation that is represented in the value of I(engine) option.
     - For additional plugin configuration options refer to the individual validate plugin
       documentation that is represented by the value of I(engine) option.
-    - The plugin configuration option can be either passed as B(key=value) pairs within lookup plugin
+    - The plugin configuration option can be either passed as C(key=value) pairs within lookup plugin
       or task or environment variables.
     - The precedence the validate plugin configurable option is the variable passed within lookup plugin
-      as B(key=value) pairs followed by task variables followed by environment variables.
+      as C(key=value) pairs followed by task variables followed by environment variables.
 """
 
 EXAMPLES = r"""
@@ -83,8 +83,8 @@ RETURN = """
 from ansible.errors import AnsibleError, AnsibleLookupError
 from ansible.module_utils._text import to_text
 from ansible.plugins.lookup import LookupBase
-from ansible_collections.ansible.utils.plugins.module_utils.validate.base import (
-    load_validator,
+from ansible_collections.ansible.utils.plugins.plugin_utils.base.validate import (
+    _load_validator,
 )
 from ansible_collections.ansible.utils.plugins.module_utils.common.utils import (
     to_list,
@@ -123,7 +123,7 @@ class LookupModule(LookupBase):
                 )
             )
 
-        validator_engine, validator_result = load_validator(
+        validator_engine, validator_result = _load_validator(
             engine=updated_params["engine"],
             data=updated_params["data"],
             criteria=updated_params["criteria"],
