@@ -1,0 +1,4 @@
+---
+trivial:
+  - uncap ansible in meta/runtime.yaml
+  - move python requirements to requirements.txt for execution environments
