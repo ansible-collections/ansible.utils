@@ -3,3 +3,5 @@ breaking_changes:
   - Move sub plugins cli_parsers, fact_diff and validate to `plugins/sub_plugins` folder
   - If added custom sub plugins in your collection move from old location `plugins/<sub-plugin-name>` to the
     new location `plugins/sub_plugins/<sub-plugin-name>` and update the imports as required
+  - The `cli_parsers` sub plugins folder name is changed to `cli_parse` to have consistent naming convention,
+    that is all the cli_parse subplugins will now be in `plugins/sub_plugins/cli_parse` folder
