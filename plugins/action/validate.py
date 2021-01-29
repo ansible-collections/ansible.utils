@@ -17,8 +17,8 @@ from ansible.plugins.action import ActionBase
 from ansible_collections.ansible.utils.plugins.modules.validate import (
     DOCUMENTATION,
 )
-from ansible_collections.ansible.utils.plugins.module_utils.validate.base import (
-    load_validator,
+from ansible_collections.ansible.utils.plugins.plugin_utils.base.validate import (
+    _load_validator,
 )
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     check_argspec,
@@ -72,7 +72,7 @@ class ActionModule(ActionBase):
             task_vars.get("inventory_hostname") if task_vars else None
         )
 
-        self._validator_engine, validator_result = load_validator(
+        self._validator_engine, validator_result = _load_validator(
             engine=updated_params["engine"],
             data=updated_params["data"],
             criteria=updated_params["criteria"],

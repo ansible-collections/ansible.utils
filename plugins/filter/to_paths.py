@@ -28,7 +28,7 @@ DOCUMENTATION = """
         description:
         - The value of I(var) will be will be used.
         - This option represents the value that is passed to the filter plugin in pipe format.
-        - For example C(config_data|ansible.utils.to_paths()), in this case B(config_data) represents this option.
+        - For example C(config_data|ansible.utils.to_paths()), in this case C(config_data) represents this option.
         type: raw
         required: True
       prepend:

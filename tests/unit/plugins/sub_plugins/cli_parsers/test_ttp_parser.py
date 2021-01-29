@@ -10,20 +10,20 @@ import os
 import pytest
 
 from ansible_collections.ansible.utils.tests.unit.compat import unittest
-from ansible_collections.ansible.utils.plugins.cli_parsers.textfsm_parser import (
+from ansible_collections.ansible.utils.plugins.sub_plugins.cli_parser.ttp_parser import (
     CliParser,
 )
 
-textfsm = pytest.importorskip("textfsm")
+textfsm = pytest.importorskip("ttp")
 
 
 class TestTextfsmParser(unittest.TestCase):
-    def test_textfsm_parser(self):
+    def test_ttp_parser(self):
         nxos_cfg_path = os.path.join(
             os.path.dirname(__file__), "fixtures", "nxos_show_version.cfg"
         )
         nxos_template_path = os.path.join(
-            os.path.dirname(__file__), "fixtures", "nxos_show_version.textfsm"
+            os.path.dirname(__file__), "fixtures", "nxos_show_version.ttp"
         )
 
         with open(nxos_cfg_path) as fhand:
@@ -32,7 +32,7 @@ class TestTextfsmParser(unittest.TestCase):
         task_args = {
             "text": nxos_show_version_output,
             "parser": {
-                "name": "ansible.utils.textfsm",
+                "name": "ansible.utils.ttp",
                 "command": "show version",
                 "template_path": nxos_template_path,
             },
@@ -40,23 +40,23 @@ class TestTextfsmParser(unittest.TestCase):
         parser = CliParser(task_args=task_args, task_vars=[], debug=False)
 
         result = parser.parse()
+        # import pdb; pdb.set_trace()
         parsed_output = [
             {
-                "BOOT_IMAGE": "bootflash:///nxos.7.0.3.I7.1.bin",
-                "LAST_REBOOT_REASON": "Unknown",
-                "OS": "7.0(3)I7(1)",
-                "PLATFORM": "9000v",
-                "UPTIME": "12 day(s), 23 hour(s), 48 minute(s), 10 second(s)",
+                "boot_image": "bootflash:///nxos.7.0.3.I7.1.bin",
+                "os": "7.0(3)I7(1)",
+                "platform": "9000v",
+                "uptime": "12 day(s), 23 hour(s), 48 minute(s), 10 second(s)",
             }
         ]
-        self.assertEqual(result, {"parsed": parsed_output})
+        self.assertEqual(result["parsed"][0][0], parsed_output)
 
     def test_textfsm_parser_invalid_parser(self):
         fake_path = "/ /I hope this doesn't exist"
         task_args = {
             "text": "",
             "parser": {
-                "name": "ansible.utils.textfsm",
+                "name": "ansible.utils.ttp",
                 "command": "show version",
                 "template_path": fake_path,
             },

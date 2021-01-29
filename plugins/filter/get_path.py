@@ -25,7 +25,7 @@ DOCUMENTATION = """
         description:
         - The variable from which the value should be extracted.
         - This option represents the value that is passed to the filter plugin in pipe format.
-        - For example C(config_data|ansible.utils.get_path()), in this case B(config_data) represents this option.
+        - For example C(config_data|ansible.utils.get_path()), in this case C(config_data) represents this option.
         type: raw
         required: True
       path:

@@ -11,7 +11,7 @@ __metaclass__ = type
 DOCUMENTATION = """
     author: Bradley Thornton (@cidrblock)
     name: ttp
-    short_description: Define configurable options for C(ttp) sub-plugin of B(cli_parse) module
+    short_description: Define configurable options for C(ttp) sub-plugin of M(ansible.utils.cli_parse) module
     description:
     - This plugin documentation provides the configurable options that can be passed
       to the M(ansible.utils.cli_parse) plugins when I(ansible.utils.ttp) is used as a value for
@@ -40,7 +40,7 @@ import os
 
 from ansible.module_utils._text import to_native
 from ansible.module_utils.basic import missing_required_lib
-from ansible_collections.ansible.utils.plugins.cli_parsers._base import (
+from ansible_collections.ansible.utils.plugins.plugin_utils.base.cli_parser import (
     CliParserBase,
 )
 
