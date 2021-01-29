@@ -1,3 +1,0 @@
----
-trivial:
-  - Ansible 3.0.0 collection inclusion related changes (https://github.com/ansible-collections/ansible-inclusion/discussions/4)

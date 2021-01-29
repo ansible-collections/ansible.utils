@@ -51,3 +51,19 @@ releases:
     fragments:
     - fix_changelog_file_location.yaml
     release_date: '2020-12-08'
+  2.0.0:
+    changes:
+      breaking_changes:
+      - If added custom sub plugins in your collection move from old location `plugins/<sub-plugin-name>`
+        to the new location `plugins/sub_plugins/<sub-plugin-name>` and update the
+        imports as required
+      - Move sub plugins cli_parsers, fact_diff and validate to `plugins/sub_plugins`
+        folder
+      - The `cli_parsers` sub plugins folder name is changed to `cli_parse` to have
+        consistent naming convention, that is all the cli_parse subplugins will now
+        be in `plugins/sub_plugins/cli_parse` folder
+    fragments:
+    - 32_doc_updates.yaml
+    - sub_plugins_dir_change.yaml
+    - upcap_ansible.yaml
+    release_date: '2021-01-29'
