@@ -10,6 +10,7 @@ __metaclass__ = type
 DOCUMENTATION = """
     name: validate
     author: Ganesh Nalawade (@ganeshrn)
+    plugin_type: lookup
     version_added: "1.0.0"
     short_description: Validate data with provided criteria
     description:

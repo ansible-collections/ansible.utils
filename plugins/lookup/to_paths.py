@@ -15,6 +15,7 @@ __metaclass__ = type
 DOCUMENTATION = """
     name: to_paths
     author: Bradley Thornton (@cidrblock)
+    plugin_type: lookup
     version_added: "1.0.0"
     short_description: Flatten a complex object into a dictionary of paths and values
     description:
