@@ -15,6 +15,7 @@ __metaclass__ = type
 DOCUMENTATION = """
     name: get_path
     author: Bradley Thornton (@cidrblock)
+    plugin_type: lookup
     version_added: "1.0.0"
     short_description: Retrieve the value in a variable using a path
     description:

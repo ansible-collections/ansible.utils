@@ -1,0 +1,3 @@
+---
+trivial:
+  - add missing plugin_type for lookup plugins.
