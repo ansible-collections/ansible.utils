@@ -1,5 +1,3 @@
-
-
 # Ansible Utilities Collection
 [![Codecov](https://img.shields.io/codecov/c/github/ansible-collections/ansible.utils)](https://codecov.io/gh/ansible-collections/ansible.utils)
 
