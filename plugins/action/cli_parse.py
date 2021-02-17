@@ -140,6 +140,34 @@ class ActionModule(ActionBase):
             )
             return parser
         except Exception as exc:
+            # TODO: The condition is added to support old sub-plugin strucutre.
+            # Remove the if condition after ansible.netcommon.cli_parse module is removed
+            # from ansible.netcommon collection
+            if cref["cname"] == "netcommon" and cref["plugin"] in [
+                "native",
+                "ntc",
+                "pyats",
+            ]:
+                parserlib = "ansible_collections.{corg}.{cname}.plugins.cli_parsers.{plugin}_parser".format(
+                    **cref
+                )
+                try:
+                    parsercls = getattr(
+                        import_module(parserlib), self.PARSER_CLS_NAME
+                    )
+                    parser = parsercls(
+                        task_args=self._task.args,
+                        task_vars=task_vars,
+                        debug=self._debug,
+                    )
+                    return parser
+                except Exception as exc:
+                    self._result["failed"] = True
+                    self._result["msg"] = "Error loading parser: {err}".format(
+                        err=to_native(exc)
+                    )
+                    return None
+
             self._result["failed"] = True
             self._result["msg"] = "Error loading parser: {err}".format(
                 err=to_native(exc)
