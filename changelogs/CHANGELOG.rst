@@ -5,6 +5,14 @@ Ansible Utils Collection Release Notes
 .. contents:: Topics
 
 
+v2.0.1
+======
+
+Bugfixes
+--------
+
+- Fix ansible.utils.cli_parse action plugin to support old cli_parse sub-plugin structure in ansible.netcommon collection.
+
 v2.0.0
 ======
 

@@ -67,3 +67,12 @@ releases:
     - sub_plugins_dir_change.yaml
     - upcap_ansible.yaml
     release_date: '2021-01-29'
+  2.0.1:
+    changes:
+      bugfixes:
+      - Fix ansible.utils.cli_parse action plugin to support old cli_parse sub-plugin
+        structure in ansible.netcommon collection.
+    fragments:
+    - ansible-doc.yaml
+    - cli_parse_fix.yaml
+    release_date: '2021-02-25'
