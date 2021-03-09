@@ -63,9 +63,9 @@ class TestTextfsmParser(unittest.TestCase):
         }
         parser = CliParser(task_args=task_args, task_vars=[], debug=False)
         result = parser.parse()
-        error = {
-            "error": "error while reading template_path file {0}".format(
+        errors = {
+            "errors": "error while reading template_path file {0}".format(
                 fake_path
             )
         }
-        self.assertEqual(result, error)
+        self.assertEqual(result, errors)
