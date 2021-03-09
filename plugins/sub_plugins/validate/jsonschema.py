@@ -33,8 +33,7 @@ DOCUMENTATION = """
         vars:
         - name: ansible_validate_jsonschema_draft
     notes:
-    - The value of I(data) option should be either of type B(dict) or B(strings) which should be
-      a valid B(dict) when read in python.
+    - The value of I(data) option should be either a valid B(JSON) object or a B(JSON) string.
     - The value of I(criteria) should be B(list) of B(dict) or B(list) of B(strings) and each
       B(string) within the B(list) entry should be a valid B(dict) when read in python.
 """
@@ -98,19 +97,14 @@ class Validate(ValidateBase):
         :return: None: In case all arguments passed are valid
         """
         try:
-            if isinstance(self._data, dict):
-                self._data = json.loads(json.dumps(self._data))
-            elif isinstance(self._data, string_types):
+            if isinstance(self._data, string_types):
                 self._data = json.loads(self._data)
             else:
-                msg = "Expected value of 'data' option is either dict or str, received type '{data_type}'".format(
-                    data_type=type(self._data)
-                )
-                raise AnsibleError(msg)
+                self._data = json.loads(json.dumps(self._data))
 
         except (TypeError, JSONDecodeError) as exe:
             msg = (
-                "'data' option value is invalid, value should of type dict or str format of dict."
+                "'data' option value is invalid, value should a valid JSON."
                 " Failed to read with error '{err}'".format(
                     err=to_text(exe, errors="surrogate_then_replace")
                 )

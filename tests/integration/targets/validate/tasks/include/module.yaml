@@ -132,3 +132,14 @@
     that:
       - "'errors' not in result"
       - "'all checks passed' in result.msg"
+
+- name: validate list data using jsonschema
+  ansible.utils.validate:
+    data: "{{ lookup('ansible.builtin.file', 'data/test_list_data.json') }}"
+    criteria: "{{ lookup('ansible.builtin.file', 'criteria/check_list_data.json') }}"
+    engine: ansible.utils.jsonschema
+
+- assert:
+    that:
+      - "'errors' not in result"
+      - "'all checks passed' in result.msg"
