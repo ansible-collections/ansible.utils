@@ -114,20 +114,15 @@ class Validate(ValidateBase):
         try:
             criteria = []
             for item in to_list(self._criteria):
-                if isinstance(item, dict):
-                    criteria.append(json.loads(json.dumps(item)))
-                elif isinstance(self._criteria, string_types):
+                if isinstance(self._criteria, string_types):
                     criteria.append(json.loads(item))
                 else:
-                    msg = "Expected value of 'criteria' option is either list of dict/str or dict or str, received type '{criteria_type}'".format(
-                        criteria_type=type(criteria)
-                    )
-                    raise AnsibleError(msg)
+                    criteria.append(json.loads(json.dumps(item)))
 
             self._criteria = criteria
         except (TypeError, JSONDecodeError) as exe:
             msg = (
-                "'criteria' option value is invalid, value should of type dict or str format of dict."
+                "'criteria' option value is invalid, value should a valid JSON."
                 " Failed to read with error '{err}'".format(
                     err=to_text(exe, errors="surrogate_then_replace")
                 )

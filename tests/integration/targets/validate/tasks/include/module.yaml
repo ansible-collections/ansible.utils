@@ -79,7 +79,7 @@
 - assert:
     that:
       - "result['failed'] == true"
-      - "'\\'data\\' option value is invalid, value should of type dict or str format of dict' in result.msg"
+      - "'\\'data\\' option value is invalid' in result.msg"
 
 - name: invalid criteria value
   ansible.utils.validate:
@@ -92,7 +92,7 @@
 - assert:
     that:
       - "result['failed'] == true"
-      - "'\\'criteria\\' option value is invalid, value should of type dict or str format of dict' in result.msg"
+      - "'\\'criteria\\' option value is invalid' in result.msg"
 
 - name: validate data using jsonschema engine (invalid data read from file)
   ansible.utils.validate:
