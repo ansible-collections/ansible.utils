@@ -94,14 +94,14 @@ class CliParser(CliParserBase):
         template_path = self._task_args.get("parser").get("template_path")
         if template_path and not os.path.isfile(template_path):
             return {
-                "error": "error while reading template_path file {file}".format(
+                "errors": "error while reading template_path file {file}".format(
                     file=template_path
                 )
             }
         try:
             template = open(self._task_args.get("parser").get("template_path"))
         except IOError as exc:
-            return {"error": to_native(exc)}
+            return {"errors": to_native(exc)}
 
         re_table = textfsm.TextFSM(template)
         fsm_results = re_table.ParseText(cli_output)
