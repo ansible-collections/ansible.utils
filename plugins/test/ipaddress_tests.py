@@ -341,7 +341,7 @@ class TestModule(object):
 
     test_map = {
         "in_any_network": _in_any_network,
-        "in_network": _in_network,
+        # "in_network": _in_network,
         "in_one_network": _in_one_network,
         "ip_address": _ip_address,
         "ip": _ip,
