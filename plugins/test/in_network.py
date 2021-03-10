@@ -54,6 +54,25 @@ EXAMPLES = r"""
 #     "changed": false
 # }
 
+- name: Check if 10.1.1.1 is not in 192.168.1.0/24
+      ansible.builtin.set_fact:
+        data: "{{ '10.1.1.1' is not ansible.utils.in_network '192.168.1.0/24' }}"
+
+# TASK [Check if 10.1.1.1 is not in 192.168.1.0/24] ****************************
+# ok: [localhost] => {
+#     "ansible_facts": {
+#         "data": true
+#     },
+#     "changed": false
+# }
+
+"""
+
+RETURN = """
+  data:
+    description:
+      - If jinja test satisfies plugin expression C(true)
+      - If jinja test does not satisfy plugin expression C(false)
 """
 
 @_need_ipaddress
