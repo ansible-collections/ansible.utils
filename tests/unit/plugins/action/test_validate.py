@@ -159,7 +159,7 @@ class TestValidate(unittest.TestCase):
         with self.assertRaises(AnsibleActionFail) as error:
             self._plugin.run(task_vars=None)
         self.assertIn(
-            "'data' option value is invalid, value should of type dict or str format of dict",
+            "'data' option value is invalid",
             str(error.exception),
         )
 
@@ -173,7 +173,7 @@ class TestValidate(unittest.TestCase):
         with self.assertRaises(AnsibleActionFail) as error:
             self._plugin.run(task_vars=None)
         self.assertIn(
-            "'criteria' option value is invalid, value should of type dict or str format of dict",
+            "'criteria' option value is invalid",
             str(error.exception),
         )
 
