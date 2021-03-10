@@ -4,7 +4,7 @@
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 """
-Simple, dependancy free convenience tests
+Simple, dependency free convenience tests
 """
 from __future__ import absolute_import, division, print_function
 
