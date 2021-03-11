@@ -15,19 +15,18 @@ from ansible_collections.ansible.utils.plugins.module_utils.common.ipaddress_uti
 __metaclass__ = type
 
 DOCUMENTATION = """
-    name: ipv4
+    name: ipv6
     author: Bradley Thornton (@cidrblock)
     version_added: "2.0.1"
-    short_description: Test if something in an IPv4 address or network
+    short_description: Test if something in an IPv6 address or network
     description:
-        - This plugin checks if the provided value is a valid host or network IP address with IPv4 addressing scheme
+        - This plugin checks if the provided value is a valid host or network IP address with IPv6 addressing scheme
     options:
         ip:
             description:
             - A string that represents the value against which the test is going to be performed
             - For example: 
-                - "10.1.1.1"
-                - "10.0.0.0/8"
+                - "2001:db8:a::/64"
                 - "fe80::216:3eff:fee4:16f3"
             type: str
             required: True
@@ -38,11 +37,11 @@ EXAMPLES = r"""
 
 #### Simple examples
 
-- name: Check if 10.0.0.0/8 is a valid IPv4 address
+- name: Check if fe80::216:3eff:fee4:16f3 is a valid IPv6 address
   ansible.builtin.set_fact:
-    data: "{{ '10.0.0.0/8' is ansible.utils.ipv4 }}"
+    data: "{{ 'fe80::216:3eff:fee4:16f3' is ansible.utils.ipv6 }}"
 
-# TASK [Check if 10.0.0.0/8 is a valid IPv4 address] ***************************
+# TASK [Check if fe80::216:3eff:fee4:16f3 is a valid IPv6 address] *************
 # ok: [localhost] => {
 #     "ansible_facts": {
 #         "data": true
@@ -50,11 +49,11 @@ EXAMPLES = r"""
 #     "changed": false
 # }
 
-- name: Check if 192.168.1.250 is a valid IPv4 address
+- name: Check if 2001:db8:a::/64 is a valid IPv6 address
   ansible.builtin.set_fact:
-    data: "{{ '192.168.1.250' is ansible.utils.ipv4 }}"
+    data: "{{ '2001:db8:a::/64' is ansible.utils.ipv6 }}"
 
-# TASK [Check if 192.168.1.250 is a valid IPv4 address] ********************
+# TASK [Check if 2001:db8:a::/64 is a valid IPv6 address] **********************
 # ok: [localhost] => {
 #     "ansible_facts": {
 #         "data": true
@@ -62,11 +61,11 @@ EXAMPLES = r"""
 #     "changed": false
 # }
 
-- name: Check if fe80::216:3eff:fee4:16f3 is not a valid IPv4 address
+- name: Check if 192.169.1.250 is not a valid IPv6 address
   ansible.builtin.set_fact:
-    data: "{{ 'fe80::216:3eff:fee4:16f3' is not ansible.utils.ipv4 }}"
+    data: "{{ '192.169.1.250' is not ansible.utils.ipv6 }}"
 
-# TASK [Check if fe80::216:3eff:fee4:16f3 is not a valid IPv4 address] *********
+# TASK [Check if 192.169.1.250 is not a valid IPv6 address] ********************
 # ok: [localhost] => {
 #     "ansible_facts": {
 #         "data": true
@@ -84,18 +83,18 @@ RETURN = """
 """
 
 @_need_ipaddress
-def _ipv4(ip):
-    """Test if something in an IPv4 address or network"""
+def _ipv6(ip):
+    """ Test if something is an IPv6 address or network"""
 
     try:
-        return ip_network(ip).version == 4
+        return ip_network(ip).version == 6
     except Exception:
         return False
 
 class TestModule(object):
     """ network jinja test"""
 
-    test_map = {"ipv4": _ipv4}
+    test_map = {"ipv6": _ipv6}
 
     def tests(self):
         return self.test_map

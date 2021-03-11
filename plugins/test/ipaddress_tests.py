@@ -186,14 +186,14 @@ import re
 #         return False
 
 
-@_need_ipaddress
-def _ipv6(ip):
-    """ Test if something is an IPv6 address or network<br/>`'2001:db8:a::123/64' is ansible.utils.ipv6`
-    """
-    try:
-        return ip_network(ip).version == 6
-    except Exception:
-        return False
+# @_need_ipaddress
+# def _ipv6(ip):
+#     """ Test if something is an IPv6 address or network<br/>`'2001:db8:a::123/64' is ansible.utils.ipv6`
+#     """
+#     try:
+#         return ip_network(ip).version == 6
+#     except Exception:
+#         return False
 
 
 @_need_ipaddress
@@ -349,7 +349,7 @@ class TestModule(object):
         # "ipv4_address": _ipv4_address,
         # "ipv4_hostmask": _ipv4_hostmask,
         # "ipv4_netmask": _ipv4_netmask,
-        "ipv6": _ipv6,
+        # "ipv6": _ipv6,
         "ipv6_address": _ipv6_address,
         "ipv6_ipv4_mapped": _ipv6_ipv4_mapped,
         "ipv6_sixtofour": _ipv6_sixtofour,
