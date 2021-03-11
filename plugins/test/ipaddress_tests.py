@@ -154,14 +154,14 @@ import re
 #         return False
 
 
-@_need_ipaddress
-def _ipv4_address(ip):
-    """Test if something in an IPv4 address<br/>`'10.1.1.1' is ansible.utils.ipv4_address`
-    """
-    try:
-        return ip_address(ip).version == 4
-    except Exception:
-        return False
+# @_need_ipaddress
+# def _ipv4_address(ip):
+#     """Test if something in an IPv4 address<br/>`'10.1.1.1' is ansible.utils.ipv4_address`
+#     """
+#     try:
+#         return ip_address(ip).version == 4
+#     except Exception:
+#         return False
 
 
 @_need_ipaddress
@@ -346,7 +346,7 @@ class TestModule(object):
         # "ip_address": _ip_address,
         # "ip": _ip,
         # "ipv4": _ipv4,
-        "ipv4_address": _ipv4_address,
+        # "ipv4_address": _ipv4_address,
         "ipv4_hostmask": _ipv4_hostmask,
         "ipv4_netmask": _ipv4_netmask,
         "ipv6": _ipv6,
