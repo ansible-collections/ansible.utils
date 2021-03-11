@@ -196,14 +196,14 @@ import re
 #         return False
 
 
-@_need_ipaddress
-def _ipv6_address(ip):
-    """ Test if something is an IPv6 address<br/>`'fe80::216:3eff:fee4:16f3' is ansible.utils.ipv6_address`
-    """
-    try:
-        return ip_address(ip).version == 6
-    except Exception:
-        return False
+# @_need_ipaddress
+# def _ipv6_address(ip):
+#     """ Test if something is an IPv6 address<br/>`'fe80::216:3eff:fee4:16f3' is ansible.utils.ipv6_address`
+#     """
+#     try:
+#         return ip_address(ip).version == 6
+#     except Exception:
+#         return False
 
 
 @_need_ipaddress
@@ -350,7 +350,7 @@ class TestModule(object):
         # "ipv4_hostmask": _ipv4_hostmask,
         # "ipv4_netmask": _ipv4_netmask,
         # "ipv6": _ipv6,
-        "ipv6_address": _ipv6_address,
+        # "ipv6_address": _ipv6_address,
         "ipv6_ipv4_mapped": _ipv6_ipv4_mapped,
         "ipv6_sixtofour": _ipv6_sixtofour,
         "ipv6_teredo": _ipv6_teredo,
