@@ -112,14 +112,14 @@ import re
 #     return False
 
 
-def _in_any_network(ip, networks):
-    """Test if an IP or network is in any network<br/>`'10.1.1.1' is ansible.utils.in_any_network ['10.0.0.0/8', '192.168.1.0/24']`
-    """
-    _error_not_list("in_networks", networks)
-    bools = [_in_network(ip, network) for network in networks]
-    if True in bools:
-        return True
-    return False
+# def _in_any_network(ip, networks):
+#     """Test if an IP or network is in any network<br/>`'10.1.1.1' is ansible.utils.in_any_network ['10.0.0.0/8', '192.168.1.0/24']`
+#     """
+#     _error_not_list("in_networks", networks)
+#     bools = [_in_network(ip, network) for network in networks]
+#     if True in bools:
+#         return True
+#     return False
 
 
 @_need_ipaddress
@@ -340,7 +340,7 @@ class TestModule(object):
     """
 
     test_map = {
-        "in_any_network": _in_any_network,
+        # "in_any_network": _in_any_network,
         # "in_network": _in_network,
         # "in_one_network": _in_one_network,
         "ip_address": _ip_address,

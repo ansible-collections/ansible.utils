@@ -111,10 +111,9 @@ def _in_network(ip, network):
         return False
 
 class TestModule(object):
-    """ network jinja tests
-    """
+    """ network jinja test"""
 
-    test_map = {"in_network": _in_network,}
+    test_map = {"in_network": _in_network}
 
     def tests(self):
         return self.test_map
