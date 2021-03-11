@@ -144,14 +144,14 @@ import re
 #         return False
 
 
-@_need_ipaddress
-def _ipv4(ip):
-    """Test if something in an IPv4 address or network<br/>`'10.0.0.0/8' is ansible.utils.ipv4`
-    """
-    try:
-        return ip_network(ip).version == 4
-    except Exception:
-        return False
+# @_need_ipaddress
+# def _ipv4(ip):
+#     """Test if something in an IPv4 address or network<br/>`'10.0.0.0/8' is ansible.utils.ipv4`
+#     """
+#     try:
+#         return ip_network(ip).version == 4
+#     except Exception:
+#         return False
 
 
 @_need_ipaddress
@@ -345,7 +345,7 @@ class TestModule(object):
         # "in_one_network": _in_one_network,
         # "ip_address": _ip_address,
         # "ip": _ip,
-        "ipv4": _ipv4,
+        # "ipv4": _ipv4,
         "ipv4_address": _ipv4_address,
         "ipv4_hostmask": _ipv4_hostmask,
         "ipv4_netmask": _ipv4_netmask,
