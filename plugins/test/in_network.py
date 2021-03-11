@@ -34,7 +34,6 @@ DOCUMENTATION = """
             - For example: "10.0.0.0/8"
             type: str
             required: True
-
     notes:
 """
 
@@ -58,7 +57,34 @@ EXAMPLES = r"""
       ansible.builtin.set_fact:
         data: "{{ '10.1.1.1' is not ansible.utils.in_network '192.168.1.0/24' }}"
 
+        
 # TASK [Check if 10.1.1.1 is not in 192.168.1.0/24] ****************************
+# ok: [localhost] => {
+#     "ansible_facts": {
+#         "data": true
+#     },
+#     "changed": false
+# }
+
+- name: Check if 2001:db8:a::123 is in 2001:db8:a::/64
+      ansible.builtin.set_fact:
+        data: "{{ '2001:db8:a::123' is ansible.utils.in_network '2001:db8:a::/64' }}"
+
+# TASK [Check if 2001:db8:a::123 is in 2001:db8:a::/64] ****************************
+# task path: /home/prsahoo/playbooks/collections/localhost_test/utils_in_network.yml:16
+# ok: [localhost] => {
+#     "ansible_facts": {
+#         "data": true
+#     },
+#     "changed": false
+# }
+
+- name: Check if 2001:db8:a::123 is not in 10.0.0.0/8
+      ansible.builtin.set_fact:
+        data: "{{ '2001:db8:a::123' is not ansible.utils.in_network '10.0.0.0/8' }}"
+
+# TASK [Check if 2001:db8:a::123 is not in 10.0.0.0/8] *********************************
+# task path: /home/prsahoo/playbooks/collections/localhost_test/utils_in_network.yml:20
 # ok: [localhost] => {
 #     "ansible_facts": {
 #         "data": true
