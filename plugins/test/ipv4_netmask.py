@@ -15,12 +15,12 @@ from ansible_collections.ansible.utils.plugins.module_utils.common.ipaddress_uti
 __metaclass__ = type
 
 DOCUMENTATION = """
-    name: ipv4_hostmask
+    name: ipv4_netmask
     author: Bradley Thornton (@cidrblock)
     version_added: "2.0.1"
-    short_description: Test if an address is a valid hostmask
+    short_description: Test if an address is a valid netmask
     description:
-        - This plugin checks if the provided ip address is a IPv4 hostmask or not
+        - This plugin checks if the provided ip address is a valid IPv4 netmask or not
     options:
         ip:
             description:
@@ -37,11 +37,11 @@ EXAMPLES = r"""
 
 #### Simple examples
 
-- name: Check if 0.0.0.255 is a hostmask
+- name: Check if 255.255.255.0 is a netmask
   ansible.builtin.set_fact:
-    data: "{{ '0.0.0.255' is ansible.utils.ipv4_hostmask }}"
+    data: "{{ '255.255.255.0' is ansible.utils.ipv4_netmask }}"
 
-# TASK [Check if 0.0.0.255 is a hostmask] ***********************************************
+# TASK [Check if 255.255.255.0 is a netmask] *******************************************
 # ok: [localhost] => {
 #     "ansible_facts": {
 #         "data": true
@@ -49,11 +49,23 @@ EXAMPLES = r"""
 #     "changed": false
 # }
 
-- name: Check if 255.255.255.0 is not a hostmask
+- name: Check if 255.255.255.128 is a netmask
   ansible.builtin.set_fact:
-    data: "{{ '255.255.255.0' is not ansible.utils.ipv4_hostmask }}"
+    data: "{{ '255.255.255.128' is ansible.utils.ipv4_netmask }}"
 
-# TASK [Check if 255.255.255.0 is a hostmask] *********************************
+# TASK [Check if 255.255.255.128 is a netmask] *****************************************
+# ok: [localhost] => {
+#     "ansible_facts": {
+#         "data": true
+#     },
+#     "changed": false
+# }
+
+- name: Check if 255.255.255.127 is not a netmask
+  ansible.builtin.set_fact:
+    data: "{{ '255.255.255.127' is not ansible.utils.ipv4_netmask }}"
+
+# TASK [Check if 255.255.255.127 is not a netmask] *************************************
 # ok: [localhost] => {
 #     "ansible_facts": {
 #         "data": true
@@ -71,12 +83,12 @@ RETURN = """
 """
 
 @_need_ipaddress
-def _ipv4_hostmask(ip):
-    """Test if an address is a hostmask"""
-
+def _ipv4_netmask(mask):
+    """ Test for a valid IPv4 netmask"""
+    
     try:
-        ipaddr = ip_network("10.0.0.0/{ip}".format(ip=ip))
-        return str(ipaddr.hostmask) == ip
+        network = ip_network("10.0.0.0/{mask}".format(mask=mask))
+        return str(network.netmask) == mask
     except Exception:
         return False
 
@@ -84,7 +96,7 @@ def _ipv4_hostmask(ip):
 class TestModule(object):
     """ network jinja test"""
 
-    test_map = {"ipv4_hostmask": _ipv4_hostmask}
+    test_map = {"ipv4_netmask": _ipv4_netmask}
 
     def tests(self):
         return self.test_map

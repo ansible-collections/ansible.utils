@@ -175,15 +175,15 @@ import re
 #         return False
 
 
-@_need_ipaddress
-def _ipv4_netmask(mask):
-    """ Test for a valid IPv4 netmask<br/>`'255.255.255.0' is ansible.utils.ipv4_netmask`
-    """
-    try:
-        network = ip_network("10.0.0.0/{mask}".format(mask=mask))
-        return str(network.netmask) == mask
-    except Exception:
-        return False
+# @_need_ipaddress
+# def _ipv4_netmask(mask):
+#     """ Test for a valid IPv4 netmask<br/>`'255.255.255.0' is ansible.utils.ipv4_netmask`
+#     """
+#     try:
+#         network = ip_network("10.0.0.0/{mask}".format(mask=mask))
+#         return str(network.netmask) == mask
+#     except Exception:
+#         return False
 
 
 @_need_ipaddress
@@ -348,7 +348,7 @@ class TestModule(object):
         # "ipv4": _ipv4,
         # "ipv4_address": _ipv4_address,
         # "ipv4_hostmask": _ipv4_hostmask,
-        "ipv4_netmask": _ipv4_netmask,
+        # "ipv4_netmask": _ipv4_netmask,
         "ipv6": _ipv6,
         "ipv6_address": _ipv6_address,
         "ipv6_ipv4_mapped": _ipv6_ipv4_mapped,
