@@ -9,13 +9,13 @@ A test plugin file for netaddr tests
 
 from __future__ import absolute_import, division, print_function
 from ansible_collections.ansible.utils.plugins.module_utils.common.ipaddress_utils import (
-    ip_network, _need_ipaddress
+    ip_address, _need_ipaddress
 )
 
 __metaclass__ = type
 
 DOCUMENTATION = """
-    name: ip
+    name: ip_address
     author: Bradley Thornton (@cidrblock)
     version_added: "2.0.1"
     short_description: Test if something in an IP address or network
@@ -39,9 +39,9 @@ EXAMPLES = r"""
 
 - name: Check if 10.1.1.1 is a valid IP address
   ansible.builtin.set_fact:
-    data: "{{ '10.1.1.1' is ansible.utils.ip }}"
+    data: "{{ '10.1.1.1' is ansible.utils.ip_address }}"
 
-# TASK [Check if 10.1.1.1 is a valid IP address] *****************************
+# TASK [Check if 10.1.1.1 is a valid IP address] *************************************
 # ok: [localhost] => {
 #     "ansible_facts": {
 #         "data": true
@@ -51,9 +51,9 @@ EXAMPLES = r"""
 
 - name: Check if "hello-world" is not a valid IP address
   ansible.builtin.set_fact:
-    data: "{{ 'hello-world' is not ansible.utils.ip }}"
+    data: "{{ 'hello-world' is not ansible.utils.ip_address }}"
 
-# TASK [Check if "hello-world" is not a valid IP address] ********************
+# TASK [Check if "hello-world" is not a valid IP address] ****************************
 # ok: [localhost] => {
 #     "ansible_facts": {
 #         "data": true
@@ -61,12 +61,11 @@ EXAMPLES = r"""
 #     "changed": false
 # }
 
-
-- name: Check if 300.1.1.1 is a valid IP address
+- name: Check if 10.0.0.0/8 is a valid IP address
   ansible.builtin.set_fact:
-    data: "{{ '300.1.1.1' is ansible.utils.ip }}"
+    data: "{{ '10.0.0.0/8' is ansible.utils.ip_address }}"
 
-# TASK [Check if 300.1.1.1 is a valid IP address] ****************************
+# TASK [Check if 10.0.0.0/8 is a valid IP address] ***********************************
 # ok: [localhost] => {
 #     "ansible_facts": {
 #         "data": false
@@ -84,11 +83,11 @@ RETURN = """
 """
 
 @_need_ipaddress
-def _ip(ip):
-    """Test if something in an IP address or network"""
-
+def _ip_address(ip):
+    """Test if something in an IP address"""
+    
     try:
-        ip_network(ip)
+        ip_address(ip)
         return True
     except Exception:
         return False
@@ -96,7 +95,7 @@ def _ip(ip):
 class TestModule(object):
     """ network jinja test"""
 
-    test_map = {"ip": _ip}
+    test_map = {"ip_address": _ip_address}
 
     def tests(self):
         return self.test_map
