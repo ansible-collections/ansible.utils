@@ -42,14 +42,14 @@ EXAMPLES = r"""
 #### Simple examples
 
 - name: Set network list
-      ansible.builtin.set_fact:
-        networks:
-          - "10.0.0.0/8"
-          - "192.168.1.0/24"
+  ansible.builtin.set_fact:
+    networks:
+      - "10.0.0.0/8"
+      - "192.168.1.0/24"
 
-    - name: Check if 10.1.1.1 is in the provided network list
-      ansible.builtin.set_fact:
-        data: "{{ '10.1.1.1' is ansible.utils.in_one_network networks }}"
+- name: Check if 10.1.1.1 is in the provided network list
+  ansible.builtin.set_fact:
+    data: "{{ '10.1.1.1' is ansible.utils.in_one_network networks }}"
 
 # TASK [Check if 10.1.1.1 is in the provided network list] **********************
 # ok: [localhost] => {
@@ -59,13 +59,13 @@ EXAMPLES = r"""
 #     "changed": false
 
 - name: Set network list
-      ansible.builtin.set_fact:
-        networks:
-          - "10.0.0.0/8"
-          - "10.1.1.0/24"
+  ansible.builtin.set_fact:
+    networks:
+      - "10.0.0.0/8"
+      - "10.1.1.0/24"
 
 - name: Check if 10.1.1.1 is not in the provided network list
-    ansible.builtin.set_fact:
+  ansible.builtin.set_fact:
     data: "{{ '10.1.1.1' is not ansible.utils.in_one_network networks }}"
 
 # TASK [Check if 10.1.1.1 is in not the provided network list] ************************

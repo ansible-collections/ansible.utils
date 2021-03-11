@@ -42,13 +42,13 @@ EXAMPLES = r"""
 #### Simple examples
 
 - name: Set network list
-      ansible.builtin.set_fact:
-        networks:
-          - "10.0.0.0/8"
-          - "192.168.1.0/24"
+  ansible.builtin.set_fact:
+    networks:
+      - "10.0.0.0/8"
+      - "192.168.1.0/24"
 
 - name: Check if 10.1.1.1 is in the provided network list
-    ansible.builtin.set_fact:
+  ansible.builtin.set_fact:
     data: "{{ '10.1.1.1' is ansible.utils.in_any_network networks }}"
 
 # TASK [Check if 10.1.1.1 is in the provided network list] **************************
@@ -60,15 +60,15 @@ EXAMPLES = r"""
 # }
 
 - name: Set network list
-      ansible.builtin.set_fact:
-        networks:
-          - "10.0.0.0/8"
-          - "192.168.1.0/24"
-          - "172.16.0.0/16"
+  ansible.builtin.set_fact:
+    networks:
+      - "10.0.0.0/8"
+      - "192.168.1.0/24"
+      - "172.16.0.0/16"
 
 - name: Check if 8.8.8.8 is not in the provided network list
     ansible.builtin.set_fact:
-    data: "{{ '8.8.8.8' is not ansible.utils.in_any_network networks }}"
+      data: "{{ '8.8.8.8' is not ansible.utils.in_any_network networks }}"
 
 # TASK [Check if 8.8.8.8 is not in the provided network list] ************************
 # ok: [localhost] => {

@@ -122,15 +122,15 @@ import re
 #     return False
 
 
-@_need_ipaddress
-def _ip(ip):
-    """Test if something in an IP address or network<br/>`'10.1.1.1' is ansible.utils.ip`
-    """
-    try:
-        ip_network(ip)
-        return True
-    except Exception:
-        return False
+# @_need_ipaddress
+# def _ip(ip):
+#     """Test if something in an IP address or network<br/>`'10.1.1.1' is ansible.utils.ip`
+#     """
+#     try:
+#         ip_network(ip)
+#         return True
+#     except Exception:
+#         return False
 
 
 @_need_ipaddress
@@ -344,7 +344,7 @@ class TestModule(object):
         # "in_network": _in_network,
         # "in_one_network": _in_one_network,
         "ip_address": _ip_address,
-        "ip": _ip,
+        # "ip": _ip,
         "ipv4": _ipv4,
         "ipv4_address": _ipv4_address,
         "ipv4_hostmask": _ipv4_hostmask,
