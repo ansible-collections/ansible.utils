@@ -218,16 +218,16 @@ import re
 #         return False
 
 
-@_need_ipaddress
-def _ipv6_sixtofour(ip):
-    """ Test if something appears to be a 6to4 address<br/>`'2002:c0a8:6301:1::1' is ansible.utils.ipv6_sixtofour`
-    """
-    try:
-        if ip_address(ip).sixtofour is None:
-            return False
-        return True
-    except Exception:
-        return False
+# @_need_ipaddress
+# def _ipv6_sixtofour(ip):
+#     """ Test if something appears to be a 6to4 address<br/>`'2002:c0a8:6301:1::1' is ansible.utils.ipv6_sixtofour`
+#     """
+#     try:
+#         if ip_address(ip).sixtofour is None:
+#             return False
+#         return True
+#     except Exception:
+#         return False
 
 
 @_need_ipaddress
@@ -352,7 +352,7 @@ class TestModule(object):
         # "ipv6": _ipv6,
         # "ipv6_address": _ipv6_address,
         # "ipv6_ipv4_mapped": _ipv6_ipv4_mapped,
-        "ipv6_sixtofour": _ipv6_sixtofour,
+        # "ipv6_sixtofour": _ipv6_sixtofour,
         "ipv6_teredo": _ipv6_teredo,
         "loopback": _loopback,
         "mac": _mac,
