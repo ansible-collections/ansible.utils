@@ -15,19 +15,19 @@ from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddress_utils
 __metaclass__ = type
 
 DOCUMENTATION = """
-    name: ipv6_sixtofour
+    name: ipv6_teredo
     author: Priyam Sahoo (@priyamsahoo)
     version_added: "2.0.1"
-    short_description: Test if something appears to be a 6to4 address
+    short_description: Test if something appears to be an IPv6 teredo address
     description:
-        - This plugin checks if the provided value is a valid 6to4 address
+        - This plugin checks if the provided value is a valid IPv6 teredo address
     options:
         ip:
             description:
             - A string that represents the value against which the test is going to be performed
             - For example: 
-                - "2002:c0a8:6301:1::1"
-                - "::AAAA:10.1.1.1"
+                - "2001::c0a8:6301:1"
+                - "2002::c0a8:6301:1"
                 - "hello_world"
             type: str
             required: True
@@ -38,11 +38,12 @@ EXAMPLES = r"""
 
 #### Simple examples
 
-- name: Check if 2002:c0a8:6301:1::1 is a valid 6to4 address
+- name: Check if 2001::c0a8:6301:1 is a valid IPv6 teredo address
   ansible.builtin.set_fact:
-    data: "{{ '2002:c0a8:6301:1::1' is ansible.utils.ipv6_sixtofour }}"
+    data: "{{ '2001::c0a8:6301:1' is ansible.utils.ipv6_teredo }}"
 
-# TASK [Check if 2002:c0a8:6301:1::1 is a valid 6to4 address] ****************************
+# TASK [Check if 2001::c0a8:6301:1 is a valid IPv6 teredo address] *********************************************************************************************************
+# task path: /home/prsahoo/playbooks/collections/localhost_test/utils_ipv6_teredo.yml:8
 # ok: [localhost] => {
 #     "ansible_facts": {
 #         "data": true
@@ -50,11 +51,12 @@ EXAMPLES = r"""
 #     "changed": false
 # }
 
-- name: Check if 2001:c0a8:6301:1::1 is not a valid 6to4 address
+- name: Check if 2002::c0a8:6301:1 is not a valid IPv6 teredo address
   ansible.builtin.set_fact:
-    data: "{{ '2001:c0a8:6301:1::1' is not ansible.utils.ipv6_sixtofour }}"
+    data: "{{ '2002::c0a8:6301:1' is not ansible.utils.ipv6_teredo }}"
 
-# TASK [Check if 2001:c0a8:6301:1::1 is not a valid 6to4 address] ************************
+# TASK [Check if 2002::c0a8:6301:1 is not a valid IPv6 teredo address] *****************************************************************************************************
+# task path: /home/prsahoo/playbooks/collections/localhost_test/utils_ipv6_teredo.yml:12
 # ok: [localhost] => {
 #     "ansible_facts": {
 #         "data": true
@@ -62,11 +64,12 @@ EXAMPLES = r"""
 #     "changed": false
 # }
 
-- name: Check if helloworld is not a valid 6to4 address
+- name: Check if hello_world is not a valid IPv6 teredo address
   ansible.builtin.set_fact:
-    data: "{{ 'helloworld' is not ansible.utils.ipv6_sixtofour }}"
+    data: "{{ 'hello_world' is not ansible.utils.ipv6_teredo }}"
 
-# TASK [Check if helloworld is not a valid 6to4 address] *********************************
+# TASK [Check if hello_world is not a valid IPv6 teredo address] ***********************************************************************************************************
+# task path: /home/prsahoo/playbooks/collections/localhost_test/utils_ipv6_teredo.yml:16
 # ok: [localhost] => {
 #     "ansible_facts": {
 #         "data": true
@@ -84,11 +87,11 @@ RETURN = """
 """
 
 @_need_ipaddress
-def _ipv6_sixtofour(ip):
-    """ Test if something appears to be a 6to4 address """
+def _ipv6_teredo(ip):
+    """ Test if something is an IPv6 teredo address """
 
     try:
-        if ip_address(ip).sixtofour is None:
+        if ip_address(ip).teredo is None:
             return False
         return True
     except Exception:
@@ -98,7 +101,7 @@ def _ipv6_sixtofour(ip):
 class TestModule(object):
     """ network jinja test"""
 
-    test_map = {"ipv6_sixtofour": _ipv6_sixtofour}
+    test_map = {"ipv6_teredo": _ipv6_teredo}
 
     def tests(self):
         return self.test_map
