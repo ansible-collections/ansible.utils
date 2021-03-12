@@ -206,16 +206,16 @@ import re
 #         return False
 
 
-@_need_ipaddress
-def _ipv6_ipv4_mapped(ip):
-    """ Test if something appears to be a mapped IPv6 to IPv4 mapped address<br/>`'::FFFF:10.1.1.1'' is ansible.utils.ipv4_ipv4_mapped`
-    """
-    try:
-        if ip_address(ip).ipv4_mapped is None:
-            return False
-        return True
-    except Exception:
-        return False
+# @_need_ipaddress
+# def _ipv6_ipv4_mapped(ip):
+#     """ Test if something appears to be a mapped IPv6 to IPv4 mapped address<br/>`'::FFFF:10.1.1.1'' is ansible.utils.ipv4_ipv4_mapped`
+#     """
+#     try:
+#         if ip_address(ip).ipv4_mapped is None:
+#             return False
+#         return True
+#     except Exception:
+#         return False
 
 
 @_need_ipaddress
@@ -351,7 +351,7 @@ class TestModule(object):
         # "ipv4_netmask": _ipv4_netmask,
         # "ipv6": _ipv6,
         # "ipv6_address": _ipv6_address,
-        "ipv6_ipv4_mapped": _ipv6_ipv4_mapped,
+        # "ipv6_ipv4_mapped": _ipv6_ipv4_mapped,
         "ipv6_sixtofour": _ipv6_sixtofour,
         "ipv6_teredo": _ipv6_teredo,
         "loopback": _loopback,
