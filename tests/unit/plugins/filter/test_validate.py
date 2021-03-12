@@ -120,8 +120,7 @@ class TestValidate(unittest.TestCase):
         with self.assertRaises(AnsibleFilterError) as error:
             validate([DATA])
         self.assertIn(
-            "Missing either 'data' or 'criteria' value",
-            str(error.exception),
+            "Missing either 'data' or 'criteria' value", str(error.exception)
         )
 
         args = [DATA, [CRITERIA_IN_RATE_CHECK]]
