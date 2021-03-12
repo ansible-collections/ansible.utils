@@ -118,9 +118,9 @@ class TestValidate(unittest.TestCase):
 
         # missing required arguments
         with self.assertRaises(AnsibleFilterError) as error:
-            validate([DATA], {})
+            validate([DATA])
         self.assertIn(
-            "Expected value of 'data' option is either dict or str, received type",
+            "Missing either 'data' or 'criteria' value",
             str(error.exception),
         )
 
