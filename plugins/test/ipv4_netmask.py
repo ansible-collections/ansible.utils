@@ -8,7 +8,7 @@ A test plugin file for netaddr tests
 """
 
 from __future__ import absolute_import, division, print_function
-from ansible_collections.ansible.utils.plugins.module_utils.common.ipaddress_utils import (
+from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddress_utils import (
     ip_network, _need_ipaddress
 )
 
@@ -16,7 +16,7 @@ __metaclass__ = type
 
 DOCUMENTATION = """
     name: ipv4_netmask
-    author: Bradley Thornton (@cidrblock)
+    author: Priyam Sahoo (@priyamsahoo)
     version_added: "2.0.1"
     short_description: Test if an address is a valid netmask
     description:

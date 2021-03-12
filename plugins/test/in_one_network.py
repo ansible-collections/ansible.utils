@@ -8,14 +8,14 @@ A test plugin file for netaddr tests
 """
 
 from __future__ import absolute_import, division, print_function
-from ansible_collections.ansible.utils.plugins.module_utils.common.ipaddress_utils import _error_not_list
+from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddress_utils import _error_not_list
 from ansible_collections.ansible.utils.plugins.test.in_network import _in_network
 
 __metaclass__ = type
 
 DOCUMENTATION = """
     name: in_one_network
-    author: Bradley Thornton (@cidrblock)
+    author: Priyam Sahoo (@priyamsahoo)
     version_added: "2.0.1"
     short_description: Test if IP address belongs in any one of the networks in the list
     description:

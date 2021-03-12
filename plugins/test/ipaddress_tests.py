@@ -8,7 +8,7 @@ The test plugin file for netaddr tests
 """
 
 from __future__ import absolute_import, division, print_function
-from ansible_collections.ansible.utils.plugins.module_utils.common.ipaddress_utils import (
+from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddress_utils import (
     ip_network, ip_address, _need_ipaddress, _is_subnet_of, _to_well_known_type, _error_not_list
 )
 
