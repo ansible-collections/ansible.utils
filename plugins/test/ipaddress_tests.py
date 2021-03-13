@@ -242,14 +242,14 @@ import re
 #         return False
 
 
-@_need_ipaddress
-def _loopback(ip):
-    """ Test if an IP address is a loopback<br/>`'127.10.10.10' is ansible.utils.loopback`
-    """
-    try:
-        return ip_address(ip).is_loopback
-    except Exception:
-        return False
+# @_need_ipaddress
+# def _loopback(ip):
+#     """ Test if an IP address is a loopback<br/>`'127.10.10.10' is ansible.utils.loopback`
+#     """
+#     try:
+#         return ip_address(ip).is_loopback
+#     except Exception:
+#         return False
 
 
 def _mac(mac):
@@ -354,7 +354,7 @@ class TestModule(object):
         # "ipv6_ipv4_mapped": _ipv6_ipv4_mapped,
         # "ipv6_sixtofour": _ipv6_sixtofour,
         # "ipv6_teredo": _ipv6_teredo,
-        "loopback": _loopback,
+        # "loopback": _loopback,
         "mac": _mac,
         "multicast": _multicast,
         "private": _private,
