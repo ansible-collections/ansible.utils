@@ -252,17 +252,17 @@ import re
 #         return False
 
 
-def _mac(mac):
-    """ Test if something appears to be a valid mac address<br/>`'02:16:3e:e4:16:f3' is ansible.utils.mac`'
-    """
-    # IEEE EUI-48 upper and lower, commom unix
-    re1 = r"^(?i)([0-9a-f]{2}[:-]){5}[0-9a-f]{2}$"
-    # Cisco triple hextex
-    re2 = r"^(?i)([0-9a-f]{4}\.[0-9a-f]{4}\.[0-9a-f]{4})$"
-    # Bare
-    re3 = r"^(?i)[0-9a-f]{12}$"
-    regex = "{re1}|{re2}|{re3}".format(re1=re1, re2=re2, re3=re3)
-    return bool(re.match(regex, mac))
+# def _mac(mac):
+#     """ Test if something appears to be a valid mac address<br/>`'02:16:3e:e4:16:f3' is ansible.utils.mac`'
+#     """
+#     # IEEE EUI-48 upper and lower, commom unix
+#     re1 = r"^(?i)([0-9a-f]{2}[:-]){5}[0-9a-f]{2}$"
+#     # Cisco triple hextex
+#     re2 = r"^(?i)([0-9a-f]{4}\.[0-9a-f]{4}\.[0-9a-f]{4})$"
+#     # Bare
+#     re3 = r"^(?i)[0-9a-f]{12}$"
+#     regex = "{re1}|{re2}|{re3}".format(re1=re1, re2=re2, re3=re3)
+#     return bool(re.match(regex, mac))
 
 
 @_need_ipaddress
@@ -355,7 +355,7 @@ class TestModule(object):
         # "ipv6_sixtofour": _ipv6_sixtofour,
         # "ipv6_teredo": _ipv6_teredo,
         # "loopback": _loopback,
-        "mac": _mac,
+        # "mac": _mac,
         "multicast": _multicast,
         "private": _private,
         "public": _public,
