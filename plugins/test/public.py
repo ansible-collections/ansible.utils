@@ -15,19 +15,19 @@ from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddress_utils
 __metaclass__ = type
 
 DOCUMENTATION = """
-    name: private
+    name: public
     author: Priyam Sahoo (@priyamsahoo)
     version_added: "2.0.1"
-    short_description: Test if an IP address is private
+    short_description: Test if an IP address is public
     description:
-        - This plugin checks if the provided value is a private IP address
+        - This plugin checks if the provided value is a public IP address
     options:
         ip:
             description:
             - A string that represents the value against which the test is going to be performed
             - For example: 
-                - "10.1.1.1"
                 - "8.8.8.8"
+                - "10.1.1.1"
                 - "192.168.1.250"
             type: str
             required: True
@@ -36,11 +36,11 @@ DOCUMENTATION = """
 
 EXAMPLES = r"""
 
-- name: Check if 10.1.1.1 is a private IP address
+- name: Check if 8.8.8.8 is a public IP address
   ansible.builtin.set_fact:
-    data: "{{ '10.1.1.1' is ansible.utils.private }}"
+    data: "{{ '8.8.8.8' is ansible.utils.public }}"
 
-# TASK [Check if 10.1.1.1 is a private IP address] *******************************
+# TASK [Check if 8.8.8.8 is a public IP address] *********************************
 # ok: [localhost] => {
 #     "ansible_facts": {
 #         "data": true
@@ -48,11 +48,11 @@ EXAMPLES = r"""
 #     "changed": false
 # }
 
-- name: Check if 8.8.8.8 is not a private IP address
+- name: Check if 10.1.1.1 is not a public IP address
   ansible.builtin.set_fact:
-    data: "{{ '8.8.8.8' is not ansible.utils.private }}"
+    data: "{{ '10.1.1.1' is not ansible.utils.public }}"
 
-# TASK [Check if 8.8.8.8 is not a private IP address] ******************************
+# TASK [Check if 10.1.1.1 is not a public IP address] ******************************
 # ok: [localhost] => {
 #     "ansible_facts": {
 #         "data": true
@@ -70,18 +70,18 @@ RETURN = """
 """
 
 @_need_ipaddress
-def _private(ip):
-    """ Test if an IP address is private """
-
+def _public(ip):
+    """ Test if an IP address is public """
+    
     try:
-        return ip_address(ip).is_private
+        return ip_address(ip).is_global
     except Exception:
         return False
 
 class TestModule(object):
     """ network jinja test"""
 
-    test_map = {"private": _private}
+    test_map = {"public": _public}
 
     def tests(self):
         return self.test_map

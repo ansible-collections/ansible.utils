@@ -285,14 +285,14 @@ import re
 #         return False
 
 
-@_need_ipaddress
-def _public(ip):
-    """ Test if an IP address is public<br/>`'8.8.8.8' is ansible.utils.public`
-    """
-    try:
-        return ip_address(ip).is_global
-    except Exception:
-        return False
+# @_need_ipaddress
+# def _public(ip):
+#     """ Test if an IP address is public<br/>`'8.8.8.8' is ansible.utils.public`
+#     """
+#     try:
+#         return ip_address(ip).is_global
+#     except Exception:
+#         return False
 
 
 @_need_ipaddress
@@ -358,7 +358,7 @@ class TestModule(object):
         # "mac": _mac,
         # "multicast": _multicast,
         # "private": _private,
-        "public": _public,
+        # "public": _public,
         "reserved": _reserved,
         "subnet_of": _subnet_of,
         "supernet_of": _supernet_of,
