@@ -305,14 +305,14 @@ import re
 #         return False
 
 
-@_need_ipaddress
-def _subnet_of(network_a, network_b):
-    """Test if a network is a subnet of another network<br/>`'10.1.1.0/24' is ansible.utils.subnet_of '10.0.0.0/8'`
-    """
-    try:
-        return _is_subnet_of(ip_network(network_a), ip_network(network_b))
-    except Exception:
-        return False
+# @_need_ipaddress
+# def _subnet_of(network_a, network_b):
+#     """Test if a network is a subnet of another network<br/>`'10.1.1.0/24' is ansible.utils.subnet_of '10.0.0.0/8'`
+#     """
+#     try:
+#         return _is_subnet_of(ip_network(network_a), ip_network(network_b))
+#     except Exception:
+#         return False
 
 
 @_need_ipaddress
@@ -360,7 +360,7 @@ class TestModule(object):
         # "private": _private,
         # "public": _public,
         # "reserved": _reserved,
-        "subnet_of": _subnet_of,
+        # "subnet_of": _subnet_of,
         "supernet_of": _supernet_of,
         "unspecified": _unspecified,
     }
