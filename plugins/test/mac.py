@@ -20,7 +20,7 @@ DOCUMENTATION = """
     description:
         - This plugin checks if the provided value is a valid MAC address that follows the industry level standards 
     options:
-        ip:
+        mac:
             description:
             - A string that represents the value against which the test is going to be performed
             - For example: 

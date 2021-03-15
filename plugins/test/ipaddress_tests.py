@@ -275,14 +275,14 @@ import re
 #         return False
 
 
-@_need_ipaddress
-def _private(ip):
-    """ Test if an IP address is private<br/>`'10.1.1.1' is ansible.utils.private`
-    """
-    try:
-        return ip_address(ip).is_private
-    except Exception:
-        return False
+# @_need_ipaddress
+# def _private(ip):
+#     """ Test if an IP address is private<br/>`'10.1.1.1' is ansible.utils.private`
+#     """
+#     try:
+#         return ip_address(ip).is_private
+#     except Exception:
+#         return False
 
 
 @_need_ipaddress
@@ -357,7 +357,7 @@ class TestModule(object):
         # "loopback": _loopback,
         # "mac": _mac,
         # "multicast": _multicast,
-        "private": _private,
+        # "private": _private,
         "public": _public,
         "reserved": _reserved,
         "subnet_of": _subnet_of,
