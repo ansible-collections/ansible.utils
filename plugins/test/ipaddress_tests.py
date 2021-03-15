@@ -295,14 +295,14 @@ import re
 #         return False
 
 
-@_need_ipaddress
-def _reserved(ip):
-    """ Test for a reserved IP address<br/>`'253.0.0.1' is ansible.utils.reserved`
-    """
-    try:
-        return ip_address(ip).is_reserved
-    except Exception:
-        return False
+# @_need_ipaddress
+# def _reserved(ip):
+#     """ Test for a reserved IP address<br/>`'253.0.0.1' is ansible.utils.reserved`
+#     """
+#     try:
+#         return ip_address(ip).is_reserved
+#     except Exception:
+#         return False
 
 
 @_need_ipaddress
@@ -359,7 +359,7 @@ class TestModule(object):
         # "multicast": _multicast,
         # "private": _private,
         # "public": _public,
-        "reserved": _reserved,
+        # "reserved": _reserved,
         "subnet_of": _subnet_of,
         "supernet_of": _supernet_of,
         "unspecified": _unspecified,
