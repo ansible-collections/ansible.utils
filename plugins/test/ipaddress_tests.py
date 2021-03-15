@@ -325,14 +325,14 @@ import re
 #         return False
 
 
-@_need_ipaddress
-def _unspecified(ip):
-    """ Test for a unicast IP address<br/>`'0.0.0.0' is ansible.utils.unspecifed`
-    """
-    try:
-        return ip_address(ip).is_unspecified
-    except Exception:
-        return False
+# @_need_ipaddress
+# def _unspecified(ip):
+#     """ Test for a unicast IP address<br/>`'0.0.0.0' is ansible.utils.unspecifed`
+#     """
+#     try:
+#         return ip_address(ip).is_unspecified
+#     except Exception:
+#         return False
 
 
 class TestModule(object):
@@ -362,7 +362,7 @@ class TestModule(object):
         # "reserved": _reserved,
         # "subnet_of": _subnet_of,
         # "supernet_of": _supernet_of,
-        "unspecified": _unspecified,
+        # "unspecified": _unspecified,
     }
 
     def tests(self):

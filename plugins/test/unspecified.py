@@ -9,25 +9,27 @@ A test plugin file for netaddr tests
 
 from __future__ import absolute_import, division, print_function
 from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddress_utils import (
-    ip_network, _need_ipaddress
+    ip_address, _need_ipaddress
 )
 
 __metaclass__ = type
 
 DOCUMENTATION = """
-    name: ip
+    name: unspecified
     author: Priyam Sahoo (@priyamsahoo)
     version_added: "2.0.1"
-    short_description: Test if something in an IP address or network
+    short_description: Test for an unspecified IP address
     description:
-        - This plugin checks if the provided value is a valid host or network IP address
+        - This plugin checks if the provided value is an unspecified IP address
     options:
         ip:
             description:
             - A string that represents the value against which the test is going to be performed
             - For example: 
-                - "10.1.1.1"
-                - "hello-world"
+                - "0.0.0.0"
+                - "0:0:0:0:0:0:0:0"
+                - "::"
+                - "::1"
             type: str
             required: True
     notes:
@@ -37,11 +39,11 @@ EXAMPLES = r"""
 
 #### Simple examples
 
-- name: Check if 10.1.1.1 is a valid IP address
+- name: Check if 0.0.0.0 is an unspecified IP address
   ansible.builtin.set_fact:
-    data: "{{ '10.1.1.1' is ansible.utils.ip }}"
+    data: "{{ '0.0.0.0' is ansible.utils.unspecified }}"
 
-# TASK [Check if 10.1.1.1 is a valid IP address] *****************************
+# TASK [Check if 0.0.0.0 is an unspecified IP address] ***************************
 # ok: [localhost] => {
 #     "ansible_facts": {
 #         "data": true
@@ -49,11 +51,11 @@ EXAMPLES = r"""
 #     "changed": false
 # }
 
-- name: Check if "hello-world" is not a valid IP address
+- name: Check if 0:0:0:0:0:0:0:0 is an unspecified IP address
   ansible.builtin.set_fact:
-    data: "{{ 'hello-world' is not ansible.utils.ip }}"
+    data: "{{ '0:0:0:0:0:0:0:0' is ansible.utils.unspecified }}"
 
-# TASK [Check if "hello-world" is not a valid IP address] ********************
+# TASK [Check if 0:0:0:0:0:0:0:0 is an unspecified IP address] *******************
 # ok: [localhost] => {
 #     "ansible_facts": {
 #         "data": true
@@ -61,15 +63,26 @@ EXAMPLES = r"""
 #     "changed": false
 # }
 
-
-- name: Check if 300.1.1.1 is a valid IP address
+- name: Check if "::" is an unspecified IP address
   ansible.builtin.set_fact:
-    data: "{{ '300.1.1.1' is ansible.utils.ip }}"
+    data: "{{ '::' is ansible.utils.unspecified }}"
 
-# TASK [Check if 300.1.1.1 is a valid IP address] ****************************
+# TASK [Check if "::" is an unspecified IP address] ******************************
 # ok: [localhost] => {
 #     "ansible_facts": {
-#         "data": false
+#         "data": true
+#     },
+#     "changed": false
+# }
+
+- name: Check if ::1 is not an unspecified IP address
+  ansible.builtin.set_fact:
+    data: "{{ '::1' is not ansible.utils.unspecified }}"
+
+# TASK [Check if ::1 is not an unspecified IP address] ***************************
+# ok: [localhost] => {
+#     "ansible_facts": {
+#         "data": true
 #     },
 #     "changed": false
 # }
@@ -84,19 +97,18 @@ RETURN = """
 """
 
 @_need_ipaddress
-def _ip(ip):
-    """ Test if something in an IP address or network """
+def _unspecified(ip):
+    """ Test for an unspecified IP address """
 
     try:
-        ip_network(ip)
-        return True
+        return ip_address(ip).is_unspecified
     except Exception:
         return False
 
 class TestModule(object):
     """ network jinja test"""
 
-    test_map = {"ip": _ip}
+    test_map = {"unspecified": _unspecified}
 
     def tests(self):
         return self.test_map
