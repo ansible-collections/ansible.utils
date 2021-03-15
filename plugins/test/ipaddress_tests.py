@@ -265,14 +265,14 @@ import re
 #     return bool(re.match(regex, mac))
 
 
-@_need_ipaddress
-def _multicast(ip):
-    """ Test for a multicast IP address<br/>`'224.0.0.1' is ansible.utils.multicast`
-    """
-    try:
-        return ip_address(ip).is_multicast
-    except Exception:
-        return False
+# @_need_ipaddress
+# def _multicast(ip):
+#     """ Test for a multicast IP address<br/>`'224.0.0.1' is ansible.utils.multicast`
+#     """
+#     try:
+#         return ip_address(ip).is_multicast
+#     except Exception:
+#         return False
 
 
 @_need_ipaddress
@@ -356,7 +356,7 @@ class TestModule(object):
         # "ipv6_teredo": _ipv6_teredo,
         # "loopback": _loopback,
         # "mac": _mac,
-        "multicast": _multicast,
+        # "multicast": _multicast,
         "private": _private,
         "public": _public,
         "reserved": _reserved,
