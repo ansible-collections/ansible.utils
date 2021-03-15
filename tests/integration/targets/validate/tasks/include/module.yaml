@@ -79,7 +79,7 @@
 - assert:
     that:
       - "result['failed'] == true"
-      - "'\\'data\\' option value is invalid, value should of type dict or str format of dict' in result.msg"
+      - "'\\'data\\' option value is invalid' in result.msg"
 
 - name: invalid criteria value
   ansible.utils.validate:
@@ -92,7 +92,7 @@
 - assert:
     that:
       - "result['failed'] == true"
-      - "'\\'criteria\\' option value is invalid, value should of type dict or str format of dict' in result.msg"
+      - "'\\'criteria\\' option value is invalid' in result.msg"
 
 - name: validate data using jsonschema engine (invalid data read from file)
   ansible.utils.validate:
@@ -127,6 +127,17 @@
   register: result
   vars:
     ansible_validate_jsonschema_draft: draft7
+
+- assert:
+    that:
+      - "'errors' not in result"
+      - "'all checks passed' in result.msg"
+
+- name: validate list data using jsonschema
+  ansible.utils.validate:
+    data: "{{ lookup('ansible.builtin.file', 'data/test_list_data.json') }}"
+    criteria: "{{ lookup('ansible.builtin.file', 'criteria/check_list_data.json') }}"
+    engine: ansible.utils.jsonschema
 
 - assert:
     that:
