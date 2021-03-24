@@ -12,6 +12,7 @@ Bugfixes
 --------
 
 - Fix ansible.utils.cli_parse action plugin to support old cli_parse sub-plugin structure in ansible.netcommon collection.
+- Test sanity jobs for 2.11
 
 v2.0.0
 ======
