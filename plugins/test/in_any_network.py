@@ -31,7 +31,7 @@ DOCUMENTATION = """
             description:
             - A list of string and each string represents a network address in CIDR form
             - For example: ['10.0.0.0/8', '192.168.1.0/24']
-            type: str
+            type: list
             required: True
 
     notes:
