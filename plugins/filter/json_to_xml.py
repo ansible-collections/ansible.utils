@@ -12,19 +12,19 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 DOCUMENTATION = """
-    name: xml_to_json
+    name: json_to_xml
     author: Ashwini Mhatre (@amhatre)
     version_added: "1.0.0"
-    short_description: convert given xml string to json
+    short_description: convert given json string to xml
     description:
         - This plugin converts the xml string to json.
-        - Using the parameters below- C(data|ansible.utils.xml_to_json)
+        - Using the parameters below- C(data|ansible.utils.json_to_xml)
     options:
       data:
         description:
-        - The input xml string .
-        - This option represents the xml value that is passed to the filter plugin in pipe format.
-        - For example C(config_data|ansible.utils.xml_to_json), in this case C(config_data) represents this option.
+        - The input json string .
+        - This option represents the json value that is passed to the filter plugin in pipe format.
+        - For example C(config_data|ansible.utils.json_to_xml), in this case C(config_data) represents this option.
         type: str
         required: True
 """
@@ -36,9 +36,7 @@ EXAMPLES = r"""
 - name: Define xml data 
   ansible.builtin.set_fact:
     xml:
-    - 1
-    - 2
-    - 3
+    
 
 - name: Find the index of 2
   ansible.builtin.set_fact:
@@ -268,8 +266,8 @@ EXAMPLES = r"""
 
 from ansible.errors import AnsibleFilterError
 from jinja2.filters import environmentfilter
-from ansible_collections.ansible.utils.plugins.module_utils.common.xml_to_json import (
-    xml_to_json,
+from ansible_collections.ansible.utils.plugins.module_utils.common.json_to_xml import (
+    json_to_xml,
 )
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     AnsibleArgSpecValidator,
@@ -277,7 +275,7 @@ from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_valid
 
 
 @environmentfilter
-def _xml_to_json(*args, **kwargs):
+def _json_to_xml(*args, **kwargs):
     """Convert the given data from xml to json."""
 
     keys = [
@@ -288,19 +286,18 @@ def _xml_to_json(*args, **kwargs):
     data.update(kwargs)
     environment = data.pop("environment")
     aav = AnsibleArgSpecValidator(
-        data=data, schema=DOCUMENTATION, name="xml_to_json"
+        data=data, schema=DOCUMENTATION, name="json_to_xml"
     )
     valid, errors, updated_data = aav.validate()
     if not valid:
         raise AnsibleFilterError(errors)
     updated_data["tests"] = environment.tests
-    return xml_to_json(**updated_data)
+    return json_to_xml(**updated_data)
 
 
 class FilterModule(object):
-    """ xml_to_json  """
+    """ json_to_xml  """
 
     def filters(self):
-
         """a mapping of filter names to functions"""
-        return {"xml_to_json": _xml_to_json}
+        return {"json_to_xml": _json_to_xml}
