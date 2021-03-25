@@ -72,10 +72,10 @@ TESTS = [
     # "{{ '10.1.1.0/24' is ansible.utils.subnet_of '10.0.0.0/8' }}",
     # "{{ '192.168.1.0/24' is not ansible.utils.subnet_of '10.0.0.0/8' }}",
     # "{{ '10.0.0.0/8' is ansible.utils.supernet_of '10.1.1.0/24' }}",
-    "{{ '0.0.0.0' is ansible.utils.unspecified }}",
-    "{{ '0:0:0:0:0:0:0:0' is ansible.utils.unspecified }}",
-    "{{ '::' is ansible.utils.unspecified }}",
-    "{{ '::1' is not ansible.utils.unspecified }}",
+    # "{{ '0.0.0.0' is ansible.utils.unspecified }}",
+    # "{{ '0:0:0:0:0:0:0:0' is ansible.utils.unspecified }}",
+    # "{{ '::' is ansible.utils.unspecified }}",
+    # "{{ '::1' is not ansible.utils.unspecified }}",
 ]
 
 

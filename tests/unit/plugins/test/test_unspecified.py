@@ -12,7 +12,6 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 import unittest  # TestCase, assertTrue
-import ansible_collections.ansible.utils.plugins.test.ipaddress_tests as ipaddress
 from ansible.template import Templar
 
 TESTS = [
