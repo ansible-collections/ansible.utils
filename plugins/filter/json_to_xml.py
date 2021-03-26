@@ -35,7 +35,7 @@ EXAMPLES = r"""
 
 #### Simple examples
 
-- name: Define json data 
+- name: Define json data
     ansible.builtin.set_fact:
       data: {
         "interface-configurations": {

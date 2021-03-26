@@ -17,7 +17,6 @@ import ast
 from ansible.errors import AnsibleError
 
 
-
 def _raise_error(msg):
     """Raise an error message, prepend with filter name
 
@@ -38,7 +37,6 @@ def json_to_xml(data):
 
     try:
         data = ast.literal_eval(data)
-        import epdb;epdb.serve()
         res = xmltodict.unparse(data, pretty=True)
     except Exception:
         _raise_error("Input json is not valid")
