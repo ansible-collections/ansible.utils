@@ -16,6 +16,7 @@ import json
 from ansible_collections.ansible.utils.plugins.module_utils.common.utils import (
     validate_data,
 )
+
 # Note, this file can only be used on the control node
 # where ansible is installed
 # limit imports to filter and lookup plugins
@@ -34,15 +35,14 @@ def _raise_error(msg):
     error = "Error when using plugin 'xml_to_json': {msg}".format(msg=msg)
     raise AnsibleError(error)
 
-def xml_to_json(
-    data
-):
+
+def xml_to_json(data):
     """Convert data which is in xml to json"
     :param data: The data passed in (data|xml_to_json(...))
     :type data: xml
     """
-    filter_type = validate_data(data, 'xml')
-    if filter_type == 'xml':
+    filter_type = validate_data(data, "xml")
+    if filter_type == "xml":
         res = json.dumps(xmltodict.parse(data))
     else:
         _raise_error("Input Xml is not valid")

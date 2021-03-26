@@ -36,16 +36,15 @@ def _raise_error(msg):
     error = "Error when using plugin 'json_to_xml': {msg}".format(msg=msg)
     raise AnsibleError(error)
 
-def json_to_xml(
-    data
-):
+
+def json_to_xml(data):
     """Convert data which is in json to xml"
 
     :param data: The data passed in (data|json_to_xml(...))
     :type data: xml
     """
-    filter_type = validate_data(data, 'json')
-    if filter_type == 'json':
+    filter_type = validate_data(data, "json")
+    if filter_type == "json":
         data = ast.literal_eval(data)
         res = xmltodict.unparse(data, pretty=True)
     else:
