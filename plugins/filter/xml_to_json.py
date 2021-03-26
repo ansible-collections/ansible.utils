@@ -28,11 +28,16 @@ DOCUMENTATION = """
         - For example C(config_data|ansible.utils.xml_to_json), in this case C(config_data) represents this option.
         type: str
         required: True
+      engine:
+        description:
+        - Conversion library to use within the filter plugin.
+        type: str
+        default: xmltodict
 """
 
 EXAMPLES = r"""
 
-#### Simple examples
+#### Simple examples with out any engine. plugin will use default value as xmltodict
 
 tasks:
   - name: convert given xml to json
@@ -43,6 +48,42 @@ tasks:
 
   - debug:
       msg:  "{{ data|ansible.utils.xml_to_json }}"
+
+##TASK######
+TASK [convert given xml to json] *****************************************************************************************************
+task path: /Users/amhatre/ansible-collections/playbooks/test_utils.yaml:5
+ok: [localhost] => {
+    "ansible_facts": {
+        "data": " <netconf-state xmlns=\"urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring\"><schemas><schema/></schemas></netconf-state> "
+    },
+    "changed": false
+}
+
+TASK [debug] *************************************************************************************************************************
+task path: /Users/amhatre/ansible-collections/playbooks/test_utils.yaml:13
+Loading collection ansible.utils from /Users/amhatre/ansible-collections/collections/ansible_collections/ansible/utils
+ok: [localhost] => {
+    "msg": {
+        "netconf-state": {
+            "@xmlns": "urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring",
+            "schemas": {
+                "schema": null
+            }
+        }
+    }
+}
+
+#### example2 with engine=xmltodict
+
+tasks:
+  - name: convert given xml to json
+    ansible.builtin.set_fact:
+      data: "
+        <netconf-state xmlns=\"urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring\"><schemas><schema/></schemas></netconf-state>
+            "
+
+  - debug:
+      msg:  "{{ data|ansible.utils.xml_to_json('xmltodict') }}"
 
 ##TASK######
 TASK [convert given xml to json] *****************************************************************************************************
@@ -83,7 +124,8 @@ from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_valid
 def _xml_to_json(*args, **kwargs):
     """Convert the given data from xml to json."""
 
-    data = {"data": args[1]}
+    keys = ["data", "engine"]
+    data = dict(zip(keys, args[1:]))
     data.update(kwargs)
     aav = AnsibleArgSpecValidator(
         data=data, schema=DOCUMENTATION, name="xml_to_json"

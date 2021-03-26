@@ -12,7 +12,6 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-import xmltodict
 import ast
 from ansible.errors import AnsibleError
 
@@ -28,16 +27,19 @@ def _raise_error(msg):
     raise AnsibleError(error)
 
 
-def json_to_xml(data):
+def json_to_xml(data, engine):
     """Convert data which is in json to xml"
 
     :param data: The data passed in (data|json_to_xml(...))
     :type data: xml
+    :param engine: Conversion library default=xmltodict
     """
+    if engine == "xmltodict":
+        import xmltodict
 
-    try:
-        data = ast.literal_eval(data)
-        res = xmltodict.unparse(data, pretty=True)
-    except Exception:
-        _raise_error("Input json is not valid")
-    return res
+        try:
+            data = ast.literal_eval(data)
+            res = xmltodict.unparse(data, pretty=True)
+        except Exception:
+            _raise_error("Input json is not valid")
+        return res

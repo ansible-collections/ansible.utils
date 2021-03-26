@@ -29,11 +29,16 @@ DOCUMENTATION = """
         - For example C(config_data|ansible.utils.json_to_xml), in this case C(config_data) represents this option.
         type: str
         required: True
+      engine:
+        description:
+        - Conversion library to use within the filter plugin.
+        type: str
+        default: xmltodict
 """
 
 EXAMPLES = r"""
 
-#### Simple examples
+#### Simple examples with out any engine. plugin will use default value as xmltodict
 
 - name: Define json data
     ansible.builtin.set_fact:
@@ -68,7 +73,40 @@ ok: [localhost] => {
     Cisco-IOS-XR-ifmgr-cfg\">\n\t<interface-configuration></interface-configuration>\n</interface-configurations>"
 }
 
+#### example2 with engine=xmltodict
 
+- name: Define json data
+    ansible.builtin.set_fact:
+      data: {
+        "interface-configurations": {
+          "@xmlns": "http://cisco.com/ns/yang/Cisco-IOS-XR-ifmgr-cfg",
+          "interface-configuration": null
+        }
+      }
+  - debug:
+      msg:  "{{ data|ansible.utils.json_to_xml('xmltodict') }}"
+
+TASK [Define json data ] *************************************************************************
+task path: /Users/amhatre/ansible-collections/playbooks/test_utils_json_to_xml.yaml:5
+ok: [localhost] => {
+    "ansible_facts": {
+        "data": {
+            "interface-configurations": {
+                "@xmlns": "http://cisco.com/ns/yang/Cisco-IOS-XR-ifmgr-cfg",
+                "interface-configuration": null
+            }
+        }
+    },
+    "changed": false
+}
+
+TASK [debug] ***********************************************************************************************************
+task path: /Users/amhatre/ansible-collections/playbooks/test_utils_json_to_xml.yaml:13
+Loading collection ansible.utils from /Users/amhatre/ansible-collections/collections/ansible_collections/ansible/utils
+ok: [localhost] => {
+    "msg": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<interface-configurations xmlns=\"http://cisco.com/ns/yang/
+    Cisco-IOS-XR-ifmgr-cfg\">\n\t<interface-configuration></interface-configuration>\n</interface-configurations>"
+}
 
 """
 
@@ -84,9 +122,12 @@ from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_valid
 
 @environmentfilter
 def _json_to_xml(*args, **kwargs):
-    """Convert the given data from xml to json."""
+    """Convert the given data from json to xml."""
+    import epdb
 
-    data = {"data": args[1]}
+    epdb.serve()
+    keys = ["data", "engine"]
+    data = dict(zip(keys, args[1:]))
     data.update(kwargs)
     aav = AnsibleArgSpecValidator(
         data=data, schema=DOCUMENTATION, name="json_to_xml"
