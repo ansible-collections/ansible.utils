@@ -95,7 +95,6 @@ def _xml_to_json(*args, **kwargs):
     valid, errors, updated_data = aav.validate()
     if not valid:
         raise AnsibleFilterError(errors)
-    updated_data["tests"] = environment.tests
     return xml_to_json(**updated_data)
 
 
