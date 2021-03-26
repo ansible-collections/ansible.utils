@@ -1,11 +1,12 @@
+#
 # -*- coding: utf-8 -*-
-# Copyright 2020 Red Hat
+# Copyright 2021 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
-
+#
 
 """
-The index_of plugin common code
+The xml_to_json plugin code
 """
 from __future__ import absolute_import, division, print_function
 
@@ -13,17 +14,8 @@ __metaclass__ = type
 
 import xmltodict
 import json
-from ansible_collections.ansible.utils.plugins.module_utils.common.utils import (
-    validate_data,
-)
+from ansible.errors import AnsibleError
 
-# Note, this file can only be used on the control node
-# where ansible is installed
-# limit imports to filter and lookup plugins
-try:
-    from ansible.errors import AnsibleError
-except ImportError:
-    pass
 
 
 def _raise_error(msg):
@@ -41,9 +33,9 @@ def xml_to_json(data):
     :param data: The data passed in (data|xml_to_json(...))
     :type data: xml
     """
-    filter_type = validate_data(data, "xml")
-    if filter_type == "xml":
+
+    try:
         res = json.dumps(xmltodict.parse(data))
-    else:
+    except Exception:
         _raise_error("Input Xml is not valid")
     return res

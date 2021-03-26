@@ -7,37 +7,10 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-import sys
-import json
 from copy import deepcopy
 
 from ansible.module_utils.common._collections_compat import Mapping
 from ansible.module_utils.six import iteritems
-from ansible.module_utils.basic import missing_required_lib
-from ansible.module_utils.six import string_types
-from ansible.module_utils._text import to_native
-
-try:
-    HAS_LXML = True
-    from lxml.etree import fromstring, XMLSyntaxError
-    from lxml import etree
-
-except ImportError:
-    HAS_LXML = False
-    from xml.etree.ElementTree import fromstring
-
-    if sys.version_info < (2, 7):
-        from xml.parsers.expat import ExpatError as XMLSyntaxError
-    else:
-        from xml.etree.ElementTree import ParseError as XMLSyntaxError
-
-
-try:
-    import xmltodict
-
-    HAS_XMLTODICT = True
-except ImportError:
-    HAS_XMLTODICT = False
 
 
 def sort_list(val):
@@ -137,101 +110,3 @@ def to_list(val):
         return [val]
     else:
         return list()
-
-
-def validate_data(data, fmt=None):
-    """
-    This function validates the data for given format (fmt).
-    If the fmt is None it tires to guess the data format.
-    Currently support data format checks are
-    1) xml
-    2) json
-    :param data: The data which should be validated and normalised.
-    :param fmt: This is an optional argument which indicated the format
-    of the data. Valid values are "xml" and "json". If the value
-    is None the format of the data will be guessed and returned in the output.
-    :return:
-        *  If the format identified is XML it returns the data format type
-           which is "xml" in this case.
-
-        *  If the format identified is JSON it returns data format type
-           which is "json" in this case.
-
-    """
-    if data is None:
-        return None, None
-
-    if isinstance(data, string_types):
-        data = data.strip()
-        if (data.startswith("<") and data.endswith(">")) or fmt == "xml":
-            try:
-                result = fromstring(data)
-                if fmt and fmt != "xml":
-                    raise Exception(
-                        "Invalid format '%s'. Expected format is 'xml' for data '%s'"
-                        % (fmt, data)
-                    )
-                return "xml"
-            except XMLSyntaxError as exc:
-                if fmt == "xml":
-                    raise Exception(
-                        "'%s' XML validation failed with error '%s'"
-                        % (
-                            data,
-                            to_native(exc, errors="surrogate_then_replace"),
-                        )
-                    )
-                pass
-            except Exception as exc:
-                error = "'%s' recognized as XML but was not valid." % data
-                raise Exception(
-                    error + to_native(exc, errors="surrogate_then_replace")
-                )
-        elif (data.startswith("{") and data.endswith("}")) or fmt == "json":
-            try:
-                if fmt and fmt != "json":
-                    raise Exception(
-                        "Invalid format '%s'. Expected format is 'json' for data '%s'"
-                        % (fmt, data)
-                    )
-                return "json"
-            except (
-                TypeError,
-                getattr(json.decoder, "JSONDecodeError", ValueError),
-            ) as exc:
-                if fmt == "json":
-                    raise Exception(
-                        "'%s' JSON validation failed with error '%s'"
-                        % (
-                            data,
-                            to_native(exc, errors="surrogate_then_replace"),
-                        )
-                    )
-            except Exception as exc:
-                error = "'%s' recognized as JSON but was not valid." % data
-                raise Exception(
-                    error + to_native(exc, errors="surrogate_then_replace")
-                )
-    elif isinstance(data, dict):
-        if fmt and fmt != "json":
-            raise Exception(
-                "Invalid format '%s'. Expected format is 'json' for data '%s'"
-                % (fmt, data)
-            )
-
-        try:
-            result = json.loads(json.dumps(data))
-            return "json"
-        except (
-            TypeError,
-            getattr(json.decoder, "JSONDecodeError", ValueError),
-        ) as exc:
-            raise Exception(
-                "'%s' JSON validation failed with error '%s'"
-                % (data, to_native(exc, errors="surrogate_then_replace"))
-            )
-        except Exception as exc:
-            error = "'%s' recognized as JSON but was not valid." % data
-            raise Exception(
-                error + to_native(exc, errors="surrogate_then_replace")
-            )

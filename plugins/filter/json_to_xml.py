@@ -1,11 +1,13 @@
+#
 # -*- coding: utf-8 -*-
-# Copyright 2020 Red Hat
+# Copyright 2021 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
+#
 
 
 """
-The index_of filter plugin
+The json_to_xml filter plugin
 """
 from __future__ import absolute_import, division, print_function
 
@@ -14,7 +16,7 @@ __metaclass__ = type
 DOCUMENTATION = """
     name: json_to_xml
     author: Ashwini Mhatre (@amhatre)
-    version_added: "1.0.0"
+    version_added: "2.0.2"
     short_description: convert given json string to xml
     description:
         - This plugin converts the xml string to json.
@@ -72,7 +74,7 @@ ok: [localhost] => {
 
 from ansible.errors import AnsibleFilterError
 from jinja2.filters import environmentfilter
-from ansible_collections.ansible.utils.plugins.module_utils.common.json_to_xml import (
+from ansible_collections.ansible.utils.plugins.plugin_utils.json_to_xml import (
     json_to_xml,
 )
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
@@ -84,13 +86,8 @@ from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_valid
 def _json_to_xml(*args, **kwargs):
     """Convert the given data from xml to json."""
 
-    keys = [
-        "environment",
-        "data",
-    ]
-    data = dict(zip(keys, args))
+    data = {"data": args[1]}
     data.update(kwargs)
-    environment = data.pop("environment")
     aav = AnsibleArgSpecValidator(
         data=data, schema=DOCUMENTATION, name="json_to_xml"
     )
