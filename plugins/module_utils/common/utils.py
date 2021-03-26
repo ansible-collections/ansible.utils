@@ -138,6 +138,7 @@ def to_list(val):
     else:
         return list()
 
+
 def validate_data(data, fmt=None):
     """
     This function validates the data for given format (fmt).
