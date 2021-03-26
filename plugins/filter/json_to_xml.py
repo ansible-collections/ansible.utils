@@ -19,7 +19,7 @@ DOCUMENTATION = """
     version_added: "2.0.2"
     short_description: convert given json string to xml
     description:
-        - This plugin converts the xml string to json.
+        - This plugin converts the json string to xml.
         - Using the parameters below- C(data|ansible.utils.json_to_xml)
     options:
       data:
