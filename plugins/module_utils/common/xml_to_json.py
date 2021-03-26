@@ -13,9 +13,10 @@ __metaclass__ = type
 
 import xmltodict
 import json
-from ansible.module_utils.six import string_types, integer_types
 from ansible.module_utils._text import to_native
-
+from ansible_collections.ansible.utils.plugins.module_utils.common.utils import (
+    validate_data,
+)
 # Note, this file can only be used on the control node
 # where ansible is installed
 # limit imports to filter and lookup plugins
@@ -98,12 +99,6 @@ def _run_test(entry, test, right, tests):
         result = not result
     return result
 
-def validate_xml(data):
-    """
-    validate input xml
-    """
-    return data
-
 def xml_to_json(
     data,
     tests=None,
@@ -112,8 +107,8 @@ def xml_to_json(
     :param data: The data passed in (data|xml_to_json(...))
     :type data: xml
     """
-    valid_xml = validate_xml(data)
-    if valid_xml:
+    filter_type = validate_data(data, 'xml')
+    if filter_type == 'xml':
         res = json.dumps(xmltodict.parse(data))
     else:
         _raise_error("Input Xml is not valid")
