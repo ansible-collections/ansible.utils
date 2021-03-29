@@ -50,28 +50,28 @@ tasks:
       msg:  "{{ data|ansible.utils.xml_to_json }}"
 
 ##TASK######
-TASK [convert given xml to json] *****************************************************************************************************
-task path: /Users/amhatre/ansible-collections/playbooks/test_utils.yaml:5
-ok: [localhost] => {
-    "ansible_facts": {
-        "data": " <netconf-state xmlns=\"urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring\"><schemas><schema/></schemas></netconf-state> "
-    },
-    "changed": false
-}
-
-TASK [debug] *************************************************************************************************************************
-task path: /Users/amhatre/ansible-collections/playbooks/test_utils.yaml:13
-Loading collection ansible.utils from /Users/amhatre/ansible-collections/collections/ansible_collections/ansible/utils
-ok: [localhost] => {
-    "msg": {
-        "netconf-state": {
-            "@xmlns": "urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring",
-            "schemas": {
-                "schema": null
-            }
-        }
-    }
-}
+# TASK [convert given xml to json] *****************************************************************************************************
+# task path: /Users/amhatre/ansible-collections/playbooks/test_utils.yaml:5
+# ok: [localhost] => {
+#     "ansible_facts": {
+#         "data": " <netconf-state xmlns=\"urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring\"><schemas><schema/></schemas></netconf-state> "
+#     },
+#     "changed": false
+# }
+#
+# TASK [debug] *************************************************************************************************************************
+# task path: /Users/amhatre/ansible-collections/playbooks/test_utils.yaml:13
+# Loading collection ansible.utils from /Users/amhatre/ansible-collections/collections/ansible_collections/ansible/utils
+# ok: [localhost] => {
+#     "msg": {
+#         "netconf-state": {
+#             "@xmlns": "urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring",
+#             "schemas": {
+#                 "schema": null
+#             }
+#         }
+#     }
+# }
 
 #### example2 with engine=xmltodict
 
@@ -86,28 +86,28 @@ tasks:
       msg:  "{{ data|ansible.utils.xml_to_json('xmltodict') }}"
 
 ##TASK######
-TASK [convert given xml to json] *****************************************************************************************************
-task path: /Users/amhatre/ansible-collections/playbooks/test_utils.yaml:5
-ok: [localhost] => {
-    "ansible_facts": {
-        "data": " <netconf-state xmlns=\"urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring\"><schemas><schema/></schemas></netconf-state> "
-    },
-    "changed": false
-}
-
-TASK [debug] *************************************************************************************************************************
-task path: /Users/amhatre/ansible-collections/playbooks/test_utils.yaml:13
-Loading collection ansible.utils from /Users/amhatre/ansible-collections/collections/ansible_collections/ansible/utils
-ok: [localhost] => {
-    "msg": {
-        "netconf-state": {
-            "@xmlns": "urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring",
-            "schemas": {
-                "schema": null
-            }
-        }
-    }
-}
+# TASK [convert given xml to json] *****************************************************************************************************
+# task path: /Users/amhatre/ansible-collections/playbooks/test_utils.yaml:5
+# ok: [localhost] => {
+#     "ansible_facts": {
+#         "data": " <netconf-state xmlns=\"urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring\"><schemas><schema/></schemas></netconf-state> "
+#     },
+#     "changed": false
+# }
+#
+# TASK [debug] *************************************************************************************************************************
+# task path: /Users/amhatre/ansible-collections/playbooks/test_utils.yaml:13
+# Loading collection ansible.utils from /Users/amhatre/ansible-collections/collections/ansible_collections/ansible/utils
+# ok: [localhost] => {
+#     "msg": {
+#         "netconf-state": {
+#             "@xmlns": "urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring",
+#             "schemas": {
+#                 "schema": null
+#             }
+#         }
+#     }
+# }
 """
 
 from ansible.errors import AnsibleFilterError

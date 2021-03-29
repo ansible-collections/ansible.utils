@@ -41,7 +41,7 @@ EXAMPLES = r"""
 #### Simple examples with out any engine. plugin will use default value as xmltodict
 
 - name: Define json data
-    ansible.builtin.set_fact:
+  ansible.builtin.set_fact:
       data: {
         "interface-configurations": {
           "@xmlns": "http://cisco.com/ns/yang/Cisco-IOS-XR-ifmgr-cfg",
@@ -51,27 +51,27 @@ EXAMPLES = r"""
   - debug:
       msg:  "{{ data|ansible.utils.json_to_xml }}"
 
-TASK [Define json data ] *************************************************************************
-task path: /Users/amhatre/ansible-collections/playbooks/test_utils_json_to_xml.yaml:5
-ok: [localhost] => {
-    "ansible_facts": {
-        "data": {
-            "interface-configurations": {
-                "@xmlns": "http://cisco.com/ns/yang/Cisco-IOS-XR-ifmgr-cfg",
-                "interface-configuration": null
-            }
-        }
-    },
-    "changed": false
-}
-
-TASK [debug] ***********************************************************************************************************
-task path: /Users/amhatre/ansible-collections/playbooks/test_utils_json_to_xml.yaml:13
-Loading collection ansible.utils from /Users/amhatre/ansible-collections/collections/ansible_collections/ansible/utils
-ok: [localhost] => {
-    "msg": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<interface-configurations xmlns=\"http://cisco.com/ns/yang/
-    Cisco-IOS-XR-ifmgr-cfg\">\n\t<interface-configuration></interface-configuration>\n</interface-configurations>"
-}
+# TASK [Define json data ] *************************************************************************
+# task path: /Users/amhatre/ansible-collections/playbooks/test_utils_json_to_xml.yaml:5
+# ok: [localhost] => {
+#     "ansible_facts": {
+#         "data": {
+#             "interface-configurations": {
+#                 "@xmlns": "http://cisco.com/ns/yang/Cisco-IOS-XR-ifmgr-cfg",
+#                 "interface-configuration": null
+#             }
+#         }
+#     },
+#     "changed": false
+# }
+#
+# TASK [debug] ***********************************************************************************************************
+# task path: /Users/amhatre/ansible-collections/playbooks/test_utils_json_to_xml.yaml:13
+# Loading collection ansible.utils from /Users/amhatre/ansible-collections/collections/ansible_collections/ansible/utils
+# ok: [localhost] => {
+#     "msg": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<interface-configurations xmlns=\"http://cisco.com/ns/yang/
+#     Cisco-IOS-XR-ifmgr-cfg\">\n\t<interface-configuration></interface-configuration>\n</interface-configurations>"
+# }
 
 #### example2 with engine=xmltodict
 
@@ -86,27 +86,26 @@ ok: [localhost] => {
   - debug:
       msg:  "{{ data|ansible.utils.json_to_xml('xmltodict') }}"
 
-TASK [Define json data ] *************************************************************************
-task path: /Users/amhatre/ansible-collections/playbooks/test_utils_json_to_xml.yaml:5
-ok: [localhost] => {
-    "ansible_facts": {
-        "data": {
-            "interface-configurations": {
-                "@xmlns": "http://cisco.com/ns/yang/Cisco-IOS-XR-ifmgr-cfg",
-                "interface-configuration": null
-            }
-        }
-    },
-    "changed": false
-}
-
-TASK [debug] ***********************************************************************************************************
-task path: /Users/amhatre/ansible-collections/playbooks/test_utils_json_to_xml.yaml:13
-Loading collection ansible.utils from /Users/amhatre/ansible-collections/collections/ansible_collections/ansible/utils
-ok: [localhost] => {
-    "msg": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<interface-configurations xmlns=\"http://cisco.com/ns/yang/
-    Cisco-IOS-XR-ifmgr-cfg\">\n\t<interface-configuration></interface-configuration>\n</interface-configurations>"
-}
+# TASK [Define json data ] *************************************************************************
+# task path: /Users/amhatre/ansible-collections/playbooks/test_utils_json_to_xml.yaml:5
+# ok: [localhost] => {
+#     "ansible_facts": {
+#         "data": {
+#             "interface-configurations": {
+#                 "@xmlns": "http://cisco.com/ns/yang/Cisco-IOS-XR-ifmgr-cfg",
+#                 "interface-configuration": null
+#             }
+#         }
+#     },
+#     "changed": false
+# } 
+# TASK [debug] ***********************************************************************************************************
+# task path: /Users/amhatre/ansible-collections/playbooks/test_utils_json_to_xml.yaml:13
+# Loading collection ansible.utils from /Users/amhatre/ansible-collections/collections/ansible_collections/ansible/utils
+# ok: [localhost] => {
+#     "msg": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<interface-configurations xmlns=\"http://cisco.com/ns/yang/
+#     Cisco-IOS-XR-ifmgr-cfg\">\n\t<interface-configuration></interface-configuration>\n</interface-configurations>"
+# }
 
 """
 
