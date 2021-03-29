@@ -76,3 +76,12 @@ releases:
     - ansible-doc.yaml
     - cli_parse_fix.yaml
     release_date: '2021-02-25'
+  2.0.2:
+    changes:
+      bugfixes:
+      - Fix cli_parse template_path read error (https://github.com/ansible-collections/ansible.utils/pull/51).
+      - Fix jsonschema input data format checking (https://github.com/ansible-collections/ansible.utils/pull/50).
+    fragments:
+    - cli_parse_errors_return.yaml
+    - jsonschema_data_validation_fix.yaml
+    release_date: '2021-03-29'
