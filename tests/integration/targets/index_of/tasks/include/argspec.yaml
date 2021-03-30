@@ -13,7 +13,7 @@
 
 - name: Check argspec validation with filter (not a list)
   ansible.builtin.set_fact:
-    _result: "{{ complex|ansible.utils.index_of() }}"
+    _result: "{{ complex|ansible.utils.index_of('eq', 2) }}"
   ignore_errors: true
   register: result
 
@@ -35,7 +35,7 @@
 
 - name: Check argspec validation with lookup (not a list)
   ansible.builtin.set_fact:
-    _result: "{{ lookup('ansible.utils.index_of', complex) }}"
+    _result: "{{ lookup('ansible.utils.index_of', complex, 'eq', 2) }}"
   ignore_errors: true
   register: result
 
