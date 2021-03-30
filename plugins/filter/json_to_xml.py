@@ -122,9 +122,6 @@ from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_valid
 @environmentfilter
 def _json_to_xml(*args, **kwargs):
     """Convert the given data from json to xml."""
-    import epdb
-
-    epdb.serve()
     keys = ["data", "engine"]
     data = dict(zip(keys, args[1:]))
     data.update(kwargs)
