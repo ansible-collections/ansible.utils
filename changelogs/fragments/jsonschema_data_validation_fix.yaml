@@ -1,3 +1,0 @@
----
-bugfixes:
-  - Fix jsonschema input data format checking (https://github.com/ansible-collections/ansible.utils/pull/50).
