@@ -129,9 +129,6 @@ class TestSortList(unittest.TestCase):
             other_args={"bypass_checks": True},
         )
         valid, errors, _updated_data = aav.validate()
-        print(valid)
-        print(errors)
-        print(_updated_data)
         self.assertTrue(valid)
         self.assertIsNone(errors)
 
