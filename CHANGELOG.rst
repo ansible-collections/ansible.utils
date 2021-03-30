@@ -5,6 +5,15 @@ Ansible Utils Collection Release Notes
 .. contents:: Topics
 
 
+v2.0.2
+======
+
+Bugfixes
+--------
+
+- Fix cli_parse template_path read error (https://github.com/ansible-collections/ansible.utils/pull/51).
+- Fix jsonschema input data format checking (https://github.com/ansible-collections/ansible.utils/pull/50).
+
 v2.0.1
 ======
 
