@@ -1,11 +1,11 @@
-
-
 # Ansible Utilities Collection
+
 [![Codecov](https://img.shields.io/codecov/c/github/ansible-collections/ansible.utils)](https://codecov.io/gh/ansible-collections/ansible.utils)
 
-The Ansible ``ansible.utils`` collection includes a variety of plugins that aid in the management, manipulation and visibility of data for the Ansible playbook developer.
+The Ansible `ansible.utils` collection includes a variety of plugins that aid in the management, manipulation and visibility of data for the Ansible playbook developer.
 
 <!--start requires_ansible-->
+
 ## Ansible version compatibility
 
 This collection has been tested against following Ansible versions: **>=2.9.10**.
@@ -13,47 +13,53 @@ This collection has been tested against following Ansible versions: **>=2.9.10**
 Plugins and modules within a collection may be tested with only specific Ansible versions.
 A collection may contain metadata that identifies these versions.
 PEP440 is the schema used to describe the versions of Ansible.
+
 <!--end requires_ansible-->
 
 ## Included content
 
 <!--start collection content-->
+
 ### Filter plugins
-Name | Description
---- | ---
-[ansible.utils.from_xml](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.from_xml_filter.rst)|Convert given XML string to native python dictionary.
-[ansible.utils.get_path](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.get_path_filter.rst)|Retrieve the value in a variable using a path
-[ansible.utils.index_of](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.index_of_filter.rst)|Find the indices of items in a list matching some criteria
-[ansible.utils.to_paths](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.to_paths_filter.rst)|Flatten a complex object into a dictionary of paths and values
-[ansible.utils.to_xml](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.to_xml_filter.rst)|Convert given JSON string to XML
-[ansible.utils.validate](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.validate_filter.rst)|Validate data with provided criteria
+
+| Name                                                                                                                            | Description                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------- |
+| [ansible.utils.from_xml](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.from_xml_filter.rst) | Convert given XML string to native python dictionary.          |
+| [ansible.utils.get_path](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.get_path_filter.rst) | Retrieve the value in a variable using a path                  |
+| [ansible.utils.index_of](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.index_of_filter.rst) | Find the indices of items in a list matching some criteria     |
+| [ansible.utils.to_paths](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.to_paths_filter.rst) | Flatten a complex object into a dictionary of paths and values |
+| [ansible.utils.to_xml](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.to_xml_filter.rst)     | Convert given JSON string to XML                               |
+| [ansible.utils.validate](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.validate_filter.rst) | Validate data with provided criteria                           |
 
 ### Lookup plugins
-Name | Description
---- | ---
-[ansible.utils.get_path](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.get_path_lookup.rst)|Retrieve the value in a variable using a path
-[ansible.utils.index_of](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.index_of_lookup.rst)|Find the indices of items in a list matching some criteria
-[ansible.utils.to_paths](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.to_paths_lookup.rst)|Flatten a complex object into a dictionary of paths and values
-[ansible.utils.validate](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.validate_lookup.rst)|Validate data with provided criteria
+
+| Name                                                                                                                                            | Description                                                    |
+| ----------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------- |
+| [ansible.utils.get_path](https://github.com/ansible-collections/ansible.utils/blob/network-test-plugins/docs/ansible.utils.get_path_lookup.rst) | Retrieve the value in a variable using a path                  |
+| [ansible.utils.index_of](https://github.com/ansible-collections/ansible.utils/blob/network-test-plugins/docs/ansible.utils.index_of_lookup.rst) | Find the indices of items in a list matching some criteria     |
+| [ansible.utils.to_paths](https://github.com/ansible-collections/ansible.utils/blob/network-test-plugins/docs/ansible.utils.to_paths_lookup.rst) | Flatten a complex object into a dictionary of paths and values |
+| [ansible.utils.validate](https://github.com/ansible-collections/ansible.utils/blob/network-test-plugins/docs/ansible.utils.validate_lookup.rst) | Validate data with provided criteria                           |
 
 ### Modules
-Name | Description
---- | ---
-[ansible.utils.cli_parse](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.cli_parse_module.rst)|Parse cli output or text using a variety of parsers
-[ansible.utils.fact_diff](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.fact_diff_module.rst)|Find the difference between currently set facts
-[ansible.utils.update_fact](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.update_fact_module.rst)|Update currently set facts
-[ansible.utils.validate](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.validate_module.rst)|Validate data with provided criteria
+
+| Name                                                                                                                                                  | Description                                         |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------- |
+| [ansible.utils.cli_parse](https://github.com/ansible-collections/ansible.utils/blob/network-test-plugins/docs/ansible.utils.cli_parse_module.rst)     | Parse cli output or text using a variety of parsers |
+| [ansible.utils.fact_diff](https://github.com/ansible-collections/ansible.utils/blob/network-test-plugins/docs/ansible.utils.fact_diff_module.rst)     | Find the difference between currently set facts     |
+| [ansible.utils.update_fact](https://github.com/ansible-collections/ansible.utils/blob/network-test-plugins/docs/ansible.utils.update_fact_module.rst) | Update currently set facts                          |
+| [ansible.utils.validate](https://github.com/ansible-collections/ansible.utils/blob/network-test-plugins/docs/ansible.utils.validate_module.rst)       | Validate data with provided criteria                |
 
 ### Test plugins
-Name | Description
---- | ---
-[ansible.utils.validate](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.validate_test.rst)|Validate data with provided criteria
+
+| Name                                                                                                                          | Description                          |
+| ----------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ |
+| [ansible.utils.validate](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.validate_test.rst) | Validate data with provided criteria |
 
 <!--end collection content-->
 
 ## Installing this collection
 
-You can install the ``ansible.utils`` collection with the Ansible Galaxy CLI:
+You can install the `ansible.utils` collection with the Ansible Galaxy CLI:
 
     ansible-galaxy collection install ansible.utils
 
@@ -64,16 +70,16 @@ You can also include it in a `requirements.yml` file and install it with `ansibl
 collections:
   - name: ansible.utils
 ```
+
 ## Using this collection
 
 The most common use case for this collection is when you want to work with the complex data structures present in an Ansible playbook, inventory, or returned from modules. See each plugin documentation page for detailed examples for how these utilities can be used in tasks.
-
 
 **NOTE**: For Ansible 2.9, you may not see deprecation warnings when you run your playbooks with this collection. Use this documentation to track when a module is deprecated.
 
 ### See Also:
 
-* [Using collections](https://docs.ansible.com/ansible/latest/user_guide/collections_using.html) in the Ansible documentation for more details.
+- [Using collections](https://docs.ansible.com/ansible/latest/user_guide/collections_using.html) in the Ansible documentation for more details.
 
 ## Contributing to this collection
 
@@ -92,20 +98,21 @@ See the [Ansible Community Guide](https://docs.ansible.com/ansible/latest/commun
 - Use of the latest version of black is required for formatting (black -l79)
 - The README contains a table of plugins. Use the [collection_prep](https://github.com/ansible-network/collection_prep) utilities to maintain this.
 
-
 ### Code of Conduct
+
 This collection follows the Ansible project's
 [Code of Conduct](https://docs.ansible.com/ansible/devel/community/code_of_conduct.html).
 Please read and familiarize yourself with this document.
 
-
 ## Release notes
+
 <!--Add a link to a changelog.md file or an external docsite to cover this information. -->
+
 Release notes are available [here](https://github.com/ansible-collections/ansible.utils/blob/main/changelogs/CHANGELOG.rst)
 For automated release announcements refer [here](https://twitter.com/AnsibleContent).
 
-
 ## Roadmap
+
 For information on releasing, versioning and deprecation see the [stratergy document](https://access.redhat.com/articles/4993781).
 
 In general, major versions can contain breaking changes, while minor versions only contain new features (like new plugin addition) and bugfixes.
