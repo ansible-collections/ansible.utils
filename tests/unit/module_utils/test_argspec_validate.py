@@ -120,7 +120,7 @@ class TestSortList(unittest.TestCase):
         )
 
     def test_other_args(self):
-        data = {}
+        data = {"param_str": "string"}
         aav = AnsibleArgSpecValidator(
             data=data,
             schema=DOCUMENTATION,
