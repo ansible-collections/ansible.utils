@@ -17,8 +17,8 @@ Version added: 1.0.0
 
 Synopsis
 --------
-- Use a ``path`` to retrieve a nested value from a ``var``.
-- ``get_path`` is also available as a ``lookup plugin`` for convenience.
+- Use a *path* to retrieve a nested value from a *var*.
+- **get_path** is also available as a **lookup plugin** for convenience.
 - Using the parameters below- ``var|ansible.utils.get_path(path, wantlist``)
 
 
@@ -51,8 +51,8 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>The <code>path</code> in the <code>var</code> to retrieve the value of.</div>
-                        <div>The <code>path</code> needs to be a valid jinja path.</div>
+                        <div>The <em>path</em> in the <em>var</em> to retrieve the value of.</div>
+                        <div>The <em>path</em> needs to be a valid jinja path.</div>
                 </td>
             </tr>
             <tr>
@@ -72,7 +72,7 @@ Parameters
                 <td>
                         <div>The variable from which the value should be extracted.</div>
                         <div>This option represents the value that is passed to the filter plugin in pipe format.</div>
-                        <div>For example <em>config_data|ansible.utils.get_path(</em>), in this case <em>config_data</em> represents this option.</div>
+                        <div>For example <code>config_data|ansible.utils.get_path(</code>), in this case <code>config_data</code> represents this option.</div>
                 </td>
             </tr>
             <tr>

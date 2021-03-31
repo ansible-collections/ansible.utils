@@ -20,7 +20,7 @@ Synopsis
 - Flatten a complex object into a dictionary of paths and values.
 - Paths are dot delimited whenever possible.
 - Brackets are used for list indices and keys that contain special characters.
-- ``to_paths`` is also available as a filter plugin.
+- **to_paths** is also available as a filter plugin.
 - Using the parameters below- ``lookup('ansible.utils.to_paths', var, prepend, wantlist``)
 
 
@@ -52,7 +52,7 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>Prepend each path entry. Useful to add the initial <code>var</code> name.</div>
+                        <div>Prepend each path entry. Useful to add the initial <em>var</em> name.</div>
                 </td>
             </tr>
             <tr>
@@ -70,7 +70,7 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>The value of <code>var</code> will be will be used.</div>
+                        <div>The value of <em>var</em> will be used.</div>
                 </td>
             </tr>
             <tr>
@@ -91,7 +91,7 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>If set to <code>True</code>, the return value will always be a list. This can also be accomplished using <code>query</code> or <code>q</code> instead of <code>lookup</code>. <a href='https://docs.ansible.com/ansible/latest/plugins/lookup.html'>https://docs.ansible.com/ansible/latest/plugins/lookup.html</a></div>
+                        <div>If set to <em>True</em>, the return value will always be a list. This can also be accomplished using <code>query</code> or <b>q</b> instead of <code>lookup</code>. <a href='https://docs.ansible.com/ansible/latest/plugins/lookup.html'>https://docs.ansible.com/ansible/latest/plugins/lookup.html</a></div>
                 </td>
             </tr>
     </table>
