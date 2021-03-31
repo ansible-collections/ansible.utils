@@ -98,7 +98,7 @@ EXAMPLES = r"""
 #         }
 #     },
 #     "changed": false
-# } 
+# }
 # TASK [debug] ***********************************************************************************************************
 # task path: /Users/amhatre/ansible-collections/playbooks/test_utils_json_to_xml.yaml:13
 # Loading collection ansible.utils from /Users/amhatre/ansible-collections/collections/ansible_collections/ansible/utils

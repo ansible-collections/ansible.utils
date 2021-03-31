@@ -42,7 +42,7 @@ class TestXmlToJson(unittest.TestCase):
     def test_valid_data(self):
         """Check passing valid data as per criteria"""
         self.maxDiff = None
-        output = """{"netconf-state": {"@xmlns": "urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring", 
+        output = """{"netconf-state": {"@xmlns": "urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring",
         "schemas": {"schema": null}}}"""
         args = [VALID_DATA, "xmltodict"]
         result = xml_to_json(*args)
