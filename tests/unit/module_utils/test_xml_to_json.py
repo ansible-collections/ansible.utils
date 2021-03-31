@@ -9,13 +9,16 @@ __metaclass__ = type
 
 import unittest
 from ansible.errors import AnsibleError
-from ansible_collections.ansible.utils.plugins.filter.xml_to_json import xml_to_json
+from ansible_collections.ansible.utils.plugins.filter.xml_to_json import (
+    xml_to_json,
+)
 
-INVALID_DATA = "<netconf-state xmlns=\"urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring\">"
+INVALID_DATA = '<netconf-state xmlns="urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring">'
 
-VALID_DATA = "<netconf-state xmlns=\"urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring\">" \
-             "<schemas><schema/></schemas></netconf-state>"
-
+VALID_DATA = (
+    '<netconf-state xmlns="urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring">'
+    "<schemas><schema/></schemas></netconf-state>"
+)
 
 
 class TestXmlToJson(unittest.TestCase):
