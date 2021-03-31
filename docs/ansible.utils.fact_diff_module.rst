@@ -124,6 +124,7 @@ Parameters
                     <a class="ansibleOptionLink" href="#parameter-" title="Permalink to this option"></a>
                     <div style="font-size: small">
                         <span style="color: purple">list</span>
+                         / <span style="color: purple">elements=string</span>
                     </div>
                 </td>
                 <td>
@@ -298,11 +299,12 @@ Common return values are documented `here <https://docs.ansible.com/ansible/late
                     <a class="ansibleOptionLink" href="#return-" title="Permalink to this return value"></a>
                     <div style="font-size: small">
                       <span style="color: purple">list</span>
+                       / <span style="color: purple">elements=string</span>
                     </div>
                 </td>
                 <td>always</td>
                 <td>
-                            <div>The <code>diff_text</code> split into lines.</div>
+                            <div>The <em>diff_text</em> split into lines.</div>
                     <br/>
                 </td>
             </tr>

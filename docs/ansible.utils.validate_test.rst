@@ -17,7 +17,7 @@ Version added: 1.0.0
 
 Synopsis
 --------
-- Validate ``data`` with provided ``criteria`` based on the validation ``engine``.
+- Validate *data* with provided *criteria* based on the validation *engine*.
 
 
 
@@ -49,9 +49,9 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>The criteria used for validation of value that represents <code>data</code> options.</div>
-                        <div>This option is passed to the test plugin as key, value pair For example <em>config_data is ansible.utils.validate(criteria=criteria</em>), in this case the value of <em>criteria</em> key represents this criteria for data validation.</div>
-                        <div>For the type of <code>criteria</code> that represents this value refer documentation of individual validate plugins.</div>
+                        <div>The criteria used for validation of value that represents <em>data</em> options.</div>
+                        <div>This option is passed to the test plugin as key, value pair For example <code>config_data is ansible.utils.validate(criteria=criteria</code>), in this case the value of <em>criteria</em> key represents this criteria for data validation.</div>
+                        <div>For the type of <em>criteria</em> that represents this value refer documentation of individual validate plugins.</div>
                 </td>
             </tr>
             <tr>
@@ -69,9 +69,9 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>A data that will be validated against <code>criteria</code>.</div>
-                        <div>This option represents the value that is passed to test plugin as check. For example <em>config_data is ansible.utils.validate(criteria=criteria</em>, in this case <em>config_data</em> represents this option.</div>
-                        <div>For the type of <code>data</code> that represents this value refer documentation of individual validate plugins.</div>
+                        <div>A data that will be validated against <em>criteria</em>.</div>
+                        <div>This option represents the value that is passed to test plugin as check. For example <code>config_data is ansible.utils.validate(criteria=criteria</code>, in this case <b>config_data</b> represents this option.</div>
+                        <div>For the type of <em>data</em> that represents this value refer documentation of individual validate plugins.</div>
                 </td>
             </tr>
             <tr>
@@ -90,8 +90,8 @@ Parameters
                     </td>
                 <td>
                         <div>The name of the validate plugin to use.</div>
-                        <div>This option can be passed in test plugin as a key, value pair For example <em>config_data is ansible.utils.validate(engine=&#x27;ansible.utils.jsonschema&#x27;, criteria=criteria</em>), in this case the value of <em>engine</em> key represents the engine to be use for data validation. If the value is not provided the default value that is <em>ansible.uitls.jsonschema</em> will be used.</div>
-                        <div>The value should be in fully qualified collection name format that is <em>&lt;org-name&gt;.&lt;collection-name&gt;.&lt;validate-plugin-name&gt;</em>.</div>
+                        <div>This option can be passed in test plugin as a key, value pair For example <code>config_data is ansible.utils.validate(engine=&#x27;ansible.utils.jsonschema&#x27;, criteria=criteria</code>), in this case the value of <em>engine</em> key represents the engine to be use for data validation. If the value is not provided the default value that is <code>ansible.utils.jsonschema</code> will be used.</div>
+                        <div>The value should be in fully qualified collection name format that is <b>&lt;org-name&gt;.&lt;collection-name&gt;.&lt;validate-plugin-name&gt;</b>.</div>
                 </td>
             </tr>
     </table>
@@ -102,10 +102,10 @@ Notes
 -----
 
 .. note::
-   - For the type of options ``data`` and ``criteria`` refer the individual ``validate`` plugin documentation that is represented in the value of ``engine`` option.
-   - For additional plugin configuration options refer the individual ``validate`` plugin documentation that is represented by the value of ``engine`` option.
-   - The plugin configuration option can be either passed as *key=value* pairs within test plugin or set as environment variables.
-   - The precedence the ``validate`` plugin configurable option is the variable passed within test plugin as *key=value* pairs followed by task variables followed by environment variables.
+   - For the type of options *data* and *criteria* refer the individual validate plugin documentation that is represented in the value of *engine* option.
+   - For additional plugin configuration options refer the individual validate plugin documentation that is represented by the value of *engine* option.
+   - The plugin configuration option can be either passed as ``key=value`` pairs within test plugin or set as environment variables.
+   - The precedence the validate plugin configurable option is the variable passed within test plugin as ``key=value`` pairs followed by task variables followed by environment variables.
 
 
 

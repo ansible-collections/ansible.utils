@@ -46,7 +46,7 @@ Parameters
                 <td>
                 </td>
                 <td>
-                        <div>The criteria used for validation of <code>data</code>. For the type of criteria refer to the documentation of individual validate plugins.</div>
+                        <div>The criteria used for validation of <em>data</em>. For the type of criteria refer to the documentation of individual validate plugins.</div>
                 </td>
             </tr>
             <tr>
@@ -62,7 +62,7 @@ Parameters
                 <td>
                 </td>
                 <td>
-                        <div>Data that will be validated against <code>criteria</code>. For the type of data refer to the documentation of individual validate plugins.</div>
+                        <div>Data that will be validated against <em>criteria</em>. For the type of data refer to the documentation of individual validate plugins.</div>
                 </td>
             </tr>
             <tr>
@@ -89,10 +89,10 @@ Notes
 -----
 
 .. note::
-   - For the type of options ``data`` and ``criteria`` refer to the individual ``validate`` plugin documentation that is represented in the value of ``engine`` option.
-   - For additional plugin configuration options refer to the individual ``validate`` plugin documentation that is represented by the value of ``engine`` option.
+   - For the type of options *data* and *criteria* refer to the individual validate plugin documentation that is represented in the value of *engine* option.
+   - For additional plugin configuration options refer to the individual validate plugin documentation that is represented by the value of *engine* option.
    - The plugin configuration option can be either passed as task or environment variables.
-   - The precedence of the ``validate`` plugin configurable option is task variables followed by the environment variables.
+   - The precedence of the validate plugin configurable option is task variables followed by the environment variables.
 
 
 
@@ -135,11 +135,12 @@ Common return values are documented `here <https://docs.ansible.com/ansible/late
                     <a class="ansibleOptionLink" href="#return-" title="Permalink to this return value"></a>
                     <div style="font-size: small">
                       <span style="color: purple">list</span>
+                       / <span style="color: purple">elements=string</span>
                     </div>
                 </td>
-                <td>when <code>data</code> value is invalid</td>
+                <td>when <em>data</em> value is invalid</td>
                 <td>
-                            <div>The list of errors in <code>data</code> based on the <code>criteria</code>.</div>
+                            <div>The list of errors in <em>data</em> based on the <em>criteria</em>.</div>
                     <br/>
                 </td>
             </tr>
@@ -154,9 +155,9 @@ Common return values are documented `here <https://docs.ansible.com/ansible/late
                 </td>
                 <td>always</td>
                 <td>
-                            <div>The msg indicates if the <code>data</code> is valid as per the <code>criteria</code>.</div>
-                            <div>In case data is valid return success message <em>all checks passed</em>.</div>
-                            <div>In case data is invalid return error message <em>Validation errors were found</em> along with more information on error is available.</div>
+                            <div>The msg indicates if the <em>data</em> is valid as per the <em>criteria</em>.</div>
+                            <div>In case data is valid return success message <b>all checks passed</b>.</div>
+                            <div>In case data is invalid return error message <b>Validation errors were found</b> along with more information on error is available.</div>
                     <br/>
                 </td>
             </tr>
