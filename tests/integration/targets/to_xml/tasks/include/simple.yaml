@@ -10,26 +10,26 @@
     output: "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<interface-configurations xmlns=\"http://cisco.com/ns/yang/Cisco-IOS-XR-ifmgr-cfg\">\n\t<interface-configuration></interface-configuration>\n</interface-configurations>"
 
 - debug:
-      msg:  "{{ data|ansible.utils.json_to_xml() }}"
+      msg:  "{{ data|ansible.utils.to_xml() }}"
 
 - name: Integration tests with and without default engine as xmltodict and
   assert:
     that: "{{ output == item.test }}"
   loop:
-    - test: "{{ data|ansible.utils.json_to_xml() }}"
-    - test: "{{ data|ansible.utils.json_to_xml('xmltodict') }}"
+    - test: "{{ data|ansible.utils.to_xml() }}"
+    - test: "{{ data|ansible.utils.to_xml('xmltodict') }}"
 
-- name: Setup invalid xml as input to ansible.utils.xml_to_json.
+- name: Setup invalid xml as input to ansible.utils.from_xml
   ansible.builtin.set_fact:
     data: "<netconf-state xmlns=\"urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring\">"
 
 - name: validate input xml
   ansible.builtin.set_fact:
-    _result: "{{ data|ansible.utils.json_to_xml() }}"
+    _result: "{{ data|ansible.utils.to_xml() }}"
   ignore_errors: true
   register: result
 
 - assert:
     that: "{{ msg in result.msg }}"
   vars:
-    msg: "Error when using plugin 'json_to_xml': Input json is not valid"
+    msg: "Error when using plugin 'to_xml': Input json is not valid"

@@ -6,7 +6,7 @@
 #
 
 """
-The xml_to_json plugin code
+The from_xml plugin code
 """
 from __future__ import absolute_import, division, print_function
 
@@ -15,6 +15,12 @@ __metaclass__ = type
 import json
 from ansible.errors import AnsibleError
 
+try:
+    import xmltodict
+
+    HAS_XMLTODICT = True
+except ImportError:
+    HAS_XMLTODICT = False
 
 def _raise_error(msg):
     """Raise an error message, prepend with filter name
@@ -22,19 +28,19 @@ def _raise_error(msg):
     :type msg: str
     :raises: AnsibleError
     """
-    error = "Error when using plugin 'xml_to_json': {msg}".format(msg=msg)
+    error = "Error when using plugin 'from_xml': {msg}".format(msg=msg)
     raise AnsibleError(error)
 
 
-def xml_to_json(data, engine):
+def from_xml(data, engine):
     """Convert data which is in xml to json"
-    :param data: The data passed in (data|xml_to_json(...))
+    :param data: The data passed in (data|from_xml(...))
     :type data: xml
     :param engine: Conversion library default=xml_to_dict
     """
     if engine == "xmltodict":
-        import xmltodict
-
+        if not HAS_XMLTODICT:
+            _raise_error("Missing required library xmltodict")
         try:
             res = json.dumps(xmltodict.parse(data))
         except Exception:

@@ -20,13 +20,13 @@ DOCUMENTATION = """
     short_description: convert given json string to xml
     description:
         - This plugin converts the json string to xml.
-        - Using the parameters below- C(data|ansible.utils.json_to_xml)
+        - Using the parameters below- C(data|ansible.utils.to_xml)
     options:
       data:
         description:
         - The input json string .
         - This option represents the json value that is passed to the filter plugin in pipe format.
-        - For example C(config_data|ansible.utils.json_to_xml), in this case C(config_data) represents this option.
+        - For example C(config_data|ansible.utils.to_xml), in this case C(config_data) represents this option.
         type: str
         required: True
       engine:
@@ -49,7 +49,7 @@ EXAMPLES = r"""
         }
       }
   - debug:
-      msg:  "{{ data|ansible.utils.json_to_xml }}"
+      msg:  "{{ data|ansible.utils.to_xml }}"
 
 # TASK [Define json data ] *************************************************************************
 # task path: /Users/amhatre/ansible-collections/playbooks/test_utils_json_to_xml.yaml:5
@@ -84,7 +84,7 @@ EXAMPLES = r"""
         }
       }
   - debug:
-      msg:  "{{ data|ansible.utils.json_to_xml('xmltodict') }}"
+      msg:  "{{ data|ansible.utils.to_xml('xmltodict') }}"
 
 # TASK [Define json data ] *************************************************************************
 # task path: /Users/amhatre/ansible-collections/playbooks/test_utils_json_to_xml.yaml:5
@@ -111,8 +111,8 @@ EXAMPLES = r"""
 
 from ansible.errors import AnsibleFilterError
 from jinja2.filters import environmentfilter
-from ansible_collections.ansible.utils.plugins.plugin_utils.json_to_xml import (
-    json_to_xml,
+from ansible_collections.ansible.utils.plugins.plugin_utils.to_xml import (
+    to_xml,
 )
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     AnsibleArgSpecValidator,
@@ -120,23 +120,23 @@ from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_valid
 
 
 @environmentfilter
-def _json_to_xml(*args, **kwargs):
+def _to_xml(*args, **kwargs):
     """Convert the given data from json to xml."""
     keys = ["data", "engine"]
     data = dict(zip(keys, args[1:]))
     data.update(kwargs)
     aav = AnsibleArgSpecValidator(
-        data=data, schema=DOCUMENTATION, name="json_to_xml"
+        data=data, schema=DOCUMENTATION, name="to_xml"
     )
     valid, errors, updated_data = aav.validate()
     if not valid:
         raise AnsibleFilterError(errors)
-    return json_to_xml(**updated_data)
+    return to_xml(**updated_data)
 
 
 class FilterModule(object):
-    """ json_to_xml  """
+    """ to_xml  """
 
     def filters(self):
         """a mapping of filter names to functions"""
-        return {"json_to_xml": _json_to_xml}
+        return {"to_xml": _to_xml}

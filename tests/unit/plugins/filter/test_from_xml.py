@@ -9,8 +9,8 @@ __metaclass__ = type
 
 import unittest
 from ansible.errors import AnsibleError
-from ansible_collections.ansible.utils.plugins.filter.xml_to_json import (
-    xml_to_json,
+from ansible_collections.ansible.utils.plugins.filter.from_xml import (
+    from_xml,
 )
 
 INVALID_DATA = '<netconf-state xmlns="urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring">'
@@ -20,8 +20,10 @@ VALID_DATA = (
     "<schemas><schema/></schemas></netconf-state>"
 )
 
+OUTPUT = """{"netconf-state": \
+{"@xmlns": "urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring", "schemas": {"schema": null}}}"""
 
-class TestXmlToJson(unittest.TestCase):
+class TestFromXml(unittest.TestCase):
     def setUp(self):
         pass
 
@@ -32,18 +34,17 @@ class TestXmlToJson(unittest.TestCase):
         args = [INVALID_DATA, "xmltodict"]
         kwargs = {}
         with self.assertRaises(AnsibleError) as error:
-            xml_to_json(*args, **kwargs)
+            from_xml(*args, **kwargs)
         print(str(error.exception))
         self.assertIn(
-            "Error when using plugin 'xml_to_json': Input Xml is not valid",
+            "Error when using plugin 'from_xml': Input Xml is not valid",
             str(error.exception),
         )
 
     def test_valid_data(self):
         """Check passing valid data as per criteria"""
         self.maxDiff = None
-        output = """{"netconf-state": {"@xmlns": "urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring",
-        "schemas": {"schema": null}}}"""
         args = [VALID_DATA, "xmltodict"]
-        result = xml_to_json(*args)
-        self.assertEqual(result, output)
+        result = from_xml(*args)
+        print(result)
+        self.assertEqual(result, OUTPUT)

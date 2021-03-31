@@ -6,26 +6,26 @@
 #
 
 """
-The xml_to_json filter plugin
+The from_xml filter plugin
 """
 from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
 DOCUMENTATION = """
-    name: xml_to_json
+    name: from_xml
     author: Ashwini Mhatre (@amhatre)
     version_added: "2.0.2"
-    short_description: convert given xml string to json
+    short_description: convert given xml string to native python dictionary.
     description:
-        - This plugin converts the xml string to json.
-        - Using the parameters below- C(data|ansible.utils.xml_to_json)
+        - This plugin converts the xml string to native python dictionary.
+        - Using the parameters below- C(data|ansible.utils.from_xml)
     options:
       data:
         description:
         - The input xml string .
         - This option represents the xml value that is passed to the filter plugin in pipe format.
-        - For example C(config_data|ansible.utils.xml_to_json), in this case C(config_data) represents this option.
+        - For example C(config_data|ansible.utils.from_xml), in this case C(config_data) represents this option.
         type: str
         required: True
       engine:
@@ -40,14 +40,14 @@ EXAMPLES = r"""
 #### Simple examples with out any engine. plugin will use default value as xmltodict
 
 tasks:
-  - name: convert given xml to json
+  - name: convert given xml to native python dictionary
     ansible.builtin.set_fact:
       data: "
         <netconf-state xmlns=\"urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring\"><schemas><schema/></schemas></netconf-state>
             "
 
   - debug:
-      msg:  "{{ data|ansible.utils.xml_to_json }}"
+      msg:  "{{ data|ansible.utils.from_xml }}"
 
 ##TASK######
 # TASK [convert given xml to json] *****************************************************************************************************
@@ -83,7 +83,7 @@ tasks:
             "
 
   - debug:
-      msg:  "{{ data|ansible.utils.xml_to_json('xmltodict') }}"
+      msg:  "{{ data|ansible.utils.from_xml('xmltodict') }}"
 
 ##TASK######
 # TASK [convert given xml to json] *****************************************************************************************************
@@ -112,8 +112,8 @@ tasks:
 
 from ansible.errors import AnsibleFilterError
 from jinja2.filters import environmentfilter
-from ansible_collections.ansible.utils.plugins.plugin_utils.xml_to_json import (
-    xml_to_json,
+from ansible_collections.ansible.utils.plugins.plugin_utils.from_xml import (
+    from_xml,
 )
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     AnsibleArgSpecValidator,
@@ -121,25 +121,25 @@ from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_valid
 
 
 @environmentfilter
-def _xml_to_json(*args, **kwargs):
+def _from_xml(*args, **kwargs):
     """Convert the given data from xml to json."""
 
     keys = ["data", "engine"]
     data = dict(zip(keys, args[1:]))
     data.update(kwargs)
     aav = AnsibleArgSpecValidator(
-        data=data, schema=DOCUMENTATION, name="xml_to_json"
+        data=data, schema=DOCUMENTATION, name="from_xml"
     )
     valid, errors, updated_data = aav.validate()
     if not valid:
         raise AnsibleFilterError(errors)
-    return xml_to_json(**updated_data)
+    return from_xml(**updated_data)
 
 
 class FilterModule(object):
-    """ xml_to_json  """
+    """ from_xml  """
 
     def filters(self):
 
         """a mapping of filter names to functions"""
-        return {"xml_to_json": _xml_to_json}
+        return {"from_xml": _from_xml}

@@ -9,8 +9,8 @@ __metaclass__ = type
 
 import unittest
 from ansible.errors import AnsibleError
-from ansible_collections.ansible.utils.plugins.filter.json_to_xml import (
-    json_to_xml,
+from ansible_collections.ansible.utils.plugins.filter.to_xml import (
+    to_xml,
 )
 
 INVALID_DATA = '<netconf-state xmlns="urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring">'
@@ -25,7 +25,7 @@ OUTPUT = """<?xml version="1.0" encoding="utf-8"?>
 <interface-configurations xmlns="http://cisco.com/ns/yang/Cisco-IOS-XR-ifmgr-cfg"></interface-configurations>"""
 
 
-class TestXmlToJson(unittest.TestCase):
+class TestToXml(unittest.TestCase):
     def setUp(self):
         pass
 
@@ -36,10 +36,10 @@ class TestXmlToJson(unittest.TestCase):
         args = [INVALID_DATA, "xmltodict"]
         kwargs = {}
         with self.assertRaises(AnsibleError) as error:
-            json_to_xml(*args, **kwargs)
+            to_xml(*args, **kwargs)
         print(str(error.exception))
         self.assertIn(
-            "Error when using plugin 'json_to_xml': Input json is not valid",
+            "Error when using plugin 'to_xml': Input json is not valid",
             str(error.exception),
         )
 
@@ -47,6 +47,6 @@ class TestXmlToJson(unittest.TestCase):
         """Check passing valid data as per criteria"""
         self.maxDiff = None
         args = [VALID_DATA, "xmltodict"]
-        result = json_to_xml(*args)
+        result = to_xml(*args)
         print(result)
         self.assertEqual(result, OUTPUT)
