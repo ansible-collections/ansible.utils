@@ -1,3 +1,3 @@
 ---
 minor_changes:
-  - Add Xml_to_json and json_to_xml fiter plugin (https://github.com/ansible-collections/ansible.utils/pull/56).
+  - Add from_xml and to_xml fiter plugin (https://github.com/ansible-collections/ansible.utils/pull/56).

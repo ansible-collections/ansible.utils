@@ -7,14 +7,14 @@
 
 
 """
-The json_to_xml filter plugin
+The to_xml filter plugin
 """
 from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
 DOCUMENTATION = """
-    name: json_to_xml
+    name: to_xml
     author: Ashwini Mhatre (@amhatre)
     version_added: "2.0.2"
     short_description: convert given json string to xml
