@@ -13,7 +13,7 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 import ast
-from ansible.errors import AnsibleError
+from ansible.errors import AnsibleFilterError
 
 try:
     import xmltodict
@@ -31,7 +31,7 @@ def _raise_error(msg):
     :raises: AnsibleError
     """
     error = "Error when using plugin 'to_xml': {msg}".format(msg=msg)
-    raise AnsibleError(error)
+    raise AnsibleFilterError(error)
 
 
 def to_xml(data, engine):
