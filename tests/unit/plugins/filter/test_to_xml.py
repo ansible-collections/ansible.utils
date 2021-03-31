@@ -9,9 +9,7 @@ __metaclass__ = type
 
 import unittest
 from ansible.errors import AnsibleError
-from ansible_collections.ansible.utils.plugins.filter.to_xml import (
-    to_xml,
-)
+from ansible_collections.ansible.utils.plugins.filter.to_xml import to_xml
 
 INVALID_DATA = '<netconf-state xmlns="urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring">'
 
