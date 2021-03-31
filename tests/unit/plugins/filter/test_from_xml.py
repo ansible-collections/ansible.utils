@@ -23,6 +23,7 @@ VALID_DATA = (
 OUTPUT = """{"netconf-state": \
 {"@xmlns": "urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring", "schemas": {"schema": null}}}"""
 
+
 class TestFromXml(unittest.TestCase):
     def setUp(self):
         pass

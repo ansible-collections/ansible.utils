@@ -22,6 +22,7 @@ try:
 except ImportError:
     HAS_XMLTODICT = False
 
+
 def _raise_error(msg):
     """Raise an error message, prepend with filter name
     :param msg: The message
