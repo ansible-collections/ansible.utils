@@ -33,27 +33,51 @@ PEP440 is the schema used to describe the versions of Ansible.
 
 ### Lookup plugins
 
-| Name                                                                                                                                            | Description                                                    |
-| ----------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------- |
-| [ansible.utils.get_path](https://github.com/ansible-collections/ansible.utils/blob/network-test-plugins/docs/ansible.utils.get_path_lookup.rst) | Retrieve the value in a variable using a path                  |
-| [ansible.utils.index_of](https://github.com/ansible-collections/ansible.utils/blob/network-test-plugins/docs/ansible.utils.index_of_lookup.rst) | Find the indices of items in a list matching some criteria     |
-| [ansible.utils.to_paths](https://github.com/ansible-collections/ansible.utils/blob/network-test-plugins/docs/ansible.utils.to_paths_lookup.rst) | Flatten a complex object into a dictionary of paths and values |
-| [ansible.utils.validate](https://github.com/ansible-collections/ansible.utils/blob/network-test-plugins/docs/ansible.utils.validate_lookup.rst) | Validate data with provided criteria                           |
+| Name                                                                                                                            | Description                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------- |
+| [ansible.utils.get_path](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.get_path_lookup.rst) | Retrieve the value in a variable using a path                  |
+| [ansible.utils.index_of](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.index_of_lookup.rst) | Find the indices of items in a list matching some criteria     |
+| [ansible.utils.to_paths](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.to_paths_lookup.rst) | Flatten a complex object into a dictionary of paths and values |
+| [ansible.utils.validate](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.validate_lookup.rst) | Validate data with provided criteria                           |
 
 ### Modules
 
-| Name                                                                                                                                                  | Description                                         |
-| ----------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------- |
-| [ansible.utils.cli_parse](https://github.com/ansible-collections/ansible.utils/blob/network-test-plugins/docs/ansible.utils.cli_parse_module.rst)     | Parse cli output or text using a variety of parsers |
-| [ansible.utils.fact_diff](https://github.com/ansible-collections/ansible.utils/blob/network-test-plugins/docs/ansible.utils.fact_diff_module.rst)     | Find the difference between currently set facts     |
-| [ansible.utils.update_fact](https://github.com/ansible-collections/ansible.utils/blob/network-test-plugins/docs/ansible.utils.update_fact_module.rst) | Update currently set facts                          |
-| [ansible.utils.validate](https://github.com/ansible-collections/ansible.utils/blob/network-test-plugins/docs/ansible.utils.validate_module.rst)       | Validate data with provided criteria                |
+| Name                                                                                                                                  | Description                                         |
+| ------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------- |
+| [ansible.utils.cli_parse](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.cli_parse_module.rst)     | Parse cli output or text using a variety of parsers |
+| [ansible.utils.fact_diff](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.fact_diff_module.rst)     | Find the difference between currently set facts     |
+| [ansible.utils.update_fact](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.update_fact_module.rst) | Update currently set facts                          |
+| [ansible.utils.validate](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.validate_module.rst)       | Validate data with provided criteria                |
 
 ### Test plugins
 
-| Name                                                                                                                          | Description                          |
-| ----------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ |
-| [ansible.utils.validate](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.validate_test.rst) | Validate data with provided criteria |
+| Name                                                                                                                                          | Description                                                          |
+| --------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| [ansible.utils.in_any_network](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.in_any_network_test.rst)     | Test if Test if an IP or network falls in any network                |
+| [ansible.utils.in_network](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.in_network_test.rst)             | Test if IP address falls in the network                              |
+| [ansible.utils.in_one_network](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.in_one_network_test.rst)     | Test if IP address belongs in any one of the networks in the list    |
+| [ansible.utils.ip](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ip_test.rst)                             | Test if something in an IP address or network                        |
+| [ansible.utils.ip_address](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ip_address_test.rst)             | Test if something in an IP address or network                        |
+| [ansible.utils.ipv4](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipv4_test.rst)                         | Test if something in an IPv4 address or network                      |
+| [ansible.utils.ipv4_address](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipv4_address_test.rst)         | Test if something in an IPv4 address or network                      |
+| [ansible.utils.ipv4_hostmask](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipv4_hostmask_test.rst)       | Test if an address is a valid hostmask                               |
+| [ansible.utils.ipv4_netmask](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipv4_netmask_test.rst)         | Test if an address is a valid netmask                                |
+| [ansible.utils.ipv6](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipv6_test.rst)                         | Test if something in an IPv6 address or network                      |
+| [ansible.utils.ipv6_address](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipv6_address_test.rst)         | Test if something in an IPv6 address or network                      |
+| [ansible.utils.ipv6_ipv4_mapped](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipv6_ipv4_mapped_test.rst) | Test if something appears to be a mapped IPv6 to IPv4 mapped address |
+| [ansible.utils.ipv6_sixtofour](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipv6_sixtofour_test.rst)     | Test if something appears to be a 6to4 address                       |
+| [ansible.utils.ipv6_teredo](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipv6_teredo_test.rst)           | Test if something appears to be an IPv6 teredo address               |
+| [ansible.utils.loopback](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.loopback_test.rst)                 | Test if an IP address is a loopback                                  |
+| [ansible.utils.mac](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.mac_test.rst)                           | Test if something appears to be a valid MAC address                  |
+| [ansible.utils.multicast](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.multicast_test.rst)               | Test for a multicast IP address                                      |
+| [ansible.utils.private](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.private_test.rst)                   | Test if an IP address is private                                     |
+| [ansible.utils.public](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.public_test.rst)                     | Test if an IP address is public                                      |
+| [ansible.utils.reserved](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.reserved_test.rst)                 | Test for a reserved IP address                                       |
+| [ansible.utils.resolvable](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.resolvable_test.rst)             | Test if an IP or name can be resolved via /etc/hosts or DNS          |
+| [ansible.utils.subnet_of](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.subnet_of_test.rst)               | Test if a network is a subnet of another network                     |
+| [ansible.utils.supernet_of](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.supernet_of_test.rst)           | Test if a network is a supernet of another network                   |
+| [ansible.utils.unspecified](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.unspecified_test.rst)           | Test for an unspecified IP address                                   |
+| [ansible.utils.validate](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.validate_test.rst)                 | Validate data with provided criteria                                 |
 
 <!--end collection content-->
 
