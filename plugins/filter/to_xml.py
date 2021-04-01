@@ -42,7 +42,7 @@ EXAMPLES = r"""
 
 - name: Define json data
   ansible.builtin.set_fact:
-      data: 
+      data:
         "interface-configurations":
           "@xmlns": "http://cisco.com/ns/yang/Cisco-IOS-XR-ifmgr-cfg"
           "interface-configuration":
@@ -75,7 +75,7 @@ EXAMPLES = r"""
 
 - name: Define json data
   ansible.builtin.set_fact:
-    data: 
+    data:
       "interface-configurations":
           "@xmlns": "http://cisco.com/ns/yang/Cisco-IOS-XR-ifmgr-cfg"
           "interface-configuration":
