@@ -27,7 +27,7 @@ DOCUMENTATION = """
         - The input json string .
         - This option represents the json value that is passed to the filter plugin in pipe format.
         - For example C(config_data|ansible.utils.to_xml), in this case C(config_data) represents this option.
-        type: str
+        type: dict
         required: True
       engine:
         description:
@@ -42,12 +42,10 @@ EXAMPLES = r"""
 
 - name: Define json data
   ansible.builtin.set_fact:
-      data: {
-        "interface-configurations": {
-          "@xmlns": "http://cisco.com/ns/yang/Cisco-IOS-XR-ifmgr-cfg",
-          "interface-configuration": null
-        }
-      }
+      data: 
+        "interface-configurations":
+          "@xmlns": "http://cisco.com/ns/yang/Cisco-IOS-XR-ifmgr-cfg"
+          "interface-configuration":
 - debug:
     msg:  "{{ data|ansible.utils.to_xml }}"
 
@@ -77,12 +75,10 @@ EXAMPLES = r"""
 
 - name: Define json data
   ansible.builtin.set_fact:
-    data: {
-        "interface-configurations": {
-          "@xmlns": "http://cisco.com/ns/yang/Cisco-IOS-XR-ifmgr-cfg",
-          "interface-configuration": null
-        }
-      }
+    data: 
+      "interface-configurations":
+          "@xmlns": "http://cisco.com/ns/yang/Cisco-IOS-XR-ifmgr-cfg"
+          "interface-configuration":
 - debug:
     msg:  "{{ data|ansible.utils.to_xml('xmltodict') }}"
 

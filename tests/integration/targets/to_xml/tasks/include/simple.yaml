@@ -1,12 +1,10 @@
 ---
 - name: Setup xml and expected json
   ansible.builtin.set_fact:
-    data: {
-      "interface-configurations": {
-        "@xmlns": "http://cisco.com/ns/yang/Cisco-IOS-XR-ifmgr-cfg",
-        "interface-configuration": null
-      }
-    }
+    data:
+      "interface-configurations":
+        "@xmlns": "http://cisco.com/ns/yang/Cisco-IOS-XR-ifmgr-cfg"
+        "interface-configuration":
     output: "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<interface-configurations xmlns=\"http://cisco.com/ns/yang/Cisco-IOS-XR-ifmgr-cfg\">\n\t<interface-configuration></interface-configuration>\n</interface-configurations>"
 
 - debug:
@@ -19,17 +17,19 @@
     - test: "{{ data|ansible.utils.to_xml() }}"
     - test: "{{ data|ansible.utils.to_xml('xmltodict') }}"
 
-- name: Setup invalid xml as input to ansible.utils.from_xml
+- name: test for supported engine for to_xml filter
   ansible.builtin.set_fact:
-    data: "<netconf-state xmlns=\"urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring\">"
+    data:
+      "interface-configurations":
+        "@xmlns": "http://cisco.com/ns/yang/Cisco-IOS-XR-ifmgr-cfg"
 
 - name: validate input xml
   ansible.builtin.set_fact:
-    _result: "{{ data|ansible.utils.to_xml() }}"
+    _result: "{{ data|ansible.utils.to_xml('dicttoxml') }}"
   ignore_errors: true
   register: result
 
 - assert:
     that: "{{ msg in result.msg }}"
   vars:
-    msg: "Error when using plugin 'to_xml': Input json is not valid"
+    msg: "Error when using plugin 'to_xml': engine: dicttoxml is not supported"

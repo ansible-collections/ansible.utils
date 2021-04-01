@@ -47,3 +47,6 @@ def from_xml(data, engine):
         except Exception:
             _raise_error("Input Xml is not valid")
         return res
+    else:
+        error = "engine: {engine} is not supported ".format(engine=engine)
+        _raise_error(error)

@@ -45,8 +45,10 @@ def to_xml(data, engine):
         if not HAS_XMLTODICT:
             _raise_error("Missing required library xmltodict")
         try:
-            data = ast.literal_eval(data)
             res = xmltodict.unparse(data, pretty=True)
         except Exception:
             _raise_error("Input json is not valid")
         return res
+    else:
+        error = "engine: {engine} is not supported ".format(engine=engine)
+        _raise_error(error)
