@@ -8,7 +8,7 @@ The Ansible ``ansible.utils`` collection includes a variety of plugins that aid 
 <!--start requires_ansible-->
 ## Ansible version compatibility
 
-This collection has been tested against following Ansible versions: **>=2.9.10,<2.12**.
+This collection has been tested against following Ansible versions: **>=2.9.10**.
 
 Plugins and modules within a collection may be tested with only specific Ansible versions.
 A collection may contain metadata that identifies these versions.
@@ -48,11 +48,6 @@ Name | Description
 Name | Description
 --- | ---
 [ansible.utils.validate](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.validate_test.rst)|Validate data with provided criteria
-
-### Validate plugins
-Name | Description
---- | ---
-[ansible.utils.jsonschema](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.jsonschema_validate.rst)|Define configurable options for jsonschema validate plugin
 
 <!--end collection content-->
 

@@ -20,7 +20,7 @@ Synopsis
 - Flatten a complex object into a dictionary of paths and values.
 - Paths are dot delimited whenever possible.
 - Brackets are used for list indices and keys that contain special characters.
-- ``to_paths`` is also available as a ``lookup plugin`` for convenience.
+- **to_paths** is also available as a **lookup plugin** for convenience.
 - Using the parameters below- ``var|ansible.utils.to_paths(prepend, wantlist``)
 
 
@@ -52,7 +52,7 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>Prepend each path entry. Useful to add the initial <code>var</code> name.</div>
+                        <div>Prepend each path entry. Useful to add the initial <em>var</em> name.</div>
                 </td>
             </tr>
             <tr>
@@ -70,9 +70,9 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>The value of <code>var</code> will be will be used.</div>
+                        <div>The value of <em>var</em> will be will be used.</div>
                         <div>This option represents the value that is passed to the filter plugin in pipe format.</div>
-                        <div>For example <em>config_data|ansible.utils.to_paths(</em>), in this case <em>config_data</em> represents this option.</div>
+                        <div>For example <code>config_data|ansible.utils.to_paths(</code>), in this case <code>config_data</code> represents this option.</div>
                 </td>
             </tr>
             <tr>

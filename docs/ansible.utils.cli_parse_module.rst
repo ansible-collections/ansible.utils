@@ -438,6 +438,7 @@ Common return values are documented `here <https://docs.ansible.com/ansible/late
                     <a class="ansibleOptionLink" href="#return-" title="Permalink to this return value"></a>
                     <div style="font-size: small">
                       <span style="color: purple">list</span>
+                       / <span style="color: purple">elements=string</span>
                     </div>
                 </td>
                 <td>when provided a command</td>

@@ -19,7 +19,7 @@ Synopsis
 --------
 - This plugin returns the indices of items matching some criteria in a list.
 - When working with a list of dictionaries, the key to evaluate can be specified.
-- ``index_of`` is also available as a ``filter plugin`` for convenience.
+- **index_of** is also available as a **filter plugin** for convenience.
 - Using the parameters below- ``lookup('ansible.utils.index_of', data, test, value, key, fail_on_missing, wantlist``).
 
 
@@ -90,7 +90,7 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>When the data provided is a list of dictionaries, run the test against this dictionary key. When using a <code>key</code>, the <code>data</code> must only contain dictionaries. See <code>fail_on_missing</code> below to determine the behaviour when the <code>key</code> is missing from a dictionary in the <code>data</code>.</div>
+                        <div>When the data provided is a list of dictionaries, run the test against this dictionary key. When using a <em>key</em>, the <em>data</em> must only contain dictionaries. See <em>fail_on_missing</em> below to determine the behaviour when the <em>key</em> is missing from a dictionary in the <em>data</em>.</div>
                 </td>
             </tr>
             <tr>
@@ -125,7 +125,7 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>The value used to test each list item against. Not required for simple tests (eg: <code>true</code>, <code>false</code>, <code>even</code>, <code>odd</code>) May be a <code>string</code>, <code>boolean</code>, <code>number</code>, <code>regular expression</code> <code>dict</code> and so on, depending on the <code>test</code> used.</div>
+                        <div>The value used to test each list item against. Not required for simple tests (eg: <code>true</code>, <code>false</code>, <code>even</code>, <code>odd</code>) May be a <code>string</code>, <code>boolean</code>, <code>number</code>, <code>regular expression</code> <code>dict</code> and so on, depending on the <b>test</b> used.</div>
                 </td>
             </tr>
             <tr>
@@ -146,7 +146,7 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>When only a single entry in the <code>data</code> is matched, the index of that entry is returned as an integer. If set to <code>True</code>, the return value will always be a list, even if only a single entry is matched. This can also be accomplished using <code>query</code> or <code>q</code> instead of <code>lookup</code>. <a href='https://docs.ansible.com/ansible/latest/plugins/lookup.html'>https://docs.ansible.com/ansible/latest/plugins/lookup.html</a></div>
+                        <div>When only a single entry in the <em>data</em> is matched, the index of that entry is returned as an integer. If set to <code>True</code>, the return value will always be a list, even if only a single entry is matched. This can also be accomplished using <code>query</code> or <code>q</code> instead of <code>lookup</code>. <a href='https://docs.ansible.com/ansible/latest/plugins/lookup.html'>https://docs.ansible.com/ansible/latest/plugins/lookup.html</a></div>
                 </td>
             </tr>
     </table>
