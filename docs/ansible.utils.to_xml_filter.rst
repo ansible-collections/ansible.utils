@@ -5,7 +5,7 @@
 ansible.utils.to_xml
 ********************
 
-**convert given json string to xml**
+**Convert given JSON string to XML**
 
 
 Version added: 2.0.2
@@ -17,7 +17,7 @@ Version added: 2.0.2
 
 Synopsis
 --------
-- This plugin converts the json string to xml.
+- This plugin converts the JSON string to XML.
 - Using the parameters below- ``data|ansible.utils.to_xml``
 
 
@@ -50,8 +50,8 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>The input json string .</div>
-                        <div>This option represents the json value that is passed to the filter plugin in pipe format.</div>
+                        <div>The input JSON string .</div>
+                        <div>This option represents the JSON value that is passed to the filter plugin in pipe format.</div>
                         <div>For example <code>config_data|ansible.utils.to_xml</code>, in this case <code>config_data</code> represents this option.</div>
                 </td>
             </tr>
@@ -86,7 +86,7 @@ Examples
 
     #### Simple examples with out any engine. plugin will use default value as xmltodict
 
-    - name: Define json data
+    - name: Define JSON data
       ansible.builtin.set_fact:
           data:
             "interface-configurations":
@@ -95,7 +95,7 @@ Examples
     - debug:
         msg:  "{{ data|ansible.utils.to_xml }}"
 
-    # TASK [Define json data ] *************************************************************************
+    # TASK [Define JSON data ] *************************************************************************
     # task path: /Users/amhatre/ansible-collections/playbooks/test_utils_json_to_xml.yaml:5
     # ok: [localhost] => {
     #     "ansible_facts": {
@@ -119,7 +119,7 @@ Examples
 
     #### example2 with engine=xmltodict
 
-    - name: Define json data
+    - name: Define JSON data
       ansible.builtin.set_fact:
         data:
           "interface-configurations":
@@ -128,7 +128,7 @@ Examples
     - debug:
         msg:  "{{ data|ansible.utils.to_xml('xmltodict') }}"
 
-    # TASK [Define json data ] *************************************************************************
+    # TASK [Define JSON data ] *************************************************************************
     # task path: /Users/amhatre/ansible-collections/playbooks/test_utils_json_to_xml.yaml:5
     # ok: [localhost] => {
     #     "ansible_facts": {

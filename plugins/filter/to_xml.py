@@ -17,15 +17,15 @@ DOCUMENTATION = """
     name: to_xml
     author: Ashwini Mhatre (@amhatre)
     version_added: "2.0.2"
-    short_description: convert given json string to xml
+    short_description: Convert given JSON string to XML
     description:
-        - This plugin converts the json string to xml.
+        - This plugin converts the JSON string to XML.
         - Using the parameters below- C(data|ansible.utils.to_xml)
     options:
       data:
         description:
-        - The input json string .
-        - This option represents the json value that is passed to the filter plugin in pipe format.
+        - The input JSON string .
+        - This option represents the JSON value that is passed to the filter plugin in pipe format.
         - For example C(config_data|ansible.utils.to_xml), in this case C(config_data) represents this option.
         type: dict
         required: True
@@ -40,7 +40,7 @@ EXAMPLES = r"""
 
 #### Simple examples with out any engine. plugin will use default value as xmltodict
 
-- name: Define json data
+- name: Define JSON data
   ansible.builtin.set_fact:
       data:
         "interface-configurations":
@@ -49,7 +49,7 @@ EXAMPLES = r"""
 - debug:
     msg:  "{{ data|ansible.utils.to_xml }}"
 
-# TASK [Define json data ] *************************************************************************
+# TASK [Define JSON data ] *************************************************************************
 # task path: /Users/amhatre/ansible-collections/playbooks/test_utils_json_to_xml.yaml:5
 # ok: [localhost] => {
 #     "ansible_facts": {
@@ -73,7 +73,7 @@ EXAMPLES = r"""
 
 #### example2 with engine=xmltodict
 
-- name: Define json data
+- name: Define JSON data
   ansible.builtin.set_fact:
     data:
       "interface-configurations":
@@ -82,7 +82,7 @@ EXAMPLES = r"""
 - debug:
     msg:  "{{ data|ansible.utils.to_xml('xmltodict') }}"
 
-# TASK [Define json data ] *************************************************************************
+# TASK [Define JSON data ] *************************************************************************
 # task path: /Users/amhatre/ansible-collections/playbooks/test_utils_json_to_xml.yaml:5
 # ok: [localhost] => {
 #     "ansible_facts": {

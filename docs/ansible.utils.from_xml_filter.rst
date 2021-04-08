@@ -5,7 +5,7 @@
 ansible.utils.from_xml
 **********************
 
-**convert given xml string to native python dictionary.**
+**Convert given XML string to native python dictionary.**
 
 
 Version added: 2.0.2
@@ -17,7 +17,7 @@ Version added: 2.0.2
 
 Synopsis
 --------
-- This plugin converts the xml string to native python dictionary.
+- This plugin converts the XML string to a native python dictionary.
 - Using the parameters below- ``data|ansible.utils.from_xml``
 
 
@@ -50,8 +50,8 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>The input xml string .</div>
-                        <div>This option represents the xml value that is passed to the filter plugin in pipe format.</div>
+                        <div>The input XML string.</div>
+                        <div>This option represents the XML value that is passed to the filter plugin in pipe format.</div>
                         <div>For example <code>config_data|ansible.utils.from_xml</code>, in this case <code>config_data</code> represents this option.</div>
                 </td>
             </tr>
@@ -87,7 +87,7 @@ Examples
     #### Simple examples with out any engine. plugin will use default value as xmltodict
 
     tasks:
-      - name: convert given xml to native python dictionary
+      - name: convert given XML to native python dictionary
         ansible.builtin.set_fact:
           data: "
             <netconf-state xmlns=\"urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring\"><schemas><schema/></schemas></netconf-state>
@@ -97,7 +97,7 @@ Examples
           msg:  "{{ data|ansible.utils.from_xml }}"
 
     ##TASK######
-    # TASK [convert given xml to json] *****************************************************************************************************
+    # TASK [convert given XML to native python dictionary] *****************************************************************************************************
     # task path: /Users/amhatre/ansible-collections/playbooks/test_utils.yaml:5
     # ok: [localhost] => {
     #     "ansible_facts": {
@@ -123,7 +123,7 @@ Examples
     #### example2 with engine=xmltodict
 
     tasks:
-      - name: convert given xml to json
+      - name: convert given XML to native python dictionary
         ansible.builtin.set_fact:
           data: "
             <netconf-state xmlns=\"urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring\"><schemas><schema/></schemas></netconf-state>
@@ -133,7 +133,7 @@ Examples
           msg:  "{{ data|ansible.utils.from_xml('xmltodict') }}"
 
     ##TASK######
-    # TASK [convert given xml to json] *****************************************************************************************************
+    # TASK [convert given XML to native python dictionary] *****************************************************************************************************
     # task path: /Users/amhatre/ansible-collections/playbooks/test_utils.yaml:5
     # ok: [localhost] => {
     #     "ansible_facts": {
