@@ -5,6 +5,19 @@ Ansible Utils Collection Release Notes
 .. contents:: Topics
 
 
+v2.1.0
+======
+
+Minor Changes
+-------------
+
+- Add from_xml and to_xml fiter plugin (https://github.com/ansible-collections/ansible.utils/pull/56).
+
+Bugfixes
+--------
+
+- Add missing test requirements (https://github.com/ansible-collections/ansible.utils/pull/57).
+
 v2.0.2
 ======
 

@@ -1,3 +1,0 @@
----
-minor_changes:
-  - Add from_xml and to_xml fiter plugin (https://github.com/ansible-collections/ansible.utils/pull/56).
