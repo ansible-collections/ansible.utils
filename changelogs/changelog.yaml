@@ -85,3 +85,15 @@ releases:
     - cli_parse_errors_return.yaml
     - jsonschema_data_validation_fix.yaml
     release_date: '2021-03-29'
+  2.1.0:
+    changes:
+      bugfixes:
+      - Add missing test requirements (https://github.com/ansible-collections/ansible.utils/pull/57).
+      minor_changes:
+      - Add from_xml and to_xml fiter plugin (https://github.com/ansible-collections/ansible.utils/pull/56).
+    fragments:
+    - 63-add_ignore_txt.yml
+    - add-xmltojson-and-jsontoxml-filter.yaml
+    - add_missing_test_requirements.yml
+    - fix_tests.yaml
+    release_date: '2021-04-27'
