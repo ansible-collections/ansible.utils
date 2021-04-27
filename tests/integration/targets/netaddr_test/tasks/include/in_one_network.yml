@@ -1,0 +1,13 @@
+---
+- name: "in_one_network: Check if 10.1.1.1 is in the provided network list"
+  assert:
+    that: "{{ '10.1.1.1' is ansible.utils.in_one_network networks }}"
+
+- name: "in_one_network: Check if 192.168.3.5 is not in the provided network list"
+  assert:
+    that: "{{ '192.168.3.5' is not ansible.utils.in_one_network networks }}"
+
+- name: "in_one_network: Test invalidness"
+  assert:
+    that: "{{ '172.168.2.16' is ansible.utils.in_one_network networks }}"
+  ignore_errors: true
