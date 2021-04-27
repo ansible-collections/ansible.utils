@@ -1,0 +1,3 @@
+---
+bugfixes:
+  - Add missing test requirements (https://github.com/ansible-collections/ansible.utils/pull/57).
