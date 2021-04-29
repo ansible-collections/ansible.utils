@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2020 Red Hat
+# Copyright 2021 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
@@ -17,7 +17,7 @@ __metaclass__ = type
 DOCUMENTATION = """
     name: in_network
     author: Priyam Sahoo (@priyamsahoo)
-    version_added: "2.0.1"
+    version_added: "2.2.0"
     short_description: Test if IP address falls in the network
     description:
         - This plugin checks if the provided IP address belongs to the provided network
