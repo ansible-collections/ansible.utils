@@ -10,8 +10,7 @@
 - name: "in_one_network: Test invalidness"
   ansible.builtin.set_fact:
     criteria_check: "{{ '172.168.2.16' is ansible.utils.in_one_network networks }}"
-  register: result
 
 - name: "in_one_network: Assert invalidness"
   assert:
-    that: "{{ result['ansible_facts']['criteria_check'] == false }}"
+    that: "{{ criteria_check == false }}"

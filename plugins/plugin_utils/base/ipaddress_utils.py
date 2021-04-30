@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-# Copyright 2020 Red Hat
+# Copyright 2021 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 """
-The test plugin utils file for netaddr tests
+The utils file for all netaddr tests
 """
 
 from __future__ import absolute_import, division, print_function
@@ -18,11 +18,12 @@ from ansible.errors import AnsibleError
 from ansible.module_utils.basic import missing_required_lib
 from ansible.module_utils.six import ensure_text
 from functools import wraps
-
+from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
+    check_argspec,
+)
 
 try:
     import ipaddress
-
     HAS_IPADDRESS = True
 except ImportError:
     HAS_IPADDRESS = False
@@ -31,12 +32,22 @@ except ImportError:
 def ip_network(ip):
     """ PY2 compat shim, PY2 requires unicode
     """
+
+    if not HAS_IPADDRESS:
+        msg = "Missing required library 'ipaddress'"
+        raise AnsibleError(msg)
+        
     return ipaddress.ip_network(ensure_text(ip))
 
 
 def ip_address(ip):
     """ PY2 compat shim, PY2 requires unicode
     """
+
+    if not HAS_IPADDRESS:
+        msg = "Missing required library 'ipaddress'"
+        raise AnsibleError(msg)
+
     return ipaddress.ip_address(ensure_text(ip))
 
 
@@ -69,20 +80,21 @@ def _is_subnet_of(network_a, network_b):
         return False
 
 
-def _to_well_known_type(obj):
-    """ Convert an ansible internal type to a well-known type
-    ie AnsibleUnicode => str
-
-    :param obj: the obj to convert
-    :type obj: unknown
+def _validate_args(plugin, doc, params):
+    """ argspec validator utility function
     """
-    return json.loads(json.dumps(obj))
+    
+    valid, argspec_result, updated_params = check_argspec(
+        doc,
+        plugin + " test",
+        **params
+    )
 
-
-def _error_not_list(test, obj):
-    tipe = _to_well_known_type(obj)
-    if not isinstance(tipe, list):
-        msg = "The test '{test}' requires a list, but {obj} was a '{type}'".format(
-            test=test, obj=obj, type=type(tipe).__name__
+    if not valid:
+        raise AnsibleError(
+            "{argspec_result} with errors: {argspec_errors}".format(
+                argspec_result=argspec_result.get("msg"),
+                argspec_errors=argspec_result.get("errors"),
+                version3=None
+            )
         )
-        raise AnsibleError(msg)

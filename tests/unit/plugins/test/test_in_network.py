@@ -4,31 +4,50 @@
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 """
-The test plugin file for netaddr tests
+Unit test file for netaddr test plugin: in_network
 """
 
 from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-import unittest  # TestCase, assertTrue
-from ansible.template import Templar
+import unittest
+from ansible.errors import AnsibleError
+from ansible_collections.ansible.utils.plugins.test.in_network import _in_network
 
-TESTS = [
-    "{{ '10.1.1.1' is ansible.utils.in_network '10.0.0.0/8' }}",
-    "{{ '10.1.1.1' is not ansible.utils.in_network '192.168.1.0/24' }}",
-    "{{ '2001:db8:a::123' is ansible.utils.in_network '2001:db8:a::/64' }}",
-    "{{ '2001:db8:a::123' is not ansible.utils.in_network '10.0.0.0/8' }}",
-    "{{ '2001:db8:a::123' is not ansible.utils.in_network 'string' }}",
-]
-
-
-class TestIpaddress(unittest.TestCase):
+class TestInNetwork(unittest.TestCase):
     def setUp(self):
-        self._templar = Templar(loader=None, variables=vars)
+        pass
 
-    def test_simple(self):
-        """ Confirm some simple jinja tests
-        """
-        for test in TESTS:
-            self.assertTrue(self._templar.template(test), test)
+    def test_invalid_data(self):
+        """Check passing invalid argspec"""
+
+        # invalid argument
+        with self.assertRaises(TypeError) as error:
+            _in_network(ip='10.1.1.1')
+        print(str(error.exception))
+        self.assertIn(
+            "argument",
+            str(error.exception),
+        )
+
+    def test_valid_data(self):
+        """Check passing valid data as per criteria"""
+
+        result = _in_network(ip='10.1.1.1', network='10.0.0.0/8')
+        print(result)
+        self.assertEqual(result, True)
+
+        result = _in_network(ip='8.8.8.8', network='192.168.1.0/24')
+        print(result)
+        self.assertEqual(result, False)
+
+        result = _in_network(ip='2001:db8:a::123', network='2001:db8:a::/64')
+        print(result)
+        self.assertEqual(result, True)
+
+        result = _in_network(ip='2001:db8:a::123', network='10.0.0.0/8')
+        print(result)
+        self.assertEqual(result, False)
+
+        

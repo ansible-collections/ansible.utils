@@ -8,8 +8,8 @@ Test plugin file for netaddr tests: in_any_network
 """
 
 from __future__ import absolute_import, division, print_function
-from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddress_utils import _error_not_list
 from ansible_collections.ansible.utils.plugins.test.in_network import _in_network
+from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddress_utils import _validate_args
 
 __metaclass__ = type
 
@@ -27,7 +27,7 @@ DOCUMENTATION = """
             - For example: "10.1.1.1"
             type: str
             required: True
-        network:
+        networks:
             description:
             - A list of string and each string represents a network address in CIDR form
             - For example: ['10.0.0.0/8', '192.168.1.0/24']
@@ -89,7 +89,9 @@ RETURN = """
 def _in_any_network(ip, networks):
     """Test if an IP or network is in any network"""
 
-    _error_not_list("in_networks", networks)
+    params = {"ip": ip, "networks": networks}
+    _validate_args("in_any_network", DOCUMENTATION, params)
+
     bools = [_in_network(ip, network) for network in networks]
     if True in bools:
         return True
