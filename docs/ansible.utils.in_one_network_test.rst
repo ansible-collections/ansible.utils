@@ -8,7 +8,7 @@ ansible.utils.in_one_network
 **Test if IP address belongs in any one of the networks in the list**
 
 
-Version added: 2.0.1
+Version added: 2.2.0
 
 .. contents::
    :local:
@@ -56,7 +56,7 @@ Parameters
             <tr>
                 <td colspan="1">
                     <div class="ansibleOptionAnchor" id="parameter-"></div>
-                    <b>network</b>
+                    <b>networks</b>
                     <a class="ansibleOptionLink" href="#parameter-" title="Permalink to this option"></a>
                     <div style="font-size: small">
                         <span style="color: purple">list</span>

@@ -8,7 +8,7 @@ ansible.utils.in_network
 **Test if IP address falls in the network**
 
 
-Version added: 2.0.1
+Version added: 2.2.0
 
 .. contents::
    :local:
