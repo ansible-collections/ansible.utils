@@ -11,20 +11,17 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-
-import json
-
 from ansible.errors import AnsibleError
 from ansible.module_utils.basic import missing_required_lib
 from ansible.module_utils.six import ensure_text
 from functools import wraps
-from ansible.module_utils.basic import missing_required_lib
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     check_argspec,
 )
 
 try:
     import ipaddress
+
     HAS_IPADDRESS = True
 except ImportError:
     HAS_IPADDRESS = False
@@ -36,7 +33,7 @@ def ip_network(ip):
 
     if not HAS_IPADDRESS:
         raise AnsibleError(missing_required_lib("ipaddress"))
-        
+
     return ipaddress.ip_network(ensure_text(ip))
 
 
@@ -75,11 +72,9 @@ def _is_subnet_of(network_a, network_b):
 def _validate_args(plugin, doc, params):
     """ argspec validator utility function
     """
-    
+
     valid, argspec_result, updated_params = check_argspec(
-        doc,
-        plugin + " test",
-        **params
+        doc, plugin + " test", **params
     )
 
     if not valid:
@@ -87,6 +82,5 @@ def _validate_args(plugin, doc, params):
             "{argspec_result} with errors: {argspec_errors}".format(
                 argspec_result=argspec_result.get("msg"),
                 argspec_errors=argspec_result.get("errors"),
-                version3=None
             )
         )

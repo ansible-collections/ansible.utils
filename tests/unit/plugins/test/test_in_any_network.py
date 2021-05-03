@@ -13,7 +13,10 @@ __metaclass__ = type
 
 import unittest
 from ansible.errors import AnsibleError
-from ansible_collections.ansible.utils.plugins.test.in_any_network import _in_any_network
+from ansible_collections.ansible.utils.plugins.test.in_any_network import (
+    _in_any_network,
+)
+
 
 class TestInAnyNetwork(unittest.TestCase):
     def setUp(self):
@@ -24,17 +27,24 @@ class TestInAnyNetwork(unittest.TestCase):
 
         # invalid argument
         with self.assertRaises(AnsibleError) as error:
-            _in_any_network(ip='10.1.1.1', networks={"name": "networks", "value": ['10.0.0.0/8', '192.168.1.0/24']})
-        self.assertIn(
-            "unable to convert to list",
-            str(error.exception),
-        )
+            _in_any_network(
+                ip="10.1.1.1",
+                networks={
+                    "name": "networks",
+                    "value": ["10.0.0.0/8", "192.168.1.0/24"],
+                },
+            )
+        self.assertIn("unable to convert to list", str(error.exception))
 
     def test_valid_data(self):
         """Check passing valid data as per criteria"""
 
-        result = _in_any_network(ip='10.1.1.1', networks=['10.0.0.0/8', '192.168.1.0/24'])
+        result = _in_any_network(
+            ip="10.1.1.1", networks=["10.0.0.0/8", "192.168.1.0/24"]
+        )
         self.assertEqual(result, True)
 
-        result = _in_any_network(ip='8.8.8.8', networks=['10.0.0.0/8', '192.168.1.0/24'])
+        result = _in_any_network(
+            ip="8.8.8.8", networks=["10.0.0.0/8", "192.168.1.0/24"]
+        )
         self.assertEqual(result, False)

@@ -8,8 +8,12 @@ Test plugin file for netaddr tests: in_any_network
 """
 
 from __future__ import absolute_import, division, print_function
-from ansible_collections.ansible.utils.plugins.test.in_network import _in_network
-from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddress_utils import _validate_args
+from ansible_collections.ansible.utils.plugins.test.in_network import (
+    _in_network,
+)
+from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddress_utils import (
+    _validate_args,
+)
 
 __metaclass__ = type
 
@@ -86,6 +90,7 @@ RETURN = """
       - If jinja test does not satisfy plugin expression C(false)
 """
 
+
 def _in_any_network(ip, networks):
     """Test if an IP or network is in any network"""
 
@@ -96,6 +101,7 @@ def _in_any_network(ip, networks):
     if True in bools:
         return True
     return False
+
 
 class TestModule(object):
     """ network jinja test"""

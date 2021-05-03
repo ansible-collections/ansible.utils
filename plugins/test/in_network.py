@@ -9,9 +9,13 @@ Test plugin file for netaddr tests: in_network
 
 from __future__ import absolute_import, division, print_function
 from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddress_utils import (
-    ip_network, _is_subnet_of, _need_ipaddress
+    ip_network,
+    _is_subnet_of,
+    _need_ipaddress,
 )
-from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddress_utils import _validate_args
+from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddress_utils import (
+    _validate_args,
+)
 
 __metaclass__ = type
 
@@ -57,7 +61,7 @@ EXAMPLES = r"""
 - name: Check if 10.1.1.1 is not in 192.168.1.0/24
   ansible.builtin.set_fact:
     data: "{{ '10.1.1.1' is not ansible.utils.in_network '192.168.1.0/24' }}"
-        
+
 # TASK [Check if 10.1.1.1 is not in 192.168.1.0/24] ****************************
 # ok: [localhost] => {
 #     "ansible_facts": {
@@ -101,6 +105,7 @@ RETURN = """
       - If jinja test does not satisfy plugin expression C(false)
 """
 
+
 @_need_ipaddress
 def _in_network(ip, network):
     """Test if an address or network is in a network"""
@@ -112,6 +117,7 @@ def _in_network(ip, network):
         return _is_subnet_of(ip_network(ip), ip_network(network))
     except Exception:
         return False
+
 
 class TestModule(object):
     """ network jinja test"""
