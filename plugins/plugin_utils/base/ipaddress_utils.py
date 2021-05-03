@@ -18,6 +18,7 @@ from ansible.errors import AnsibleError
 from ansible.module_utils.basic import missing_required_lib
 from ansible.module_utils.six import ensure_text
 from functools import wraps
+from ansible.module_utils.basic import missing_required_lib
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     check_argspec,
 )
@@ -34,8 +35,7 @@ def ip_network(ip):
     """
 
     if not HAS_IPADDRESS:
-        msg = "Missing required library 'ipaddress'"
-        raise AnsibleError(msg)
+        raise AnsibleError(missing_required_lib("ipaddress"))
         
     return ipaddress.ip_network(ensure_text(ip))
 
@@ -45,8 +45,7 @@ def ip_address(ip):
     """
 
     if not HAS_IPADDRESS:
-        msg = "Missing required library 'ipaddress'"
-        raise AnsibleError(msg)
+        raise AnsibleError(missing_required_lib("ipaddress"))
 
     return ipaddress.ip_address(ensure_text(ip))
 
@@ -55,14 +54,7 @@ def _need_ipaddress(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         if not HAS_IPADDRESS:
-            test = func.__name__.lstrip("_")
-            msg = "'{test}' requires 'ipaddress' {stnd}".format(
-                test=test,
-                stnd=missing_required_lib("ipaddress").replace(
-                    "module", "plugin"
-                ),
-            )
-            raise AnsibleError(msg)
+            raise AnsibleError(missing_required_lib("ipaddress"))
         return func(*args, **kwargs)
 
     return wrapper

@@ -25,7 +25,6 @@ class TestInNetwork(unittest.TestCase):
         # invalid argument
         with self.assertRaises(TypeError) as error:
             _in_network(ip='10.1.1.1')
-        print(str(error.exception))
         self.assertIn(
             "argument",
             str(error.exception),
@@ -35,19 +34,15 @@ class TestInNetwork(unittest.TestCase):
         """Check passing valid data as per criteria"""
 
         result = _in_network(ip='10.1.1.1', network='10.0.0.0/8')
-        print(result)
         self.assertEqual(result, True)
 
         result = _in_network(ip='8.8.8.8', network='192.168.1.0/24')
-        print(result)
         self.assertEqual(result, False)
 
         result = _in_network(ip='2001:db8:a::123', network='2001:db8:a::/64')
-        print(result)
         self.assertEqual(result, True)
 
         result = _in_network(ip='2001:db8:a::123', network='10.0.0.0/8')
-        print(result)
         self.assertEqual(result, False)
 
         
