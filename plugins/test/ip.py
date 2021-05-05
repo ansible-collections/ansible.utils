@@ -9,7 +9,9 @@ Test plugin file for netaddr tests: ip
 
 from __future__ import absolute_import, division, print_function
 from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddress_utils import (
-    ip_network, _need_ipaddress, _validate_args
+    ip_network,
+    _need_ipaddress,
+    _validate_args,
 )
 
 __metaclass__ = type
@@ -25,7 +27,7 @@ DOCUMENTATION = """
         ip:
             description:
             - A string that represents the value against which the test is going to be performed
-            - For example: 
+            - For example:
                 - "10.1.1.1"
                 - "2001:db8:a::123"
                 - "hello-world"
@@ -94,10 +96,9 @@ EXAMPLES = r"""
 # ok: [localhost] => {
 #     "ansible_facts": {
 #         "data": true
-#     }, 
+#     },
 #     "changed": false
 # }
-
 
 """
 
@@ -107,6 +108,7 @@ RETURN = """
       - If jinja test satisfies plugin expression C(true)
       - If jinja test does not satisfy plugin expression C(false)
 """
+
 
 @_need_ipaddress
 def _ip(ip):
@@ -120,6 +122,7 @@ def _ip(ip):
         return True
     except Exception:
         return False
+
 
 class TestModule(object):
     """ network jinja test"""
