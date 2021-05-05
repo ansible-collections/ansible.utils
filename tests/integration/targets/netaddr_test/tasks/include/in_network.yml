@@ -26,7 +26,6 @@
 - name: "in_network: Test invalidness"
   ansible.builtin.set_fact:
     criteria_check2: "{{ '2001:db8:a::123' is not ansible.utils.in_network '2001:db8:a::/64' }}"
-  register: result2
 
 - name: "in_network: Assert invalidness"
   assert:
