@@ -1,0 +1,3 @@
+---
+minor_changes:
+  - Add ip, ip_address test plugins
