@@ -50,6 +50,8 @@ Name | Description
 [ansible.utils.in_any_network](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.in_any_network_test.rst)|Test if Test if an IP or network falls in any network
 [ansible.utils.in_network](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.in_network_test.rst)|Test if IP address falls in the network
 [ansible.utils.in_one_network](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.in_one_network_test.rst)|Test if IP address belongs in any one of the networks in the list
+[ansible.utils.ip](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ip_test.rst)|Test if something in an IP address or network
+[ansible.utils.ip_address](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ip_address_test.rst)|Test if something in an IP address
 [ansible.utils.validate](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.validate_test.rst)|Validate data with provided criteria
 
 <!--end collection content-->
