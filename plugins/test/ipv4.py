@@ -9,7 +9,9 @@ Test plugin file for netaddr tests: ipv4
 
 from __future__ import absolute_import, division, print_function
 from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddress_utils import (
-    ip_network, _need_ipaddress, _validate_args
+    ip_network,
+    _need_ipaddress,
+    _validate_args,
 )
 
 __metaclass__ = type
@@ -25,7 +27,7 @@ DOCUMENTATION = """
         ip:
             description:
             - A string that represents the value against which the test is going to be performed
-            - For example: 
+            - For example:
                 - "10.1.1.1"
                 - "10.0.0.0/8"
                 - "fe80::216:3eff:fee4:16f3"
@@ -83,6 +85,7 @@ RETURN = """
       - If jinja test does not satisfy plugin expression C(false)
 """
 
+
 @_need_ipaddress
 def _ipv4(ip):
     """Test if something in an IPv4 address or network"""
@@ -94,6 +97,7 @@ def _ipv4(ip):
         return ip_network(ip).version == 4
     except Exception:
         return False
+
 
 class TestModule(object):
     """ network jinja test"""

@@ -12,9 +12,7 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 import unittest
-from ansible_collections.ansible.utils.plugins.test.ipv4 import (
-    _ipv4,
-)
+from ansible_collections.ansible.utils.plugins.test.ipv4 import _ipv4
 
 
 class TestIpV4(unittest.TestCase):
