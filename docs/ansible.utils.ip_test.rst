@@ -1,11 +1,11 @@
-.. _ansible.utils.in_network_test:
+.. _ansible.utils.ip_test:
 
 
-************************
-ansible.utils.in_network
-************************
+****************
+ansible.utils.ip
+****************
 
-**Test if IP address falls in the network**
+**Test if something in an IP address or network**
 
 
 Version added: 2.2.0
@@ -17,7 +17,7 @@ Version added: 2.2.0
 
 Synopsis
 --------
-- This plugin checks if the provided IP address belongs to the provided network
+- This plugin checks if the provided value is a valid host or network IP address
 
 
 
@@ -49,27 +49,8 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>A string that represents an IP address</div>
-                        <div>{&#x27;For example&#x27;: &#x27;10.1.1.1&#x27;}</div>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="1">
-                    <div class="ansibleOptionAnchor" id="parameter-"></div>
-                    <b>network</b>
-                    <a class="ansibleOptionLink" href="#parameter-" title="Permalink to this option"></a>
-                    <div style="font-size: small">
-                        <span style="color: purple">string</span>
-                         / <span style="color: red">required</span>
-                    </div>
-                </td>
-                <td>
-                </td>
-                    <td>
-                    </td>
-                <td>
-                        <div>A string that represents the network address in CIDR form</div>
-                        <div>{&#x27;For example&#x27;: &#x27;10.0.0.0/8&#x27;}</div>
+                        <div>A string that represents the value against which the test is going to be performed</div>
+                        <div>{&#x27;For example&#x27;: [&#x27;10.1.1.1&#x27;, &#x27;2001:db8:a::123&#x27;, &#x27;hello-world&#x27;]}</div>
                 </td>
             </tr>
     </table>
@@ -85,11 +66,11 @@ Examples
 
     #### Simple examples
 
-    - name: Check if 10.1.1.1 is in 10.0.0.0/8
+    - name: Check if 10.1.1.1 is a valid IP address
       ansible.builtin.set_fact:
-        data: "{{ '10.1.1.1' is ansible.utils.in_network '10.0.0.0/8' }}"
+        data: "{{ '10.1.1.1' is ansible.utils.ip }}"
 
-    # TASK [Check if 10.1.1.1 is in 10.0.0.0/8] ***********************************
+    # TASK [Check if 10.1.1.1 is a valid IP address] *****************************
     # ok: [localhost] => {
     #     "ansible_facts": {
     #         "data": true
@@ -97,11 +78,11 @@ Examples
     #     "changed": false
     # }
 
-    - name: Check if 10.1.1.1 is not in 192.168.1.0/24
+    - name: Check if 2001:db8:a::123 is a valid IP address
       ansible.builtin.set_fact:
-        data: "{{ '10.1.1.1' is not ansible.utils.in_network '192.168.1.0/24' }}"
+        data: "{{ '2001:db8:a::123' is ansible.utils.ip }}"
 
-    # TASK [Check if 10.1.1.1 is not in 192.168.1.0/24] ****************************
+    # TASK [Check if 2001:db8:a::123 is a valid IP address] **********************
     # ok: [localhost] => {
     #     "ansible_facts": {
     #         "data": true
@@ -109,12 +90,11 @@ Examples
     #     "changed": false
     # }
 
-    - name: Check if 2001:db8:a::123 is in 2001:db8:a::/64
+    - name: Check if "hello-world" is not a valid IP address
       ansible.builtin.set_fact:
-        data: "{{ '2001:db8:a::123' is ansible.utils.in_network '2001:db8:a::/64' }}"
+        data: "{{ 'hello-world' is not ansible.utils.ip }}"
 
-    # TASK [Check if 2001:db8:a::123 is in 2001:db8:a::/64] ****************************
-    # task path: /home/prsahoo/playbooks/collections/localhost_test/utils_in_network.yml:16
+    # TASK [Check if "hello-world" is not a valid IP address] ********************
     # ok: [localhost] => {
     #     "ansible_facts": {
     #         "data": true
@@ -122,12 +102,23 @@ Examples
     #     "changed": false
     # }
 
-    - name: Check if 2001:db8:a::123 is not in 10.0.0.0/8
+    - name: Check if 300.1.1.1 is a valid IP address
       ansible.builtin.set_fact:
-        data: "{{ '2001:db8:a::123' is not ansible.utils.in_network '10.0.0.0/8' }}"
+        data: "{{ '300.1.1.1' is ansible.utils.ip }}"
 
-    # TASK [Check if 2001:db8:a::123 is not in 10.0.0.0/8] *********************************
-    # task path: /home/prsahoo/playbooks/collections/localhost_test/utils_in_network.yml:20
+    # TASK [Check if 300.1.1.1 is a valid IP address] ****************************
+    # ok: [localhost] => {
+    #     "ansible_facts": {
+    #         "data": false
+    #     },
+    #     "changed": false
+    # }
+
+    - name: Check if 10.0.0.0/8 is a valid IP address
+      ansible.builtin.set_fact:
+        data: "{{ '10.0.0.0/8' is ansible.utils.ip }}"
+
+    # TASK [Check if 10.0.0.0/8 is a valid IP address] ***************************
     # ok: [localhost] => {
     #     "ansible_facts": {
     #         "data": true
