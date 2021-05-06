@@ -122,7 +122,7 @@ Examples
     # ok: [localhost] => {
     #     "ansible_facts": {
     #         "data": true
-    #     }, 
+    #     },
     #     "changed": false
     # }
 

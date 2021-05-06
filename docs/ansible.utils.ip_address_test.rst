@@ -8,7 +8,7 @@ ansible.utils.ip_address
 **Test if something in an IP address**
 
 
-Version added: 2.0.1
+Version added: 2.2.0
 
 .. contents::
    :local:

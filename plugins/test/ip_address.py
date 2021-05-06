@@ -19,7 +19,7 @@ __metaclass__ = type
 DOCUMENTATION = """
     name: ip_address
     author: Priyam Sahoo (@priyamsahoo)
-    version_added: "2.0.1"
+    version_added: "2.2.0"
     short_description: Test if something in an IP address
     description:
         - This plugin checks if the provided value is a valid host IP address
