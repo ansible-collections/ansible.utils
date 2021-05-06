@@ -90,7 +90,7 @@ def _ip_address(ip):
     """Test if something in an IP address"""
 
     params = {"ip": ip}
-    _validate_args("ip", DOCUMENTATION, params)
+    _validate_args("ip_address", DOCUMENTATION, params)
 
     try:
         ip_address(ip)
