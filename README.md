@@ -52,8 +52,8 @@ Name | Description
 [ansible.utils.in_one_network](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.in_one_network_test.rst)|Test if IP address belongs in any one of the networks in the list
 [ansible.utils.ip](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ip_test.rst)|Test if something in an IP address or network
 [ansible.utils.ip_address](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ip_address_test.rst)|Test if something in an IP address
-[ansible.utils.ipv4](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipv4_test.rst)|Test if something in an IPv4 address or network
-[ansible.utils.ipv4_address](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipv4_address_test.rst)|Test if something in an IPv4 address
+[ansible.utils.ipv4](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipv4_test.rst)|Test if something is an IPv4 address or network
+[ansible.utils.ipv4_address](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipv4_address_test.rst)|Test if something is an IPv4 address
 [ansible.utils.ipv4_hostmask](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipv4_hostmask_test.rst)|Test if an address is a valid hostmask
 [ansible.utils.ipv4_netmask](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipv4_netmask_test.rst)|Test if an address is a valid netmask
 [ansible.utils.validate](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.validate_test.rst)|Validate data with provided criteria

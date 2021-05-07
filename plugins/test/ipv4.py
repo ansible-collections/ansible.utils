@@ -20,7 +20,7 @@ DOCUMENTATION = """
     name: ipv4
     author: Priyam Sahoo (@priyamsahoo)
     version_added: "2.2.0"
-    short_description: Test if something in an IPv4 address or network
+    short_description: Test if something is an IPv4 address or network
     description:
         - This plugin checks if the provided value is a valid host or network IP address with IPv4 addressing scheme
     options:

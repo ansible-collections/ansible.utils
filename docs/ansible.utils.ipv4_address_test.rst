@@ -5,7 +5,7 @@
 ansible.utils.ipv4_address
 **************************
 
-**Test if something in an IPv4 address**
+**Test if something is an IPv4 address**
 
 
 Version added: 2.2.0
