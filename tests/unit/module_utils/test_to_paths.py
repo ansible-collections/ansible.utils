@@ -65,3 +65,39 @@ class TestToPaths(unittest.TestCase):
                 var, to_test, environment=self._environment, wantlist=False
             )
             self.assertEqual(gotten, paths[to_test])
+
+    def test_to_paths_empty_list(self):
+        var = {"a": []}
+        expected = {"a": []}
+        result = to_paths(var, prepend=None, wantlist=None)
+        self.assertEqual(result, expected)
+
+    def test_to_paths_list_of_empty_list(self):
+        var = {"a": [[], []]}
+        expected = {"a[0]": [], "a[1]": []}
+        result = to_paths(var, prepend=None, wantlist=None)
+        self.assertEqual(result, expected)
+
+    def test_to_paths_empty_mapping(self):
+        var = {"a": {}}
+        expected = {"a": {}}
+        result = to_paths(var, prepend=None, wantlist=None)
+        self.assertEqual(result, expected)
+
+    def test_to_paths_list_of_empty_mapping(self):
+        var = [{}, {}]
+        expected = {"[0]": {}, "[1]": {}}
+        result = to_paths(var, prepend=None, wantlist=None)
+        self.assertEqual(result, expected)
+
+    def test_to_paths_only_empty_list(self):
+        var = []
+        expected = []
+        result = to_paths(var, prepend=None, wantlist=None)
+        self.assertEqual(result, expected)
+
+    def test_to_paths_only_empty_mapping(self):
+        var = {}
+        expected = {}
+        result = to_paths(var, prepend=None, wantlist=None)
+        self.assertEqual(result, expected)
