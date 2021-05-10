@@ -5,7 +5,7 @@
 ansible.utils.ipv6_address
 **************************
 
-**Test if something in an IPv6 address**
+**Test if something is an IPv6 address**
 
 
 Version added: 2.2.0
