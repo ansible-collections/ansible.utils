@@ -9,7 +9,9 @@ Test plugin file for netaddr tests: ipv6_ipv4_mapped
 
 from __future__ import absolute_import, division, print_function
 from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddress_utils import (
-    ip_address, _need_ipaddress, _validate_args
+    ip_address,
+    _need_ipaddress,
+    _validate_args,
 )
 
 __metaclass__ = type
@@ -25,7 +27,7 @@ DOCUMENTATION = """
         ip:
             description:
             - A string that represents the value against which the test is going to be performed
-            - For example: 
+            - For example:
                 - "::FFFF:10.1.1.1"
                 - "::AAAA:10.1.1.1"
                 - "helloworld"
@@ -83,13 +85,14 @@ RETURN = """
       - If jinja test does not satisfy plugin expression C(false)
 """
 
+
 @_need_ipaddress
 def _ipv6_ipv4_mapped(ip):
     """ Test if something appears to be a mapped IPv6 to IPv4 mapped address """
 
     params = {"ip": ip}
     _validate_args("ipv6_ipv4_mapped", DOCUMENTATION, params)
-    
+
     try:
         if ip_address(ip).ipv4_mapped is None:
             return False
