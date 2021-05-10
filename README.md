@@ -56,6 +56,11 @@ Name | Description
 [ansible.utils.ipv4_address](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipv4_address_test.rst)|Test if something is an IPv4 address
 [ansible.utils.ipv4_hostmask](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipv4_hostmask_test.rst)|Test if an address is a valid hostmask
 [ansible.utils.ipv4_netmask](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipv4_netmask_test.rst)|Test if an address is a valid netmask
+[ansible.utils.ipv6](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipv6_test.rst)|Test if something in an IPv6 address or network
+[ansible.utils.ipv6_address](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipv6_address_test.rst)|Test if something in an IPv6 address
+[ansible.utils.ipv6_ipv4_mapped](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipv6_ipv4_mapped_test.rst)|Test if something appears to be a mapped IPv6 to IPv4 mapped address
+[ansible.utils.ipv6_sixtofour](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipv6_sixtofour_test.rst)|Test if something appears to be a 6to4 address
+[ansible.utils.ipv6_teredo](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipv6_teredo_test.rst)|Test if something appears to be an IPv6 teredo address
 [ansible.utils.validate](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.validate_test.rst)|Validate data with provided criteria
 
 <!--end collection content-->
