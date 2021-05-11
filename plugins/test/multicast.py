@@ -65,11 +65,11 @@ EXAMPLES = r"""
   ansible.builtin.set_fact:
     data: "{{ '127.0.0.1' is not ansible.utils.multicast }}"
 
-# TASK [Check if 127.0.0.1 is a valid multicast IP address] **********************
+# TASK [Check if 127.0.0.1 is not a valid multicast IP address] *********************
 # ok: [localhost] => {
 #     "ansible_facts": {
 #         "data": true
-#     },
+#     }, 
 #     "changed": false
 # }
 
