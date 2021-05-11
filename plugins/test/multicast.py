@@ -9,7 +9,9 @@ Test plugin file for netaddr tests: multicast
 
 from __future__ import absolute_import, division, print_function
 from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddress_utils import (
-    ip_address, _need_ipaddress, _validate_args
+    ip_address,
+    _need_ipaddress,
+    _validate_args,
 )
 
 __metaclass__ = type
@@ -92,6 +94,7 @@ RETURN = """
       - If jinja test does not satisfy plugin expression C(false)
 """
 
+
 @_need_ipaddress
 def _multicast(ip):
     """ Test for a multicast IP address """
@@ -103,6 +106,7 @@ def _multicast(ip):
         return ip_address(ip).is_multicast
     except Exception:
         return False
+
 
 class TestModule(object):
     """ network jinja test"""

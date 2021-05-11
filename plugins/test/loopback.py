@@ -9,7 +9,9 @@ Test plugin file for netaddr tests: loopback
 
 from __future__ import absolute_import, division, print_function
 from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddress_utils import (
-    ip_address, _need_ipaddress, _validate_args
+    ip_address,
+    _need_ipaddress,
+    _validate_args,
 )
 
 __metaclass__ = type
@@ -80,13 +82,14 @@ RETURN = """
       - If jinja test does not satisfy plugin expression C(false)
 """
 
+
 @_need_ipaddress
 def _loopback(ip):
     """ Test if an IP address is a loopback """
 
     params = {"ip": ip}
     _validate_args("loopback", DOCUMENTATION, params)
-    
+
     try:
         return ip_address(ip).is_loopback
     except Exception:

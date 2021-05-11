@@ -8,7 +8,9 @@ Test plugin file for netaddr tests: mac
 """
 
 from __future__ import absolute_import, division, print_function
-from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddress_utils import _validate_args
+from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddress_utils import (
+    _validate_args,
+)
 import re
 
 __metaclass__ = type
@@ -19,7 +21,7 @@ DOCUMENTATION = """
     version_added: "2.2.0"
     short_description: Test if something appears to be a valid MAC address
     description:
-        - This plugin checks if the provided value is a valid MAC address that follows the industry level standards 
+        - This plugin checks if the provided value is a valid MAC address that follows the industry level standards
     options:
         mac:
             description:
@@ -105,12 +107,13 @@ RETURN = """
       - If jinja test does not satisfy plugin expression C(false)
 """
 
+
 def _mac(mac):
     """ Test if something appears to be a valid mac address """
 
     params = {"mac": mac}
     _validate_args("mac", DOCUMENTATION, params)
-    
+
     # IEEE EUI-48 upper and lower, commom unix
     re1 = r"^(?i)([0-9a-f]{2}[:-]){5}[0-9a-f]{2}$"
     # Cisco triple hextex
