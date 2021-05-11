@@ -61,6 +61,9 @@ Name | Description
 [ansible.utils.ipv6_ipv4_mapped](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipv6_ipv4_mapped_test.rst)|Test if something appears to be a mapped IPv6 to IPv4 mapped address
 [ansible.utils.ipv6_sixtofour](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipv6_sixtofour_test.rst)|Test if something appears to be a 6to4 address
 [ansible.utils.ipv6_teredo](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipv6_teredo_test.rst)|Test if something appears to be an IPv6 teredo address
+[ansible.utils.loopback](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.loopback_test.rst)|Test if an IP address is a loopback
+[ansible.utils.mac](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.mac_test.rst)|Test if something appears to be a valid MAC address
+[ansible.utils.multicast](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.multicast_test.rst)|Test for a multicast IP address
 [ansible.utils.validate](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.validate_test.rst)|Validate data with provided criteria
 
 <!--end collection content-->
