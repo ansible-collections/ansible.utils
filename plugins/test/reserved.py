@@ -9,7 +9,9 @@ Test plugin file for netaddr tests: reserved
 
 from __future__ import absolute_import, division, print_function
 from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddress_utils import (
-    ip_address, _need_ipaddress, _validate_args
+    ip_address,
+    _need_ipaddress,
+    _validate_args,
 )
 
 __metaclass__ = type
@@ -25,7 +27,7 @@ DOCUMENTATION = """
         ip:
             description:
             - A string that represents the value against which the test is going to be performed
-            - For example: 
+            - For example:
                 - "253.0.0.1"
                 - "128.146.1.7"
             type: str
@@ -68,6 +70,7 @@ RETURN = """
       - If jinja test does not satisfy plugin expression C(false)
 """
 
+
 @_need_ipaddress
 def _reserved(ip):
     """ Test for a reserved IP address """
@@ -79,6 +82,7 @@ def _reserved(ip):
         return ip_address(ip).is_reserved
     except Exception:
         return False
+
 
 class TestModule(object):
     """ network jinja test"""

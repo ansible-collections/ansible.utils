@@ -9,7 +9,9 @@ Test plugin file for netaddr tests: public
 
 from __future__ import absolute_import, division, print_function
 from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddress_utils import (
-    ip_address, _need_ipaddress, _validate_args
+    ip_address,
+    _need_ipaddress,
+    _validate_args,
 )
 
 __metaclass__ = type
@@ -25,7 +27,7 @@ DOCUMENTATION = """
         ip:
             description:
             - A string that represents the value against which the test is going to be performed
-            - For example: 
+            - For example:
                 - "8.8.8.8"
                 - "10.1.1.1"
                 - "192.168.1.250"
@@ -69,17 +71,19 @@ RETURN = """
       - If jinja test does not satisfy plugin expression C(false)
 """
 
+
 @_need_ipaddress
 def _public(ip):
     """ Test if an IP address is public """
 
     params = {"ip": ip}
     _validate_args("public", DOCUMENTATION, params)
-    
+
     try:
         return ip_address(ip).is_global
     except Exception:
         return False
+
 
 class TestModule(object):
     """ network jinja test"""

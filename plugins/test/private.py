@@ -9,7 +9,9 @@ Test plugin file for netaddr tests: private
 
 from __future__ import absolute_import, division, print_function
 from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddress_utils import (
-    ip_address, _need_ipaddress, _validate_args
+    ip_address,
+    _need_ipaddress,
+    _validate_args,
 )
 
 __metaclass__ = type
@@ -25,7 +27,7 @@ DOCUMENTATION = """
         ip:
             description:
             - A string that represents the value against which the test is going to be performed
-            - For example: 
+            - For example:
                 - "10.1.1.1"
                 - "8.8.8.8"
                 - "192.168.1.250"
@@ -69,6 +71,7 @@ RETURN = """
       - If jinja test does not satisfy plugin expression C(false)
 """
 
+
 @_need_ipaddress
 def _private(ip):
     """ Test if an IP address is private """
@@ -80,6 +83,7 @@ def _private(ip):
         return ip_address(ip).is_private
     except Exception:
         return False
+
 
 class TestModule(object):
     """ network jinja test"""
