@@ -43,7 +43,9 @@ def to_paths(var, prepend, wantlist):
         elif isinstance(data, list):
             if data:
                 for idx, val in enumerate(data):
-                    flatten(val, "{name}[{idx}]".format(name=name, idx=idx), out)
+                    flatten(
+                        val, "{name}[{idx}]".format(name=name, idx=idx), out
+                    )
             elif name:
                 out[name] = []
             else:
