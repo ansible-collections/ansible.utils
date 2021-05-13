@@ -50,5 +50,5 @@ class TestSupernetOf(unittest.TestCase):
         result = _supernet_of(network_a="10.1.1.0/24", network_b="10.0.0.0/8")
         self.assertEqual(result, False)
 
-        result = _supernet_of(network_b="10.0.0.0/8", network_a="192.168.1.0/24")
+        result = _supernet_of(network_a="10.0.0.0/8", network_b="192.168.1.0/24")
         self.assertEqual(result, False)
