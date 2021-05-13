@@ -9,7 +9,10 @@ Test plugin file for netaddr tests: supernet_of
 
 from __future__ import absolute_import, division, print_function
 from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddress_utils import (
-    ip_network, _need_ipaddress, _is_subnet_of, _validate_args
+    ip_network,
+    _need_ipaddress,
+    _is_subnet_of,
+    _validate_args,
 )
 
 __metaclass__ = type
@@ -74,6 +77,7 @@ RETURN = """
       - If jinja test does not satisfy plugin expression C(false)
 """
 
+
 @_need_ipaddress
 def _supernet_of(network_a, network_b):
     """ Test if an network is a supernet of another network """
@@ -85,6 +89,7 @@ def _supernet_of(network_a, network_b):
         return _is_subnet_of(ip_network(network_b), ip_network(network_a))
     except Exception:
         return False
+
 
 class TestModule(object):
     """ network jinja test """

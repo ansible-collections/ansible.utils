@@ -12,18 +12,12 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 import unittest
-from ansible.errors import AnsibleError
-from ansible_collections.ansible.utils.plugins.test.subnet_of import (
-    _subnet_of,
-)
+from ansible_collections.ansible.utils.plugins.test.subnet_of import _subnet_of
 
 
 class TestSubnetOf(unittest.TestCase):
     def setUp(self):
         pass
-
-    def test_invalid_data(self):
-        """Check passing invalid argspec"""
 
     def test_invalid_data(self):
         """Check passing invalid argspec"""
