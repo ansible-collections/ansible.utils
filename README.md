@@ -67,6 +67,9 @@ Name | Description
 [ansible.utils.private](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.private_test.rst)|Test if an IP address is private
 [ansible.utils.public](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.public_test.rst)|Test if an IP address is public
 [ansible.utils.reserved](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.reserved_test.rst)|Test for a reserved IP address
+[ansible.utils.subnet_of](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.subnet_of_test.rst)|Test if a network is a subnet of another network
+[ansible.utils.supernet_of](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.supernet_of_test.rst)|Test if a network is a supernet of another network
+[ansible.utils.unspecified](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.unspecified_test.rst)|Test for an unspecified IP address
 [ansible.utils.validate](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.validate_test.rst)|Validate data with provided criteria
 
 <!--end collection content-->
