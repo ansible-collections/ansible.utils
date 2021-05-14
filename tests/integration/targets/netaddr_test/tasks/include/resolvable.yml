@@ -1,7 +1,7 @@
 ---
 - name: "resolvable: Check if {{ good_name }} is resolvable or not"
   assert:
-    that: "{{ 'www.google.com' is ansible.utils.resolvable }}"
+    that: "{{ good_name is ansible.utils.resolvable }}"
 
 - name: "resolvable: Check if {{ ipv4_localhost }} is resolvable or not"
   assert:
@@ -13,7 +13,7 @@
 
 - name: "resolvable: Test invalidness"
   ansible.builtin.set_fact:
-    criteria_check1: "{{ 'foo.google.com' is ansible.utils.resolvable }}"
+    criteria_check1: "{{ bad_name is ansible.utils.resolvable }}"
 
 - name: "resolvable: Assert invalidness"
   assert:
