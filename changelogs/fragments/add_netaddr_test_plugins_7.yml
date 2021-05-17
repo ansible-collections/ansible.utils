@@ -1,3 +1,0 @@
----
-minor_changes:
-  - Add subnet_of, supernet_of, unspecified test plugins

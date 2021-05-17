@@ -5,6 +5,21 @@ Ansible Utils Collection Release Notes
 .. contents:: Topics
 
 
+v2.2.0
+======
+
+Minor Changes
+-------------
+
+- Add in_any_network, in_network, in_one_network test plugins
+- Add ip, ip_address test plugins
+- Add ipv4, ipv4_address, ipv4_hostmask, ipv4_netmask test plugins
+- Add ipv6, ipv6_address, ipv6_ipv4_mapped, ipv6_sixtofour, ipv6_teredo test plugins
+- Add loopback, mac, multicast test plugins
+- Add private, public, reserved test plugins
+- Add resolvable test plugins
+- Add subnet_of, supernet_of, unspecified test plugins
+
 v2.1.0
 ======
 

@@ -1,3 +1,0 @@
----
-minor_changes:
-  - Add ipv4, ipv4_address, ipv4_hostmask, ipv4_netmask test plugins
