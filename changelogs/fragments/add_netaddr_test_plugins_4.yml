@@ -1,3 +1,0 @@
----
-minor_changes:
-  - Add ipv6, ipv6_address, ipv6_ipv4_mapped, ipv6_sixtofour, ipv6_teredo test plugins

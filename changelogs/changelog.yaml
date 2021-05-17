@@ -97,3 +97,25 @@ releases:
     - add_missing_test_requirements.yml
     - fix_tests.yaml
     release_date: '2021-04-27'
+  2.2.0:
+    changes:
+      minor_changes:
+      - Add in_any_network, in_network, in_one_network test plugins
+      - Add ip, ip_address test plugins
+      - Add ipv4, ipv4_address, ipv4_hostmask, ipv4_netmask test plugins
+      - Add ipv6, ipv6_address, ipv6_ipv4_mapped, ipv6_sixtofour, ipv6_teredo test
+        plugins
+      - Add loopback, mac, multicast test plugins
+      - Add private, public, reserved test plugins
+      - Add resolvable test plugins
+      - Add subnet_of, supernet_of, unspecified test plugins
+    fragments:
+    - add_netaddr_test_plugins_1.yml
+    - add_netaddr_test_plugins_2.yml
+    - add_netaddr_test_plugins_3.yml
+    - add_netaddr_test_plugins_4.yml
+    - add_netaddr_test_plugins_5.yml
+    - add_netaddr_test_plugins_6.yml
+    - add_netaddr_test_plugins_7.yml
+    - add_netaddr_test_plugins_8.yml
+    release_date: '2021-05-17'
