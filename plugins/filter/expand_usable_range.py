@@ -97,7 +97,6 @@ RETURN = """
 
 from ansible.errors import AnsibleError, AnsibleFilterError
 from ansible.module_utils.basic import missing_required_lib
-# from ansible.module_utils.six import ensure_str
 from ansible.module_utils.common.text.converters import to_text
 
 try:
