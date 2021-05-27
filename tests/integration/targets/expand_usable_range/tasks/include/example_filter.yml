@@ -1,0 +1,25 @@
+---
+- name: Expand and produce list of usable IP addresses in 10.1.1.1
+  ansible.builtin.set_fact:
+    result1: "{{ '10.1.1.1' | ansible.utils.expand_usable_range }}"
+
+- name: Assert result for 10.1.1.1
+  assert:
+    that: "{{ result1 == result1_val }}"
+
+- name: Expand and produce list of usable IP addresses in 10.0.0.0/28
+  ansible.builtin.set_fact:
+    result2: "{{ '10.0.0.0/28' | ansible.utils.expand_usable_range }}"
+
+- name: Assert result for 10.0.0.0/28
+  assert:
+    that: "{{ result2 == result2_val }}"
+
+- name: Expand and produce list of usable IP addresses in 192.0.2.0/24
+  ansible.builtin.set_fact:
+    result3: "{{ '192.0.2.0/24' | ansible.utils.expand_usable_range }}"
+
+- name: Assert result for 192.0.2.0/24
+  assert:
+    # Since the list is huge, asserting only on number of ips
+    that: "{{ result3.number_of_ips == result3_val.number_of_ips }}"
