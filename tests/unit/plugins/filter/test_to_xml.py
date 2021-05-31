@@ -9,7 +9,8 @@ __metaclass__ = type
 
 import unittest
 from ansible.errors import AnsibleError
-from ansible_collections.ansible.utils.plugins.filter.to_xml import to_xml
+from ansible.errors import AnsibleFilterError
+from ansible_collections.ansible.utils.plugins.filter.to_xml import _to_xml
 
 INVALID_DATA = '<netconf-state xmlns="urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring">'
 
@@ -31,20 +32,37 @@ class TestToXml(unittest.TestCase):
         """Check passing invalid argspec"""
 
         # missing required arguments
-        args = [INVALID_DATA, "xmltodict"]
+        args = ["", INVALID_DATA, "xmltodict"]
         kwargs = {}
         with self.assertRaises(AnsibleError) as error:
-            to_xml(*args, **kwargs)
-        print(str(error.exception))
+            _to_xml(*args, **kwargs)
         self.assertIn(
-            "Error when using plugin 'to_xml': Input json is not valid",
-            str(error.exception),
+            "we were unable to convert to dict", str(error.exception)
         )
 
     def test_valid_data(self):
         """Check passing valid data as per criteria"""
         self.maxDiff = None
-        args = [VALID_DATA, "xmltodict"]
-        result = to_xml(*args)
-        print(result)
+        args = ["", VALID_DATA, "xmltodict"]
+        result = _to_xml(*args)
         self.assertEqual(result, OUTPUT)
+
+    def test_args(self):
+        """Check passing invalid argspec"""
+
+        # missing required arguments
+        args = []
+        kwargs = {}
+        with self.assertRaises(AnsibleFilterError) as error:
+            _to_xml(*args, **kwargs)
+        self.assertIn("missing required arguments: data", str(error.exception))
+
+    def test_invalid_engine(self):
+        """Check passing invalid argspec"""
+
+        # missing required arguments
+        args = ["", VALID_DATA, "test"]
+        kwargs = {}
+        with self.assertRaises(AnsibleError) as error:
+            _to_xml(*args, **kwargs)
+        self.assertIn("engine: test is not supported", str(error.exception))
