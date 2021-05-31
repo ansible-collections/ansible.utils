@@ -38,7 +38,7 @@ class TestToXml(unittest.TestCase):
             _to_xml(*args, **kwargs)
         print(str(error.exception))
         self.assertIn(
-            "argument data is of type <class 'str'> and we were unable to convert to dict",
+            "we were unable to convert to dict",
             str(error.exception),
         )
 
