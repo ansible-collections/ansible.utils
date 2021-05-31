@@ -1,0 +1,3 @@
+---
+trivial:
+  - Improve coverage of uts related to to_xml and from_xml filter plugin.
