@@ -32,22 +32,19 @@ class TestToXml(unittest.TestCase):
         """Check passing invalid argspec"""
 
         # missing required arguments
-        args = ['', INVALID_DATA, "xmltodict"]
+        args = ["", INVALID_DATA, "xmltodict"]
         kwargs = {}
         with self.assertRaises(AnsibleError) as error:
             _to_xml(*args, **kwargs)
-        print(str(error.exception))
         self.assertIn(
-            "we were unable to convert to dict",
-            str(error.exception),
+            "we were unable to convert to dict", str(error.exception)
         )
 
     def test_valid_data(self):
         """Check passing valid data as per criteria"""
         self.maxDiff = None
-        args = ['', VALID_DATA, "xmltodict"]
+        args = ["", VALID_DATA, "xmltodict"]
         result = _to_xml(*args)
-        print(result)
         self.assertEqual(result, OUTPUT)
 
     def test_args(self):
@@ -58,21 +55,14 @@ class TestToXml(unittest.TestCase):
         kwargs = {}
         with self.assertRaises(AnsibleFilterError) as error:
             _to_xml(*args, **kwargs)
-        self.assertIn(
-            "missing required arguments: data",
-            str(error.exception),
-        )
+        self.assertIn("missing required arguments: data", str(error.exception))
 
     def test_invalid_engine(self):
         """Check passing invalid argspec"""
 
         # missing required arguments
-        args = ['', VALID_DATA, "test"]
+        args = ["", VALID_DATA, "test"]
         kwargs = {}
         with self.assertRaises(AnsibleError) as error:
             _to_xml(*args, **kwargs)
-        print(str(error.exception))
-        self.assertIn(
-            "engine: test is not supported",
-            str(error.exception),
-        )
+        self.assertIn("engine: test is not supported", str(error.exception))

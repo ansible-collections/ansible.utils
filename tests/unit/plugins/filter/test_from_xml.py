@@ -31,7 +31,7 @@ class TestFromXml(unittest.TestCase):
         """Check passing invalid argspec"""
 
         # missing required arguments
-        args = ['', INVALID_DATA, "xmltodict"]
+        args = ["", INVALID_DATA, "xmltodict"]
         kwargs = {}
         with self.assertRaises(AnsibleError) as error:
             _from_xml(*args, **kwargs)
@@ -43,7 +43,7 @@ class TestFromXml(unittest.TestCase):
     def test_valid_data(self):
         """Check passing valid data as per criteria"""
         self.maxDiff = None
-        args = ['', VALID_DATA, "xmltodict"]
+        args = ["", VALID_DATA, "xmltodict"]
         result = _from_xml(*args)
         self.assertEqual(result, OUTPUT)
 
@@ -55,21 +55,14 @@ class TestFromXml(unittest.TestCase):
         kwargs = {}
         with self.assertRaises(AnsibleFilterError) as error:
             _from_xml(*args, **kwargs)
-        self.assertIn(
-            "missing required arguments: data",
-            str(error.exception),
-        )
+        self.assertIn("missing required arguments: data", str(error.exception))
 
     def test_invalid_engine(self):
         """Check passing invalid argspec"""
 
         # missing required arguments
-        args = ['', INVALID_DATA, "test"]
+        args = ["", INVALID_DATA, "test"]
         kwargs = {}
         with self.assertRaises(AnsibleError) as error:
             _from_xml(*args, **kwargs)
-        print(str(error.exception))
-        self.assertIn(
-            "engine: test is not supported",
-            str(error.exception),
-        )
+        self.assertIn("engine: test is not supported", str(error.exception))
