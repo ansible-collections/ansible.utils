@@ -8,26 +8,26 @@ Filter plugin file for usable_range
 """
 
 from __future__ import absolute_import, division, print_function, unicode_literals
-from ipaddress import IPv4Network
+from ipaddress import IPv4Network, IPv6Network
 
 from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddress_utils import (
     _validate_args, ip_network, _need_ipaddress
 )
 
 __metaclass__ = type
-# 2.3.0
+
 DOCUMENTATION = """
     name: usable_range
     author: Priyam Sahoo (@priyamsahoo)
-    version_added: "2.2.0"
+    version_added: "2.3.0"
     short_description: Expand the usable IP addresses
     description:
-        - For a given IP Address in CIDR form, this plugins generates a list of usable IP addresses belonging to the network.
+        - For a given IP Address (IPv4 or IPv6) in CIDR form, this plugins generates a list of usable IP addresses belonging to the network.
     options:
         ip:
             description:
             - A string that represents an IP address of network in CIDR form
-            - For example: "10.0.0.0/24"
+            - For example: "10.0.0.0/24", "2001:db8:abcd:0012::0/124"
             type: str
             required: True
     notes:
@@ -69,6 +69,26 @@ EXAMPLES = r"""
 #     "changed": false
 # }
 
+- name: Expand and produce list of usable IP addresses in 2001:db8:abcd:0012::0/126
+  ansible.builtin.set_fact:
+    data1: "{{ '2001:db8:abcd:0012::0/126' | ansible.utils.usable_range }}"
+
+# TASK [Expand and produce list of usable IP addresses in 2001:db8:abcd:0012::0/126] ***
+# ok: [localhost] => {
+#     "ansible_facts": {
+#         "data1": {
+#             "number_of_ips": 4, 
+#             "usable_ips": [
+#                 "2001:db8:abcd:12::", 
+#                 "2001:db8:abcd:12::1", 
+#                 "2001:db8:abcd:12::2", 
+#                 "2001:db8:abcd:12::3"
+#             ]
+#         }
+#     }, 
+#     "changed": false
+# }
+
 - name: Expand and produce list of usable IP addresses in 10.1.1.1
   ansible.builtin.set_fact:
     data: "{{ '10.1.1.1' | ansible.utils.usable_range }}"
@@ -95,8 +115,7 @@ RETURN = """
         - List of usable IP addresses under the key C(usable_ips)
 """
 
-from ansible.errors import AnsibleError, AnsibleFilterError
-from ansible.module_utils.basic import missing_required_lib
+from ansible.errors import AnsibleFilterError
 from ansible.module_utils.common.text.converters import to_text
 from ansible.module_utils.six import ensure_text
 
@@ -107,12 +126,14 @@ def _usable_range(ip):
     params = {"ip": ip}
     _validate_args("usable_range", DOCUMENTATION, params)
 
-    # if not HAS_IPADDRESS:
-    #     raise AnsibleError(missing_required_lib("ipaddress"))
-
     try:
-        ips = [to_text(usable_ips) for usable_ips in IPv4Network(ensure_text(ip))]
-        no_of_ips = IPv4Network(ensure_text(ip)).num_addresses
+        if ip_network(ip).version == 4:
+            ips = [to_text(usable_ips) for usable_ips in IPv4Network(ensure_text(ip))]
+            no_of_ips = IPv4Network(ensure_text(ip)).num_addresses
+        if ip_network(ip).version == 6:
+            ips = [to_text(usable_ips) for usable_ips in IPv6Network(ensure_text(ip))]
+            no_of_ips = IPv6Network(ensure_text(ip)).num_addresses
+
     except Exception as e:
         raise AnsibleFilterError("Error while using plugin 'usable_range': {msg}".format(msg = to_text(e)))
     
