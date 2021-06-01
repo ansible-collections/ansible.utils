@@ -1,7 +1,7 @@
 ---
 - name: Expand and produce list of usable IP addresses in 10.1.1.1
   ansible.builtin.set_fact:
-    result1: "{{ '10.1.1.1' | ansible.utils.expand_usable_range }}"
+    result1: "{{ '10.1.1.1' | ansible.utils.usable_range }}"
 
 - name: Assert result for 10.1.1.1
   assert:
@@ -9,7 +9,7 @@
 
 - name: Expand and produce list of usable IP addresses in 10.0.0.0/28
   ansible.builtin.set_fact:
-    result2: "{{ '10.0.0.0/28' | ansible.utils.expand_usable_range }}"
+    result2: "{{ '10.0.0.0/28' | ansible.utils.usable_range }}"
 
 - name: Assert result for 10.0.0.0/28
   assert:
@@ -17,7 +17,7 @@
 
 - name: Expand and produce list of usable IP addresses in 192.0.2.0/24
   ansible.builtin.set_fact:
-    result3: "{{ '192.0.2.0/24' | ansible.utils.expand_usable_range }}"
+    result3: "{{ '192.0.2.0/24' | ansible.utils.usable_range }}"
 
 - name: Assert result for 192.0.2.0/24
   assert:

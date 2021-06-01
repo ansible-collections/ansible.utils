@@ -1,7 +1,7 @@
 ---
 - name: Check argspec validation with filter (missing arg)
   ansible.builtin.set_fact:
-    _result1: "{{ '' | ansible.utils.expand_usable_range }}"
+    _result1: "{{ '' | ansible.utils.usable_range }}"
   ignore_errors: true
   register: result1
 
@@ -12,7 +12,7 @@
 
 - name: Check argspec validation with filter (random string arg)
   ansible.builtin.set_fact:
-    _result2: "{{ 'helloworld' | ansible.utils.expand_usable_range }}"
+    _result2: "{{ 'helloworld' | ansible.utils.usable_range }}"
   ignore_errors: true
   register: result2
 
@@ -23,7 +23,7 @@
 
 - name: Check argspec validation with filter (invalid arg for expansion)
   ansible.builtin.set_fact:
-    _result3: "{{ '192.168.1.25/24' | ansible.utils.expand_usable_range }}"
+    _result3: "{{ '192.168.1.25/24' | ansible.utils.usable_range }}"
   ignore_errors: true
   register: result3
 
@@ -34,7 +34,7 @@
 
 - name: Check argspec validation with filter (invalid format for arg)
   ansible.builtin.set_fact:
-    _result4: "{{ '192.0.2.0/23/24' | ansible.utils.expand_usable_range }}"
+    _result4: "{{ '192.0.2.0/23/24' | ansible.utils.usable_range }}"
   ignore_errors: true
   register: result4
 
@@ -45,7 +45,7 @@
 
 - name: Check argspec validation with filter (invalid netmask)
   ansible.builtin.set_fact:
-    _result5: "{{ '10.0.0.0/322' | ansible.utils.expand_usable_range }}"
+    _result5: "{{ '10.0.0.0/322' | ansible.utils.usable_range }}"
   ignore_errors: true
   register: result5
 
