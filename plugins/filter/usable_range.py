@@ -27,7 +27,9 @@ DOCUMENTATION = """
         ip:
             description:
             - A string that represents an IP address of network in CIDR form
-            - For example: "10.0.0.0/24", "2001:db8:abcd:0012::0/124"
+            - For example:
+                - "10.0.0.0/24"
+                - "2001:db8:abcd:0012::0/124"
             type: str
             required: True
     notes:
