@@ -7,11 +7,13 @@
 Filter plugin file for usable_range
 """
 
-from __future__ import absolute_import, division, print_function, unicode_literals
+from __future__ import absolute_import, division, print_function
 from ipaddress import IPv4Network, IPv6Network
 
 from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddress_utils import (
-    _validate_args, ip_network, _need_ipaddress
+    _validate_args,
+    ip_network,
+    _need_ipaddress,
 )
 
 __metaclass__ = type
@@ -79,15 +81,15 @@ EXAMPLES = r"""
 # ok: [localhost] => {
 #     "ansible_facts": {
 #         "data1": {
-#             "number_of_ips": 4, 
+#             "number_of_ips": 4,
 #             "usable_ips": [
-#                 "2001:db8:abcd:12::", 
-#                 "2001:db8:abcd:12::1", 
-#                 "2001:db8:abcd:12::2", 
+#                 "2001:db8:abcd:12::",
+#                 "2001:db8:abcd:12::1",
+#                 "2001:db8:abcd:12::2",
 #                 "2001:db8:abcd:12::3"
 #             ]
 #         }
-#     }, 
+#     },
 #     "changed": false
 # }
 
@@ -151,6 +153,7 @@ from ansible.errors import AnsibleFilterError
 from ansible.module_utils.common.text.converters import to_text
 from ansible.module_utils.six import ensure_text
 
+
 @_need_ipaddress
 def _usable_range(ip):
     """Expand the usable IP addresses"""
@@ -160,16 +163,27 @@ def _usable_range(ip):
 
     try:
         if ip_network(ip).version == 4:
-            ips = [to_text(usable_ips) for usable_ips in IPv4Network(ensure_text(ip))]
+            ips = [
+                to_text(usable_ips)
+                for usable_ips in IPv4Network(ensure_text(ip))
+            ]
             no_of_ips = IPv4Network(ensure_text(ip)).num_addresses
         if ip_network(ip).version == 6:
-            ips = [to_text(usable_ips) for usable_ips in IPv6Network(ensure_text(ip))]
+            ips = [
+                to_text(usable_ips)
+                for usable_ips in IPv6Network(ensure_text(ip))
+            ]
             no_of_ips = IPv6Network(ensure_text(ip)).num_addresses
 
     except Exception as e:
-        raise AnsibleFilterError("Error while using plugin 'usable_range': {msg}".format(msg = to_text(e)))
-    
+        raise AnsibleFilterError(
+            "Error while using plugin 'usable_range': {msg}".format(
+                msg=to_text(e)
+            )
+        )
+
     return {"usable_ips": ips, "number_of_ips": no_of_ips}
+
 
 class FilterModule(object):
     """ usable_range  """
@@ -178,4 +192,3 @@ class FilterModule(object):
 
         """a mapping of filter names to functions"""
         return {"usable_range": _usable_range}
-
