@@ -24,7 +24,7 @@ DOCUMENTATION = """
     version_added: "2.3.0"
     short_description: Expand the usable IP addresses
     description:
-        - For a given IP Address (IPv4 or IPv6) in CIDR form, this plugins generates a list of usable IP addresses belonging to the network.
+        - For a given IP address (IPv4 or IPv6) in CIDR form, the plugin generates a list of usable IP addresses belonging to the network.
     options:
         ip:
             description:
