@@ -108,6 +108,36 @@ EXAMPLES = r"""
 #     "changed": false
 # }
 
+#### Simple Use-case (looping through the list result)
+
+- name: Expand and produce list of usable IP addresses in 192.0.2.0/28
+  ansible.builtin.set_fact:
+    data1: "{{ '127.0.0.0/28' | ansible.utils.usable_range }}"
+
+- name: Ping all but first IP addresses from the generated list
+  shell: "ping -c 1 {{ item }}"
+  loop: "{{ data1.usable_ips[1:] }}"
+
+# TASK [Expand and produce list of usable IP addresses in 192.0.2.0/28] ******************************
+# ok: [localhost]
+
+# TASK [Ping all but first IP addresses from the generated list] *************************************
+# changed: [localhost] => (item=127.0.0.1)
+# changed: [localhost] => (item=127.0.0.2)
+# changed: [localhost] => (item=127.0.0.3)
+# changed: [localhost] => (item=127.0.0.4)
+# changed: [localhost] => (item=127.0.0.5)
+# changed: [localhost] => (item=127.0.0.6)
+# changed: [localhost] => (item=127.0.0.7)
+# changed: [localhost] => (item=127.0.0.8)
+# changed: [localhost] => (item=127.0.0.9)
+# changed: [localhost] => (item=127.0.0.10)
+# changed: [localhost] => (item=127.0.0.11)
+# changed: [localhost] => (item=127.0.0.12)
+# changed: [localhost] => (item=127.0.0.13)
+# changed: [localhost] => (item=127.0.0.14)
+# changed: [localhost] => (item=127.0.0.15)
+
 """
 
 RETURN = """
