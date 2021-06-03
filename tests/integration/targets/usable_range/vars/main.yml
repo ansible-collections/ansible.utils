@@ -26,3 +26,16 @@ result2_val:
 
 result3_val:
   number_of_ips: 256
+
+result4_val:
+  number_of_ips: 4
+  usable_ips:
+    - "2001:db8:abcd:12::"
+    - "2001:db8:abcd:12::1"
+    - "2001:db8:abcd:12::2"
+    - "2001:db8:abcd:12::3"
+
+result5_val:
+  number_of_ips: 1
+  usable_ips:
+    - "2001:db8:abcd:12::"

@@ -8,7 +8,7 @@
 - assert:
     that: "{{ msg in result1.msg }}"
   vars:
-    msg: "Address cannot be empty"
+    msg: "does not appear to be an IPv4 or IPv6 network"
 
 - name: Check argspec validation with filter (random string arg)
   ansible.builtin.set_fact:
@@ -19,7 +19,7 @@
 - assert:
     that: "{{ msg in result2.msg }}"
   vars:
-    msg: "Expected 4 octets"
+    msg: "does not appear to be an IPv4 or IPv6 network"
 
 - name: Check argspec validation with filter (invalid arg for expansion)
   ansible.builtin.set_fact:
@@ -41,15 +41,37 @@
 - assert:
     that: "{{ msg in result4.msg }}"
   vars:
-    msg: "Only one '/' permitted"
+    msg: "does not appear to be an IPv4 or IPv6 network"
 
-- name: Check argspec validation with filter (invalid netmask)
+- name: Check argspec validation with filter (invalid format for arg)
   ansible.builtin.set_fact:
-    _result5: "{{ '10.0.0.0/322' | ansible.utils.usable_range }}"
+    _result5: "{{ '::/20/30' | ansible.utils.usable_range }}"
   ignore_errors: true
   register: result5
 
 - assert:
     that: "{{ msg in result5.msg }}"
   vars:
-    msg: "not a valid netmask"
+    msg: "does not appear to be an IPv4 or IPv6 network"
+
+- name: Check argspec validation with filter (invalid netmask)
+  ansible.builtin.set_fact:
+    _result6: "{{ '10.0.0.0/322' | ansible.utils.usable_range }}"
+  ignore_errors: true
+  register: result6
+
+- assert:
+    that: "{{ msg in result6.msg }}"
+  vars:
+    msg: "does not appear to be an IPv4 or IPv6 network"
+
+- name: Check argspec validation with filter (invalid netmask)
+  ansible.builtin.set_fact:
+    _result7: "{{ '2001:db8:abcd:0012::0/129' | ansible.utils.usable_range }}"
+  ignore_errors: true
+  register: result7
+
+- assert:
+    that: "{{ msg in result7.msg }}"
+  vars:
+    msg: "does not appear to be an IPv4 or IPv6 network"
