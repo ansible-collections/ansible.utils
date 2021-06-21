@@ -112,7 +112,7 @@ EXAMPLES = r"""
 
 #### Simple Use-case (looping through the list result)
 
-- name: Expand and produce list of usable IP addresses in 192.0.2.0/28
+- name: Expand and produce list of usable IP addresses in 127.0.0.0/28
   ansible.builtin.set_fact:
     data1: "{{ '127.0.0.0/28' | ansible.utils.usable_range }}"
 
@@ -120,7 +120,7 @@ EXAMPLES = r"""
   shell: "ping -c 1 {{ item }}"
   loop: "{{ data1.usable_ips[1:] }}"
 
-# TASK [Expand and produce list of usable IP addresses in 192.0.2.0/28] ******************************
+# TASK [Expand and produce list of usable IP addresses in 127.0.0.0/28] ******************************
 # ok: [localhost]
 
 # TASK [Ping all but first IP addresses from the generated list] *************************************
