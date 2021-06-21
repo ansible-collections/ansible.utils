@@ -5,6 +5,19 @@ Ansible Utils Collection Release Notes
 .. contents:: Topics
 
 
+v2.3.0
+======
+
+Minor Changes
+-------------
+
+- Add usable_range test plugin
+
+Bugfixes
+--------
+
+- Also include empty lists and mappings into the output dictionary (https://github.com/ansible-collections/ansible.utils/pull/58).
+
 v2.2.0
 ======
 
