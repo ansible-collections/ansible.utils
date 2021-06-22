@@ -18,6 +18,11 @@ Bugfixes
 
 - Also include empty lists and mappings into the output dictionary (https://github.com/ansible-collections/ansible.utils/pull/58).
 
+Documentation Changes
+---------------------
+
+- Update doc for usable_range filter plugin
+
 v2.2.0
 ======
 
