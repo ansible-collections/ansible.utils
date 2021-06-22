@@ -123,10 +123,13 @@ releases:
     changes:
       bugfixes:
       - Also include empty lists and mappings into the output dictionary (https://github.com/ansible-collections/ansible.utils/pull/58).
+      doc_changes:
+      - Update doc for usable_range filter plugin
       minor_changes:
       - Add usable_range test plugin
     fragments:
     - add_usable_range_filter_plugin.yml
     - empty_list_mapping.yml
     - improve_coverage_for_filter_plugins.yaml
+    - update_doc_for_usable_range_filter_plugin.yml
     release_date: '2021-06-18'
