@@ -132,4 +132,4 @@ releases:
     - empty_list_mapping.yml
     - improve_coverage_for_filter_plugins.yaml
     - update_doc_for_usable_range_filter_plugin.yml
-    release_date: '2021-06-18'
+    release_date: '2021-06-22'
