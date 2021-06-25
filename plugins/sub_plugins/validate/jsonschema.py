@@ -160,13 +160,13 @@ class Validate(ValidateBase):
 
         for criteria in self._criteria:
             if draft == "draft3":
-                validator = jsonschema.Draft3Validator(criteria)
+                validator = jsonschema.Draft3Validator(criteria, format_checker=jsonschema.draft3_format_checker)
             elif draft == "draft4":
-                validator = jsonschema.Draft4Validator(criteria)
+                validator = jsonschema.Draft4Validator(criteria, format_checker=jsonschema.draft4_format_checker)
             elif draft == "draft6":
-                validator = jsonschema.Draft6Validator(criteria)
+                validator = jsonschema.Draft6Validator(criteria, format_checker=jsonschema.draft6_format_checker)
             else:
-                validator = jsonschema.Draft7Validator(criteria)
+                validator = jsonschema.Draft7Validator(criteria, format_checker=jsonschema.draft7_format_checker)
 
             validation_errors = sorted(
                 validator.iter_errors(self._data), key=lambda e: e.path
