@@ -1,0 +1,4 @@
+---
+bugfixes:
+  - Add support for the validation of formats to the jsonschema validator.
+  - Improve test coverage
