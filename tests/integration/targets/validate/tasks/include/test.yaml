@@ -89,14 +89,14 @@
       - "is_data_valid == true"
 
 - name: read data and criteria from file
-    ansible.builtin.set_fact:
-      data: "{{ lookup('ansible.builtin.file', 'test_format_checker.json') }}"
-      criteria_1: "{{ lookup('ansible.builtin.file', 'format_checker.json') }}"
+  ansible.builtin.set_fact:
+    data: "{{ lookup('ansible.builtin.file', 'test_format_checker.json') }}"
+    criteria_1: "{{ lookup('ansible.builtin.file', 'format_checker.json') }}"
 
-  - name: validate data using jsonschema engine (valid data read from file)
-    ansible.builtin.set_fact:
-      is_data_valid: "{{ data is ansible.utils.validate(engine='ansible.utils.jsonschema', criteria=[criteria_1], draft='draft7') }}"
+- name: validate data using jsonschema engine (valid data read from file)
+  ansible.builtin.set_fact:
+    is_data_valid: "{{ data is ansible.utils.validate(engine='ansible.utils.jsonschema', criteria=[criteria_1], draft='draft7') }}"
 
-  - assert:
-      that:
-        - "is_data_valid == true"
+- assert:
+    that:
+      - "is_data_valid == true"
