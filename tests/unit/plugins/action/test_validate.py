@@ -108,24 +108,15 @@ CRITERIA_IN_RATE_CHECK = {
     },
 }
 
-VALID_DATA = {
-    "name": "ansible",
-    "email": "ansible@redhat.com"
-}
+VALID_DATA = {"name": "ansible", "email": "ansible@redhat.com"}
 
-IN_VALID_DATA = {
-    "name": "ansible",
-    "email": "redhatcom"
-}
+IN_VALID_DATA = {"name": "ansible", "email": "redhatcom"}
 
 CRITERIA_FORMAT_SUPPORT_CHECK = {
     "$schema": "https://json-schema.org/schema#",
     "type": "object",
-    "properties": {
-        "name": {"type": "string"},
-        "email": {"format": "email"}
-    },
-    "required": ["email"]
+    "properties": {"name": {"type": "string"}, "email": {"format": "email"}},
+    "required": ["email"],
 }
 
 
@@ -222,10 +213,7 @@ class TestValidate(unittest.TestCase):
         result = self._plugin.run(
             task_vars={"ansible_validate_jsonschema_draft": "draft3"}
         )
-        self.assertIn(
-            "all checks passed",
-            result["msg"],
-        )
+        self.assertIn("all checks passed", result["msg"])
 
     def test_validate_plugin_config_options_with_draft4(self):
         """Check passing invalid validate plugin options"""
@@ -239,10 +227,7 @@ class TestValidate(unittest.TestCase):
         result = self._plugin.run(
             task_vars={"ansible_validate_jsonschema_draft": "draft4"}
         )
-        self.assertIn(
-            "all checks passed",
-            result["msg"],
-        )
+        self.assertIn("all checks passed", result["msg"])
 
     def test_validate_plugin_config_options_with_draft6(self):
         """Check passing invalid validate plugin options"""
@@ -256,10 +241,7 @@ class TestValidate(unittest.TestCase):
         result = self._plugin.run(
             task_vars={"ansible_validate_jsonschema_draft": "draft6"}
         )
-        self.assertIn(
-            "all checks passed",
-            result["msg"],
-        )
+        self.assertIn("all checks passed", result["msg"])
 
     def test_invalid_data(self):
         """Check passing invalid data as per criteria"""
