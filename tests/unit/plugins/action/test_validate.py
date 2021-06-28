@@ -303,4 +303,4 @@ class TestValidate(unittest.TestCase):
         }
 
         result = self._plugin.run(task_vars=None)
-        self.assertIn("'redhatcom' is not a 'email'", result["msg"])
+        self.assertIn("Validation errors were found", result["msg"])
