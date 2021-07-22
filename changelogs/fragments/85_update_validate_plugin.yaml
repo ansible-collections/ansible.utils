@@ -1,0 +1,3 @@
+---
+bugfixes:
+  - Update validate to use 2.11 ArgumentSpecValidator if available.
