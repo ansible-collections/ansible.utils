@@ -35,5 +35,5 @@
     that: "{{ 'unable to convert to list' in result.msg }}"
 
 - assert:
-        that: "{{ 'unable to convert to list' in result.msg[0] }}"
-      when: ansible_version.full >= "2.11"
+    that: "{{ 'unable to convert to list' in result.msg[0] }}"
+  when: ansible_version.full >= "2.11"
