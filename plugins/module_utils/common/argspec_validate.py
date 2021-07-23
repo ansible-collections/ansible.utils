@@ -244,7 +244,7 @@ class AnsibleArgSpecValidator:
                 )
             if self._other_args is not None:
                 self._schema = dict_merge(self._schema, self._other_args)
-            validator = ArgumentSpecValidator(self._schema["argument_spec"])
+            validator = ArgumentSpecValidator(**self._schema)
             result = validator.validate(self._data)
             valid = not bool(result.error_messages)
             return valid, result.error_messages, result.validated_parameters

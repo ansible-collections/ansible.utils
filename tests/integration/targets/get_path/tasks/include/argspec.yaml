@@ -14,7 +14,7 @@
   register: result
 
 - assert:
-    that: "{{ result.msg == msg }}"
+    that: "{{ msg in result.msg }}"
   vars:
     msg: "missing required arguments: path"
 
