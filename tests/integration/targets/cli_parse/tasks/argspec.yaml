@@ -11,7 +11,9 @@
 
 - name: "{{ parser }} Check argspec fail"
   assert:
-    that: "argfail['errors'] == 'parameters are mutually exclusive: command|template_path found in parser'"
+    that: "{{ msg in argfail.errors }}"
+  vars:
+      msg: "parameters are mutually exclusive: command|template_path found in parser"
 
 - name: "{{ parser }} validate argspec"
   ansible.utils.cli_parse:
@@ -25,7 +27,9 @@
 
 - name: "{{ parser }} Check argspec fail"
   assert:
-    that: "argfail['errors'] == 'parameters are mutually exclusive: command|text'"
+    that: "{{ msg in argfail.errors }}"
+  vars:
+    msg: "parameters are mutually exclusive: command|text"
 
 - name: "{{ parser }} validate argspec"
   ansible.utils.cli_parse:
@@ -37,7 +41,9 @@
 
 - name: "{{ parser }} Check argspec fail"
   assert:
-    that: "argfail['errors'] == 'one of the following is required: command, text'"
+    that: "{{ msg in argfail.errors }}"
+  vars:
+    msg: "one of the following is required: command, text"
 
 
 - name: "{{ parser }} validate argspec"
@@ -51,4 +57,6 @@
 
 - name: "{{ parser }} Check arspec fail"
   assert:
-    that: "argfail['msg'] == 'Parser name should be provided as a full name including collection'"
+    that: "{{ msg in argfail.errors }}"
+  vars:
+    msg: "Parser name should be provided as a full name including collection"
