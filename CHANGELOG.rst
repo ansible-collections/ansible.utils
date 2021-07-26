@@ -5,6 +5,15 @@ Ansible Utils Collection Release Notes
 .. contents:: Topics
 
 
+v2.3.1
+======
+
+Bugfixes
+--------
+
+- Add support for the validation of formats to the jsonschema validator.
+- Improve test coverage
+
 v2.3.0
 ======
 
