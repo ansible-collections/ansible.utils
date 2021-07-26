@@ -15,7 +15,7 @@
   when: ansible_version.full < "2.11"
 
 - assert:
-    that: "{{ string in result.msg }}"
+    that: "{{ msg in result.msg }}"
   vars:
     msg: "missing required arguments: after, before"
   when: ansible_version.full >= "2.11"
