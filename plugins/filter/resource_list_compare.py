@@ -70,13 +70,19 @@ def resource_list_compare(*args, **kwargs):
 
     combined = []
     alls = [x for x in other if x == "all"]
-    bangs = [x[1:] for x in other if x.startswith('!')]
-    rbangs = [x for x in other if x.startswith('!')]
-    remain = [x for x in other if x not in alls and x not in rbangs and x in base]
-    unsupported = [x for x in other if x not in alls and x not in rbangs and x not in base]
+    bangs = [x[1:] for x in other if x.startswith("!")]
+    rbangs = [x for x in other if x.startswith("!")]
+    remain = [
+        x for x in other if x not in alls and x not in rbangs and x in base
+    ]
+    unsupported = [
+        x for x in other if x not in alls and x not in rbangs and x not in base
+    ]
 
     if unsupported:
-        raise AnsibleFilterError("The following are unsupported: %s" % (",".join(unsupported)))
+        raise AnsibleFilterError(
+            "The following are unsupported: %s" % (",".join(unsupported))
+        )
 
     if alls:
         combined = base
@@ -87,7 +93,7 @@ def resource_list_compare(*args, **kwargs):
         if entry not in combined:
             combined.append(entry)
     combined.sort()
-    output = {'actionable': combined, 'unsupported': unsupported}
+    output = {"actionable": combined, "unsupported": unsupported}
     return output
 
 
@@ -96,6 +102,4 @@ class FilterModule(object):
 
     def filters(self):
         """a mapping of filter names to functions"""
-        return {
-            'resource_list_compare': resource_list_compare
-        }
+        return {"resource_list_compare": resource_list_compare}
