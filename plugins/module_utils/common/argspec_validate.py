@@ -242,12 +242,21 @@ class AnsibleArgSpecValidator:
                 self._schema = dict_merge(
                     self._schema, self._schema_conditionals
                 )
-            if self._other_args is not None:
-                self._schema = dict_merge(self._schema, self._other_args)
-            validator = ArgumentSpecValidator(**self._schema)
-            result = validator.validate(self._data)
-            valid = not bool(result.error_messages)
-            return valid, result.error_messages, result.validated_parameters
+            invalid_keys = [
+                k for k in self._schema.keys() if k not in VALID_ANSIBLEMODULE_ARGS
+            ]
+            if invalid_keys:
+                valid = False
+                errors = ["Invalid schema. Invalid keys found: {ikeys}".format(
+                    ikeys=",".join(invalid_keys)
+                )]
+                updated_data = {}
+                return valid, errors, updated_data
+            else:
+                validator = ArgumentSpecValidator(**self._schema)
+                result = validator.validate(self._data)
+                valid = not bool(result.error_messages)
+                return valid, result.error_messages, result.validated_parameters
         else:
             return self._validate()
 

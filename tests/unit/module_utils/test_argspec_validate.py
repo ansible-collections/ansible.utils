@@ -27,6 +27,8 @@ class TestSortList(unittest.TestCase):
         )
         valid, errors, _updated_data = aav.validate()
         self.assertTrue(valid)
+        if not errors:
+            errors = None
         self.assertEqual(errors, None)
 
     def test_simple_defaults(self):
@@ -46,6 +48,8 @@ class TestSortList(unittest.TestCase):
         }
         valid, errors, updated_data = aav.validate()
         self.assertTrue(valid)
+        if not errors:
+            errors = None
         self.assertEqual(errors, None)
         self.assertEqual(expected, updated_data)
 
@@ -84,6 +88,8 @@ class TestSortList(unittest.TestCase):
         )
         valid, errors, _updated_data = aav.validate()
         self.assertTrue(valid)
+        if not errors:
+            errors = None
         self.assertEqual(errors, None)
 
     def test_schema_conditional(self):
@@ -114,10 +120,17 @@ class TestSortList(unittest.TestCase):
         )
         valid, errors, _updated_data = aav.validate()
         self.assertFalse(valid)
-        self.assertIn(
-            "Unsupported parameters for 'test_action' module: not_valid",
-            errors,
-        )
+        if isinstance(errors, list):
+            # for ansibleargspecvalidator 2.11 its returning errors as list
+            self.assertIn(
+                "not_valid. Supported parameters include:",
+                errors[0],
+            )
+        else:
+            self.assertIn(
+                "Unsupported parameters for 'test_action' module: not_valid",
+                errors,
+            )
 
     def test_other_args(self):
         data = {"param_str": "string"}
@@ -130,6 +143,8 @@ class TestSortList(unittest.TestCase):
         )
         valid, errors, _updated_data = aav.validate()
         self.assertTrue(valid)
+        if not errors:
+            errors = None
         self.assertIsNone(errors)
 
     def test_invalid_spec(self):
@@ -143,4 +158,4 @@ class TestSortList(unittest.TestCase):
         )
         valid, errors, _updated_data = aav.validate()
         self.assertFalse(valid)
-        self.assertIn("Invalid keys found: not_valid", errors)
+        self.assertIn("Invalid schema. Invalid keys found: not_valid", errors)
