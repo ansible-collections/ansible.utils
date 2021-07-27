@@ -31,7 +31,7 @@ RETURN = """
     combined=['interfaces', 'l2_interfaces', 'l3_interfaces']
 """
 
-from ansible.errors import AnsibleError, AnsibleFilterError
+from ansible.errors import AnsibleFilterError
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     check_argspec,
 )
@@ -63,11 +63,6 @@ def resource_list_compare(*args, **kwargs):
         )
     base = params["base"]
     other = params["target"]
-    if not isinstance(base, list):
-        raise AssertionError("`base` must be of type 'list'")
-    if not isinstance(other, list):
-        raise AssertionError("`other` must be of type 'list'")
-
     combined = []
     alls = [x for x in other if x == "all"]
     bangs = [x[1:] for x in other if x.startswith("!")]
