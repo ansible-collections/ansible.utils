@@ -15,7 +15,7 @@ DOCUMENTATION = """
         type: list
         elements: str
       target:
-        description: Specify the target list of resources. 
+        description: Specify the target list of resources.
         type: list
         elements: str
 """
