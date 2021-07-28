@@ -53,24 +53,24 @@ class TestResource_list_compare_merge(unittest.TestCase):
     def test_invalid_base_type_data(self):
         """Check passing valid data as per criteria"""
 
-        base = {""}
+        base = {}
         other = ["all"]
         args = [base, other]
         kwargs = {}
         with self.assertRaises(AnsibleFilterError) as error:
             resource_list_compare(*args, **kwargs)
-        self.assertIn("argument base is of type", str(error.exception))
+        self.assertIn("cannot be converted to a list", str(error.exception))
 
     def test_invalid_other_type_data(self):
         """Check passing valid data as per criteria"""
 
         base = ["interfaces"]
-        other = {"all"}
+        other = {"all": None}
         args = [base, other]
         kwargs = {}
         with self.assertRaises(AnsibleFilterError) as error:
             resource_list_compare(*args, **kwargs)
-        self.assertIn("argument target is of type", str(error.exception))
+        self.assertIn("cannot be converted to a list", str(error.exception))
 
     def test_invalid_unsupported_bang(self):
         """Check passing valid data as per criteria"""
