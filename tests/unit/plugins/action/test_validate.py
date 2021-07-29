@@ -144,8 +144,11 @@ class TestValidate(unittest.TestCase):
         # missing required arguments
         self._plugin._task.args = {"engine": "ansible.utils.jsonschema"}
         result = self._plugin.run(task_vars=None)
-        msg = "missing required arguments: criteria, data"
-        self.assertIn(msg, result["errors"])
+        msg = "missing required arguments:"
+        if isinstance(result["errors"], list):
+            self.assertIn(msg, result["errors"][0])
+        else:
+            self.assertIn(msg, result["errors"])
 
         # invalid engine option value
         self._plugin._task.args = {
