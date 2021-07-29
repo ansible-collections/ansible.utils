@@ -123,8 +123,7 @@ class TestSortList(unittest.TestCase):
         if isinstance(errors, list):
             # for ansibleargspecvalidator 2.11 its returning errors as list
             self.assertIn(
-                "not_valid. Supported parameters include:",
-                errors[0],
+                "not_valid. Supported parameters include:", errors[0]
             )
         else:
             self.assertIn(
