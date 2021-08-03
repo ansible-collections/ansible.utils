@@ -46,9 +46,7 @@ except ImportError:
 # ansible-base 2.11 should expose argspec validation outside of the
 # ansiblemodule class
 try:
-    from ansible.module_utils.somefile import (  # noqa: F401
-        FutureBaseArgspecValidator,
-    )
+    from ansible.module_utils.common.arg_spec import ArgumentSpecValidator
 
     HAS_ANSIBLE_ARG_SPEC_VALIDATOR = True
 except ImportError:
@@ -238,7 +236,35 @@ class AnsibleArgSpecValidator:
         that is coming in 2.11, change the check according above
         """
         if HAS_ANSIBLE_ARG_SPEC_VALIDATOR:
-            return self._validate()
+            if self._schema_format == "doc":
+                self._convert_doc_to_schema()
+            if self._schema_conditionals is not None:
+                self._schema = dict_merge(
+                    self._schema, self._schema_conditionals
+                )
+            invalid_keys = [
+                k
+                for k in self._schema.keys()
+                if k not in VALID_ANSIBLEMODULE_ARGS
+            ]
+            if invalid_keys:
+                valid = False
+                errors = [
+                    "Invalid schema. Invalid keys found: {ikeys}".format(
+                        ikeys=",".join(invalid_keys)
+                    )
+                ]
+                updated_data = {}
+                return valid, errors, updated_data
+            else:
+                validator = ArgumentSpecValidator(**self._schema)
+                result = validator.validate(self._data)
+                valid = not bool(result.error_messages)
+                return (
+                    valid,
+                    result.error_messages,
+                    result.validated_parameters,
+                )
         else:
             return self._validate()
 

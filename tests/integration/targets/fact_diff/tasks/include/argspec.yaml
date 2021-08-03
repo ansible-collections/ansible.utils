@@ -12,6 +12,13 @@
     - after
   loop_control:
     loop_var: string
+  when: "{{result.msg|type_debug != 'list'}}"
+
+- assert:
+    that: "{{ msg in result.msg }}"
+  vars:
+    msg: "missing required arguments: after, before"
+  when: "{{result.msg|type_debug == 'list'}}"
 
 - name: Check argspec validation, skip_lines must be a dict
   ansible.utils.fact_diff:
@@ -26,3 +33,8 @@
 
 - assert:
     that: "{{ 'unable to convert to list' in result.msg }}"
+  when: "{{result.msg|type_debug != 'list'}}"
+
+- assert:
+    that: "{{ 'unable to convert to list' in result.msg[0] }}"
+  when: "{{result.msg|type_debug == 'list'}}"

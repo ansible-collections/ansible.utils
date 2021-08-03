@@ -117,7 +117,7 @@ class TestCli_Parse(unittest.TestCase):
             **kwargs
         )
 
-        self.assertEqual(
+        self.assertIn(
             "one of the following is required: command, text", result["errors"]
         )
 
@@ -131,7 +131,7 @@ class TestCli_Parse(unittest.TestCase):
             schema_conditionals=ARGSPEC_CONDITIONALS,
             **kwargs
         )
-        self.assertEqual(
+        self.assertIn(
             "missing required arguments: name found in parser",
             result["errors"],
         )
