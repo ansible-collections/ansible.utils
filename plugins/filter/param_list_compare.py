@@ -8,14 +8,14 @@ DOCUMENTATION = """
     version_added: "2.4.0"
     short_description: Generate the final resource list combining/comparing base and provided resources
     description:
-        - Generate the final list of resources after comparing with base list and provide list of resources/bangs.
+        - Generate the final list of resources after comparing with base list and provide list of params/bangs.
     options:
       base:
         description: Specify the base list of supported network resources.
         type: list
         elements: str
       target:
-        description: Specify the target list of resources.
+        description: Specify the target list of params.
         type: list
         elements: str
 """
