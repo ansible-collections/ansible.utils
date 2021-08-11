@@ -79,6 +79,5 @@ class TestParam_list_compare_merge(unittest.TestCase):
         other = ["every"]
         args = [base, other]
         kwargs = {}
-        with self.assertRaises(AnsibleFilterError) as error:
-            param_list_compare(*args, **kwargs)
-        self.assertIn("The following are unsupported", str(error.exception))
+        result = param_list_compare(*args, **kwargs)
+        self.assertEqual(result["unsupported"], other)
