@@ -6,21 +6,45 @@ DOCUMENTATION = """
     name: param_list_compare
     author: Rohit Thakur (@rohitthakur2590)
     version_added: "2.4.0"
-    short_description: Generate the final resource list combining/comparing base and provided resources
+    short_description: Generate the final param list combining/comparing base and provided parameters.
     description:
-        - Generate the final list of resources after comparing with base list and provide list of params/bangs.
+        - Generate the final list of parameters after comparing with base list and provided/target list of params/bangs.
     options:
       base:
-        description: Specify the base list of supported network resources.
+        description: Specify the base list.
         type: list
         elements: str
       target:
-        description: Specify the target list of params.
+        description: Specify the target list.
         type: list
         elements: str
 """
 
 EXAMPLES = r"""
+- set_fact:
+    base: ['1','2','3','4','5']
+
+- set_fact:
+    target: ['!all','2','4']
+
+- name: Get final list of parameters
+  register: result
+  set_fact:
+    final_params: "{{ base|param_list_compare(target) }}"
+
+# TASK [Target list] **********************************************************
+# ok: [localhost] => {
+#     "msg": {
+#         "actionable": [
+#             "2",
+#             "4"
+#         ],
+#         "unsupported": []
+#     }
+# }
+
+# Network Specific Example
+# -----------
 - set_fact:
         ios_resources:
           - "acl_interfaces"
@@ -49,12 +73,12 @@ EXAMPLES = r"""
       - '!all'
       - 'vlan'
       - 'bgp_global'
-      
-- name: Get final list of target resources/params 
+
+- name: Get final list of target resources/params
   register: result
   set_fact:
     network_resources: "{{ ios_resources|param_list_compare(target_resources) }}"
-    
+
 - name: Target list of network resources
   debug:
     msg: "{{ network_resources }}"
@@ -70,23 +94,16 @@ EXAMPLES = r"""
 #     }
 # }
 
-
-- set_fact:
-    target_resources:
-      - 'vla'
-      - 'logging_global'
-      - ntp_global
-      
-- name: Get final list of target resources/params 
+- name: Get final list of target resources/params
   register: result
   set_fact:
-    network_resources: "{{ ios_resources|param_list_compare(target_resources) }}"
-    
+    network_resources: "{{ ios_resources|param_list_compare(target=['vla', 'ntp_global', 'logging_global']) }}"
+
 - name: Target list of network resources
   debug:
     msg: "{{ network_resources }}"
-    
-# TASK [Target list of network resources] *******************************************************************************************************************
+
+# TASK [Target list of network resources] ************************************************
 # ok: [localhost] => {
 #     "msg": {
 #         "actionable": [
@@ -98,14 +115,14 @@ EXAMPLES = r"""
 #         ]
 #     }
 # }
-  
+
 """
 
 RETURN = """
   actionable:
     description: list of combined params
     type: list
-  
+
   unsupported:
     description: list of unsupported params
     type: list
@@ -121,19 +138,21 @@ ARGSPEC_CONDITIONALS = {}
 
 
 def param_list_compare(*args, **kwargs):
-    if len(args) < 2:
+    params = ["base", "target"]
+    data = dict(zip(params, args))
+    data.update(kwargs)
+
+    if len(data) < 2:
         raise AnsibleFilterError(
             "Missing either 'base' or 'other value in filter input,"
-            " refer 'ansible.network.resource_manager.param_list_compare' filter plugin documentation for details"
+            "refer 'ansible.utils.param_list_compare' filter plugin documentation for details"
         )
-
-    params = {"base": args[0], "target": args[1]}
 
     valid, argspec_result, updated_params = check_argspec(
         DOCUMENTATION,
         "param_list_compare filter",
         schema_conditionals=ARGSPEC_CONDITIONALS,
-        **params
+        **data
     )
     if not valid:
         raise AnsibleFilterError(
@@ -142,8 +161,8 @@ def param_list_compare(*args, **kwargs):
                 argspec_errors=argspec_result.get("errors"),
             )
         )
-    base = params["base"]
-    other = params["target"]
+    base = data["base"]
+    other = data["target"]
     combined = []
     alls = [x for x in other if x == "all"]
     bangs = [x[1:] for x in other if x.startswith("!")]

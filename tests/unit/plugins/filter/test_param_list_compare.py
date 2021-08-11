@@ -26,7 +26,7 @@ class TestParam_list_compare_merge(unittest.TestCase):
         result = param_list_compare(*args, **kwargs)
         self.assertEqual(result["actionable"], base)
 
-    def test_valid_data(self):
+    def test_valid_data_same_contents(self):
         """Check passing valid data as per criteria"""
 
         base = ["interfaces", "l2_interfaces", "l3_interfaces"]
