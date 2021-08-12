@@ -1,0 +1,56 @@
+---
+- debug:
+    msg: "START param_list_compare integration tests on connection={{ ansible_connection }}"
+
+- name: Setup supported resource module list json
+  ansible.builtin.set_fact:
+    network_resources:
+      modules:
+        - 'acl_interfaces'
+        - 'acls'
+        - 'bgp_address_family'
+        - 'bgp_global'
+        - 'interfaces'
+        - 'l2_interfaces'
+        - 'l3_interfaces'
+        - 'lacp'
+        - 'lacp_interfaces'
+        - 'lag_interfaces'
+        - 'lldp_global'
+        - 'lldp_interfaces'
+        - 'logging_global'
+        - 'ospf_interfaces'
+        - 'ospfv2'
+        - 'ospfv3'
+        - 'prefix_lists'
+        - 'route_maps'
+        - 'static_routes'
+        - 'vlans'
+
+- name: Setup target resources with bangs
+  ansible.builtin.set_fact:
+    provided_resources:
+      - '!all'
+      - '!acl_interfaces'
+      - 'acls'
+      - 'bgp_address_family'
+      - 'bgp_global'
+
+- name: Setup target resources with bangs
+  ansible.builtin.set_fact:
+    expected_network_resources:
+      - 'acls'
+      - 'bgp_address_family'
+      - 'bgp_global'
+
+- name: Get the final list of resources
+  set_fact:
+    final_network_resources: "{{ network_resources['modules']|ansible.utils.param_list_compare(provided_resources) }}"
+
+- name: Assert final network resources
+  assert:
+    that:
+      - "{{ expected_network_resources | symmetric_difference(final_network_resources['actionable']) |length\
+              \ == 0 }}"
+- debug:
+    msg: "END param_list_compare integration tests on connection={{ ansible_connection }}"
