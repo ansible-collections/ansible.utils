@@ -43,6 +43,30 @@ EXAMPLES = r"""
 #     }
 # }
 
+- set_fact:
+    base: ['1','2','3','4','5']
+
+- name: Get final list of parameters
+  register: result
+  set_fact:
+    final_params: "{{ base|param_list_compare(target=['2', '7', '8']) }}"
+
+# TASK [Get final list of parameters] ********************************************
+# ok: [localhost] => {
+#     "ansible_facts": {
+#         "final_params": {
+#             "actionable": [
+#                 "2"
+#             ],
+#             "unsupported": [
+#                 "7",
+#                 "8"
+#             ]
+#         }
+#     },
+#     "changed": false
+# }
+
 # Network Specific Example
 # -----------
 - set_fact:
