@@ -5,6 +5,19 @@ Ansible Utils Collection Release Notes
 .. contents:: Topics
 
 
+v2.4.0
+======
+
+Minor Changes
+-------------
+
+- Add new plugin param_list_compare that generates the final param list after comparing base and provided/target param list.
+
+Bugfixes
+--------
+
+- Update validate to use 2.11 ArgumentSpecValidator if available.
+
 v2.3.1
 ======
 

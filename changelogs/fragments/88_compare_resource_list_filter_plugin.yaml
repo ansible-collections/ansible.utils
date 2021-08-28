@@ -1,3 +1,0 @@
----
-minor_changes:
-  - Add new plugin param_list_compare that generates the final param list after comparing base and provided/target param list.
