@@ -1,0 +1,3 @@
+---
+trivial:
+        - Update target tests folder name starting with utils_* to fix network ee tests.
