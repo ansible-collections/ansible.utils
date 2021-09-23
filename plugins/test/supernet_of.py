@@ -12,7 +12,6 @@ from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddress_utils
     ip_network,
     _need_ipaddress,
     _is_subnet_of,
-    _validate_args,
 )
 from ansible_collections.ansible.utils.plugins.plugin_utils.base.utils import (
     _validate_args,
