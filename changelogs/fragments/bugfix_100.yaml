@@ -1,0 +1,3 @@
+---
+trivial:
+        - Make "_validate_arg" method as generic utility function.
