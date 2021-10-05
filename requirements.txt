@@ -1,4 +1,4 @@
-jsonschema
+jsonschema==3.2.0 ; python_version == '3.5'
 textfsm
 ttp
 xmltodict
