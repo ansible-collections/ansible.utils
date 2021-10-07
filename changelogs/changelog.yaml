@@ -155,8 +155,8 @@ releases:
     release_date: '2021-08-28'
   2.4.1:
     changes:
-       release_summary:
-       - Rereleased 2.4.0 with trivial changes.
+      release_summary:
+      - Rereleased 2.4.0 with trivial changes.
     fragments:
     - 2.4.1.yaml
     - fix_network_ee.yaml
