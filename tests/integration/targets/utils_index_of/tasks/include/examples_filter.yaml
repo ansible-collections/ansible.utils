@@ -37,13 +37,13 @@
 #     indices:
 #     - 2
 
-- name: Find numbers greater than 1, using loop
-  debug:
-    msg: "{{ data[item] }} is {{ test }} than {{ value }}"
-  loop: "{{ data|ansible.utils.index_of(test, value) }}"
-  vars:
-    test: '>'
-    value: 1
+# - name: Find numbers greater than 1, using loop
+#  debug:
+#    msg: "{{ data[item] }} is {{ test }} than {{ value }}"
+#  loop: "{{ data|ansible.utils.index_of(test, value) }}"
+#  vars:
+#    test: '>'
+#    value: 1
 
 # TASK [Find numbers great than 1, using loop] *******************************
 # ok: [sw01] => (item=1) =>
