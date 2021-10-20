@@ -5,6 +5,14 @@ Ansible Utils Collection Release Notes
 .. contents:: Topics
 
 
+v2.4.2
+======
+
+Release Summary
+---------------
+
+- Rereleased 2.4.1 with valid requirement.txt.
+
 v2.4.1
 ======
 
