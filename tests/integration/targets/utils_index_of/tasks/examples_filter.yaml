@@ -8,7 +8,7 @@
 
 - name: Find the index of 2
   ansible.builtin.set_fact:
-    indices: "{{ lookup('ansible.utils.index_of', data, 'eq', 2) }}"
+    indices: "{{ data|ansible.utils.index_of('eq', 2) }}"
 
 # TASK [Find the index of 2] *************************************************
 # ok: [nxos101] => changed=false
@@ -17,7 +17,7 @@
 
 - name: Find the index of 2, ensure list is returned
   ansible.builtin.set_fact:
-    indices: "{{ lookup('ansible.utils.index_of', data, 'eq', 2, wantlist=True) }}"
+    indices: "{{ data|ansible.utils.index_of('eq', 2, wantlist=True) }}"
 
 # TASK [Find the index of 2, ensure list is returned] ************************
 # ok: [nxos101] => changed=false
@@ -27,7 +27,7 @@
 
 - name: Find the index of 3 using the long format
   ansible.builtin.set_fact:
-    indices: "{{ lookup('ansible.utils.index_of', data=data, test='eq', value=value, wantlist=True) }}"
+    indices: "{{ data|ansible.utils.index_of(test='eq', value=value, wantlist=True) }}"
   vars:
     value: 3
 
@@ -37,34 +37,18 @@
 #     indices:
 #     - 2
 
-- name: Find numbers greater than 1, using loop
-  debug:
-    msg: "{{ data[item] }} is {{ test }} than {{ value }}"
-  loop: "{{ lookup('ansible.utils.index_of', data, test, value) }}"
-  vars:
-    test: '>'
-    value: 1
+#- name: Find numbers greater than 1, using loop
+#  debug:
+#    msg: "{{ data[item] }} is {{ test }} than {{ value }}"
+#  loop: "{{ data|ansible.utils.index_of(test, value) }}"
+#  vars:
+#    test: '>'
+#    value: 1
 
 # TASK [Find numbers great than 1, using loop] *******************************
 # ok: [sw01] => (item=1) =>
 #   msg: 2 is > than 1
 # ok: [sw01] => (item=2) =>
-#   msg: 3 is > than 1
-
-- name: Find numbers greater than 1, using with
-  debug:
-    msg: "{{ data[item] }} is {{ params.test }} than {{ params.value }}"
-  with_ansible.utils.index_of: "{{ params }}"
-  vars:
-    params:
-      data: "{{ data }}"
-      test: '>'
-      value: 1
-
-# TASK [Find numbers greater than 1, using with] *****************************
-# ok: [nxos101] => (item=1) =>
-#   msg: 2 is > than 1
-# ok: [nxos101] => (item=2) =>
 #   msg: 3 is > than 1
 
 
@@ -83,7 +67,7 @@
 
 - name: Find the index of all firewalls using the type key
   ansible.builtin.set_fact:
-    firewalls: "{{ lookup('ansible.utils.index_of', data, 'eq', 'firewall', 'type') }}"
+    firewalls: "{{ data|ansible.utils.index_of('eq', 'firewall', 'type') }}"
 
 # TASK [Find the index of all firewalls using the type key] ******************
 # ok: [nxos101] => changed=false
@@ -95,7 +79,7 @@
 - name: Find the index of all firewalls, use in a loop
   debug:
     msg: "The type of {{ device_type }} at index {{ item }} has name {{ data[item].name }}."
-  loop: "{{ lookup('ansible.utils.index_of', data, 'eq', device_type, 'type') }}"
+  loop: "{{ data|ansible.utils.index_of('eq', device_type, 'type') }}"
   vars:
     device_type: firewall
 
@@ -108,7 +92,7 @@
 - name: Find the index of all devices with a .corp name
   debug:
     msg: "The device named {{ data[item].name }} is a {{ data[item].type }}"
-  loop: "{{ lookup('ansible.utils.index_of', data, 'regex', expression, 'name') }}"
+  loop: "{{ data|ansible.utils.index_of('regex', expression, 'name') }}"
   vars:
     expression: '\.corp$'  # ends with .corp
 
@@ -144,7 +128,7 @@
 #   vars:
 #     found: []
 #     ip: '192.168.101.'
-#     address: "{{ lookup('ansible.utils.index_of', item.1.ipv4|d([]), 'search', ip, 'address', wantlist=True) }}"
+#     address: "{{ item.1.ipv4|d([])|ansible.utils.index_of('search', ip, 'address', wantlist=True) }}"
 #     entry:
 #     - interface_idx: "{{ item.0 }}"
 #       address_idxs: "{{ address }}"
@@ -230,13 +214,12 @@
     sub_index: 10
     # retrieve the index in each nested list
     int_idx: |
-      {{ lookup('ansible.utils.index_of',
-             data.interfaces.interface,
-                 'eq', int_name, 'name') }}
+      {{ data.interfaces.interface|
+            ansible.utils.index_of('eq', int_name, 'name') }}
     subint_idx: |
-      {{ lookup('ansible.utils.index_of',
-             data.interfaces.interface[int_idx|int].subinterfaces.subinterface,
-                 'eq', sub_index, 'index') }}
+      {{ data.interfaces.interface[int_idx|int]
+            .subinterfaces.subinterface|
+                ansible.utils.index_of('eq', sub_index, 'index') }}
 
 # TASK [Find the description of loopback111, subinterface index 10] ************
 # ok: [sw01] =>

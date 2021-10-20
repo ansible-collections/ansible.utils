@@ -1,13 +1,3 @@
 ---
-- name: Recursively find all test files
-  find:
-    file_type: file
-    paths: "{{ role_path }}/tasks/include"
-    recurse: true
-    use_regex: true
-    patterns:
-      - "^(?!_).+$"
-  register: found
-
-- include: "{{ item.path }}"
-  loop: "{{ found.files }}"
+- include_tasks: argspec.yml
+- include_tasks: example_filter.yml

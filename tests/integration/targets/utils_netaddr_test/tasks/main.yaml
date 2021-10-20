@@ -1,13 +1,25 @@
 ---
-- name: Recursively find all test files
-  find:
-    file_type: file
-    paths: "{{ role_path }}/tasks/include"
-    recurse: true
-    use_regex: true
-    patterns:
-      - '^(?!_).+$'
-  register: found
-
-- include: "{{ item.path }}"
-  loop: "{{ found.files }}"
+- include_tasks: in_any_network.yml
+- include_tasks: in_network.yml
+- include_tasks: in_one_network.yml
+- include_tasks: ip.yml
+- include_tasks: ip_address.yml
+- include_tasks: ipv4.yml
+- include_tasks: ipv4_address.yml
+- include_tasks: ipv4_hostmask.yml
+- include_tasks: ipv4_netmask.yml
+- include_tasks: ipv6.yml
+- include_tasks: ipv6_address.yml
+- include_tasks: ipv6_ipv4_mapped.yml
+- include_tasks: ipv6_sixtofour.yml
+- include_tasks: ipv6_teredo.yml
+- include_tasks: loopback.yml
+- include_tasks: mac.yml
+- include_tasks: multicast.yml
+- include_tasks: private.yml
+- include_tasks: public.yml
+- include_tasks: reserved.yml
+- include_tasks: resolvable.yml
+- include_tasks: subnet_of.yml
+- include_tasks: supernet_of.yml
+- include_tasks: unspecified.yml
