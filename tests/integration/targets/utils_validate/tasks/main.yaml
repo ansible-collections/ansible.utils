@@ -1,5 +1,14 @@
 ---
-- include_tasks: filter.yaml
-- include_tasks: lookup.yaml
-- include_tasks: module.yaml
-- include_tasks: test.yaml
+- name: Recursively find all test files
+  find:
+    file_type: file
+    paths: "{{ role_path }}/tasks"
+    recurse: false
+    use_regex: true
+    patterns:
+      - '^(?!_|main).+$'
+  delegate_to: localhost
+  register: found
+
+- include: "{{ item.path }}"
+  loop: "{{ found.files }}"
