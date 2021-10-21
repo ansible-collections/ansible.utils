@@ -1,6 +1,6 @@
 plugins/module_utils/common/index_of.py pylint:ansible-bad-module-import # file's use is limited to filter and lookups on control node
 tests/unit/mock/loader.py pylint:arguments-renamed
-plugins/filter/from_xml.py traceback: DeprecationWarning: 'environmentfilter' is renamed to 'pass_environment', the old name will be removed in Jinja 3.1.
-plugins/filter/get_path.py traceback: DeprecationWarning: 'environmentfilter' is renamed to 'pass_environment', the old name will be removed in Jinja 3.1.
-plugins/filter/index_of.py traceback: DeprecationWarning: 'environmentfilter' is renamed to 'pass_environment', the old name will be removed in Jinja 3.1.
-plugins/filter/to_xml.py traceback: DeprecationWarning: 'environmentfilter' is renamed to 'pass_environment', the old name will be removed in Jinja 3.1.
+plugins/filter/from_xml.py traceback:DeprecationWarning: 'environmentfilter' is renamed to 'pass_environment', the old name will be removed in Jinja 3.1.
+plugins/filter/get_path.py traceback:DeprecationWarning: 'environmentfilter' is renamed to 'pass_environment', the old name will be removed in Jinja 3.1.
+plugins/filter/index_of.py traceback:DeprecationWarning: 'environmentfilter' is renamed to 'pass_environment', the old name will be removed in Jinja 3.1.
+plugins/filter/to_xml.py traceback:DeprecationWarning: 'environmentfilter' is renamed to 'pass_environment', the old name will be removed in Jinja 3.1.
