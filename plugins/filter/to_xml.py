@@ -106,13 +106,22 @@ EXAMPLES = r"""
 """
 
 from ansible.errors import AnsibleFilterError
-from jinja2.filters import environmentfilter
 from ansible_collections.ansible.utils.plugins.plugin_utils.to_xml import (
     to_xml,
 )
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     AnsibleArgSpecValidator,
 )
+
+# patch Jinja2 >= 3.0 for backwards compatibility
+try:
+    import sys as _sys
+    from jinja2.filters import pass_environment as _passenv
+
+    _mod = _sys.modules["jinja2.filters"]
+    _mod.environmentfilter = _passenv
+except ImportError:
+    _sys = None
 
 
 @environmentfilter
