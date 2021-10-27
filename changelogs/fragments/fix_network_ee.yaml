@@ -1,0 +1,3 @@
+---
+trivial:
+    - fix issue of skipping some tests integration targets from running after network ee migration.

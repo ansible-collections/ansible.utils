@@ -148,8 +148,6 @@ EXAMPLES = r"""
 """
 
 from ansible.errors import AnsibleFilterError
-from jinja2.filters import environmentfilter
-
 from ansible_collections.ansible.utils.plugins.module_utils.common.get_path import (
     get_path,
 )
@@ -158,8 +156,13 @@ from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_valid
     AnsibleArgSpecValidator,
 )
 
+try:
+    from jinja2.filters import pass_environment
+except ImportError:
+    from jinja2.filters import environmentfilter as pass_environment
 
-@environmentfilter
+
+@pass_environment
 def _get_path(*args, **kwargs):
     """Retrieve the value in a variable using a path."""
     keys = ["environment", "var", "path"]

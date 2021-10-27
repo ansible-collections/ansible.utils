@@ -2,11 +2,12 @@
 - name: Recursively find all test files
   find:
     file_type: file
-    paths: "{{ role_path }}/tasks/include"
-    recurse: true
+    paths: "{{ role_path }}/tasks"
+    recurse: false
     use_regex: true
     patterns:
-      - '^(?!_).+$'
+      - '^(?!_|main).+$'
+  delegate_to: localhost
   register: found
 
 - include: "{{ item.path }}"

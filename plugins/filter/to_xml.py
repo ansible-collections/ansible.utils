@@ -106,7 +106,6 @@ EXAMPLES = r"""
 """
 
 from ansible.errors import AnsibleFilterError
-from jinja2.filters import environmentfilter
 from ansible_collections.ansible.utils.plugins.plugin_utils.to_xml import (
     to_xml,
 )
@@ -114,8 +113,13 @@ from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_valid
     AnsibleArgSpecValidator,
 )
 
+try:
+    from jinja2.filters import pass_environment
+except ImportError:
+    from jinja2.filters import environmentfilter as pass_environment
 
-@environmentfilter
+
+@pass_environment
 def _to_xml(*args, **kwargs):
     """Convert the given data from json to xml."""
     keys = ["data", "engine"]
