@@ -5,3 +5,4 @@ ipaddress ; python_version < '3.0'
 mock ; python_version < '3.5'
 pytest-xdist
 yamllint
+jinja2 >= 3.0.0 ; python_version > '3.5'
