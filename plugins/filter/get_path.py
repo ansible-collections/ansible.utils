@@ -162,7 +162,6 @@ except ImportError:
     from jinja2.filters import environmentfilter as pass_environment
 
 
-
 @pass_environment
 def _get_path(*args, **kwargs):
     """Retrieve the value in a variable using a path."""

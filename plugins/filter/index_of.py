@@ -311,7 +311,6 @@ except ImportError:
     from jinja2.filters import environmentfilter as pass_environment
 
 
-
 @pass_environment
 def _index_of(*args, **kwargs):
     """Find the indicies of items in a list matching some criteria."""
