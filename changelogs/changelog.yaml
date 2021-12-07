@@ -170,3 +170,11 @@ releases:
     - add_ignore_2.13.yaml
     - bugfix_100.yaml
     release_date: '2021-10-07'
+  2.4.3:
+    changes:
+      release_summary:
+        - Rereleased 2.4.2 with fix of network ee tests.
+    fragments:
+      - 2.4.3.yaml
+      - fix_network_ee.yaml
+    release_date: '2021-12-07'

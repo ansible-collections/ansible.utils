@@ -4,6 +4,13 @@ Ansible Utils Collection Release Notes
 
 .. contents:: Topics
 
+v2.4.3
+======
+
+Release Summary
+---------------
+
+- Rereleased 2.4.2 with fix of network ee tests.
 
 v2.4.2
 ======
