@@ -50,6 +50,22 @@ def remove_keys_from_dict_n_list(data, target, matching_parameter):
     return data
 
 
+def clear_empty_data(data):
+    if isinstance(data, dict):
+        # for k in list(data.keys()):
+        #     if not data.get(k, {}):
+        #         del data[k]
+        for k, v in data.items():
+            data[k] = clear_empty_data(v)
+    if isinstance(data, list):
+        temp = []
+        for i in data:
+            if i:
+                temp.append(clear_empty_data(i))
+        return temp
+    return data
+
+
 def remove_keys(data, target, matching_parameter="equality"):
     """Remove unwanted keys recursively from a given data"
     :param data: The data passed in (data|remove_keys(...))
@@ -63,4 +79,5 @@ def remove_keys(data, target, matching_parameter="equality"):
     if not isinstance(data, (list, dict)):
         _raise_error("Input is not valid for attribute removal")
     data = remove_keys_from_dict_n_list(data, target, matching_parameter)
+    data = clear_empty_data(data)
     return data

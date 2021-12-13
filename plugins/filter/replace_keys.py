@@ -19,6 +19,7 @@ DOCUMENTATION = """
     short_description: Replaces specific keys with their after value from a data recursively.
     description:
         - This plugin replaces specific keys with their after value from a data recursively.
+        - Matching parameter defaults to equals unless C(matching_parameter) is explicitly mentioned.
         - Using the parameters below- C(data|ansible.utils.replace_keys(target([....])))
     options:
       data:
@@ -40,77 +41,241 @@ DOCUMENTATION = """
 """
 
 EXAMPLES = r"""
+##example.yaml
+interfaces:
+  - interface_name: eth0
+    enabled: true
+    duplex: auto
+    speed: auto
+  - interface_name: eth1
+    description: Configured by Ansible - Interface 1
+    mtu: 1500
+    speed: auto
+    duplex: auto
+    is_enabled: true
+    vifs:
+    - vlan_id: 100
+      description: Eth1 - VIF 100
+      mtu: 400
+      is_enabled: true
+    - vlan_id: 101
+      description: Eth1 - VIF 101
+      is_enabled: true
+  - interface_name: eth2
+    description: Configured by Ansible - Interface 2 (ADMIN DOWN)
+    mtu: 600
+    is_enabled: false
 
-#### Simple examples with out any engine. plugin will use default value as xmltodict
-
+##Playbook
+vars_files:
+  - "example.yaml"
 tasks:
-  - name: convert given XML to native python dictionary
+  - name: replace keys with specified keys dict/list to dict
     ansible.builtin.set_fact:
-      data: "
-        <netconf-state xmlns=\"urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring\"><schemas><schema/></schemas></netconf-state>
-            "
+      data: "{{ interfaces }}"
 
   - debug:
-      msg:  "{{ data|ansible.utils.from_xml }}"
+      msg:  "{{ data|ansible.utils.replace_keys(target=[{'before':'interface_name', 'after':'name'}, {'before':'is_enabled', 'after':'enabled'}]) }}"
 
-##TASK######
-# TASK [convert given XML to native python dictionary] *****************************************************************************************************
-# task path: /Users/amhatre/ansible-collections/playbooks/test_utils.yaml:5
+##Output
+# TASK [replace keys with specified keys dict/list to dict] *************************
 # ok: [localhost] => {
 #     "ansible_facts": {
-#         "data": " <netconf-state xmlns=\"urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring\"><schemas><schema/></schemas></netconf-state> "
+#         "data": [
+#             {
+#                 "duplex": "auto",
+#                 "enabled": true,
+#                 "interface_name": "eth0",
+#                 "speed": "auto"
+#             },
+#             {
+#                 "description": "Configured by Ansible - Interface 1",
+#                 "duplex": "auto",
+#                 "interface_name": "eth1",
+#                 "is_enabled": true,
+#                 "mtu": 1500,
+#                 "speed": "auto",
+#                 "vifs": [
+#                     {
+#                         "description": "Eth1 - VIF 100",
+#                         "is_enabled": true,
+#                         "mtu": 400,
+#                         "vlan_id": 100
+#                     },
+#                     {
+#                         "description": "Eth1 - VIF 101",
+#                         "is_enabled": true,
+#                         "vlan_id": 101
+#                     }
+#                 ]
+#             },
+#             {
+#                 "description": "Configured by Ansible - Interface 2 (ADMIN DOWN)",
+#                 "interface_name": "eth2",
+#                 "is_enabled": false,
+#                 "mtu": 600
+#             }
+#         ]
 #     },
 #     "changed": false
 # }
-#
-# TASK [debug] *************************************************************************************************************************
-# task path: /Users/amhatre/ansible-collections/playbooks/test_utils.yaml:13
-# Loading collection ansible.utils from /Users/amhatre/ansible-collections/collections/ansible_collections/ansible/utils
+
+# TASK [debug] **********************************************************************
 # ok: [localhost] => {
-#     "msg": {
-#         "netconf-state": {
-#             "@xmlns": "urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring",
-#             "schemas": {
-#                 "schema": null
-#             }
+#     "msg": [
+#         {
+#             "duplex": "auto",
+#             "enabled": true,
+#             "name": "eth0",
+#             "speed": "auto"
+#         },
+#         {
+#             "description": "Configured by Ansible - Interface 1",
+#             "duplex": "auto",
+#             "enabled": true,
+#             "mtu": 1500,
+#             "name": "eth1",
+#             "speed": "auto",
+#             "vifs": [
+#                 {
+#                     "description": "Eth1 - VIF 100",
+#                     "enabled": true,
+#                     "mtu": 400,
+#                     "vlan_id": 100
+#                 },
+#                 {
+#                     "description": "Eth1 - VIF 101",
+#                     "enabled": true,
+#                     "vlan_id": 101
+#                 }
+#             ]
+#         },
+#         {
+#             "description": "Configured by Ansible - Interface 2 (ADMIN DOWN)",
+#             "enabled": false,
+#             "mtu": 600,
+#             "name": "eth2"
 #         }
-#     }
+#     ]
 # }
 
-#### example2 with engine=xmltodict
+##example.yaml
+interfaces:
+  - interface_name: eth0
+    enabled: true
+    duplex: auto
+    speed: auto
+  - interface_name: eth1
+    description: Configured by Ansible - Interface 1
+    mtu: 1500
+    speed: auto
+    duplex: auto
+    is_enabled: true
+    vifs:
+    - vlan_id: 100
+      description: Eth1 - VIF 100
+      mtu: 400
+      is_enabled: true
+    - vlan_id: 101
+      description: Eth1 - VIF 101
+      is_enabled: true
+  - interface_name: eth2
+    description: Configured by Ansible - Interface 2 (ADMIN DOWN)
+    mtu: 600
+    is_enabled: false
 
+##Playbook
+vars_files:
+  - "example.yaml"
 tasks:
-  - name: convert given XML to native python dictionary
+  - name: replace keys with specified keys dict/list to dict
     ansible.builtin.set_fact:
-      data: "
-        <netconf-state xmlns=\"urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring\"><schemas><schema/></schemas></netconf-state>
-            "
+      data: "{{ interfaces }}"
 
   - debug:
-      msg:  "{{ data|ansible.utils.from_xml('xmltodict') }}"
+      msg:  "{{ data|ansible.utils.replace_keys(target=[{'before':'name', 'after':'name'}, {'before':'enabled', 'after':'enabled'}],
+            matching_parameter= 'ends_with') }}"
 
-##TASK######
-# TASK [convert given XML to native python dictionary] *****************************************************************************************************
-# task path: /Users/amhatre/ansible-collections/playbooks/test_utils.yaml:5
+##Output
+# TASK [replace keys with specified keys dict/list to dict] *********************************
 # ok: [localhost] => {
 #     "ansible_facts": {
-#         "data": " <netconf-state xmlns=\"urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring\"><schemas><schema/></schemas></netconf-state> "
+#         "data": [
+#             {
+#                 "duplex": "auto",
+#                 "enabled": true,
+#                 "interface_name": "eth0",
+#                 "speed": "auto"
+#             },
+#             {
+#                 "description": "Configured by Ansible - Interface 1",
+#                 "duplex": "auto",
+#                 "interface_name": "eth1",
+#                 "is_enabled": true,
+#                 "mtu": 1500,
+#                 "speed": "auto",
+#                 "vifs": [
+#                     {
+#                         "description": "Eth1 - VIF 100",
+#                         "is_enabled": true,
+#                         "mtu": 400,
+#                         "vlan_id": 100
+#                     },
+#                     {
+#                         "description": "Eth1 - VIF 101",
+#                         "is_enabled": true,
+#                         "vlan_id": 101
+#                     }
+#                 ]
+#             },
+#             {
+#                 "description": "Configured by Ansible - Interface 2 (ADMIN DOWN)",
+#                 "interface_name": "eth2",
+#                 "is_enabled": false,
+#                 "mtu": 600
+#             }
+#         ]
 #     },
 #     "changed": false
 # }
-#
-# TASK [debug] *************************************************************************************************************************
-# task path: /Users/amhatre/ansible-collections/playbooks/test_utils.yaml:13
-# Loading collection ansible.utils from /Users/amhatre/ansible-collections/collections/ansible_collections/ansible/utils
+
+# TASK [debug] ***************************************************************************
 # ok: [localhost] => {
-#     "msg": {
-#         "netconf-state": {
-#             "@xmlns": "urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring",
-#             "schemas": {
-#                 "schema": null
-#             }
+#     "msg": [
+#         {
+#             "duplex": "auto",
+#             "enabled": true,
+#             "name": "eth0",
+#             "speed": "auto"
+#         },
+#         {
+#             "description": "Configured by Ansible - Interface 1",
+#             "duplex": "auto",
+#             "enabled": true,
+#             "mtu": 1500,
+#             "name": "eth1",
+#             "speed": "auto",
+#             "vifs": [
+#                 {
+#                     "description": "Eth1 - VIF 100",
+#                     "enabled": true,
+#                     "mtu": 400,
+#                     "vlan_id": 100
+#                 },
+#                 {
+#                     "description": "Eth1 - VIF 101",
+#                     "enabled": true,
+#                     "vlan_id": 101
+#                 }
+#             ]
+#         },
+#         {
+#             "description": "Configured by Ansible - Interface 2 (ADMIN DOWN)",
+#             "enabled": false,
+#             "mtu": 600,
+#             "name": "eth2"
 #         }
-#     }
+#     ]
 # }
 """
 
@@ -135,7 +300,9 @@ def _replace_keys(*args, **kwargs):
     keys = ["data", "target", "matching_parameter"]
     data = dict(zip(keys, args[1:]))
     data.update(kwargs)
-    aav = AnsibleArgSpecValidator(data=data, schema=DOCUMENTATION, name="replace_keys")
+    aav = AnsibleArgSpecValidator(
+        data=data, schema=DOCUMENTATION, name="replace_keys"
+    )
     valid, errors, updated_data = aav.validate()
     if not valid:
         raise AnsibleFilterError(errors)

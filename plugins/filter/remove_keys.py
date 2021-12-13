@@ -19,6 +19,7 @@ DOCUMENTATION = """
     short_description: Remove specific keys from a data recursively.
     description:
         - This plugin removes specific keys from a provided data recursively.
+        - Matching parameter defaults to equals unless C(matching_parameter) is explicitly mentioned.
         - Using the parameters below- C(data|ansible.utils.remove_keys(target([....])))
     options:
       data:
@@ -40,77 +41,272 @@ DOCUMENTATION = """
 
 EXAMPLES = r"""
 
-#### Simple examples with out any engine. plugin will use default value as xmltodict
+##example.yaml
+interfaces:
+  - name: eth0
+    enabled: true
+    duplex: auto
+    speed: auto
+    note:
+      - Connected green wire
+  - name: eth1
+    description: Configured by Ansible - Interface 1
+    mtu: 1500
+    speed: auto
+    duplex: auto
+    enabled: true
+    note:
+      - Connected blue wire
+      - Configured by Paul
+    vifs:
+    - vlan_id: 100
+      description: Eth1 - VIF 100
+      mtu: 400
+      enabled: true
+      comment: Needs reconfiguration
+    - vlan_id: 101
+      description: Eth1 - VIF 101
+      enabled: true
+  - name: eth2
+    description: Configured by Ansible - Interface 2 (ADMIN DOWN)
+    mtu: 600
+    enabled: false
 
+##Playbook
+vars_files:
+  - "example.yaml"
 tasks:
-  - name: convert given XML to native python dictionary
+  - name: remove multiple keys from a provided data
     ansible.builtin.set_fact:
-      data: "
-        <netconf-state xmlns=\"urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring\"><schemas><schema/></schemas></netconf-state>
-            "
+      data: "{{ interfaces }}"
 
   - debug:
-      msg:  "{{ data|ansible.utils.from_xml }}"
+      msg:  "{{ data|ansible.utils.remove_keys(target=['note', 'comment']) }}"
 
-##TASK######
-# TASK [convert given XML to native python dictionary] *****************************************************************************************************
-# task path: /Users/amhatre/ansible-collections/playbooks/test_utils.yaml:5
+##Output
+# TASK [remove multiple keys from a provided data] ***************************************
 # ok: [localhost] => {
 #     "ansible_facts": {
-#         "data": " <netconf-state xmlns=\"urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring\"><schemas><schema/></schemas></netconf-state> "
+#         "data": [
+#             {
+#                 "duplex": "auto",
+#                 "enabled": true,
+#                 "name": "eth0",
+#                 "note": [
+#                     "Connected green wire"
+#                 ],
+#                 "speed": "auto"
+#             },
+#             {
+#                 "description": "Configured by Ansible - Interface 1",
+#                 "duplex": "auto",
+#                 "enabled": true,
+#                 "mtu": 1500,
+#                 "name": "eth1",
+#                 "note": [
+#                     "Connected blue wire",
+#                     "Configured by Paul"
+#                 ],
+#                 "speed": "auto",
+#                 "vifs": [
+#                     {
+#                         "comment": "Needs reconfiguration",
+#                         "description": "Eth1 - VIF 100",
+#                         "enabled": true,
+#                         "mtu": 400,
+#                         "vlan_id": 100
+#                     },
+#                     {
+#                         "description": "Eth1 - VIF 101",
+#                         "enabled": true,
+#                         "vlan_id": 101
+#                     }
+#                 ]
+#             },
+#             {
+#                 "description": "Configured by Ansible - Interface 2 (ADMIN DOWN)",
+#                 "enabled": false,
+#                 "mtu": 600,
+#                 "name": "eth2"
+#             }
+#         ]
 #     },
 #     "changed": false
 # }
-#
-# TASK [debug] *************************************************************************************************************************
-# task path: /Users/amhatre/ansible-collections/playbooks/test_utils.yaml:13
-# Loading collection ansible.utils from /Users/amhatre/ansible-collections/collections/ansible_collections/ansible/utils
+# Read vars_file 'example.yaml'
+
+# TASK [debug] ********************************************
 # ok: [localhost] => {
-#     "msg": {
-#         "netconf-state": {
-#             "@xmlns": "urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring",
-#             "schemas": {
-#                 "schema": null
-#             }
+#     "msg": [
+#         {
+#             "duplex": "auto",
+#             "enabled": true,
+#             "name": "eth0",
+#             "speed": "auto"
+#         },
+#         {
+#             "description": "Configured by Ansible - Interface 1",
+#             "duplex": "auto",
+#             "enabled": true,
+#             "mtu": 1500,
+#             "name": "eth1",
+#             "speed": "auto",
+#             "vifs": [
+#                 {
+#                     "description": "Eth1 - VIF 100",
+#                     "enabled": true,
+#                     "mtu": 400,
+#                     "vlan_id": 100
+#                 },
+#                 {
+#                     "description": "Eth1 - VIF 101",
+#                     "enabled": true,
+#                     "vlan_id": 101
+#                 }
+#             ]
+#         },
+#         {
+#             "description": "Configured by Ansible - Interface 2 (ADMIN DOWN)",
+#             "enabled": false,
+#             "mtu": 600,
+#             "name": "eth2"
 #         }
-#     }
+#     ]
 # }
 
-#### example2 with engine=xmltodict
+##example.yaml
+interfaces:
+  - name: eth0
+    enabled: true
+    duplex: auto
+    speed: auto
+    note:
+      - Connected green wire
+  - name: eth1
+    description: Configured by Ansible - Interface 1
+    mtu: 1500
+    speed: auto
+    duplex: auto
+    enabled: true
+    note:
+      - Connected blue wire
+      - Configured by Paul
+    vifs:
+    - vlan_id: 100
+      description: Eth1 - VIF 100
+      mtu: 400
+      enabled: true
+      comment: Needs reconfiguration
+    - vlan_id: 101
+      description: Eth1 - VIF 101
+      enabled: true
+  - name: eth2
+    description: Configured by Ansible - Interface 2 (ADMIN DOWN)
+    mtu: 600
+    enabled: false
 
+##Playbook
+vars_files:
+  - "example.yaml"
 tasks:
-  - name: convert given XML to native python dictionary
+  - name: remove multiple keys from a provided data
     ansible.builtin.set_fact:
-      data: "
-        <netconf-state xmlns=\"urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring\"><schemas><schema/></schemas></netconf-state>
-            "
+      data: "{{ interfaces }}"
 
   - debug:
-      msg:  "{{ data|ansible.utils.from_xml('xmltodict') }}"
+      msg:  "{{ data|ansible.utils.remove_keys(target=['^note$', '^comment'], matching_parameter= 'regex') }}"
 
-##TASK######
-# TASK [convert given XML to native python dictionary] *****************************************************************************************************
-# task path: /Users/amhatre/ansible-collections/playbooks/test_utils.yaml:5
+##Output
+# TASK [remove multiple keys from a provided data] ***********************
 # ok: [localhost] => {
 #     "ansible_facts": {
-#         "data": " <netconf-state xmlns=\"urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring\"><schemas><schema/></schemas></netconf-state> "
+#         "data": [
+#             {
+#                 "duplex": "auto",
+#                 "enabled": true,
+#                 "name": "eth0",
+#                 "note": [
+#                     "Connected green wire"
+#                 ],
+#                 "speed": "auto"
+#             },
+#             {
+#                 "description": "Configured by Ansible - Interface 1",
+#                 "duplex": "auto",
+#                 "enabled": true,
+#                 "mtu": 1500,
+#                 "name": "eth1",
+#                 "note": [
+#                     "Connected blue wire",
+#                     "Configured by Paul"
+#                 ],
+#                 "speed": "auto",
+#                 "vifs": [
+#                     {
+#                         "comment": "Needs reconfiguration",
+#                         "description": "Eth1 - VIF 100",
+#                         "enabled": true,
+#                         "mtu": 400,
+#                         "vlan_id": 100
+#                     },
+#                     {
+#                         "description": "Eth1 - VIF 101",
+#                         "enabled": true,
+#                         "vlan_id": 101
+#                     }
+#                 ]
+#             },
+#             {
+#                 "description": "Configured by Ansible - Interface 2 (ADMIN DOWN)",
+#                 "enabled": false,
+#                 "mtu": 600,
+#                 "name": "eth2"
+#             }
+#         ]
 #     },
 #     "changed": false
 # }
-#
-# TASK [debug] *************************************************************************************************************************
-# task path: /Users/amhatre/ansible-collections/playbooks/test_utils.yaml:13
-# Loading collection ansible.utils from /Users/amhatre/ansible-collections/collections/ansible_collections/ansible/utils
+# Read vars_file 'example.yaml'
+
+# TASK [debug] *****************************************
 # ok: [localhost] => {
-#     "msg": {
-#         "netconf-state": {
-#             "@xmlns": "urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring",
-#             "schemas": {
-#                 "schema": null
-#             }
+#     "msg": [
+#         {
+#             "duplex": "auto",
+#             "enabled": true,
+#             "name": "eth0",
+#             "speed": "auto"
+#         },
+#         {
+#             "description": "Configured by Ansible - Interface 1",
+#             "duplex": "auto",
+#             "enabled": true,
+#             "mtu": 1500,
+#             "name": "eth1",
+#             "speed": "auto",
+#             "vifs": [
+#                 {
+#                     "description": "Eth1 - VIF 100",
+#                     "enabled": true,
+#                     "mtu": 400,
+#                     "vlan_id": 100
+#                 },
+#                 {
+#                     "description": "Eth1 - VIF 101",
+#                     "enabled": true,
+#                     "vlan_id": 101
+#                 }
+#             ]
+#         },
+#         {
+#             "description": "Configured by Ansible - Interface 2 (ADMIN DOWN)",
+#             "enabled": false,
+#             "mtu": 600,
+#             "name": "eth2"
 #         }
-#     }
+#     ]
 # }
+
 """
 
 from ansible.errors import AnsibleFilterError
@@ -134,7 +330,9 @@ def _remove_keys(*args, **kwargs):
     keys = ["data", "target", "matching_parameter"]
     data = dict(zip(keys, args[1:]))
     data.update(kwargs)
-    aav = AnsibleArgSpecValidator(data=data, schema=DOCUMENTATION, name="remove_keys")
+    aav = AnsibleArgSpecValidator(
+        data=data, schema=DOCUMENTATION, name="remove_keys"
+    )
     valid, errors, updated_data = aav.validate()
     if not valid:
         raise AnsibleFilterError(errors)
