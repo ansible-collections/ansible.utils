@@ -22,7 +22,7 @@ def _raise_error(msg):
     :type msg: str
     :raises: AnsibleError
     """
-    error = "Error when using plugin 'remove_keys': {msg}".format(msg=msg)
+    error = "Error when using plugin 'replace_keys': {msg}".format(msg=msg)
     raise AnsibleFilterError(error)
 
 

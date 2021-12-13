@@ -34,6 +34,13 @@ DOCUMENTATION = """
         type: list
         elements: dict
         required: True
+        suboptions:
+          before:
+            description: before attribute key [to change]
+            type: str
+          after:
+            description: after attribute key [change to]
+            type: str
       matching_parameter:
         description: Specify the matching configuration of target keys and data attributes.
         type: str
