@@ -1,0 +1,136 @@
+# -*- coding: utf-8 -*-
+# Copyright 2021 Red Hat
+# GNU General Public License v3.0+
+# (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
+
+from __future__ import absolute_import, division, print_function
+
+__metaclass__ = type
+
+DOCUMENTATION = """
+    author: Nathaniel Case (@Qalthos)
+    name: config
+    short_description: Define configurable options for configuration validate plugin
+    description:
+    - This sub plugin documentation provides the configurable options that can be passed
+      to the validate plugins when C(ansible.utils.config) is used as a value for
+      engine option.
+    version_added: 2.1.0
+    notes:
+    - The value of I(data) option should be a candidate device configuration.
+    - The value of I(criteria) should be a B(list) of rules the candidate configuration
+      will be checked against.
+"""
+
+
+EXAMPLES = r"""
+- name: Interface description should not be more than 8 chars
+  example: "Matches description this-is-a-long-description"
+  rule: 'description\s(.{9,})'
+  action: warn
+
+- name: Ethernet interface names should be in format Ethernet[Slot/chassis number].[sub-intf number (optional)]
+  example: "Matches interface Eth1/1, interface Eth 1/1, interface Ethernet 1/1, interface Ethernet 1/1.100"
+  rule: 'interface\sE(?!\w{7}\d/\d(.\d+)?)'
+  action: fail
+
+- name: Ethernet interface names should be in format Ethernet[Slot/chassis number].[sub-intf number (optional)]
+  example: "Matches interface eth1/1, interface eth 1/1, interface ethernet 1/1, interface ethernet 1/1.100"
+  rule: 'interface\se(?!\w{7}\d/\d(.\d+)?)'
+  action: fail
+
+- name: Loopback interface names should be in format loopback[Virtual Interface Number]
+  example: "Matches interface Lo10, interface Loopback 10"
+  rule: 'interface\sl(?!\w{7}\d)'
+  action: fail
+
+- name: Loopback interface names should be in format loopback[Virtual Interface Number]
+  example: "Matches interface lo10, interface loopback 10"
+  rule: 'interface\sL(?!\w{7}\d)'
+  action: fail
+
+- name: Port Channel names should be in format port-channel[Port Channel number].[sub-intf number (optional)]
+  example: "Matches interface port-channel 10, interface po10, interface port-channel 10.1"
+  rule: 'interface\sp(?!\w{3}-\w{7}\d(.\d+)?)'
+  action: fail
+
+- name: Port Channel names should be in format port-channel[Port Channel number].[sub-intf number (optional)]
+  example: "Matches interface Port-channel 10, interface Po10, interface Port-channel 10.1"
+  rule: 'interface\sP(?!\w{3}-\w{7}\d(.\d+)?)'
+  action: fail
+"""
+
+import re
+
+from ansible.module_utils._text import to_text
+
+from ansible_collections.ansible.utils.plugins.plugin_utils.base.validate import (
+    ValidateBase,
+)
+
+
+def format_message(match, line_number, criteria):
+    """Format warning or error message based on given line and criteria."""
+    return 'At line {line_number}: {message}\nFound "{line}"'.format(
+        line_number=line_number + 1,
+        message=criteria["name"],
+        line=match.group(),
+    )
+
+
+class Validate(ValidateBase):
+    def validate(self):
+        """Std entry point for a validate execution
+
+        :return: Errors or parsed text as structured data
+        :rtype: dict
+
+        :example:
+
+        The parse function of a parser should return a dict:
+        {"errors": [a list of errors]}
+        or
+        {"parsed": obj}
+        """
+        try:
+            self._validate_config()
+        except Exception as exc:
+            return {"errors": to_text(exc, errors="surrogate_then_replace")}
+
+        return self._result
+
+    def _validate_config(self):
+        warnings = []
+        errors = []
+        error_messages = []
+
+        for criteria in self._criteria:
+            rule = re.compile(criteria["rule"])
+            for line_number, line in enumerate(self._data.split("\n")):
+                match = rule.search(line)
+                if match:
+                    if criteria["action"] == "warn":
+                        warnings.append(
+                            format_message(match, line_number, criteria)
+                        )
+                    if criteria["action"] == "fail":
+                        errors.append(
+                            {"message": criteria["name"], "found": line}
+                        )
+                        error_messages.append(
+                            format_message(match, line_number, criteria)
+                        )
+
+        if errors:
+            if "errors" not in self._result:
+                self._result["errors"] = []
+            self._result["errors"].extend(errors)
+        if error_messages:
+            if "msg" not in self._result:
+                self._result["msg"] = "\n".join(error_messages)
+            else:
+                self._result["msg"] += "\n".join(error_messages)
+        if warnings:
+            if "warnings" not in self._result:
+                self._result["warnings"] = []
+            self._result["warnings"].extend(warnings)

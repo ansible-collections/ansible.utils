@@ -95,6 +95,7 @@ class ActionModule(ActionBase):
                 )
             )
 
+        self._result["msg"] = ""
         if result.get("errors"):
             self._result["errors"] = result["errors"]
             self._result.update({"failed": True})
@@ -104,6 +105,13 @@ class ActionModule(ActionBase):
                 )
             else:
                 self._result["msg"] = "Validation errors were found."
-        else:
-            self._result["msg"] = "all checks passed"
+        # Doing this manually to get around warning deduplication
+        for warning in result.get("warnings", []):
+            self._display.warning(warning)
+            if not self._result["msg"]:
+                self._result["msg"] = "Non-fatal validation errors were found."
+
+        if not self._result["msg"]:
+            self._result["msg"] = "All checks passed."
+
         return self._result
