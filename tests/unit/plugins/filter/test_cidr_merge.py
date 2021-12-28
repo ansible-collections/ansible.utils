@@ -12,7 +12,6 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 import unittest
-from ansible.errors import AnsibleError
 from ansible.errors import AnsibleFilterError
 from ansible_collections.ansible.utils.plugins.filter.cidr_merge import (
     _cidr_merge,
@@ -39,7 +38,7 @@ class TestCidrMerge(unittest.TestCase):
         args = ["", INVALID_DATA_MERGE, "merge"]
         kwargs = {}
         with self.assertRaises(AnsibleFilterError) as error:
-            result = _cidr_merge(*args, **kwargs)
+            _cidr_merge(*args, **kwargs)
         self.assertIn("invalid IPNetwork 0.1234.34.44", str(error.exception))
 
     def test_valid_data_merge(self):
@@ -62,7 +61,7 @@ class TestCidrMerge(unittest.TestCase):
         args = ["", VALID_DATA_SPAN, "span1"]
         kwargs = {}
         with self.assertRaises(AnsibleFilterError) as error:
-            result = _cidr_merge(*args, **kwargs)
+            _cidr_merge(*args, **kwargs)
         self.assertIn(
             "cidr_merge: invalid action 'span1'", str(error.exception)
         )
