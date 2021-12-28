@@ -4,7 +4,7 @@
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 """
-Test plugin file for netaddr tests: resolvable
+filter plugin file for ipaddr filters: cidr_merge
 """
 from __future__ import absolute_import, division, print_function
 from functools import partial
@@ -15,6 +15,8 @@ from ansible.errors import AnsibleFilterError
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     AnsibleArgSpecValidator,
 )
+
+__metaclass__ = type
 
 try:
     import netaddr
@@ -59,7 +61,7 @@ DOCUMENTATION = """
 EXAMPLES = r"""
 #### examples
 - name: cidr_merge with merge action
-    ansible.builtin.set_fact:
+  ansible.builtin.set_fact:
       value:
         - 192.168.0.0/17
         - 192.168.128.0/17
@@ -86,7 +88,7 @@ EXAMPLES = r"""
 # }
 
 - name: Cidr_merge with span.
-    ansible.builtin.set_fact:
+  ansible.builtin.set_fact:
         value:
           - 192.168.1.1
           - 192.168.1.2
