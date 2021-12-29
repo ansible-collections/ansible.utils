@@ -20,9 +20,9 @@ __metaclass__ = type
 
 try:
     import netaddr
+    HAS_IPADDRESS = True
 except ImportError:
-    # in this case, we'll make the filters return error messages (see bottom)
-    netaddr = None
+    HAS_IPADDRESS = False
 else:
 
     class mac_linux(netaddr.mac_unix):
