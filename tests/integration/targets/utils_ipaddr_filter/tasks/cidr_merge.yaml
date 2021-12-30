@@ -24,7 +24,7 @@
 
 - name: cidr_merge with span action
   ansible.builtin.set_fact:
-    result2: "{{ value|ansible.utils.cidr_merge(span) }}"
+    result2: "{{ value|ansible.utils.cidr_merge('span') }}"
 
 - name: Assert result for cidr_merge(span)
   assert:

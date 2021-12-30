@@ -20,9 +20,10 @@ __metaclass__ = type
 
 try:
     import netaddr
-    HAS_IPADDRESS = True
+
+    HAS_NETADDR = True
 except ImportError:
-    HAS_IPADDRESS = False
+    HAS_NETADDR = False
 else:
 
     class mac_linux(netaddr.mac_unix):
@@ -184,7 +185,7 @@ class FilterModule(object):
     }
 
     def filters(self):
-        if netaddr:
+        if HAS_NETADDR:
             return self.filter_map
         else:
             # Need to install python's netaddr for these filters to work
