@@ -53,6 +53,22 @@ VALID_OUTPUT7 = ["192.24.2.1", "192.168.32.0/24"]
 
 VALID_OUTPUT8 = ["192.168.32.0/24", "2001:db8:32c:faad::/64"]
 
+# ansible_default_ipv4 = {
+#     "address": "192.168.0.11",
+#     "alias": "eth0",
+#     "broadcast": "192.168.0.255",
+#     "gateway": "192.168.0.1",
+#     "interface": "eth0",
+#     "macaddress": "fa:16:3e:c4:bd:89",
+#     "mtu": 1500,
+#     "netmask": "255.255.255.0",
+#     "network": "192.168.0.0",
+#     "type": "ether"
+# }
+
+net_mask = "192.168.0.0/255.255.255.0"
+
+host_prefix = ['2001:db8:deaf:be11::ef3/64', '192.0.2.48/24', '192.168.0.0/16']
 
 class TestIpAddr(unittest.TestCase):
     def setUp(self):
@@ -129,3 +145,36 @@ class TestIpAddr(unittest.TestCase):
         with self.assertRaises(AnsibleFilterError) as error:
             _ipaddr(*args, **kwargs)
         self.assertIn("unknown filter type: tftftf", str(error.exception))
+
+    def test_valid_data_with_prefix(self):
+        """Check passing invalid argspec"""
+
+        args = ["", net_mask, "prefix"]
+        result = _ipaddr(*args)
+        self.assertEqual(result, [24])
+
+    def test_valid_data_with_host_prefix(self):
+        """Check passing invalid argspec"""
+
+        args = ["", host_prefix, "host/prefix"]
+        result = _ipaddr(*args)
+        self.assertEqual(result, ['2001:db8:deaf:be11::ef3/64', '192.0.2.48/24'])
+
+    def test_valid_data_with_network_prefix(self):
+        """Check passing invalid argspec"""
+
+        ipaddress = '192.168.0.11/255.255.255.0'
+
+        args = ["", ipaddress, "network/prefix"]
+        result = _ipaddr(*args)
+        self.assertEqual(result, ["192.168.0.0/24"])
+
+    def test_valid_data_with_subnet(self):
+        """Check passing invalid argspec"""
+
+        args = ["", host_prefix, "host/prefix"]
+        result1 = _ipaddr(*args)
+
+        args = ["", result1, "subnet"]
+        result = _ipaddr(*args)
+        self.assertEqual(result, ['2001:db8:deaf:be11::/64', '192.0.2.0/24'])

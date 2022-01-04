@@ -41,8 +41,7 @@ DOCUMENTATION = """
     name: ipaddr
     author: Ashwini Mhatre (@amhatre)
     version_added: "2.5.0"
-    short_description:
-        - This filter is designed to return the input value if a query is True, and False if a query is False.
+    short_description: This filter is designed to return the input value if a query is True, else False.
     description:
         - This filter is designed to return the input value if a query is True, and False if a query is False
         - This way it can be easily used in chained filters
