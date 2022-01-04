@@ -30,6 +30,7 @@ else:
 
 display = Display()
 
+
 # ---- IP address and network query helpers ----
 def _empty_ipaddr_query(v, vtype):
     # We don't have any query to process, so just check what type the user
@@ -40,6 +41,7 @@ def _empty_ipaddr_query(v, vtype):
         elif vtype == "network":
             return str(v)
 
+
 def _first_last(v):
     if v.size == 2:
         first_usable = int(netaddr.IPAddress(v.first))
@@ -49,6 +51,7 @@ def _first_last(v):
         first_usable = int(netaddr.IPAddress(v.first + 1))
         last_usable = int(netaddr.IPAddress(v.last - 1))
         return first_usable, last_usable
+
 
 def _6to4_query(v, vtype, value):
     if v.version == 4:
@@ -258,9 +261,7 @@ def _peer_query(v, vtype):
             return str(netaddr.IPAddress(int(v.ip) ^ 1))
         if v.size == 4:
             if int(v.ip) % 4 == 0:
-                raise AnsibleFilterError(
-                    "Network address of /30 has no peer"
-                )
+                raise AnsibleFilterError("Network address of /30 has no peer")
             if int(v.ip) % 4 == 3:
                 raise AnsibleFilterError(
                     "Broadcast address of /30 has no peer"
@@ -600,4 +601,3 @@ def _need_netaddr(f_name, *args, **kwargs):
         "The %s filter requires python's netaddr be "
         "installed on the ansible controller" % f_name
     )
-

@@ -41,88 +41,206 @@ DOCUMENTATION = """
     name: ipaddr
     author: Ashwini Mhatre (@amhatre)
     version_added: "2.5.0"
-    short_description: This filter can be used to merge subnets or individual addresses.
+    short_description:
+        - This filter is designed to return the input value if a query is True, and False if a query is False.
     description:
-        - This filter can be used to merge subnets or individual addresses into their minimal representation, collapsing
-        - overlapping subnets and merging adjacent ones wherever possible.
+        - This filter is designed to return the input value if a query is True, and False if a query is False
+        - This way it can be easily used in chained filters
     options:
         value:
             description:
-            - list of subnets or individual address to be merged
+            - list of subnets or individual address or any other values input for ipaddr plugin
             type: list
             elements: str
             required: True
-        action:
+        query:
             description:
-            - Action to be performed.example merge,span
-            default: merge
+            - You can provide a single argument to each ipaddr() filter.
+            - The filter will then treat it as a query and return values modified by that query.
+            - Types of queries include:
+                - query by name: ansible.utils.ipaddr('address'), ansible.utils.ipv4('network');
+                - query by CIDR range: ansible.utils.ipaddr('192.168.0.0/24'), ansible.utils.ipv6('2001:db8::/32');
+                - query by index number: ansible.utils.ipaddr('1'), ansible.utils.ipaddr('-1');
             type: str
+            default: ''
+        version:
+            type: int
+            description: Ip version 4 or 6
+        alias:
+            type: str
+            description: type of filter. example ipaddr, ipv4, ipv6, ipwrap
     notes:
 """
 
 EXAMPLES = r"""
 #### examples
-- name: cidr_merge with merge action
+# Ipaddr filter plugin with different queries.
+- name: Set value as input list
   ansible.builtin.set_fact:
-      value:
-        - 192.168.0.0/17
-        - 192.168.128.0/17
-        - 192.168.128.1
+    value:
+      - 192.24.2.1
+      - host.fqdn
+      - ::1
+      - ''
+      - 192.168.32.0/24
+      - fe80::100/10
+      - 42540766412265424405338506004571095040/64
+      - True
 - debug:
-    msg:  "{{ value|ansible.utils.cidr_merge }}"
+    msg: "{{ value|ansible.utils.ipaddr }}"
 
-# TASK [cidr_merge with merge action] **********************************************************************************
+- name: Fetch only those elements that are host IP addresses and not network ranges
+  debug:
+    msg: "{{ value|ansible.utils.ipaddr('address') }}"
+
+- name: Fetch only host IP addresses with their correct CIDR prefixes (as is common with IPv6 addressing), you can use
+  the ipaddr('host') filter.
+  debug:
+    msg: "{{ value|ansible.utils.ipaddr('host') }}"
+
+- name: check if IP addresses or network ranges are accessible on a public Internet and return it.
+  debug:
+    msg: "{{ value|ansible.utils.ipaddr('public') }}"
+
+- name: check if IP addresses or network ranges are accessible on a private Internet and return it.
+  debug:
+     msg: "{{ value|ansible.utils.ipaddr('private') }}"
+
+- name: check which values are values are specifically network ranges and return it.
+  debug:
+    msg: "{{ value|ansible.utils.ipaddr('net') }}"
+
+- name: check how many IP addresses can be in a certain range.
+  debug:
+    msg: "{{ value| ansible.utils.ipaddr('net') | ansible.utils.ipaddr('size') }}"
+
+- name: By specifying a network range as a query, you can check if a given value is in that range.
+  debug:
+    msg: "{{ value|ansible.utils.ipaddr('192.0.0.0/8') }}"
+
+# First IP address (network address)
+- name: If you specify a positive or negative integer as a query, ipaddr() will treat this as an index and will return
+  the specific IP address from a network range, in the "host/prefix" format.
+  debug:
+    msg: "{{ value| ansible.utils.ipaddr('net') | ansible.utils.ipaddr('0') }}"
+
+# Second IP address (usually the gateway host)
+- debug:
+    msg: "{{ value| ansible.utils.ipaddr('net') | ansible.utils.ipaddr('1') }}"
+
+# Last IP address (the broadcast address in IPv4 networks)
+- debug:
+    msg: "{{ value| ansible.utils.ipaddr('net') | ansible.utils.ipaddr('-1') }}"
+
+
+# PLAY [Ipaddr filter plugin with different queries.] ******************************************************************
+# TASK [Set value as input list] ***************************************************************************************
+# ok: [localhost] => {"ansible_facts": {"value": ["192.24.2.1", "host.fqdn", "::1", "", "192.168.32.0/24",
+# "fe80::100/10", "42540766412265424405338506004571095040/64", true]}, "changed": false}
+#
+# TASK [debug] ********************************************************************************************************
 # ok: [localhost] => {
-#     "ansible_facts": {
-#         "value": [
-#             "192.168.0.0/17",
-#             "192.168.128.0/17",
-#             "192.168.128.1"
-#         ]
-#     },
-#     "changed": false
-# }
-# TASK [debug] *********************************************************************************************************
-# ok: [loalhost] => {
 #     "msg": [
-#         "192.168.0.0/16"
+#         "192.24.2.1",
+#         "::1",
+#         "192.168.32.0/24",
+#         "fe80::100/10",
+#         "2001:db8:32c:faad::/64"
 #     ]
 # }
-
-- name: Cidr_merge with span.
-  ansible.builtin.set_fact:
-        value:
-          - 192.168.1.1
-          - 192.168.1.2
-          - 192.168.1.3
-          - 192.168.1.4
-- debug:
-    msg: "{{ value|ansible.utils.cidr_merge('span') }}"
-
-# TASK [Cidr_merge with span.] ********************************************************************
+#
+# TASK [Fetch only those elements that are host IP addresses and not network ranges] ***********************************
 # ok: [localhost] => {
-#     "ansible_facts": {
-#         "value": [
-#             "192.168.1.1",
-#             "192.168.1.2",
-#             "192.168.1.3",
-#             "192.168.1.4"
-#         ]
-#     },
-#     "changed": false
+#     "msg": [
+#         "192.24.2.1",
+#         "::1",
+#         "fe80::100",
+#         "2001:db8:32c:faad::"
+#     ]
 # }
 #
-# TASK [debug] ************************************************************************************
+# TASK [Fetch only host IP addresses with their correct CIDR prefixes (as is common with IPv6 addressing), you can use
+the ipaddr('host') filter.] *****************
 # ok: [localhost] => {
-#     "msg": "192.168.1.0/29"
+#     "msg": [
+#         "192.24.2.1/32",
+#         "::1/128",
+#         "fe80::100/10"
+#     ]
 # }
-
+#
+# TASK [check if IP addresses or network ranges are accessible on a public Internet and return it.] ********************
+# ok: [localhost] => {
+#     "msg": [
+#         "192.24.2.1",
+#         "2001:db8:32c:faad::/64"
+#     ]
+# }
+#
+# TASK [check if IP addresses or network ranges are accessible on a private Internet and return it.] *******************
+# ok: [localhost] => {
+#     "msg": [
+#         "192.168.32.0/24",
+#         "fe80::100/10"
+#     ]
+# }
+#
+# TASK [check which values are values are specifically network ranges and return it.] **********************************
+# ok: [localhost] => {
+#     "msg": [
+#         "192.168.32.0/24",
+#         "2001:db8:32c:faad::/64"
+#     ]
+# }
+#
+# TASK [check how many IP addresses can be in a certain range.] *********************************************************
+# ok: [localhost] => {
+#     "msg": [
+#         256,
+#         18446744073709551616
+#     ]
+# }
+#
+# TASK [By specifying a network range as a query, you can check if a given value is in that range.] ********************
+# ok: [localhost] => {
+#     "msg": [
+#         "192.24.2.1",
+#         "192.168.32.0/24"
+#     ]
+# }
+#
+# TASK [If you specify a positive or negative integer as a query, ipaddr() will treat this as an index and will
+# return the specific IP address from a network range, in the "host/prefix" format.] ***
+# ok: [localhost] => {
+#     "msg": [
+#         "192.168.32.0/24",
+#         "2001:db8:32c:faad::/64"
+#     ]
+# }
+#
+# TASK [debug] *********************************************************************************************************
+# ok: [localhost] => {
+#     "msg": [
+#         "192.168.32.1/24",
+#         "2001:db8:32c:faad::1/64"
+#     ]
+# }
+#
+# TASK [debug] ********************************************************************************************************
+# ok: [localhost] => {
+#     "msg": [
+#         "192.168.32.255/24",
+#         "2001:db8:32c:faad:ffff:ffff:ffff:ffff/64"
+#     ]
+# }
 """
 
 RETURN = """
   data:
+    type: list
+    elements: str
     description:
-      - Returns a minified list of subnets or a single subnet that spans all of the inputs.
+      - Returns list with values valid for a particular query.
 """
 
 
@@ -139,6 +257,7 @@ def _ipaddr(*args, **kwargs):
     if not valid:
         raise AnsibleFilterError(errors)
     return ipaddr(**updated_data)
+
 
 class FilterModule(object):
     """IP address and network manipulation filters
