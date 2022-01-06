@@ -172,15 +172,15 @@ class FilterModule(object):
     """
 
     filter_map = {
-        # IP addresses and networks
+        # This filter is designed to do simple IP math/arithmetic
         "ipmath": _ipmath
     }
 
     def filters(self):
+        """ ipmath filter"""
         if netaddr:
             return self.filter_map
         else:
-            # Need to install python's netaddr for these filters to work
             return dict(
                 (f, partial(_need_netaddr, f)) for f in self.filter_map
             )
