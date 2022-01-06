@@ -161,7 +161,7 @@ EXAMPLES = r"""
 # }
 #
 # TASK [Fetch only host IP addresses with their correct CIDR prefixes (as is common with IPv6 addressing), you can use
-the ipaddr('host') filter.] *****************
+# the ipaddr('host') filter.] *****************
 # ok: [localhost] => {
 #     "msg": [
 #         "192.24.2.1/32",
