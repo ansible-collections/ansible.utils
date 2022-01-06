@@ -70,6 +70,7 @@ net_mask = "192.168.0.0/255.255.255.0"
 
 host_prefix = ['2001:db8:deaf:be11::ef3/64', '192.0.2.48/24', '192.168.0.0/16']
 
+
 class TestIpAddr(unittest.TestCase):
     def setUp(self):
         pass

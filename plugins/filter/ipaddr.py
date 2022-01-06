@@ -92,8 +92,9 @@ EXAMPLES = r"""
   debug:
     msg: "{{ value|ansible.utils.ipaddr('address') }}"
 
-- name: Fetch only host IP addresses with their correct CIDR prefixes (as is common with IPv6 addressing), you can use
-  the ipaddr('host') filter.
+- name: |
+    Fetch only host IP addresses with their correct CIDR prefixes (as is common with IPv6 addressing), you can use
+    the ipaddr('host') filter.
   debug:
     msg: "{{ value|ansible.utils.ipaddr('host') }}"
 
@@ -118,8 +119,9 @@ EXAMPLES = r"""
     msg: "{{ value|ansible.utils.ipaddr('192.0.0.0/8') }}"
 
 # First IP address (network address)
-- name: If you specify a positive or negative integer as a query, ipaddr() will treat this as an index and will return
-  the specific IP address from a network range, in the "host/prefix" format.
+- name: |
+    If you specify a positive or negative integer as a query, ipaddr() will treat this as an index and will return
+    the specific IP address from a network range, in the "host/prefix" format.
   debug:
     msg: "{{ value| ansible.utils.ipaddr('net') | ansible.utils.ipaddr('0') }}"
 
@@ -245,7 +247,7 @@ RETURN = """
 
 @pass_environment
 def _ipaddr(*args, **kwargs):
-    """Convert the given data from json to xml."""
+    """This filter is designed to return the input value if a query is True, and False if a query is False"""
     keys = ["value", "query", "version", "alias"]
     data = dict(zip(keys, args[1:]))
     data.update(kwargs)
@@ -268,10 +270,10 @@ class FilterModule(object):
     }
 
     def filters(self):
+        """ ipaddr filter """
         if netaddr:
             return self.filter_map
         else:
-            # Need to install python's netaddr for these filters to work
             return dict(
                 (f, partial(_need_netaddr, f)) for f in self.filter_map
             )
