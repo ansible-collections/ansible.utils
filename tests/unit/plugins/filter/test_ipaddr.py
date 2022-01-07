@@ -68,7 +68,7 @@ VALID_OUTPUT8 = ["192.168.32.0/24", "2001:db8:32c:faad::/64"]
 
 net_mask = "192.168.0.0/255.255.255.0"
 
-host_prefix = ['2001:db8:deaf:be11::ef3/64', '192.0.2.48/24', '192.168.0.0/16']
+host_prefix = ["2001:db8:deaf:be11::ef3/64", "192.0.2.48/24", "192.168.0.0/16"]
 
 
 class TestIpAddr(unittest.TestCase):
@@ -159,12 +159,14 @@ class TestIpAddr(unittest.TestCase):
 
         args = ["", host_prefix, "host/prefix"]
         result = _ipaddr(*args)
-        self.assertEqual(result, ['2001:db8:deaf:be11::ef3/64', '192.0.2.48/24'])
+        self.assertEqual(
+            result, ["2001:db8:deaf:be11::ef3/64", "192.0.2.48/24"]
+        )
 
     def test_valid_data_with_network_prefix(self):
         """Check passing invalid argspec"""
 
-        ipaddress = '192.168.0.11/255.255.255.0'
+        ipaddress = "192.168.0.11/255.255.255.0"
 
         args = ["", ipaddress, "network/prefix"]
         result = _ipaddr(*args)
@@ -178,4 +180,4 @@ class TestIpAddr(unittest.TestCase):
 
         args = ["", result1, "subnet"]
         result = _ipaddr(*args)
-        self.assertEqual(result, ['2001:db8:deaf:be11::/64', '192.0.2.0/24'])
+        self.assertEqual(result, ["2001:db8:deaf:be11::/64", "192.0.2.0/24"])
