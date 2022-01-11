@@ -19,7 +19,7 @@ DOCUMENTATION = """
     notes:
     - The value of I(data) option should be a candidate device configuration.
     - The value of I(criteria) should be a B(list) of rules the candidate configuration
-      will be checked against.
+      will be checked against, or a yaml document containing those rules.
 """
 
 
@@ -63,10 +63,28 @@ EXAMPLES = r"""
 import re
 
 from ansible.module_utils._text import to_text
+from ansible.errors import AnsibleError
+from ansible.module_utils.six import string_types
 
 from ansible_collections.ansible.utils.plugins.plugin_utils.base.validate import (
     ValidateBase,
 )
+
+from ansible_collections.ansible.utils.plugins.module_utils.common.utils import (
+    to_list,
+)
+
+try:
+    import yaml
+
+    # use C version if possible for speedup
+    try:
+        from yaml import CSafeLoader as SafeLoader
+    except ImportError:
+        from yaml import SafeLoader
+    HAS_YAML = True
+except ImportError:
+    HAS_YAML = False
 
 
 def format_message(match, line_number, criteria):
@@ -74,11 +92,44 @@ def format_message(match, line_number, criteria):
     return 'At line {line_number}: {message}\nFound "{line}"'.format(
         line_number=line_number + 1,
         message=criteria["name"],
-        line=match.group(),
+        line=match.string,
     )
 
 
 class Validate(ValidateBase):
+    def _check_args(self):
+        """Ensure specific args are set
+
+        :return: None: In case all arguments passed are valid
+        """
+
+        try:
+            if isinstance(self._criteria, string_types):
+                self._criteria = yaml.load(
+                    str(self._criteria), Loader=SafeLoader
+                )
+        except yaml.parser.ParserError as exc:
+            msg = (
+                "'criteria' option value is invalid, value should be valid YAML."
+                " Failed to read with error '{err}'".format(
+                    err=to_text(exc, errors="surrogate_then_replace")
+                )
+            )
+            raise AnsibleError(msg)
+
+        issues = []
+        for item in to_list(self._criteria):
+            if "name" not in item:
+                issues.append('Criteria {item} missing "name" key')
+            if "action" not in item:
+                issues.append('Criteria {item} missing "action" key')
+            if "rule" not in item:
+                issues.append('Criteria {item} missing "rule" key')
+
+        if issues:
+            msg = "\n".join(issues)
+            raise AnsibleError(msg)
+
     def validate(self):
         """Std entry point for a validate execution
 
@@ -92,6 +143,8 @@ class Validate(ValidateBase):
         or
         {"parsed": obj}
         """
+        self._check_args()
+
         try:
             self._validate_config()
         except Exception as exc:
