@@ -1,11 +1,11 @@
-.. _ansible.utils.ipv4_filter:
+.. _ansible.utils.ipv6_filter:
 
 
 ******************
-ansible.utils.ipv4
+ansible.utils.ipv6
 ******************
 
-**To filter only Ipv4 addresses Ipv4 filter is used.**
+**To filter only Ipv6 addresses Ipv6 filter is used.**
 
 
 Version added: 2.5.0
@@ -17,7 +17,7 @@ Version added: 2.5.0
 
 Synopsis
 --------
-- Sometimes you need only IPv4 addresses. To filter only Ipv4 addresses Ipv4 filter is used.
+- Sometimes you need only IPv6 addresses. To filter only Ipv6 addresses Ipv4 filter is used.
 
 
 
@@ -49,8 +49,8 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>You can provide a single argument to each ipv4() filter.</div>
-                        <div>Example. query type &#x27;ipv6&#x27; to convert ipv4 into ipv6</div>
+                        <div>You can provide a single argument to each ipv6() filter.</div>
+                        <div>Example. query type &#x27;ipv4&#x27; to convert ipv6 into ipv4</div>
                 </td>
             </tr>
             <tr>
@@ -84,57 +84,73 @@ Examples
 .. code-block:: yaml
 
     #### examples
-    # Ipv4 filter plugin with different queries.
+    # Ipv6 filter plugin with different queries.
     - name: Set value as input list
       ansible.builtin.set_fact:
-        value:
-          - 192.24.2.1
-          - host.fqdn
-          - ::1
-          - ''
-          - 192.168.32.0/24
-          - fe80::100/10
-          - 42540766412265424405338506004571095040/64
-          - True
-    - name: IPv4 filter to filter Ipv4 Address
+           value:
+                - 192.24.2.1
+                - ::ffff:192.168.32.0/120
+                - ''
+                - ::ffff:192.24.2.1/128
+                - 192.168.32.0/24
+                - fe80::100/10
+                - True
+    - name: IPv6 filter to filter Ipv6 Address
       debug:
-        msg: "{{ value|ansible.utils.ipv4 }}"
+        msg: "{{ value|ansible.utils.ipv6 }}"
 
-    - name: convert IPv4 addresses into IPv6 addresses.
+    - name: convert IPv6 addresses into IPv4 addresses.
       debug:
-        msg: "{{ value|ansible.utils.ipv4('ipv6') }}"
+        msg: "{{ value|ansible.utils.ipv6('ipv4') }}"
 
-    - name: convert IPv4 addresses into IPv6 addresses.
+    - name: convert IPv6 addresses into IPv4 addresses.
       debug:
-        msg: "{{ value|ansible.utils.ipv4('address') }}"
+        msg: "{{ value|ansible.utils.ipv6('address') }}"
 
 
-    # PLAY [Ipv4 filter plugin with different queries.] ******************************************************************
+    # PLAY [Ipv6 filter plugin with different queries.] ******************************************************************
     # TASK [Set value as input list] ***************************************************************************************
-    # ok: [localhost] => {"ansible_facts": {"value": ["192.24.2.1", "host.fqdn", "::1", "", "192.168.32.0/24",
-    # "fe80::100/10", "42540766412265424405338506004571095040/64", true]}, "changed": false}
-    # TASK [IPv4 filter to filter Ipv4 Address] *******************************************************************
     # ok: [localhost] => {
-    #     "msg": [
-    #         "192.24.2.1",
-    #         "192.168.32.0/24"
-    #     ]
+    #     "ansible_facts": {
+    #         "value": [
+    #             "192.24.2.1",
+    #             "::ffff:192.168.32.0/120",
+    #             "",
+    #             "::ffff:192.24.2.1/128",
+    #             "192.168.32.0/24",
+    #             "fe80::100/10",
+    #             true
+    #         ]
+    #     },
+    #     "changed": false
     # }
     #
-    # TASK [convert IPv4 addresses into IPv6 addresses.] **********************************************************
+    # TASK [IPv6 filter to filter Ipv6 Address] ****************************************************************************
     # ok: [localhost] => {
     #     "msg": [
+    #         "::ffff:192.168.32.0/120",
     #         "::ffff:192.24.2.1/128",
-    #         "::ffff:192.168.32.0/120"
+    #         "fe80::100/10"
     #     ]
     # }
     #
-    # TASK [convert IPv4 addresses into IPv6 addresses.] **********************************************************
+    # TASK [convert IPv6 addresses into IPv4 addresses.] *******************************************************************
     # ok: [localhost] => {
     #     "msg": [
-    #         "192.24.2.1"
+    #         "192.168.32.0/24",
+    #         "192.24.2.1/32"
     #     ]
     # }
+    #
+    # TASK [convert IPv6 addresses into IPv4 addresses.] *******************************************************************
+    # ok: [localhost] => {
+    #     "msg": [
+    #         "::ffff:192.168.32.0",
+    #         "::ffff:192.24.2.1",
+    #         "fe80::100"
+    #     ]
+    # }
+    #
 
 
 

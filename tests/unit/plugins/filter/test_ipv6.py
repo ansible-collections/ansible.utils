@@ -12,46 +12,53 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 import unittest
-from ansible_collections.ansible.utils.plugins.filter.ipv4 import _ipv4
+from ansible_collections.ansible.utils.plugins.filter.ipv6 import _ipv6
 
 
 VALID_DATA = [
     "192.24.2.1",
-    "host.fqdn",
-    "::1",
+    "::ffff:192.168.32.0/120",
     "",
+    "::ffff:192.24.2.1/128",
     "192.168.32.0/24",
     "fe80::100/10",
-    "42540766412265424405338506004571095040/64",
-    True,
+    True
 ]
 
 
-VALID_OUTPUT = ["192.24.2.1", "192.168.32.0/24"]
+VALID_OUTPUT = [
+    "::ffff:192.168.32.0/120",
+    "::ffff:192.24.2.1/128",
+    "fe80::100/10"
+]
 
-VALID_OUTPUT1 = ["::ffff:192.24.2.1/128", "::ffff:192.168.32.0/120"]
+VALID_OUTPUT1 = ["192.168.32.0/24", "192.24.2.1/32"]
 
-VALID_OUTPUT2 = ["192.24.2.1"]
+VALID_OUTPUT2 = [
+    "::ffff:192.168.32.0",
+    "::ffff:192.24.2.1",
+    "fe80::100"
+]
 
 
-class TestIp4(unittest.TestCase):
+class TestIp6(unittest.TestCase):
     def setUp(self):
         pass
 
-    def test_ipv4_filter_empty_query(self):
+    def test_ipv6_filter_empty_query(self):
         """Check ipv4 filter empty query"""
         args = ["", VALID_DATA, ""]
-        result = _ipv4(*args)
+        result = _ipv6(*args)
         self.assertEqual(result, VALID_OUTPUT)
 
-    def test_ipv4_ipv6_conversion(self):
-        """Check ipv4 to ipv6 conversion"""
-        args = ["", VALID_DATA, "ipv6"]
-        result = _ipv4(*args)
+    def test_ipv6_ipv4_conversion(self):
+        """Check ipv6 to ipv4 conversion"""
+        args = ["", VALID_DATA, "ipv4"]
+        result = _ipv6(*args)
         self.assertEqual(result, VALID_OUTPUT1)
 
     def test_ipv4_filter_address_query(self):
         """Check ipv4 filter address query"""
         args = ["", VALID_DATA, "address"]
-        result = _ipv4(*args)
+        result = _ipv6(*args)
         self.assertEqual(result, VALID_OUTPUT2)

@@ -4,7 +4,7 @@
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 """
-filter plugin file for ipaddr filters: ipv4
+filter plugin file for ipaddr filters: ipv6
 """
 from __future__ import absolute_import, division, print_function
 from functools import partial
@@ -38,12 +38,12 @@ else:
     mac_linux.word_fmt = "%.2x"
 
 DOCUMENTATION = """
-    name: ipv4
+    name: ipv6
     author: Ashwini Mhatre (@amhatre)
     version_added: "2.5.0"
-    short_description: To filter only Ipv4 addresses Ipv4 filter is used.
+    short_description: To filter only Ipv6 addresses Ipv6 filter is used.
     description:
-        - Sometimes you need only IPv4 addresses. To filter only Ipv4 addresses Ipv4 filter is used.
+        - Sometimes you need only IPv6 addresses. To filter only Ipv6 addresses Ipv4 filter is used.
     options:
         value:
             description:
@@ -53,8 +53,8 @@ DOCUMENTATION = """
             required: True
         query:
             description:
-            - You can provide a single argument to each ipv4() filter.
-            - Example. query type 'ipv6' to convert ipv4 into ipv6
+            - You can provide a single argument to each ipv6() filter.
+            - Example. query type 'ipv4' to convert ipv6 into ipv4
             type: str
             default: ''
     notes:
@@ -62,57 +62,73 @@ DOCUMENTATION = """
 
 EXAMPLES = r"""
 #### examples
-# Ipv4 filter plugin with different queries.
+# Ipv6 filter plugin with different queries.
 - name: Set value as input list
   ansible.builtin.set_fact:
-    value:
-      - 192.24.2.1
-      - host.fqdn
-      - ::1
-      - ''
-      - 192.168.32.0/24
-      - fe80::100/10
-      - 42540766412265424405338506004571095040/64
-      - True
-- name: IPv4 filter to filter Ipv4 Address
+       value:
+            - 192.24.2.1
+            - ::ffff:192.168.32.0/120
+            - ''
+            - ::ffff:192.24.2.1/128
+            - 192.168.32.0/24
+            - fe80::100/10
+            - True
+- name: IPv6 filter to filter Ipv6 Address
   debug:
-    msg: "{{ value|ansible.utils.ipv4 }}"
+    msg: "{{ value|ansible.utils.ipv6 }}"
 
-- name: convert IPv4 addresses into IPv6 addresses.
+- name: convert IPv6 addresses into IPv4 addresses.
   debug:
-    msg: "{{ value|ansible.utils.ipv4('ipv6') }}"
+    msg: "{{ value|ansible.utils.ipv6('ipv4') }}"
 
-- name: convert IPv4 addresses into IPv6 addresses.
+- name: convert IPv6 addresses into IPv4 addresses.
   debug:
-    msg: "{{ value|ansible.utils.ipv4('address') }}"
+    msg: "{{ value|ansible.utils.ipv6('address') }}"
 
 
-# PLAY [Ipv4 filter plugin with different queries.] ******************************************************************
+# PLAY [Ipv6 filter plugin with different queries.] ******************************************************************
 # TASK [Set value as input list] ***************************************************************************************
-# ok: [localhost] => {"ansible_facts": {"value": ["192.24.2.1", "host.fqdn", "::1", "", "192.168.32.0/24",
-# "fe80::100/10", "42540766412265424405338506004571095040/64", true]}, "changed": false}
-# TASK [IPv4 filter to filter Ipv4 Address] *******************************************************************
 # ok: [localhost] => {
-#     "msg": [
-#         "192.24.2.1",
-#         "192.168.32.0/24"
-#     ]
+#     "ansible_facts": {
+#         "value": [
+#             "192.24.2.1",
+#             "::ffff:192.168.32.0/120",
+#             "",
+#             "::ffff:192.24.2.1/128",
+#             "192.168.32.0/24",
+#             "fe80::100/10",
+#             true
+#         ]
+#     },
+#     "changed": false
 # }
 #
-# TASK [convert IPv4 addresses into IPv6 addresses.] **********************************************************
+# TASK [IPv6 filter to filter Ipv6 Address] ****************************************************************************
 # ok: [localhost] => {
 #     "msg": [
+#         "::ffff:192.168.32.0/120",
 #         "::ffff:192.24.2.1/128",
-#         "::ffff:192.168.32.0/120"
+#         "fe80::100/10"
 #     ]
 # }
 #
-# TASK [convert IPv4 addresses into IPv6 addresses.] **********************************************************
+# TASK [convert IPv6 addresses into IPv4 addresses.] *******************************************************************
 # ok: [localhost] => {
 #     "msg": [
-#         "192.24.2.1"
+#         "192.168.32.0/24",
+#         "192.24.2.1/32"
 #     ]
 # }
+#
+# TASK [convert IPv6 addresses into IPv4 addresses.] *******************************************************************
+# ok: [localhost] => {
+#     "msg": [
+#         "::ffff:192.168.32.0",
+#         "::ffff:192.24.2.1",
+#         "fe80::100"
+#     ]
+# }
+#
 
 """
 
@@ -126,20 +142,20 @@ RETURN = """
 
 
 @pass_environment
-def _ipv4(*args, **kwargs):
+def _ipv6(*args, **kwargs):
     """This filter is designed to return the input value if a query is True, and False if a query is False"""
     keys = ["value", "query"]
     data = dict(zip(keys, args[1:]))
     data.update(kwargs)
-    aav = AnsibleArgSpecValidator(data=data, schema=DOCUMENTATION, name="ipv4")
+    aav = AnsibleArgSpecValidator(data=data, schema=DOCUMENTATION, name="ipv6")
     valid, errors, updated_data = aav.validate()
     if not valid:
         raise AnsibleFilterError(errors)
-    return ipv4(**updated_data)
+    return ipv6(**updated_data)
 
 
-def ipv4(value, query=""):
-    return ipaddr(value, query, version=4, alias="ipv4")
+def ipv6(value, query=""):
+    return ipaddr(value, query, version=6, alias="ipv6")
 
 
 class FilterModule(object):
@@ -148,11 +164,11 @@ class FilterModule(object):
 
     filter_map = {
         # IP addresses and networks
-        "ipv4": _ipv4
+        "ipv6": _ipv6
     }
 
     def filters(self):
-        """ ipaddr filter """
+        """ ipv6 filter """
         if netaddr:
             return self.filter_map
         else:
