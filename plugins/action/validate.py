@@ -105,9 +105,9 @@ class ActionModule(ActionBase):
                 )
             else:
                 self._result["msg"] = "Validation errors were found."
-        # Doing this manually to get around warning deduplication
-        for warning in result.get("warnings", []):
-            self._display.warning(warning)
+
+        if result.get("warnings", []):
+            self._result["warnings"] = result["warnings"]
             if not self._result["msg"]:
                 self._result["msg"] = "Non-fatal validation errors were found."
 
