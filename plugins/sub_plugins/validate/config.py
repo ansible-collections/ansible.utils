@@ -105,11 +105,23 @@ class Validate(ValidateBase):
         issues = []
         for item in to_list(self._criteria):
             if "name" not in item:
-                issues.append('Criteria {item} missing "name" key')
+                issues.append(
+                    'Criteria {item} missing "name" key'.format(item=item)
+                )
             if "action" not in item:
-                issues.append('Criteria {item} missing "action" key')
+                issues.append(
+                    'Criteria {item} missing "action" key'.format(item=item)
+                )
+            elif item["action"] not in ("warn", "fail"):
+                issues.append(
+                    'Action in criteria {item} is not one of "warn" or "fail"'.format(
+                        item=item
+                    )
+                )
             if "rule" not in item:
-                issues.append('Criteria {item} missing "rule" key')
+                issues.append(
+                    'Criteria {item} missing "rule" key'.format(item=item)
+                )
 
         if issues:
             msg = "\n".join(issues)
