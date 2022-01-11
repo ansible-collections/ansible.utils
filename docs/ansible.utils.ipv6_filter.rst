@@ -17,7 +17,7 @@ Version added: 2.5.0
 
 Synopsis
 --------
-- Sometimes you need only IPv6 addresses. To filter only Ipv6 addresses Ipv4 filter is used.
+- Sometimes you need only IPv6 addresses. To filter only Ipv6 addresses Ipv6 filter is used.
 
 
 
@@ -69,7 +69,7 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>list of subnets or individual address or any other values input for ipv4 plugin</div>
+                        <div>list of subnets or individual address or any other values input for ipv6 plugin</div>
                 </td>
             </tr>
     </table>
@@ -103,7 +103,7 @@ Examples
       debug:
         msg: "{{ value|ansible.utils.ipv6('ipv4') }}"
 
-    - name: convert IPv6 addresses into IPv4 addresses.
+    - name: filter only  IPv6 addresses.
       debug:
         msg: "{{ value|ansible.utils.ipv6('address') }}"
 
@@ -142,7 +142,7 @@ Examples
     #     ]
     # }
     #
-    # TASK [convert IPv6 addresses into IPv4 addresses.] *******************************************************************
+    # TASK [filter only  IPv6 addresses] *******************************************************************
     # ok: [localhost] => {
     #     "msg": [
     #         "::ffff:192.168.32.0",
