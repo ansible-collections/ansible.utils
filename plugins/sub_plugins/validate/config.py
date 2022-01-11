@@ -31,32 +31,17 @@ EXAMPLES = r"""
 
 - name: Ethernet interface names should be in format Ethernet[Slot/chassis number].[sub-intf number (optional)]
   example: "Matches interface Eth1/1, interface Eth 1/1, interface Ethernet 1/1, interface Ethernet 1/1.100"
-  rule: 'interface\sE(?!\w{7}\d/\d(.\d+)?)'
-  action: fail
-
-- name: Ethernet interface names should be in format Ethernet[Slot/chassis number].[sub-intf number (optional)]
-  example: "Matches interface eth1/1, interface eth 1/1, interface ethernet 1/1, interface ethernet 1/1.100"
-  rule: 'interface\se(?!\w{7}\d/\d(.\d+)?)'
+  rule: 'interface\s[eE](?!\w{7}\d/\d(.\d+)?)'
   action: fail
 
 - name: Loopback interface names should be in format loopback[Virtual Interface Number]
   example: "Matches interface Lo10, interface Loopback 10"
-  rule: 'interface\sl(?!\w{7}\d)'
-  action: fail
-
-- name: Loopback interface names should be in format loopback[Virtual Interface Number]
-  example: "Matches interface lo10, interface loopback 10"
-  rule: 'interface\sL(?!\w{7}\d)'
+  rule: 'interface\s[lL](?!\w{7}\d)'
   action: fail
 
 - name: Port Channel names should be in format port-channel[Port Channel number].[sub-intf number (optional)]
   example: "Matches interface port-channel 10, interface po10, interface port-channel 10.1"
-  rule: 'interface\sp(?!\w{3}-\w{7}\d(.\d+)?)'
-  action: fail
-
-- name: Port Channel names should be in format port-channel[Port Channel number].[sub-intf number (optional)]
-  example: "Matches interface Port-channel 10, interface Po10, interface Port-channel 10.1"
-  rule: 'interface\sP(?!\w{3}-\w{7}\d(.\d+)?)'
+  rule: 'interface\s[pP](?!\w{3}-\w{7}\d(.\d+)?)'
   action: fail
 """
 
