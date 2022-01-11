@@ -22,23 +22,19 @@ VALID_DATA = [
     "::ffff:192.24.2.1/128",
     "192.168.32.0/24",
     "fe80::100/10",
-    True
+    True,
 ]
 
 
 VALID_OUTPUT = [
     "::ffff:192.168.32.0/120",
     "::ffff:192.24.2.1/128",
-    "fe80::100/10"
+    "fe80::100/10",
 ]
 
 VALID_OUTPUT1 = ["192.168.32.0/24", "192.24.2.1/32"]
 
-VALID_OUTPUT2 = [
-    "::ffff:192.168.32.0",
-    "::ffff:192.24.2.1",
-    "fe80::100"
-]
+VALID_OUTPUT2 = ["::ffff:192.168.32.0", "::ffff:192.24.2.1", "fe80::100"]
 
 
 class TestIp6(unittest.TestCase):
@@ -46,7 +42,7 @@ class TestIp6(unittest.TestCase):
         pass
 
     def test_ipv6_filter_empty_query(self):
-        """Check ipv4 filter empty query"""
+        """Check ipv6 filter empty query"""
         args = ["", VALID_DATA, ""]
         result = _ipv6(*args)
         self.assertEqual(result, VALID_OUTPUT)
@@ -57,8 +53,8 @@ class TestIp6(unittest.TestCase):
         result = _ipv6(*args)
         self.assertEqual(result, VALID_OUTPUT1)
 
-    def test_ipv4_filter_address_query(self):
-        """Check ipv4 filter address query"""
+    def test_ipv6_filter_address_query(self):
+        """Check ipv6 filter address query"""
         args = ["", VALID_DATA, "address"]
         result = _ipv6(*args)
         self.assertEqual(result, VALID_OUTPUT2)
