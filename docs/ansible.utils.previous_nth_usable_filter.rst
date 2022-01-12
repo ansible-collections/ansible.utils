@@ -1,11 +1,11 @@
-.. _ansible.utils.next_nth_usable_filter:
+.. _ansible.utils.previous_nth_usable_filter:
 
 
-*****************************
-ansible.utils.next_nth_usable
-*****************************
+*********************************
+ansible.utils.previous_nth_usable
+*********************************
 
-**This filter returns the next nth usable ip within a network described by value.**
+**This filter returns the previous nth usable ip within a network described by value.**
 
 
 Version added: 2.5.0
@@ -17,8 +17,8 @@ Version added: 2.5.0
 
 Synopsis
 --------
-- This filter returns the next nth usable ip within a network described by value.
-- Use next_nth_usable to find the next nth usable IP address in relation to another within a range
+- This filter returns the previous nth usable ip within a network described by value.
+- Use previous_nth_usable to find the previous nth usable IP address in relation to another within a range
 
 
 
@@ -50,7 +50,7 @@ Parameters
                     </td>
                 <td>
                         <div>index value</div>
-                        <div>next nth usable IP address</div>
+                        <div>previous nth usable IP address</div>
                 </td>
             </tr>
             <tr>
@@ -68,7 +68,7 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>subnets or individual address input for next_nth_usable plugin</div>
+                        <div>subnets or individual address input for previous_nth_usable plugin</div>
                 </td>
             </tr>
     </table>
@@ -83,24 +83,23 @@ Examples
 .. code-block:: yaml
 
     #### examples
-    # Ipv4 filter plugin with different queries.
-    - name: next_nth_usable returns the second usable IP address for the given IP range
+    - name: previous_nth_usable returns the second usable IP address for the given IP range
       debug:
-        msg: "{{ '192.168.122.1/24' | ansible.utils.next_nth_usable(2) }}"
+        msg: "{{ '192.168.122.10/24' | ansible.utils.previous_nth_usable(2) }}"
 
     - name: If there is no usable address, it returns an empty string.
       debug:
-        msg: "{{ '192.168.122.254/24' | ansible.utils.next_nth_usable(2) }}"
+        msg: "{{ '192.168.122.1/24' | ansible.utils.previous_nth_usable(2) }}"
 
-    # TASK [next_nth_usable returns the second usable IP address for the given IP range] **************************
-    # task path: /Users/amhatre/ansible-collections/playbooks/test_next_nth_usable.yaml:9
+    # TASK [previous_nth_usable returns the second usable IP address for the given IP range] **************************
+    # task path: /Users/amhatre/ansible-collections/playbooks/test_previous_nth_usable.yaml:9
     # Loading collection ansible.utils from /Users/amhatre/ansible-collections/collections/ansible_collections/ansible/utils
     # ok: [localhost] => {
-    #     "msg": "192.168.122.3"
+    #     "msg": "192.168.122.8"
     # }
     #
     # TASK [If there is no usable address, it returns an empty string.] *******************************************
-    # task path: /Users/amhatre/ansible-collections/playbooks/test_next_nth_usable.yaml:14
+    # task path: /Users/amhatre/ansible-collections/playbooks/test_previous_nth_usable.yaml:14
     # Loading collection ansible.utils from /Users/amhatre/ansible-collections/collections/ansible_collections/ansible/utils
     # ok: [localhost] => {
     #     "msg": ""

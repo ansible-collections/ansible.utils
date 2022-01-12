@@ -41,47 +41,46 @@ else:
     mac_linux.word_fmt = "%.2x"
 
 DOCUMENTATION = """
-    name: next_nth_usable
+    name: previous_nth_usable
     author: Ashwini Mhatre (@amhatre)
     version_added: "2.5.0"
-    short_description: This filter returns the next nth usable ip within a network described by value.
+    short_description: This filter returns the previous nth usable ip within a network described by value.
     description:
-        - This filter returns the next nth usable ip within a network described by value.
-        - Use next_nth_usable to find the next nth usable IP address in relation to another within a range
+        - This filter returns the previous nth usable ip within a network described by value.
+        - Use previous_nth_usable to find the previous nth usable IP address in relation to another within a range
     options:
         value:
             description:
-            - subnets or individual address input for next_nth_usable plugin
+            - subnets or individual address input for previous_nth_usable plugin
             type: str
             required: True
         offset:
             description:
             - index value
-            - next nth usable IP address
+            - previous nth usable IP address
             type: int
     notes:
 """
 
 EXAMPLES = r"""
 #### examples
-# Ipv4 filter plugin with different queries.
-- name: next_nth_usable returns the second usable IP address for the given IP range
+- name: previous_nth_usable returns the second usable IP address for the given IP range
   debug:
-    msg: "{{ '192.168.122.1/24' | ansible.utils.next_nth_usable(2) }}"
+    msg: "{{ '192.168.122.10/24' | ansible.utils.previous_nth_usable(2) }}"
 
 - name: If there is no usable address, it returns an empty string.
   debug:
-    msg: "{{ '192.168.122.254/24' | ansible.utils.next_nth_usable(2) }}"
+    msg: "{{ '192.168.122.1/24' | ansible.utils.previous_nth_usable(2) }}"
 
-# TASK [next_nth_usable returns the second usable IP address for the given IP range] **************************
-# task path: /Users/amhatre/ansible-collections/playbooks/test_next_nth_usable.yaml:9
+# TASK [previous_nth_usable returns the second usable IP address for the given IP range] **************************
+# task path: /Users/amhatre/ansible-collections/playbooks/test_previous_nth_usable.yaml:9
 # Loading collection ansible.utils from /Users/amhatre/ansible-collections/collections/ansible_collections/ansible/utils
 # ok: [localhost] => {
-#     "msg": "192.168.122.3"
+#     "msg": "192.168.122.8"
 # }
 #
 # TASK [If there is no usable address, it returns an empty string.] *******************************************
-# task path: /Users/amhatre/ansible-collections/playbooks/test_next_nth_usable.yaml:14
+# task path: /Users/amhatre/ansible-collections/playbooks/test_previous_nth_usable.yaml:14
 # Loading collection ansible.utils from /Users/amhatre/ansible-collections/collections/ansible_collections/ansible/utils
 # ok: [localhost] => {
 #     "msg": ""
@@ -99,23 +98,23 @@ RETURN = """
 
 
 @pass_environment
-def _next_nth_usable(*args, **kwargs):
-    """This filter returns the next nth usable ip within a network described by value."""
+def _previous_nth_usable(*args, **kwargs):
+    """This filter returns the previous nth usable ip within a network described by value."""
     keys = ["value", "offset"]
     data = dict(zip(keys, args[1:]))
     data.update(kwargs)
     aav = AnsibleArgSpecValidator(
-        data=data, schema=DOCUMENTATION, name="next_nth_usable"
+        data=data, schema=DOCUMENTATION, name="previous_nth_usable"
     )
     valid, errors, updated_data = aav.validate()
     if not valid:
         raise AnsibleFilterError(errors)
-    return next_nth_usable(**updated_data)
+    return previous_nth_usable(**updated_data)
 
 
-def next_nth_usable(value, offset):
+def previous_nth_usable(value, offset):
     """
-    Returns the next nth usable ip within a network described by value.
+    Returns the previous nth usable ip within a network described by value.
     """
     try:
         vtype = ipaddr(value, "type")
@@ -132,9 +131,9 @@ def next_nth_usable(value, offset):
         raise AnsibleFilterError("Must pass in an integer")
     if v.size > 1:
         first_usable, last_usable = _first_last(v)
-        nth_ip = int(netaddr.IPAddress(int(v.ip) + offset))
-        if first_usable <= nth_ip <= last_usable:
-            return str(netaddr.IPAddress(int(v.ip) + offset))
+        nth_ip = int(netaddr.IPAddress(int(v.ip) - offset))
+        if nth_ip >= first_usable and nth_ip <= last_usable:
+            return str(netaddr.IPAddress(int(v.ip) - offset))
 
 
 class FilterModule(object):
@@ -143,7 +142,7 @@ class FilterModule(object):
 
     filter_map = {
         # IP addresses and networks
-        "next_nth_usable": _next_nth_usable
+        "previous_nth_usable": _previous_nth_usable
     }
 
     def filters(self):
