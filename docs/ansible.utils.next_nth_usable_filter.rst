@@ -1,11 +1,11 @@
-.. _ansible.utils.ipv4_filter:
+.. _ansible.utils.next_nth_usable_filter:
 
 
-******************
-ansible.utils.ipv4
-******************
+*****************************
+ansible.utils.next_nth_usable
+*****************************
 
-**To filter only Ipv4 addresses Ipv4 filter is used.**
+**This filter returns the next nth usable ip within a network described by value.**
 
 
 Version added: 2.5.0
@@ -17,7 +17,8 @@ Version added: 2.5.0
 
 Synopsis
 --------
-- Sometimes you need only IPv4 addresses. To filter only Ipv4 addresses Ipv4 filter is used.
+- This filter returns the next nth usable ip within a network described by value.
+- Use next_nth_usable to find the next nth usable IP address in relation to another within a range
 
 
 
@@ -37,20 +38,19 @@ Parameters
             <tr>
                 <td colspan="1">
                     <div class="ansibleOptionAnchor" id="parameter-"></div>
-                    <b>query</b>
+                    <b>offset</b>
                     <a class="ansibleOptionLink" href="#parameter-" title="Permalink to this option"></a>
                     <div style="font-size: small">
-                        <span style="color: purple">string</span>
+                        <span style="color: purple">integer</span>
                     </div>
                 </td>
                 <td>
-                        <b>Default:</b><br/><div style="color: blue">""</div>
                 </td>
                     <td>
                     </td>
                 <td>
-                        <div>You can provide a single argument to each ipv4() filter.</div>
-                        <div>Example. query type &#x27;ipv6&#x27; to convert ipv4 into ipv6</div>
+                        <div>index value</div>
+                        <div>next nth usable IP address</div>
                 </td>
             </tr>
             <tr>
@@ -59,8 +59,7 @@ Parameters
                     <b>value</b>
                     <a class="ansibleOptionLink" href="#parameter-" title="Permalink to this option"></a>
                     <div style="font-size: small">
-                        <span style="color: purple">list</span>
-                         / <span style="color: purple">elements=string</span>
+                        <span style="color: purple">string</span>
                          / <span style="color: red">required</span>
                     </div>
                 </td>
@@ -69,7 +68,7 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>list of subnets or individual address or any other values input for ipv4 plugin</div>
+                        <div>subnets or individual address input for next_nth_usable plugin</div>
                 </td>
             </tr>
     </table>
@@ -85,55 +84,26 @@ Examples
 
     #### examples
     # Ipv4 filter plugin with different queries.
-    - name: Set value as input list
-      ansible.builtin.set_fact:
-        value:
-          - 192.24.2.1
-          - host.fqdn
-          - ::1
-          - ''
-          - 192.168.32.0/24
-          - fe80::100/10
-          - 42540766412265424405338506004571095040/64
-          - True
-    - name: IPv4 filter to filter Ipv4 Address
+    - name: next_nth_usable returns the second usable IP address for the given IP range
       debug:
-        msg: "{{ value|ansible.utils.ipv4 }}"
+        msg: "{{ '192.168.122.1/24' | ansible.utils.next_nth_usable(2) }}"
 
-    - name: convert IPv4 addresses into IPv6 addresses.
+    - name: If there is no usable address, it returns an empty string.
       debug:
-        msg: "{{ value|ansible.utils.ipv4('ipv6') }}"
+        msg: "{{ '192.168.122.254/24' | ansible.utils.next_nth_usable(2) }}"
 
-    - name: convert IPv4 addresses into IPv6 addresses.
-      debug:
-        msg: "{{ value|ansible.utils.ipv4('address') }}"
-
-
-    # PLAY [Ipv4 filter plugin with different queries.] ******************************************************************
-    # TASK [Set value as input list] ***************************************************************************************
-    # ok: [localhost] => {"ansible_facts": {"value": ["192.24.2.1", "host.fqdn", "::1", "", "192.168.32.0/24",
-    # "fe80::100/10", "42540766412265424405338506004571095040/64", true]}, "changed": false}
-    # TASK [IPv4 filter to filter Ipv4 Address] *******************************************************************
+    # TASK [next_nth_usable returns the second usable IP address for the given IP range] **************************
+    # task path: /Users/amhatre/ansible-collections/playbooks/test_next_nth_usable.yaml:9
+    # Loading collection ansible.utils from /Users/amhatre/ansible-collections/collections/ansible_collections/ansible/utils
     # ok: [localhost] => {
-    #     "msg": [
-    #         "192.24.2.1",
-    #         "192.168.32.0/24"
-    #     ]
+    #     "msg": "192.168.122.3"
     # }
     #
-    # TASK [convert IPv4 addresses into IPv6 addresses.] **********************************************************
+    # TASK [If there is no usable address, it returns an empty string.] *******************************************
+    # task path: /Users/amhatre/ansible-collections/playbooks/test_next_nth_usable.yaml:14
+    # Loading collection ansible.utils from /Users/amhatre/ansible-collections/collections/ansible_collections/ansible/utils
     # ok: [localhost] => {
-    #     "msg": [
-    #         "::ffff:192.24.2.1/128",
-    #         "::ffff:192.168.32.0/120"
-    #     ]
-    # }
-    #
-    # TASK [convert IPv4 addresses into IPv6 addresses.] **********************************************************
-    # ok: [localhost] => {
-    #     "msg": [
-    #         "192.24.2.1"
-    #     ]
+    #     "msg": ""
     # }
 
 
