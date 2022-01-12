@@ -4,7 +4,7 @@
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 """
-filter plugin file for ipaddr filters: ipv4
+filter plugin file for ipaddr filters: previous_nth_usable
 """
 from __future__ import absolute_import, division, print_function
 from functools import partial
