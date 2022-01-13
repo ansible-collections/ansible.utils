@@ -1,11 +1,11 @@
-.. _ansible.utils.network_in_network_filter:
+.. _ansible.utils.reduce_on_network_filter:
 
 
-********************************
-ansible.utils.network_in_network
-********************************
+*******************************
+ansible.utils.reduce_on_network
+*******************************
 
-**This filter returns whether an address or a network passed as argument is in a network.**
+**This filter reduces a list of addresses to only the addresses that match a given network.**
 
 
 Version added: 2.5.0
@@ -17,7 +17,9 @@ Version added: 2.5.0
 
 Synopsis
 --------
-- This filter returns whether an address or a network passed as argument is in a network.
+- This filter reduces a list of addresses to only the addresses that match a given network.
+To check whether multiple addresses belong to a network, use the reduce_on_network filter.
+
 
 
 
@@ -37,7 +39,7 @@ Parameters
             <tr>
                 <td colspan="1">
                     <div class="ansibleOptionAnchor" id="parameter-"></div>
-                    <b>test</b>
+                    <b>network</b>
                     <a class="ansibleOptionLink" href="#parameter-" title="Permalink to this option"></a>
                     <div style="font-size: small">
                         <span style="color: purple">string</span>
@@ -48,7 +50,7 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>The address or network to validate if it is within the range of &#x27;value&#x27;.</div>
+                        <div>The network to validate against.</div>
                 </td>
             </tr>
             <tr>
@@ -57,7 +59,8 @@ Parameters
                     <b>value</b>
                     <a class="ansibleOptionLink" href="#parameter-" title="Permalink to this option"></a>
                     <div style="font-size: small">
-                        <span style="color: purple">string</span>
+                        <span style="color: purple">list</span>
+                         / <span style="color: purple">elements=string</span>
                          / <span style="color: red">required</span>
                     </div>
                 </td>
@@ -66,7 +69,7 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>The network address or range to test against.</div>
+                        <div>the list of addresses to filter on.</div>
                 </td>
             </tr>
     </table>
@@ -81,37 +84,17 @@ Examples
 .. code-block:: yaml
 
     #### examples
-    - name: Check ip address 1 is part of another network
-      debug:
-        msg: "{{ '192.168.0.0/24' | ansible.utils.network_in_network( '192.168.0.1' ) }}"
+     - name: To check whether multiple addresses belong to a network, use the reduce_on_network filter.
+       debug:
+            msg: "{{ ['192.168.0.34', '10.3.0.3', '192.168.2.34'] | ansible.utils.reduce_on_network( '192.168.0.0/24' ) }}"
 
-    - name: Check ip address 2 is part of another network
-      debug:
-        msg: "{{ '192.168.0.0/24' | ansible.utils.network_in_network( '10.0.0.1' ) }}"
-
-    - name: Check in a network is part of another network.
-      debug:
-        msg: "{{ '192.168.0.0/16' | ansible.utils.network_in_network( '192.168.0.0/24' ) }}"
-
-    # TASK [Check ip address 1 is part of another network] ********************************************************
-    # task path: /Users/amhatre/ansible-collections/playbooks/test_network_in_network.yaml:7
+    # TASK [To check whether multiple addresses belong to a network, use the reduce_on_network filter.] ***********
+    # task path: /Users/amhatre/ansible-collections/playbooks/test_reduce_on_network.yaml:7
     # Loading collection ansible.utils from /Users/amhatre/ansible-collections/collections/ansible_collections/ansible/utils
     # ok: [localhost] => {
-    #     "msg": true
-    # }
-    #
-    # TASK [Check ip address 2 is part of another network] ********************************************************
-    # task path: /Users/amhatre/ansible-collections/playbooks/test_network_in_network.yaml:11
-    # Loading collection ansible.utils from /Users/amhatre/ansible-collections/collections/ansible_collections/ansible/utils
-    # ok: [localhost] => {
-    #     "msg": false
-    # }
-    #
-    # TASK [Check in a network is part of another network.] *******************************************************
-    # task path: /Users/amhatre/ansible-collections/playbooks/test_network_in_network.yaml:15
-    # Loading collection ansible.utils from /Users/amhatre/ansible-collections/collections/ansible_collections/ansible/utils
-    # ok: [localhost] => {
-    #     "msg": true
+    #     "msg": [
+    #         "192.168.0.34"
+    #     ]
     # }
 
 
