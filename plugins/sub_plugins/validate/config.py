@@ -155,7 +155,15 @@ class Validate(ValidateBase):
         error_messages = []
 
         for criteria in self._criteria:
-            rule = re.compile(criteria["rule"])
+            try:
+                rule = re.compile(criteria["rule"])
+            except re.error as exc:
+                raise AnsibleError(
+                    'Failed to compile regex "{rule}": {exc}'.format(
+                        rule=criteria["rule"], exc=exc
+                    )
+                )
+
             for line_number, line in enumerate(self._data.split("\n")):
                 match = rule.search(line)
                 if match:
