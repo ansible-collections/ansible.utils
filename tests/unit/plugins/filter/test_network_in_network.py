@@ -4,7 +4,7 @@
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 """
-Unit test file for ipwrap filter plugin
+Unit test file for network_in_network filter plugin
 """
 
 from __future__ import absolute_import, division, print_function
@@ -12,23 +12,29 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 import unittest
-from ansible_collections.ansible.utils.plugins.filter.previous_nth_usable import (
-    _previous_nth_usable,
+from ansible_collections.ansible.utils.plugins.filter.network_in_network import (
+    _network_in_network,
 )
 
 
-class Test_previous_Nth_Usable(unittest.TestCase):
+class Test_network_in_network(unittest.TestCase):
     def setUp(self):
         pass
 
-    def test_previous_nth_usable_filter(self):
-        """previous_nth_usable filter"""
-        args = ["", "192.168.122.10/24", 2]
-        result = _previous_nth_usable(*args)
-        self.assertEqual(result, "192.168.122.8")
+    def test_network_in_network_filter_1(self):
+        """network_in_network filter"""
+        args = ["", "192.168.0.0/24", "192.168.0.1"]
+        result = _network_in_network(*args)
+        self.assertEqual(result, True)
 
-    def test_previous_nth_usable_with_empty_return_string(self):
-        """Check ipv4 to ipv6 conversion"""
-        args = ["", "192.168.122.1/24", 2]
-        result = _previous_nth_usable(*args)
-        self.assertEqual(result, None)
+    def test_network_in_network_filter_2(self):
+        """network_in_network filter"""
+        args = ["", "192.168.0.0/24", "10.0.0.1"]
+        result = _network_in_network(*args)
+        self.assertEqual(result, False)
+
+    def test_network_in_network_filter_3(self):
+        """network_in_network filter"""
+        args = ["", "192.168.0.0/16", "192.168.0.0/24"]
+        result = _network_in_network(*args)
+        self.assertEqual(result, True)
