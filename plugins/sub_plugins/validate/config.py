@@ -122,6 +122,15 @@ class Validate(ValidateBase):
                 issues.append(
                     'Criteria {item} missing "rule" key'.format(item=item)
                 )
+            else:
+                try:
+                    item["rule"] = re.compile(item["rule"])
+                except re.error as exc:
+                    issues.append(
+                        'Failed to compile regex "{rule}": {exc}'.format(
+                            rule=item["rule"], exc=exc
+                        )
+                    )
 
         if issues:
             msg = "\n".join(issues)
@@ -155,17 +164,8 @@ class Validate(ValidateBase):
         error_messages = []
 
         for criteria in self._criteria:
-            try:
-                rule = re.compile(criteria["rule"])
-            except re.error as exc:
-                raise AnsibleError(
-                    'Failed to compile regex "{rule}": {exc}'.format(
-                        rule=criteria["rule"], exc=exc
-                    )
-                )
-
             for line_number, line in enumerate(self._data.split("\n")):
-                match = rule.search(line)
+                match = criteria["rule"].search(line)
                 if match:
                     if criteria["action"] == "warn":
                         warnings.append(
