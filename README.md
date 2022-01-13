@@ -24,8 +24,8 @@ Name | Description
 [ansible.utils.from_xml](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.from_xml_filter.rst)|Convert given XML string to native python dictionary.
 [ansible.utils.get_path](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.get_path_filter.rst)|Retrieve the value in a variable using a path
 [ansible.utils.index_of](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.index_of_filter.rst)|Find the indices of items in a list matching some criteria
+[ansible.utils.network_in_network](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.network_in_network_filter.rst)|This filter returns whether an address or a network passed as argument is in a network.
 [ansible.utils.param_list_compare](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.param_list_compare_filter.rst)|Generate the final param list combining/comparing base and provided parameters.
-[ansible.utils.previous_nth_usable](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.previous_nth_usable_filter.rst)|This filter returns the previous nth usable ip within a network described by value.
 [ansible.utils.to_paths](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.to_paths_filter.rst)|Flatten a complex object into a dictionary of paths and values
 [ansible.utils.to_xml](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.to_xml_filter.rst)|Convert given JSON string to XML
 [ansible.utils.usable_range](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.usable_range_filter.rst)|Expand the usable IP addresses

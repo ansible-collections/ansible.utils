@@ -1,11 +1,11 @@
-.. _ansible.utils.previous_nth_usable_filter:
+.. _ansible.utils.network_in_network_filter:
 
 
-*********************************
-ansible.utils.previous_nth_usable
-*********************************
+********************************
+ansible.utils.network_in_network
+********************************
 
-**This filter returns the previous nth usable ip within a network described by value.**
+**This filter returns whether an address or a network passed as argument is in a network.**
 
 
 Version added: 2.5.0
@@ -17,8 +17,7 @@ Version added: 2.5.0
 
 Synopsis
 --------
-- This filter returns the previous nth usable ip within a network described by value.
-- Use previous_nth_usable to find the previous nth usable IP address in relation to another within a range
+- This filter returns whether an address or a network passed as argument is in a network.
 
 
 
@@ -38,10 +37,10 @@ Parameters
             <tr>
                 <td colspan="1">
                     <div class="ansibleOptionAnchor" id="parameter-"></div>
-                    <b>offset</b>
+                    <b>test</b>
                     <a class="ansibleOptionLink" href="#parameter-" title="Permalink to this option"></a>
                     <div style="font-size: small">
-                        <span style="color: purple">integer</span>
+                        <span style="color: purple">string</span>
                     </div>
                 </td>
                 <td>
@@ -49,8 +48,7 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>index value</div>
-                        <div>previous nth usable IP address</div>
+                        <div>The address or network to validate if it is within the range of &#x27;value&#x27;.</div>
                 </td>
             </tr>
             <tr>
@@ -68,7 +66,7 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>subnets or individual address input for previous_nth_usable plugin</div>
+                        <div>The network address or range to test against.</div>
                 </td>
             </tr>
     </table>
@@ -83,26 +81,37 @@ Examples
 .. code-block:: yaml
 
     #### examples
-    - name: previous_nth_usable returns the second usable IP address for the given IP range
+    - name: Check ip address 1 is part of another network
       debug:
-        msg: "{{ '192.168.122.10/24' | ansible.utils.previous_nth_usable(2) }}"
+        msg: "{{ '192.168.0.0/24' | ansible.utils.network_in_network( '192.168.0.1' ) }}"
 
-    - name: If there is no usable address, it returns an empty string.
+    - name: Check ip address 2 is part of another network
       debug:
-        msg: "{{ '192.168.122.1/24' | ansible.utils.previous_nth_usable(2) }}"
+        msg: "{{ '192.168.0.0/24' | ansible.utils.network_in_network( '10.0.0.1' ) }}"
 
-    # TASK [previous_nth_usable returns the second usable IP address for the given IP range] **************************
-    # task path: /Users/amhatre/ansible-collections/playbooks/test_previous_nth_usable.yaml:9
+    - name: Check in a network is part of another network.
+      debug:
+        msg: "{{ '192.168.0.0/16' | ansible.utils.network_in_network( '192.168.0.0/24' ) }}"
+
+    # TASK [Check ip address 1 is part of another network] ********************************************************
+    # task path: /Users/amhatre/ansible-collections/playbooks/test_network_in_network.yaml:7
     # Loading collection ansible.utils from /Users/amhatre/ansible-collections/collections/ansible_collections/ansible/utils
     # ok: [localhost] => {
-    #     "msg": "192.168.122.8"
+    #     "msg": true
     # }
     #
-    # TASK [If there is no usable address, it returns an empty string.] *******************************************
-    # task path: /Users/amhatre/ansible-collections/playbooks/test_previous_nth_usable.yaml:14
+    # TASK [Check ip address 2 is part of another network] ********************************************************
+    # task path: /Users/amhatre/ansible-collections/playbooks/test_network_in_network.yaml:11
     # Loading collection ansible.utils from /Users/amhatre/ansible-collections/collections/ansible_collections/ansible/utils
     # ok: [localhost] => {
-    #     "msg": ""
+    #     "msg": false
+    # }
+    #
+    # TASK [Check in a network is part of another network.] *******************************************************
+    # task path: /Users/amhatre/ansible-collections/playbooks/test_network_in_network.yaml:15
+    # Loading collection ansible.utils from /Users/amhatre/ansible-collections/collections/ansible_collections/ansible/utils
+    # ok: [localhost] => {
+    #     "msg": true
     # }
 
 
@@ -125,13 +134,12 @@ Common return values are documented `here <https://docs.ansible.com/ansible/late
                     <b>data</b>
                     <a class="ansibleOptionLink" href="#return-" title="Permalink to this return value"></a>
                     <div style="font-size: small">
-                      <span style="color: purple">list</span>
-                       / <span style="color: purple">elements=string</span>
+                      <span style="color: purple">boolean</span>
                     </div>
                 </td>
                 <td></td>
                 <td>
-                            <div>Returns list with values valid for a particular query.</div>
+                            <div>Returns whether an address or a network passed as argument is in a network.</div>
                     <br/>
                 </td>
             </tr>
