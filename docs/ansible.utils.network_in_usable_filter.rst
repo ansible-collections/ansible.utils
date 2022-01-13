@@ -1,11 +1,12 @@
-.. _ansible.utils.network_in_network_filter:
+.. _ansible.utils.network_in_usable_filter:
 
 
-********************************
-ansible.utils.network_in_network
-********************************
+*******************************
+ansible.utils.network_in_usable
+*******************************
 
-**This filter returns whether an address or a network passed as argument is in a network.**
+**The network_in_usable filter returns whether an address passed as an argument is usable in a network
+**
 
 
 Version added: 2.5.0
@@ -17,7 +18,10 @@ Version added: 2.5.0
 
 Synopsis
 --------
-- This filter returns whether an address or a network passed as argument is in a network.
+- The network_in_usable filter returns whether an address passed as an argument is usable in a network
+Usable addresses are addresses that can be assigned to a host.
+The network ID and the broadcast address are not usable addresses.
+
 
 
 
@@ -48,7 +52,7 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>The address or network to validate if it is within the range of &#x27;value&#x27;.</div>
+                        <div>The address or network is usable or not.</div>
                 </td>
             </tr>
             <tr>
@@ -81,34 +85,34 @@ Examples
 .. code-block:: yaml
 
     #### examples
-    - name: Check ip address 1 is part of another network
+    - name: Check ip address is usable in a network
       debug:
-        msg: "{{ '192.168.0.0/24' | ansible.utils.network_in_network( '192.168.0.1' ) }}"
+        msg: "{{ '192.168.0.0/24' | ansible.utils.network_in_usable( '192.168.0.1' ) }}"
 
-    - name: Check ip address 2 is part of another network
+    - name: Check broadcast address is usable in a network
       debug:
-        msg: "{{ '192.168.0.0/24' | ansible.utils.network_in_network( '10.0.0.1' ) }}"
+        msg: "{{ '192.168.0.0/24' | ansible.utils.network_in_usable( '192.168.0.255' ) }}"
 
     - name: Check in a network is part of another network.
       debug:
-        msg: "{{ '192.168.0.0/16' | ansible.utils.network_in_network( '192.168.0.0/24' ) }}"
+        msg: "{{ '192.168.0.0/16' | ansible.utils.network_in_usable( '192.168.0.255' ) }}"
 
-    # TASK [Check ip address 1 is part of another network] ********************************************************
-    # task path: /Users/amhatre/ansible-collections/playbooks/test_network_in_network.yaml:7
+    # TASK [Check ip address is usable in a network] **************************************************************
+    # task path: /Users/amhatre/ansible-collections/playbooks/test_network_in_usable.yaml:7
     # Loading collection ansible.utils from /Users/amhatre/ansible-collections/collections/ansible_collections/ansible/utils
     # ok: [localhost] => {
     #     "msg": true
     # }
     #
-    # TASK [Check ip address 2 is part of another network] ********************************************************
-    # task path: /Users/amhatre/ansible-collections/playbooks/test_network_in_network.yaml:11
+    # TASK [Check broadcast address is usable in a network] *******************************************************
+    # task path: /Users/amhatre/ansible-collections/playbooks/test_network_in_usable.yaml:11
     # Loading collection ansible.utils from /Users/amhatre/ansible-collections/collections/ansible_collections/ansible/utils
     # ok: [localhost] => {
     #     "msg": false
     # }
     #
     # TASK [Check in a network is part of another network.] *******************************************************
-    # task path: /Users/amhatre/ansible-collections/playbooks/test_network_in_network.yaml:15
+    # task path: /Users/amhatre/ansible-collections/playbooks/test_network_in_usable.yaml:15
     # Loading collection ansible.utils from /Users/amhatre/ansible-collections/collections/ansible_collections/ansible/utils
     # ok: [localhost] => {
     #     "msg": true

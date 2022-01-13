@@ -4,7 +4,7 @@
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 """
-filter plugin file for ipaddr filters: network_in_network
+filter plugin file for ipaddr filters: network_in_usable
 """
 from __future__ import absolute_import, division, print_function
 from functools import partial
@@ -42,53 +42,56 @@ else:
     mac_linux.word_fmt = "%.2x"
 
 DOCUMENTATION = """
-    name: network_in_network
+    name: network_in_usable
     author: Ashwini Mhatre (@amhatre)
     version_added: "2.5.0"
-    short_description: This filter returns whether an address or a network passed as argument is in a network.
-    description:
-        - This filter returns whether an address or a network passed as argument is in a network.
+    short_description: |
+        The network_in_usable filter returns whether an address passed as an argument is usable in a network
+    description: |
+        The network_in_usable filter returns whether an address passed as an argument is usable in a network
+        Usable addresses are addresses that can be assigned to a host.
+        The network ID and the broadcast address are not usable addresses.
     options:
         value:
             description: The network address or range to test against.
             type: str
             required: True
         test:
-            description: The address or network to validate if it is within the range of 'value'.
+            description: The address or network is usable or not.
             type: str
     notes:
 """
 
 EXAMPLES = r"""
 #### examples
-- name: Check ip address 1 is part of another network
+- name: Check ip address is usable in a network
   debug:
-    msg: "{{ '192.168.0.0/24' | ansible.utils.network_in_network( '192.168.0.1' ) }}"
+    msg: "{{ '192.168.0.0/24' | ansible.utils.network_in_usable( '192.168.0.1' ) }}"
 
-- name: Check ip address 2 is part of another network
+- name: Check broadcast address is usable in a network
   debug:
-    msg: "{{ '192.168.0.0/24' | ansible.utils.network_in_network( '10.0.0.1' ) }}"
+    msg: "{{ '192.168.0.0/24' | ansible.utils.network_in_usable( '192.168.0.255' ) }}"
 
 - name: Check in a network is part of another network.
   debug:
-    msg: "{{ '192.168.0.0/16' | ansible.utils.network_in_network( '192.168.0.0/24' ) }}"
+    msg: "{{ '192.168.0.0/16' | ansible.utils.network_in_usable( '192.168.0.255' ) }}"
 
-# TASK [Check ip address 1 is part of another network] ********************************************************
-# task path: /Users/amhatre/ansible-collections/playbooks/test_network_in_network.yaml:7
+# TASK [Check ip address is usable in a network] **************************************************************
+# task path: /Users/amhatre/ansible-collections/playbooks/test_network_in_usable.yaml:7
 # Loading collection ansible.utils from /Users/amhatre/ansible-collections/collections/ansible_collections/ansible/utils
 # ok: [localhost] => {
 #     "msg": true
 # }
 #
-# TASK [Check ip address 2 is part of another network] ********************************************************
-# task path: /Users/amhatre/ansible-collections/playbooks/test_network_in_network.yaml:11
+# TASK [Check broadcast address is usable in a network] *******************************************************
+# task path: /Users/amhatre/ansible-collections/playbooks/test_network_in_usable.yaml:11
 # Loading collection ansible.utils from /Users/amhatre/ansible-collections/collections/ansible_collections/ansible/utils
 # ok: [localhost] => {
 #     "msg": false
 # }
 #
 # TASK [Check in a network is part of another network.] *******************************************************
-# task path: /Users/amhatre/ansible-collections/playbooks/test_network_in_network.yaml:15
+# task path: /Users/amhatre/ansible-collections/playbooks/test_network_in_usable.yaml:15
 # Loading collection ansible.utils from /Users/amhatre/ansible-collections/collections/ansible_collections/ansible/utils
 # ok: [localhost] => {
 #     "msg": true
@@ -107,25 +110,25 @@ RETURN = """
 
 
 @pass_environment
-def _network_in_network(*args, **kwargs):
+def _network_in_usable(*args, **kwargs):
     """This filter returns whether an address or a network passed as argument is in a network."""
     keys = ["value", "test"]
     data = dict(zip(keys, args[1:]))
     data.update(kwargs)
     aav = AnsibleArgSpecValidator(
-        data=data, schema=DOCUMENTATION, name="network_in_network"
+        data=data, schema=DOCUMENTATION, name="network_in_usable"
     )
     valid, errors, updated_data = aav.validate()
     if not valid:
         raise AnsibleFilterError(errors)
-    return network_in_network(**updated_data)
+    return network_in_usable(**updated_data)
 
 
-def network_in_network(value, test):
+def network_in_usable(value, test):
     """
-    Checks whether the 'test' address or addresses are in 'value', including broadcast and network
-    :param: value: The network address or range to test against.
-    :param test: The address or network to validate if it is within the range of 'value'.
+    Checks whether 'test' is a usable address or addresses in 'value'
+    :param: value: The string representation of an address or network to test against.
+    :param test: The string representation of an address or network to validate if it is within the range of 'value'.
     :return: bool
     """
     # normalize value and test variables into an ipaddr
@@ -133,8 +136,8 @@ def network_in_network(value, test):
     w = _address_normalizer(test)
 
     # get first and last addresses as integers to compare value and test; or cathes value when case is /32
-    v_first = ipaddr(ipaddr(v, "network") or ipaddr(v, "address"), "int")
-    v_last = ipaddr(ipaddr(v, "broadcast") or ipaddr(v, "address"), "int")
+    v_first = ipaddr(ipaddr(v, "first_usable") or ipaddr(v, "address"), "int")
+    v_last = ipaddr(ipaddr(v, "last_usable") or ipaddr(v, "address"), "int")
     w_first = ipaddr(ipaddr(w, "network") or ipaddr(w, "address"), "int")
     w_last = ipaddr(ipaddr(w, "broadcast") or ipaddr(w, "address"), "int")
 
@@ -152,7 +155,7 @@ class FilterModule(object):
 
     filter_map = {
         # IP addresses and networks
-        "network_in_network": _network_in_network
+        "network_in_usable": _network_in_usable
     }
 
     def filters(self):
