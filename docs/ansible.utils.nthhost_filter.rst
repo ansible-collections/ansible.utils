@@ -1,11 +1,11 @@
-.. _ansible.utils.network_in_network_filter:
+.. _ansible.utils.nthhost_filter:
 
 
-********************************
-ansible.utils.network_in_network
-********************************
+*********************
+ansible.utils.nthhost
+*********************
 
-**This filter returns whether an address or a network passed as argument is in a network.**
+**This filter returns the nth host within a network described by value.**
 
 
 Version added: 2.5.0
@@ -17,7 +17,10 @@ Version added: 2.5.0
 
 Synopsis
 --------
-- This filter returns whether an address or a network passed as argument is in a network.
+- This filter returns the nth host within a network described by value.
+To return the nth ip from a network, use the filter nthhost.
+nthhost also supports a negative value.
+
 
 
 
@@ -37,7 +40,7 @@ Parameters
             <tr>
                 <td colspan="1">
                     <div class="ansibleOptionAnchor" id="parameter-"></div>
-                    <b>test</b>
+                    <b>query</b>
                     <a class="ansibleOptionLink" href="#parameter-" title="Permalink to this option"></a>
                     <div style="font-size: small">
                         <span style="color: purple">string</span>
@@ -48,7 +51,7 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>The address or network to validate if it is within the range of &#x27;value&#x27;.</div>
+                        <div>nth host</div>
                 </td>
             </tr>
             <tr>
@@ -81,37 +84,26 @@ Examples
 .. code-block:: yaml
 
     #### examples
-    - name: Check ip address 1 is part of another network
+    - name: To return the nth ip from a network, use the filter nthhost.
       debug:
-        msg: "{{ '192.168.0.0/24' | ansible.utils.network_in_network( '192.168.0.1' ) }}"
+        msg: "{{ '10.0.0.0/8' | ansible.utils.nthhost(305)  }}"
 
-    - name: Check ip address 2 is part of another network
+    - name: nthhost also supports a negative value.
       debug:
-        msg: "{{ '192.168.0.0/24' | ansible.utils.network_in_network( '10.0.0.1' ) }}"
+        msg: "{{ '10.0.0.0/8' | ansible.utils.nthhost(-1) }}"
 
-    - name: Check in a network is part of another network.
-      debug:
-        msg: "{{ '192.168.0.0/16' | ansible.utils.network_in_network( '192.168.0.0/24' ) }}"
-
-    # TASK [Check ip address 1 is part of another network] ********************************************************
-    # task path: /Users/amhatre/ansible-collections/playbooks/test_network_in_network.yaml:7
+    # TASK [To return the nth ip from a network, use the filter nthhost.] *****************************************
+    # task path: /Users/amhatre/ansible-collections/playbooks/test_nthhost.yaml:7
     # Loading collection ansible.utils from /Users/amhatre/ansible-collections/collections/ansible_collections/ansible/utils
     # ok: [localhost] => {
-    #     "msg": true
+    #     "msg": "10.0.1.49"
     # }
     #
-    # TASK [Check ip address 2 is part of another network] ********************************************************
-    # task path: /Users/amhatre/ansible-collections/playbooks/test_network_in_network.yaml:11
+    # TASK [nthhost also supports a negative value.] **************************************************************
+    # task path: /Users/amhatre/ansible-collections/playbooks/test_nthhost.yaml:11
     # Loading collection ansible.utils from /Users/amhatre/ansible-collections/collections/ansible_collections/ansible/utils
     # ok: [localhost] => {
-    #     "msg": false
-    # }
-    #
-    # TASK [Check in a network is part of another network.] *******************************************************
-    # task path: /Users/amhatre/ansible-collections/playbooks/test_network_in_network.yaml:15
-    # Loading collection ansible.utils from /Users/amhatre/ansible-collections/collections/ansible_collections/ansible/utils
-    # ok: [localhost] => {
-    #     "msg": true
+    #     "msg": "10.255.255.255"
     # }
 
 
@@ -134,12 +126,12 @@ Common return values are documented `here <https://docs.ansible.com/ansible/late
                     <b>data</b>
                     <a class="ansibleOptionLink" href="#return-" title="Permalink to this return value"></a>
                     <div style="font-size: small">
-                      <span style="color: purple">boolean</span>
+                      <span style="color: purple">string</span>
                     </div>
                 </td>
                 <td></td>
                 <td>
-                            <div>Returns whether an address or a network passed as argument is in a network.</div>
+                            <div>Returns nth host from network</div>
                     <br/>
                 </td>
             </tr>
