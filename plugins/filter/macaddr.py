@@ -9,7 +9,6 @@ filter plugin file for ipaddr filters: macaddr
 from __future__ import absolute_import, division, print_function
 from functools import partial
 from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddr_utils import (
-    ipaddr,
     _need_netaddr,
     hwaddr,
 )
