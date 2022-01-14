@@ -1,11 +1,11 @@
-.. _ansible.utils.nthhost_filter:
+.. _ansible.utils.slaac_filter:
 
 
-*********************
-ansible.utils.nthhost
-*********************
+*******************
+ansible.utils.slaac
+*******************
 
-**This filter returns the nth host within a network described by value.**
+**This filter returns the SLAAC address within a network for a given HW/MAC address.**
 
 
 Version added: 2.5.0
@@ -17,9 +17,8 @@ Version added: 2.5.0
 
 Synopsis
 --------
-- This filter returns the nth host within a network described by value.
-To return the nth ip from a network, use the filter nthhost.
-nthhost also supports a negative value.
+- This filter returns the SLAAC address within a network for a given HW/MAC address.
+the filter slaac() generates an IPv6 address for a given network and a MAC Address in Stateless Configuration.
 
 
 
@@ -84,26 +83,15 @@ Examples
 .. code-block:: yaml
 
     #### examples
-    - name: To return the nth ip from a network, use the filter nthhost.
+    - name: The filter slaac() generates an IPv6 address for a given network and a MAC Address in Stateless Configuration.
       debug:
-        msg: "{{ '10.0.0.0/8' | ansible.utils.nthhost(305)  }}"
+        msg: "{{ 'fdcf:1894:23b5:d38c:0000:0000:0000:0000' | slaac('c2:31:b3:83:bf:2b') }}"
 
-    - name: nthhost also supports a negative value.
-      debug:
-        msg: "{{ '10.0.0.0/8' | ansible.utils.nthhost(-1) }}"
-
-    # TASK [To return the nth ip from a network, use the filter nthhost.] *****************************************
-    # task path: /Users/amhatre/ansible-collections/playbooks/test_nthhost.yaml:7
+    # TASK [The filter slaac() generates an IPv6 address for a given network and a MAC Address in Stateless Configuration.] ***
+    # task path: /Users/amhatre/ansible-collections/playbooks/test_slaac.yaml:7
     # Loading collection ansible.utils from /Users/amhatre/ansible-collections/collections/ansible_collections/ansible/utils
     # ok: [localhost] => {
-    #     "msg": "10.0.1.49"
-    # }
-    #
-    # TASK [nthhost also supports a negative value.] **************************************************************
-    # task path: /Users/amhatre/ansible-collections/playbooks/test_nthhost.yaml:11
-    # Loading collection ansible.utils from /Users/amhatre/ansible-collections/collections/ansible_collections/ansible/utils
-    # ok: [localhost] => {
-    #     "msg": "10.255.255.255"
+    #     "msg": "fdcf:1894:23b5:d38c:c031:b3ff:fe83:bf2b"
     # }
 
 

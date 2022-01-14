@@ -637,3 +637,90 @@ def _range_checker(ip_check, first, last):
         return True
     else:
         return False
+
+
+# ---- HWaddr query helpers ----
+def _bare_query(v):
+    v.dialect = netaddr.mac_bare
+    return str(v)
+
+
+def _bool_hwaddr_query(v):
+    if v:
+        return True
+
+
+def _int_hwaddr_query(v):
+    return int(v)
+
+
+def _cisco_query(v):
+    v.dialect = netaddr.mac_cisco
+    return str(v)
+
+
+def _empty_hwaddr_query(v, value):
+    if v:
+        return value
+
+
+def _linux_query(v):
+    v.dialect = mac_linux
+    return str(v)
+
+
+def _postgresql_query(v):
+    v.dialect = netaddr.mac_pgsql
+    import epdb
+
+    epdb.serve()
+    return str(v)
+
+
+def _unix_query(v):
+    v.dialect = netaddr.mac_unix
+    return str(v)
+
+
+def _win_query(v):
+    v.dialect = netaddr.mac_eui48
+    return str(v)
+
+
+# ---- HWaddr / MAC address filters ----
+def hwaddr(value, query="", alias="hwaddr"):
+    """ Check if string is a HW/MAC address and filter it """
+
+    query_func_extra_args = {"": ("value",)}
+
+    query_func_map = {
+        "": _empty_hwaddr_query,
+        "bare": _bare_query,
+        "bool": _bool_hwaddr_query,
+        "int": _int_hwaddr_query,
+        "cisco": _cisco_query,
+        "eui48": _win_query,
+        "linux": _linux_query,
+        "pgsql": _postgresql_query,
+        "postgresql": _postgresql_query,
+        "psql": _postgresql_query,
+        "unix": _unix_query,
+        "win": _win_query,
+    }
+
+    try:
+        v = netaddr.EUI(value)
+    except Exception:
+        v = None
+        if query and query != "bool":
+            raise AnsibleFilterError(
+                alias + ": not a hardware address: %s" % value
+            )
+
+    extras = []
+    for arg in query_func_extra_args.get(query, tuple()):
+        extras.append(locals()[arg])
+    try:
+        return query_func_map[query](v, *extras)
+    except KeyError:
+        raise AnsibleFilterError(alias + ": unknown filter type: %s" % query)
