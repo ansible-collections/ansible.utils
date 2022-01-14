@@ -46,9 +46,8 @@ DOCUMENTATION = """
     version_added: "2.5.0"
     short_description: This filter is designed to Wrap IPv6 addresses in [ ] brackets.
     description: |
-        Some configuration files require IPv6 addresses to be "wrapped" in square brackets ([ ]).
-        To accomplish that, you can use the ipwrap() filter. It will wrap all IPv6 addresses and leave any other
-        strings intact.
+        Some configuration files require IPv6 addresses to be "wrapped" in square brackets ([ ]).To accomplish that,
+        you can use the ipwrap() filter.It will wrap all IPv6 addresses and leave any other strings intact.
     options:
         value:
             description: |

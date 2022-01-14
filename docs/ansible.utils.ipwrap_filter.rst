@@ -17,9 +17,8 @@ Version added: 2.5.0
 
 Synopsis
 --------
-- Some configuration files require IPv6 addresses to be "wrapped" in square brackets ([ ]).
-To accomplish that, you can use the ipwrap() filter. It will wrap all IPv6 addresses and leave any other
-strings intact.
+- Some configuration files require IPv6 addresses to be "wrapped" in square brackets ([ ]).To accomplish that,
+you can use the ipwrap() filter.It will wrap all IPv6 addresses and leave any other strings intact.
 
 
 
