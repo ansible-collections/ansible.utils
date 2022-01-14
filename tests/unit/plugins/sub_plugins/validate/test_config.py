@@ -43,6 +43,23 @@ def test_check_args_missing_key(validator, test_rule, key):
     )
 
 
+def test_invalid_yaml(validator):
+    test_rule = "[This is not valid YAML"
+    validator._criteria = test_rule
+
+    try:
+        validator._check_args()
+        error = ""
+    except AnsibleError as exc:
+        error = to_text(exc)
+
+    expected_error = """'criteria' option value is invalid, value should be valid YAML. Failed to read with error 'while parsing a flow sequence
+  in "<unicode string>", line 1, column 1
+did not find expected ',' or ']'
+  in "<unicode string>", line 2, column 1'"""
+    assert error == expected_error
+
+
 def test_invalid_action(validator, test_rule):
     test_rule["action"] = "flunge"
     original = to_text(test_rule)
