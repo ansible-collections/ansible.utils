@@ -26,9 +26,11 @@ except ImportError:
 
 try:
     import netaddr
+
+    HAS_NETADDR = True
 except ImportError:
     # in this case, we'll make the filters return error messages (see bottom)
-    netaddr = None
+    HAS_NETADDR = False
 else:
 
     class mac_linux(netaddr.mac_unix):
@@ -125,7 +127,7 @@ class FilterModule(object):
 
     def filters(self):
         """ ip4_hex filter """
-        if netaddr:
+        if HAS_NETADDR:
             return self.filter_map
         else:
             return dict(
