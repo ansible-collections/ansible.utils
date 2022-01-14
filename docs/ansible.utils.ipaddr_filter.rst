@@ -69,7 +69,7 @@ Parameters
                 <td>
                         <div>You can provide a single argument to each ipaddr() filter.</div>
                         <div>The filter will then treat it as a query and return values modified by that query.</div>
-                        <div>AnsibleMapping([(&#x27;Types of queries include&#x27;, [AnsibleMapping([(&#x27;query by name&#x27;, &quot;ansible.utils.ipaddr(&#x27;address&#x27;), ansible.utils.ipv4(&#x27;network&#x27;);&quot;)]), AnsibleMapping([(&#x27;query by CIDR range&#x27;, &quot;ansible.utils.ipaddr(&#x27;192.168.0.0/24&#x27;), ansible.utils.ipv6(&#x27;2001:db8::/32&#x27;);&quot;)]), AnsibleMapping([(&#x27;query by index number&#x27;, &quot;ansible.utils.ipaddr(&#x27;1&#x27;), ansible.utils.ipaddr(&#x27;-1&#x27;);&quot;)])])])</div>
+                        <div>{&#x27;Types of queries include&#x27;: [{&#x27;query by name&#x27;: &quot;ansible.utils.ipaddr(&#x27;address&#x27;), ansible.utils.ipv4(&#x27;network&#x27;);&quot;}, {&#x27;query by CIDR range&#x27;: &quot;ansible.utils.ipaddr(&#x27;192.168.0.0/24&#x27;), ansible.utils.ipv6(&#x27;2001:db8::/32&#x27;);&quot;}, {&#x27;query by index number&#x27;: &quot;ansible.utils.ipaddr(&#x27;1&#x27;), ansible.utils.ipaddr(&#x27;-1&#x27;);&quot;}]}</div>
                 </td>
             </tr>
             <tr>
@@ -139,8 +139,9 @@ Examples
       debug:
         msg: "{{ value|ansible.utils.ipaddr('address') }}"
 
-    - name: Fetch only host IP addresses with their correct CIDR prefixes (as is common with IPv6 addressing), you can use
-      the ipaddr('host') filter.
+    - name: |
+        Fetch only host IP addresses with their correct CIDR prefixes (as is common with IPv6 addressing), you can use
+        the ipaddr('host') filter.
       debug:
         msg: "{{ value|ansible.utils.ipaddr('host') }}"
 
@@ -165,8 +166,9 @@ Examples
         msg: "{{ value|ansible.utils.ipaddr('192.0.0.0/8') }}"
 
     # First IP address (network address)
-    - name: If you specify a positive or negative integer as a query, ipaddr() will treat this as an index and will return
-      the specific IP address from a network range, in the "host/prefix" format.
+    - name: |
+        If you specify a positive or negative integer as a query, ipaddr() will treat this as an index and will return
+        the specific IP address from a network range, in the "host/prefix" format.
       debug:
         msg: "{{ value| ansible.utils.ipaddr('net') | ansible.utils.ipaddr('0') }}"
 
@@ -206,7 +208,7 @@ Examples
     # }
     #
     # TASK [Fetch only host IP addresses with their correct CIDR prefixes (as is common with IPv6 addressing), you can use
-    the ipaddr('host') filter.] *****************
+    # the ipaddr('host') filter.] *****************
     # ok: [localhost] => {
     #     "msg": [
     #         "192.24.2.1/32",
