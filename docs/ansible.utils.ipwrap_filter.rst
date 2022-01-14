@@ -18,7 +18,7 @@ Version added: 2.5.0
 Synopsis
 --------
 - Some configuration files require IPv6 addresses to be "wrapped" in square brackets ([ ]).
-To accomplish that, you can use the ipwrap() filter. It will wrap all IPv6 addresses and leave any other |
+To accomplish that, you can use the ipwrap() filter. It will wrap all IPv6 addresses and leave any other
 strings intact.
 
 
@@ -72,7 +72,7 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>list of subnets or individual address or any other values input. Example. [&#x27;192.24.2.1&#x27;, &#x27;host.fqdn&#x27;, |
+                        <div>list of subnets or individual address or any other values input. Example. [&#x27;192.24.2.1&#x27;, &#x27;host.fqdn&#x27;,
     &#x27;::1&#x27;, &#x27;192.168.32.0/24&#x27;, &#x27;fe80::100/10&#x27;, True, &#x27;&#x27;, &#x27;42540766412265424405338506004571095040/64&#x27;]</div>
                 </td>
             </tr>

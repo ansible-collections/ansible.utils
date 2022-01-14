@@ -28,9 +28,11 @@ except ImportError:
 
 try:
     import netaddr
+
+    HAS_NETADDR = True
 except ImportError:
     # in this case, we'll make the filters return error messages (see bottom)
-    netaddr = None
+    HAS_NETADDR = False
 else:
 
     class mac_linux(netaddr.mac_unix):
@@ -45,12 +47,12 @@ DOCUMENTATION = """
     short_description: This filter is designed to Wrap IPv6 addresses in [ ] brackets.
     description: |
         Some configuration files require IPv6 addresses to be "wrapped" in square brackets ([ ]).
-        To accomplish that, you can use the ipwrap() filter. It will wrap all IPv6 addresses and leave any other |
+        To accomplish that, you can use the ipwrap() filter. It will wrap all IPv6 addresses and leave any other
         strings intact.
     options:
         value:
             description: |
-                list of subnets or individual address or any other values input. Example. ['192.24.2.1', 'host.fqdn', |
+                list of subnets or individual address or any other values input. Example. ['192.24.2.1', 'host.fqdn',
                 '::1', '192.168.32.0/24', 'fe80::100/10', True, '', '42540766412265424405338506004571095040/64']
             type: list
             elements: str
@@ -190,7 +192,7 @@ class FilterModule(object):
 
     def filters(self):
         """ ipwrap filter """
-        if netaddr:
+        if HAS_NETADDR:
             return self.filter_map
         else:
             return dict(
