@@ -114,6 +114,12 @@ Examples
       vars:
         ansible_jsonschema_draft: draft7
 
+    - name: validate configuration with config plugin (see config plugin for criteria examples)
+      ansible.utils.validate:
+        data: "{{ lookup('ansible.builtin.file', './backup/eos.config' }}"
+        criteria: "{{ lookup('ansible.builtin.file', './validate/criteria/config/eos_config_rules.yaml' }}"
+        engine: ansible.utils.config
+
 
 
 Return Values
