@@ -26,12 +26,12 @@ class Test_reduce_on_network(unittest.TestCase):
         """Check passing invalid argspec"""
 
         # missing required arguments
-        args = ["", "", ""]
+        args = [""]
         kwargs = {}
         with self.assertRaises(AnsibleError) as error:
             _reduce_on_network(*args, **kwargs)
         self.assertIn(
-            "we were unable to convert to dict", str(error.exception)
+            "missing required arguments: value", str(error.exception)
         )
 
     def test_reduce_on_network_filter_1(self):

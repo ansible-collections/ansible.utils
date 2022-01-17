@@ -18,8 +18,7 @@ Version added: 2.5.0
 Synopsis
 --------
 - This filter reduces a list of addresses to only the addresses that match a given network.
-To check whether multiple addresses belong to a network, use the reduce_on_network filter.
-
+- To check whether multiple addresses belong to a network, use the reduce_on_network filter.
 
 
 

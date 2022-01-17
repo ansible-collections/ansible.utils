@@ -46,9 +46,9 @@ DOCUMENTATION = """
     author: Ashwini Mhatre (@amhatre)
     version_added: "2.5.0"
     short_description: This filter reduces a list of addresses to only the addresses that match a given network.
-    description: |
-        This filter reduces a list of addresses to only the addresses that match a given network.
-        To check whether multiple addresses belong to a network, use the reduce_on_network filter.
+    description:
+    - This filter reduces a list of addresses to only the addresses that match a given network.
+    - To check whether multiple addresses belong to a network, use the reduce_on_network filter.
     options:
         value:
             description: the list of addresses to filter on.
