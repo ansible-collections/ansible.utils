@@ -53,11 +53,11 @@ def test_invalid_yaml(validator):
     except AnsibleError as exc:
         error = to_text(exc)
 
-    expected_error = """'criteria' option value is invalid, value should be valid YAML. Failed to read with error 'while parsing a flow sequence
-  in "<unicode string>", line 1, column 1
-did not find expected ',' or ']'
-  in "<unicode string>", line 2, column 1'"""
-    assert error == expected_error
+    expected_error = (
+        "'criteria' option value is invalid, value should be valid YAML."
+    )
+    # Don't test for exact error string, varies with Python version
+    assert error.startswith(expected_error)
 
 
 def test_invalid_action(validator, test_rule):
@@ -87,8 +87,9 @@ def test_invalid_regex(validator, test_rule):
     except AnsibleError as exc:
         error = to_text(exc)
 
-    expected_error = 'Failed to compile regex "reg(ex": missing ), unterminated subpattern at position 3'
-    assert error == expected_error
+    expected_error = 'Failed to compile regex "reg(ex":'
+    # Don't test for exact error string, varies with Python version
+    assert error.startswith(expected_error)
 
 
 def test_valid_warning(validator, test_rule):
