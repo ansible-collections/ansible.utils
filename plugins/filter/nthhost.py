@@ -44,10 +44,9 @@ DOCUMENTATION = """
     author: Ashwini Mhatre (@amhatre)
     version_added: "2.5.0"
     short_description: This filter returns the nth host within a network described by value.
-    description: |
-        This filter returns the nth host within a network described by value.
-        To return the nth ip from a network, use the filter nthhost.
-        nthhost also supports a negative value.
+    description:
+    - This filter returns the nth host within a network described by value. To return the nth ip from a network, use the filter nthhost.
+    - Nthhost also supports a negative value.
     options:
         value:
             description: The network address or range to test against.
