@@ -2,11 +2,8 @@
 - name: Recursively find all test files
   find:
     file_type: file
-    paths: "{{ role_path }}/tasks"
-    recurse: false
-    use_regex: true
-    patterns:
-      - '^(?!_|main).+$'
+    paths: "{{ role_path }}/tests"
+    recurse: true
   delegate_to: localhost
   register: found
 
