@@ -45,9 +45,9 @@ DOCUMENTATION = """
     author: Ashwini Mhatre (@amhatre)
     version_added: "2.5.0"
     short_description: This filter returns the SLAAC address within a network for a given HW/MAC address.
-    description: |
-        This filter returns the SLAAC address within a network for a given HW/MAC address.
-        the filter slaac() generates an IPv6 address for a given network and a MAC Address in Stateless Configuration.
+    description:
+    - This filter returns the SLAAC address within a network for a given HW/MAC address.
+    - The filter slaac() generates an IPv6 address for a given network and a MAC Address in Stateless Configuration.
     options:
         value:
             description: The network address or range to test against.

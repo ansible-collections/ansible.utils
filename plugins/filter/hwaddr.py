@@ -44,10 +44,10 @@ DOCUMENTATION = """
     author: Ashwini Mhatre (@amhatre)
     version_added: "2.5.0"
     short_description: HWaddr / MAC address filters
-    description: |
-        This filter check if string is a HW/MAC address and filter it
-        You can use the hwaddr() filter to check if a given string is a MAC address or convert it between various
-        formats.
+    description:
+    - This filter check if string is a HW/MAC address and filter it
+    - You can use the hwaddr() filter to check if a given string is a MAC address or convert it between various
+      formats.
     options:
         value:
             description: HW/MAC address.

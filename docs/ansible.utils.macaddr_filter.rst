@@ -18,9 +18,7 @@ Version added: 2.5.0
 Synopsis
 --------
 - This filter check if string is a MAC address and filter it
-You can use the macaddr() filter to check if a given string is a MAC address or convert it between various
-formats.
-
+- You can use the macaddr() filter to check if a given string is a MAC address or convert it between various formats.
 
 
 
