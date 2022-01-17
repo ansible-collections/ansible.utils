@@ -45,14 +45,14 @@ DOCUMENTATION = """
     author: Ashwini Mhatre (@amhatre)
     version_added: "2.5.0"
     short_description: This filter is designed to Wrap IPv6 addresses in [ ] brackets.
-    description: |
-        Some configuration files require IPv6 addresses to be "wrapped" in square brackets ([ ]).To accomplish that,
-        you can use the ipwrap() filter.It will wrap all IPv6 addresses and leave any other strings intact.
+    description:
+    - Some configuration files require IPv6 addresses to be "wrapped" in square brackets ([ ]).To accomplish that,
+    - you can use the ipwrap() filter.It will wrap all IPv6 addresses and leave any other strings intact.
     options:
         value:
-            description: |
-                list of subnets or individual address or any other values input. Example. ['192.24.2.1', 'host.fqdn',
-                '::1', '192.168.32.0/24', 'fe80::100/10', True, '', '42540766412265424405338506004571095040/64']
+            description:
+            - list of subnets or individual address or any other values input. Example. ['192.24.2.1', 'host.fqdn',
+              '::1', '192.168.32.0/24', 'fe80::100/10', True, '', '42540766412265424405338506004571095040/64']
             type: list
             elements: str
             required: True
