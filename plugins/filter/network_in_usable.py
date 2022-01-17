@@ -45,12 +45,11 @@ DOCUMENTATION = """
     name: network_in_usable
     author: Ashwini Mhatre (@amhatre)
     version_added: "2.5.0"
-    short_description: |
-        The network_in_usable filter returns whether an address passed as an argument is usable in a network
-    description: |
-        The network_in_usable filter returns whether an address passed as an argument is usable in a network
-        Usable addresses are addresses that can be assigned to a host.
-        The network ID and the broadcast address are not usable addresses.
+    short_description: The network_in_usable filter returns whether an address passed as an argument is usable in a network.
+    description:
+    - The network_in_usable filter returns whether an address passed as an argument is usable in a network
+      Usable addresses are addresses that can be assigned to a host.
+    - The network ID and the broadcast address are not usable addresses.
     options:
         value:
             description: The network address or range to test against.

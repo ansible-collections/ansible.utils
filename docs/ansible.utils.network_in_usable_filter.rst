@@ -5,8 +5,7 @@
 ansible.utils.network_in_usable
 *******************************
 
-**The network_in_usable filter returns whether an address passed as an argument is usable in a network
-**
+**The network_in_usable filter returns whether an address passed as an argument is usable in a network.**
 
 
 Version added: 2.5.0
@@ -18,10 +17,8 @@ Version added: 2.5.0
 
 Synopsis
 --------
-- The network_in_usable filter returns whether an address passed as an argument is usable in a network
-Usable addresses are addresses that can be assigned to a host.
-The network ID and the broadcast address are not usable addresses.
-
+- The network_in_usable filter returns whether an address passed as an argument is usable in a network Usable addresses are addresses that can be assigned to a host.
+- The network ID and the broadcast address are not usable addresses.
 
 
 
