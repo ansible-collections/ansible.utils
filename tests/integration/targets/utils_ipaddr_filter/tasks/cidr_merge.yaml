@@ -12,7 +12,7 @@
 
 - name: Assert result for cidr_merge
   assert:
-    that: "{{ result1 == result1_val }}"
+    that: "{{ result1 == cidr_result1 }}"
 
 - name: cidr_merge with span action
   ansible.builtin.set_fact:
@@ -28,4 +28,4 @@
 
 - name: Assert result for cidr_merge(span)
   assert:
-    that: "{{ result2 == result2_val }}"
+    that: "{{ result2 == cidr_result2 }}"
