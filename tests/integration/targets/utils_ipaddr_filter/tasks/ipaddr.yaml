@@ -16,7 +16,7 @@
 
 - name: Assert result for ipaddr.
   assert:
-    that: "{{ result1 == result1_val }}"
+    that: "{{ result1 == ipaddr_result1 }}"
 
 - name: ipaddr filter with host string query
   ansible.builtin.set_fact:
@@ -24,7 +24,7 @@
 
 - name: Assert result for ipaddr host query
   assert:
-    that: "{{ result2 == result2_val }}"
+    that: "{{ result2 == ipaddr_result2 }}"
 
 
 - name: ipaddr filter with public network query
@@ -33,7 +33,7 @@
 
 - name: Assert result for ipaddr public network query
   assert:
-    that: "{{ result3== result3_val }}"
+    that: "{{ result3== ipaddr_result3 }}"
 
 - name: ipaddr filter with network query
   ansible.builtin.set_fact:
@@ -41,4 +41,4 @@
 
 - name: Assert result for ipaddr network query
   assert:
-    that: "{{ result4 == result4_val }}"
+    that: "{{ result4 == ipaddr_result4 }}"
