@@ -16,7 +16,7 @@
 
 - name: Assert result for ipv6.
   assert:
-    that: "{{ result1 == result1_val }}"
+    that: "{{ result1 == ipv6_result1 }}"
 
 - name: convert ipv6 to ipv4 filter
   ansible.builtin.set_fact:
@@ -24,7 +24,7 @@
 
 - name: Assert result for ipv4.
   assert:
-    that: "{{ result2 == result2_val }}"
+    that: "{{ result2 == ipv6_result2 }}"
 
 - name: Ipv6 filter with address query
   ansible.builtin.set_fact:
@@ -32,4 +32,4 @@
 
 - name: Assert result for ipv6 filter with address query.
   assert:
-    that: "{{ result3 == result3_val }}"
+    that: "{{ result3 == ipv6_result3 }}"
