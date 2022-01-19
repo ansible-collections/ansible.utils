@@ -16,4 +16,4 @@
 
 - name: Assert result for ipwrap.
   assert:
-    that: "{{ result1 == result1_val }}"
+    that: "{{ result1 == ipwrap_result1 }}"
