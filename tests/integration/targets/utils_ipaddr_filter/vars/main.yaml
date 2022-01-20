@@ -9,3 +9,8 @@ result2_val:
 
 result3_val:
     - "192.24.2.1"
+
+cidr_result1:
+    - 192.168.0.0/16
+
+cidr_result2: 192.168.1.0/29
