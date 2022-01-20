@@ -25,6 +25,7 @@ Name | Description
 [ansible.utils.from_xml](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.from_xml_filter.rst)|Convert given XML string to native python dictionary.
 [ansible.utils.get_path](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.get_path_filter.rst)|Retrieve the value in a variable using a path
 [ansible.utils.index_of](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.index_of_filter.rst)|Find the indices of items in a list matching some criteria
+[ansible.utils.next_nth_usable](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.next_nth_usable_filter.rst)|This filter returns the next nth usable ip within a network described by value.
 [ansible.utils.ipsubnet](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipsubnet_filter.rst)|This filter can be used to manipulate network subnets in several ways.
 [ansible.utils.ipv6](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipv6_filter.rst)|To filter only Ipv6 addresses Ipv6 filter is used.
 [ansible.utils.ip4_hex](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ip4_hex_filter.rst)|This filter is designed to convert IPv4 address to Hexadecimal notation with optional delimiter.
