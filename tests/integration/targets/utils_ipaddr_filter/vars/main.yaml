@@ -18,3 +18,8 @@ ipwrap_result1:
     - "[fe80::100]/10"
     - "[2001:db8:32c:faad::]/64"
     - "True"
+    
+cidr_result1:
+    - 192.168.0.0/16
+
+cidr_result2: 192.168.1.0/29
