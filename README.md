@@ -21,6 +21,7 @@ PEP440 is the schema used to describe the versions of Ansible.
 ### Filter plugins
 Name | Description
 --- | ---
+[ansible.utils.cidr_merge](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.cidr_merge_filter.rst)|This filter can be used to merge subnets or individual addresses.
 [ansible.utils.from_xml](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.from_xml_filter.rst)|Convert given XML string to native python dictionary.
 [ansible.utils.get_path](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.get_path_filter.rst)|Retrieve the value in a variable using a path
 [ansible.utils.index_of](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.index_of_filter.rst)|Find the indices of items in a list matching some criteria
