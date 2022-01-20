@@ -25,6 +25,8 @@ Name | Description
 [ansible.utils.get_path](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.get_path_filter.rst)|Retrieve the value in a variable using a path
 [ansible.utils.index_of](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.index_of_filter.rst)|Find the indices of items in a list matching some criteria
 [ansible.utils.keep_keys](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.keep_keys_filter.rst)|Keep specific keys from a data recursively.
+[ansible.utils.nthhost](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.nthhost_filter.rst)|This filter returns the nth host within a network described by value.
+[ansible.utils.ipv4](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipv4_filter.rst)|To filter only Ipv4 addresses Ipv4 filter is used.
 [ansible.utils.param_list_compare](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.param_list_compare_filter.rst)|Generate the final param list combining/comparing base and provided parameters.
 [ansible.utils.remove_keys](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.remove_keys_filter.rst)|Remove specific keys from a data recursively.
 [ansible.utils.replace_keys](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.replace_keys_filter.rst)|Replaces specific keys with their after value from a data recursively.
