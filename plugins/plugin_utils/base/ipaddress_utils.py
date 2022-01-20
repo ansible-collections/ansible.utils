@@ -18,6 +18,7 @@ from functools import wraps
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     check_argspec,
 )
+from ansible import errors
 
 try:
     import ipaddress
@@ -84,3 +85,10 @@ def _validate_args(plugin, doc, params):
                 argspec_errors=argspec_result.get("errors"),
             )
         )
+
+
+def _need_netaddr(f_name, *args, **kwargs):
+    raise errors.AnsibleFilterError(
+        "The %s filter requires python's netaddr be "
+        "installed on the ansible controller" % f_name
+    )
