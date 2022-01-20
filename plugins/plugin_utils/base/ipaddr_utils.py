@@ -604,3 +604,36 @@ def _need_netaddr(f_name, *args, **kwargs):
         "The %s filter requires python's netaddr be "
         "installed on the ansible controller" % f_name
     )
+
+
+def _address_normalizer(value):
+    """
+    Used to validate an address or network type and return it in a consistent format.
+    This is being used for future use cases not currently available such as an address range.
+    :param value: The string representation of an address or network.
+    :return: The address or network in the normalized form.
+    """
+    try:
+        vtype = ipaddr(value, "type")
+        if vtype == "address" or vtype == "network":
+            v = ipaddr(value, "subnet")
+        else:
+            return False
+    except Exception:
+        return False
+
+    return v
+
+
+def _range_checker(ip_check, first, last):
+    """
+    Tests whether an ip address is within the bounds of the first and last address.
+    :param ip_check: The ip to test if it is within first and last.
+    :param first: The first IP in the range to test against.
+    :param last: The last IP in the range to test against.
+    :return: bool
+    """
+    if first <= ip_check <= last:
+        return True
+    else:
+        return False
