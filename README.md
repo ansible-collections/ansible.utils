@@ -34,6 +34,7 @@ Name | Description
 [ansible.utils.nthhost](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.nthhost_filter.rst)|This filter returns the nth host within a network described by value.
 [ansible.utils.ipv4](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipv4_filter.rst)|To filter only Ipv4 addresses Ipv4 filter is used.
 [ansible.utils.param_list_compare](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.param_list_compare_filter.rst)|Generate the final param list combining/comparing base and provided parameters.
+[ansible.utils.reduce_on_network](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.reduce_on_network_filter.rst)|This filter reduces a list of addresses to only the addresses that match a given network.
 [ansible.utils.to_paths](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.to_paths_filter.rst)|Flatten a complex object into a dictionary of paths and values
 [ansible.utils.to_xml](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.to_xml_filter.rst)|Convert given JSON string to XML
 [ansible.utils.usable_range](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.usable_range_filter.rst)|Expand the usable IP addresses
