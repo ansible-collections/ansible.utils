@@ -1,0 +1,64 @@
+---
+- name: convert address to subnet using ipsubnet
+  ansible.builtin.set_fact:
+    result1: "{{ address | ansible.utils.ipsubnet }}"
+
+- name: Assert result for ipsubnet.
+  assert:
+    that: "{{ result1 == '192.168.144.5/32' }}"
+
+- name: check if given value is subnet
+  ansible.builtin.set_fact:
+    result2: "{{ subnet | ansible.utils.ipsubnet }}"
+
+- name: Assert result for ipsubnet.
+  assert:
+    that: "{{ result2 == '192.168.0.0/16' }}"
+
+- name: Get the number of subnets a given subnet can be split into
+  ansible.builtin.set_fact:
+    result3: "{{ subnet | ansible.utils.ipsubnet('20') }}"
+
+- name: Assert result for ipsubnet.
+  assert:
+    that: "{{ result3 == '16' }}"
+
+- name: Get the 1st subnet
+  ansible.builtin.set_fact:
+    result4: "{{ subnet | ansible.utils.ipsubnet('20', '0') }}"
+
+- name: Assert result for ipsubnet.
+  assert:
+    that: "{{ result4 == '192.168.0.0/20' }}"
+
+- name: Get the last subnet
+  ansible.builtin.set_fact:
+    result5: "{{ subnet | ansible.utils.ipsubnet('20', '-1') }}"
+
+- name: Assert result for ipsubnet.
+  assert:
+    that: "{{ result5 == '192.168.240.0/20' }}"
+
+- name: Get biggest subnet that contains that given IP address
+  ansible.builtin.set_fact:
+    result6: "{{ address | ansible.utils.ipsubnet('20') }}"
+
+- name: Assert result for ipsubnet.
+  assert:
+    that: "{{ result6 == '192.168.144.0/20' }}"
+
+- name: Get the 1st subnet
+  ansible.builtin.set_fact:
+    result7: "{{ address | ansible.utils.ipsubnet('18', '0') }}"
+
+- name: Assert result for ipsubnet.
+  assert:
+    that: "{{ result7 == '192.168.128.0/18' }}"
+
+- name: The rank of the IP in the subnet (the IP is the 36870nth /32 of the subnet)
+  ansible.builtin.set_fact:
+    result8: "{{ address | ansible.utils.ipsubnet(subnet) }}"
+
+- name: Assert result for ipsubnet.
+  assert:
+    that: "{{ result8 == '36870' }}"
