@@ -27,7 +27,6 @@ Name | Description
 [ansible.utils.hwaddr](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.hwaddr_filter.rst)|HWaddr / MAC address filters
 [ansible.utils.index_of](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.index_of_filter.rst)|Find the indices of items in a list matching some criteria
 [ansible.utils.macaddr](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.macaddr_filter.rst)|macaddr / MAC address filters
-[ansible.utils.ipv4](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipv4_filter.rst)|To filter only Ipv4 addresses Ipv4 filter is used.
 [ansible.utils.slaac](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.slaac_filter.rst)|This filter returns the SLAAC address within a network for a given HW/MAC address.
 [ansible.utils.network_in_network](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.network_in_network_filter.rst)|This filter returns whether an address or a network passed as argument is in a network.
 [ansible.utils.next_nth_usable](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.next_nth_usable_filter.rst)|This filter returns the next nth usable ip within a network described by value.
