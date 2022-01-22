@@ -26,6 +26,7 @@ Name | Description
 [ansible.utils.get_path](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.get_path_filter.rst)|Retrieve the value in a variable using a path
 [ansible.utils.index_of](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.index_of_filter.rst)|Find the indices of items in a list matching some criteria
 [ansible.utils.ipwrap](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipwrap_filter.rst)|This filter is designed to Wrap IPv6 addresses in [ ] brackets.
+[ansible.utils.network_in_usable](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.network_in_usable_filter.rst)|The network_in_usable filter returns whether an address passed as an argument is usable in a network.
 [ansible.utils.network_in_network](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.network_in_network_filter.rst)|This filter returns whether an address or a network passed as argument is in a network.
 [ansible.utils.next_nth_usable](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.next_nth_usable_filter.rst)|This filter returns the next nth usable ip within a network described by value.
 [ansible.utils.ipsubnet](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipsubnet_filter.rst)|This filter can be used to manipulate network subnets in several ways.
@@ -35,6 +36,7 @@ Name | Description
 [ansible.utils.nthhost](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.nthhost_filter.rst)|This filter returns the nth host within a network described by value.
 [ansible.utils.ipv4](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipv4_filter.rst)|To filter only Ipv4 addresses Ipv4 filter is used.
 [ansible.utils.param_list_compare](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.param_list_compare_filter.rst)|Generate the final param list combining/comparing base and provided parameters.
+[ansible.utils.previous_nth_usable](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.previous_nth_usable_filter.rst)|This filter returns the previous nth usable ip within a network described by value.
 [ansible.utils.reduce_on_network](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.reduce_on_network_filter.rst)|This filter reduces a list of addresses to only the addresses that match a given network.
 [ansible.utils.to_paths](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.to_paths_filter.rst)|Flatten a complex object into a dictionary of paths and values
 [ansible.utils.to_xml](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.to_xml_filter.rst)|Convert given JSON string to XML
