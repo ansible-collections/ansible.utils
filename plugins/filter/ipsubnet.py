@@ -75,6 +75,8 @@ EXAMPLES = r"""
 vars:
     address: '192.168.144.5'
     subnet: '192.168.0.0/16'
+    ipv6_address: '2001:4860:4860::8888'
+    ipv6_subnet: '2600:1f1c:1b3:8f00::/56'
 tasks:
       # If the given string is an IP address, it will be converted into a subnet.
       - name: convert IP address to subnet
@@ -100,6 +102,16 @@ tasks:
       - name: Get a last subnet
         debug:
           msg: "{{ subnet | ansible.utils.ipsubnet(20, -1) }}"
+
+      # Get a new subnet with the specified index.
+      - name: Get first IPv6 subnet that has prefix length /120
+        debug:
+          msg: "{{ ipv6_subnet | ansible.utils.ipsubnet(120, 0) }}"
+
+      # Get a new subnet with the specified index.
+      - name: Get last subnet that has prefix length /120
+        debug:
+          msg: "{{ ipv6_subnet | ansible.utils.ipsubnet(120, -1) }}"
 
       # If you specify an IP address instead of a subnet, and give a subnet size as the first argument, the ipsubnet() |
       # filter will instead return the biggest subnet that contains that given IP address.
@@ -137,7 +149,7 @@ tasks:
 
       # By specifying another subnet as a second argument, if the second subnet includes the first, you can determine |
       # the rank of the first subnet in the second.
-      - name: he fifth subnet /30 in a /24
+      - name: The fifth subnet /30 in a /24
         debug:
           msg: "{{ '192.168.144.16/30' | ansible.utils.ipsubnet('192.168.144.0/24') }}"
 
