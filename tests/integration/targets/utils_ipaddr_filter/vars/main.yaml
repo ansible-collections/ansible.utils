@@ -12,6 +12,26 @@ result2_val:
 result3_val:
     - "192.24.2.1"
 
+ipaddr_result1:
+    - 192.24.2.1
+    - ::1
+    - 192.168.32.0/24
+    - fe80::100/10
+    - 2001:db8:32c:faad::/64
+
+ipaddr_result2:
+  - 192.24.2.1/32
+  - ::1/128
+  - fe80::100/10
+
+ipaddr_result3:
+  - 192.24.2.1
+  - 2001:db8:32c:faad::/64
+
+ipaddr_result4:
+  - 192.168.32.0/24
+  - 2001:db8:32c:faad::/64
+
 ipwrap_result1:
     - "192.24.2.1"
     - "host.fqdn"
