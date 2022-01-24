@@ -1,0 +1,19 @@
+---
+- name: set ipaddress list
+  ansible.builtin.set_fact:
+    value:
+      - 192.24.2.1
+      - host.fqdn
+      - ::1
+      - 192.168.32.0/24
+      - fe80::100/10
+      - "42540766412265424405338506004571095040/64"
+      - True
+
+- name: ipwrap filter
+  ansible.builtin.set_fact:
+    result1: "{{ value|ansible.utils.ipwrap }}"
+
+- name: Assert result for ipwrap.
+  assert:
+    that: "{{ result1 == ipwrap_result1 }}"
