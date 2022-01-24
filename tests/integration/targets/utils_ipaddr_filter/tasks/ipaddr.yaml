@@ -1,0 +1,44 @@
+---
+- name: set ipaddress list
+  ansible.builtin.set_fact:
+    value:
+      - 192.24.2.1
+      - host.fqdn
+      - ::1
+      - 192.168.32.0/24
+      - fe80::100/10
+      - "42540766412265424405338506004571095040/64"
+      - True
+
+- name: ipaddr filter with empty string query
+  ansible.builtin.set_fact:
+    result1: "{{ value|ansible.utils.ipaddr }}"
+
+- name: Assert result for ipaddr.
+  assert:
+    that: "{{ result1 == ipaddr_result1 }}"
+
+- name: ipaddr filter with host string query
+  ansible.builtin.set_fact:
+    result2: "{{ value|ansible.utils.ipaddr('host') }}"
+
+- name: Assert result for ipaddr host query
+  assert:
+    that: "{{ result2 == ipaddr_result2 }}"
+
+
+- name: ipaddr filter with public network query
+  ansible.builtin.set_fact:
+    result3: "{{ value|ansible.utils.ipaddr('public') }}"
+
+- name: Assert result for ipaddr public network query
+  assert:
+    that: "{{ result3== ipaddr_result3 }}"
+
+- name: ipaddr filter with network query
+  ansible.builtin.set_fact:
+    result4: "{{ value|ansible.utils.ipaddr('net') }}"
+
+- name: Assert result for ipaddr network query
+  assert:
+    that: "{{ result4 == ipaddr_result4 }}"

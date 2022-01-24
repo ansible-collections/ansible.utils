@@ -28,6 +28,9 @@ Name | Description
 [ansible.utils.index_of](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.index_of_filter.rst)|Find the indices of items in a list matching some criteria
 [ansible.utils.macaddr](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.macaddr_filter.rst)|macaddr / MAC address filters
 [ansible.utils.slaac](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.slaac_filter.rst)|This filter returns the SLAAC address within a network for a given HW/MAC address.
+[ansible.utils.ipaddr](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipaddr_filter.rst)|This filter is designed to return the input value if a query is True, else False.
+[ansible.utils.ipwrap](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipwrap_filter.rst)|This filter is designed to Wrap IPv6 addresses in [ ] brackets.
+[ansible.utils.network_in_usable](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.network_in_usable_filter.rst)|The network_in_usable filter returns whether an address passed as an argument is usable in a network.
 [ansible.utils.network_in_network](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.network_in_network_filter.rst)|This filter returns whether an address or a network passed as argument is in a network.
 [ansible.utils.next_nth_usable](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.next_nth_usable_filter.rst)|This filter returns the next nth usable ip within a network described by value.
 [ansible.utils.ipsubnet](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipsubnet_filter.rst)|This filter can be used to manipulate network subnets in several ways.
