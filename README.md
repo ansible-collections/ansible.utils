@@ -24,6 +24,7 @@ Name | Description
 [ansible.utils.cidr_merge](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.cidr_merge_filter.rst)|This filter can be used to merge subnets or individual addresses.
 [ansible.utils.from_xml](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.from_xml_filter.rst)|Convert given XML string to native python dictionary.
 [ansible.utils.get_path](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.get_path_filter.rst)|Retrieve the value in a variable using a path
+[ansible.utils.hwaddr](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.hwaddr_filter.rst)|HWaddr / MAC address filters
 [ansible.utils.index_of](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.index_of_filter.rst)|Find the indices of items in a list matching some criteria
 [ansible.utils.keep_keys](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.keep_keys_filter.rst)|Keep specific keys from a data recursively.
 [ansible.utils.nthhost](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.nthhost_filter.rst)|This filter returns the nth host within a network described by value.
@@ -31,6 +32,8 @@ Name | Description
 [ansible.utils.param_list_compare](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.param_list_compare_filter.rst)|Generate the final param list combining/comparing base and provided parameters.
 [ansible.utils.remove_keys](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.remove_keys_filter.rst)|Remove specific keys from a data recursively.
 [ansible.utils.replace_keys](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.replace_keys_filter.rst)|Replaces specific keys with their after value from a data recursively.
+[ansible.utils.macaddr](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.macaddr_filter.rst)|macaddr / MAC address filters
+[ansible.utils.slaac](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.slaac_filter.rst)|This filter returns the SLAAC address within a network for a given HW/MAC address.
 [ansible.utils.ipaddr](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipaddr_filter.rst)|This filter is designed to return the input value if a query is True, else False.
 [ansible.utils.ipwrap](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipwrap_filter.rst)|This filter is designed to Wrap IPv6 addresses in [ ] brackets.
 [ansible.utils.network_in_usable](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.network_in_usable_filter.rst)|The network_in_usable filter returns whether an address passed as an argument is usable in a network.
