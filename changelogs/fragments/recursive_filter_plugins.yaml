@@ -1,0 +1,5 @@
+---
+minor_changes:
+  - "'keep_keys' filter plugin added."
+  - "'remove_keys' filter plugin added."
+  - "'replace_keys' filter plugin added."
