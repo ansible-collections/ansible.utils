@@ -49,7 +49,7 @@ author:
 
 EXAMPLES = r"""
 
-# Update an exisitng fact, dot or bracket notation
+# Update an existing fact, dot or bracket notation
 - name: Set a fact
   ansible.builtin.set_fact:
     a:

@@ -42,7 +42,7 @@ DOCUMENTATION = """
         - This option can be passed in lookup plugin as a key, value pair.
           For example C(lookup(config_data, config_criteria, engine='ansible.utils.jsonschema')), in
           this case the value C(ansible.utils.jsonschema) represents the engine to be use for data validation.
-          If the value is not provided the default value that is C(ansible.uitls.jsonschema) will be used.
+          If the value is not provided the default value that is C(ansible.utils.jsonschema) will be used.
         - The value should be in fully qualified collection name format that is
           C(<org-name>.<collection-name>.<validate-plugin-name>).
         default: ansible.utils.jsonschema

@@ -85,7 +85,7 @@ Examples
 
     #### examples
     - name: cidr_merge with merge action
-        ansible.builtin.set_fact:
+      ansible.builtin.set_fact:
           value:
             - 192.168.0.0/17
             - 192.168.128.0/17
@@ -93,7 +93,7 @@ Examples
     - debug:
         msg:  "{{ value|ansible.utils.cidr_merge }}"
 
-    # TASK [cidr_merge with merge action] ******************************************************************************************************************************
+    # TASK [cidr_merge with merge action] **********************************************************************************
     # ok: [localhost] => {
     #     "ansible_facts": {
     #         "value": [
@@ -104,7 +104,7 @@ Examples
     #     },
     #     "changed": false
     # }
-    # TASK [debug] *****************************************************************************************************************************************************
+    # TASK [debug] *********************************************************************************************************
     # ok: [loalhost] => {
     #     "msg": [
     #         "192.168.0.0/16"
@@ -112,7 +112,7 @@ Examples
     # }
 
     - name: Cidr_merge with span.
-        ansible.builtin.set_fact:
+      ansible.builtin.set_fact:
             value:
               - 192.168.1.1
               - 192.168.1.2

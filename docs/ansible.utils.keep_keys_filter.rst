@@ -277,8 +277,8 @@ Examples
         ansible.builtin.set_fact:
           data: "{{ interfaces }}"
 
-        - debug:
-            msg:  "{{ data|ansible.utils.keep_keys(target=['desc', 'name'], matching_parameter= 'starts_with') }}"
+      - debug:
+          msg:  "{{ data|ansible.utils.keep_keys(target=['desc', 'name'], matching_parameter= 'starts_with') }}"
 
     ##Output
     # TASK [keep selective keys from python dict/list of dict] **************************
