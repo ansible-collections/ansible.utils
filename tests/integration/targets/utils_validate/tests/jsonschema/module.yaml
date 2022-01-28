@@ -36,7 +36,7 @@
 - assert:
     that:
       - "'errors' not in result"
-      - "'all checks passed' in result.msg"
+      - "'All checks passed' in result.msg"
 
 - name: test invalid plugin configuration option
   ansible.utils.validate:
@@ -131,7 +131,7 @@
 - assert:
     that:
       - "'errors' not in result"
-      - "'all checks passed' in result.msg"
+      - "'All checks passed' in result.msg"
 
 - name: validate list data using jsonschema
   ansible.utils.validate:
@@ -142,4 +142,4 @@
 - assert:
     that:
       - "'errors' not in result"
-      - "'all checks passed' in result.msg"
+      - "'All checks passed' in result.msg"
