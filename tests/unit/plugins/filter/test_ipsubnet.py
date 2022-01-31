@@ -199,14 +199,6 @@ class TestIpSubnet(unittest.TestCase):
                 ["", "2600:1f1c:1b3:8f00::/56", "129", "0"],
                 False,
             ],  # Must be /128 or less
-            [
-                ["", "2600:1f1c:1b3:8f00::/56", "120", "0"],
-                "2600:1f1c:01b3:8f00::/120",
-            ],
-            [
-                ["", "2600:1f1c:1b3:8f00::/56", "120", "1"],
-                "2600:1f1c:01b3:8f00:0000:0000:0000:0100/120",
-            ],
         ]
         for args, expected in test_cases:
             self.assertEqual(
