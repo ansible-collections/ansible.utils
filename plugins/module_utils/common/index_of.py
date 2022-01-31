@@ -66,7 +66,7 @@ def _run_test(entry, test, right, tests):
     :type test: a lambda from the qual_map
     :param entry: The x for the lambda
     :type entry: str int or bool
-    :param right: The y for the lamba
+    :param right: The y for the lambda
     :type right: str int bool or list
     :return: If the test passed
     :rtype: book
@@ -134,7 +134,7 @@ def index_of(
     :param data: The data passed in (data|index_of(...))
     :type data: unknown
     :param test: the test to use
-    :type test: jinj2 test
+    :type test: jinja2 test
     :param value: The value to use for the test
     :type value: unknown
     :param key: The key to use when a list of dicts is passed

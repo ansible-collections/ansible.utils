@@ -90,7 +90,7 @@ Parameters
                     </td>
                 <td>
                         <div>The name of the validator plugin to use.</div>
-                        <div>This option can be passed in lookup plugin as a key, value pair. For example <code>config_data|ansible.utils.validate(config_criteria, engine=&#x27;ansible.utils.jsonschema&#x27;</code>), in this case the value <code>ansible.utils.jsonschema</code> represents the engine to be use for data validation. If the value is not provided the default value that is <code>ansible.uitls.jsonschema</code> will be used.</div>
+                        <div>This option can be passed in lookup plugin as a key, value pair. For example <code>config_data|ansible.utils.validate(config_criteria, engine=&#x27;ansible.utils.jsonschema&#x27;</code>), in this case the value <code>ansible.utils.jsonschema</code> represents the engine to be use for data validation. If the value is not provided the default value that is <code>ansible.utils.jsonschema</code> will be used.</div>
                         <div>The value should be in fully qualified collection name format that is <code>&lt;org-name&gt;.&lt;collection-name&gt;.&lt;validator-plugin-name&gt;</code>.</div>
                 </td>
             </tr>
@@ -121,7 +121,7 @@ Examples
 
     - name: validate data in json format using jsonschema by passing plugin configuration variable as key/value pairs
       ansible.builtin.set_fact:
-        data_validilty: "{{ data|ansible.utils.validate(criteria, engine='ansible.utils.jsonschema', draft='draft7') }}"
+        data_validity: "{{ data|ansible.utils.validate(criteria, engine='ansible.utils.jsonschema', draft='draft7') }}"
 
 
 

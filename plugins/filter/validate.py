@@ -35,7 +35,7 @@ DOCUMENTATION = """
         - This option can be passed in lookup plugin as a key, value pair.
           For example C(config_data|ansible.utils.validate(config_criteria, engine='ansible.utils.jsonschema')), in
           this case the value C(ansible.utils.jsonschema) represents the engine to be use for data validation.
-          If the value is not provided the default value that is C(ansible.uitls.jsonschema) will be used.
+          If the value is not provided the default value that is C(ansible.utils.jsonschema) will be used.
         - The value should be in fully qualified collection name format that is
           C(<org-name>.<collection-name>.<validator-plugin-name>).
         default: ansible.utils.jsonschema
@@ -58,7 +58,7 @@ EXAMPLES = r"""
 
 - name: validate data in json format using jsonschema by passing plugin configuration variable as key/value pairs
   ansible.builtin.set_fact:
-    data_validilty: "{{ data|ansible.utils.validate(criteria, engine='ansible.utils.jsonschema', draft='draft7') }}"
+    data_validity: "{{ data|ansible.utils.validate(criteria, engine='ansible.utils.jsonschema', draft='draft7') }}"
 """
 
 RETURN = """
@@ -138,7 +138,7 @@ def validate(*args, **kwargs):
 
 
 class FilterModule(object):
-    """ index_of  """
+    """index_of"""
 
     def filters(self):
         """a mapping of filter names to functions"""

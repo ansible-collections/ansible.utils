@@ -53,7 +53,7 @@ from ansible_collections.ansible.utils.plugins.module_utils.common.utils import 
     to_list,
 )
 
-# PY2 compatiblilty for JSONDecodeError
+# PY2 compatibility for JSONDecodeError
 try:
     from json.decoder import JSONDecodeError
 except ImportError:
@@ -86,7 +86,7 @@ class Validate(ValidateBase):
     def _check_reqs():
         """Check the prerequisites are installed for jsonschema
 
-        :return None: In case all prerequisites are satisfised
+        :return None: In case all prerequisites are satisfied
         """
         if not HAS_JSONSCHEMA:
             raise AnsibleError(missing_required_lib("jsonschema"))

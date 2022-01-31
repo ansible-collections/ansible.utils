@@ -141,7 +141,7 @@ class AnsibleArgSpecValidator:
         other_args=None,
     ):
         """Validate some data against a schema
-        :param data: The data to valdiate
+        :param data: The data to validate
         :type data: dict
         :param schema: A schema in ansible argspec format
         :type schema: dict

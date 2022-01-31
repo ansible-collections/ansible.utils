@@ -90,7 +90,7 @@ Parameters
                     </td>
                 <td>
                         <div>The name of the validate plugin to use.</div>
-                        <div>This option can be passed in lookup plugin as a key, value pair. For example <code>lookup(config_data, config_criteria, engine=&#x27;ansible.utils.jsonschema&#x27;</code>), in this case the value <code>ansible.utils.jsonschema</code> represents the engine to be use for data validation. If the value is not provided the default value that is <code>ansible.uitls.jsonschema</code> will be used.</div>
+                        <div>This option can be passed in lookup plugin as a key, value pair. For example <code>lookup(config_data, config_criteria, engine=&#x27;ansible.utils.jsonschema&#x27;</code>), in this case the value <code>ansible.utils.jsonschema</code> represents the engine to be use for data validation. If the value is not provided the default value that is <code>ansible.utils.jsonschema</code> will be used.</div>
                         <div>The value should be in fully qualified collection name format that is <code>&lt;org-name&gt;.&lt;collection-name&gt;.&lt;validate-plugin-name&gt;</code>.</div>
                 </td>
             </tr>
