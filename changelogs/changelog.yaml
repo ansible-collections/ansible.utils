@@ -178,3 +178,48 @@ releases:
       - 2.4.3.yaml
       - fix_network_ee.yaml
     release_date: '2021-12-07'
+  2.5.0:
+    changes:
+      doc_changes:
+      - Enhancement in documentation and docstring.
+      minor_changes:
+      - '''keep_keys'' filter plugin added.'
+      - '''remove_keys'' filter plugin added.'
+      - '''replace_keys'' filter plugin added.'
+      - Add cli_merge ipaddr filter plugin.
+      - Add ip4_hex filter plugin.
+      - Add ipaddr filter plugin.
+      - Add ipmath filter plugin.
+      - Add ipsubnet filter plugin.
+      - Add ipv4 filter plugin.
+      - Add ipv6 filter plugin.
+      - Add ipwrap filter plugin.
+      - Add network_in_network filter plugin.
+      - Add network_in_usable filter plugin.
+      - Add next_nth_usable filter plugin.
+      - Add nthhost filter plugin.
+      - Add previous_nth_usable filter plugin.
+      - Add reduce_on_network filter plugin.
+      - Add slaac,hwaddr,mac filter plugin.
+      - New validate sub-plugin "config" to validate device configuration against
+        user-defined rules (https://github.com/ansible-collections/ansible.network/issues/15).
+    fragments:
+    - 112-validate-config-plugin.yaml
+    - add_cli_merge_filter_plugin.yaml
+    - add_ip4_hex_filter.yaml
+    - add_ipaddr_filter_plugin.yaml
+    - add_ipmath_filter.yaml
+    - add_ipsubnet_filter_plugin.yaml
+    - add_ipv4_filter_plugin.yaml
+    - add_ipv6_filter_plugin.yaml
+    - add_ipwrap_filter_plugin.yaml
+    - add_network_in_network_filter.yaml
+    - add_network_in_usable_filter.yaml
+    - add_next_nth_usable_filter.yaml
+    - add_nthhost_filter.yaml
+    - add_previous_nth_usable_filter.yaml
+    - add_reduce_on_network_filter.yaml
+    - add_slaac_mac_hwaddr_filter.yaml
+    - docfix_minor_corrections.yaml
+    - recursive_filter_plugins.yaml
+    release_date: '2022-01-31'

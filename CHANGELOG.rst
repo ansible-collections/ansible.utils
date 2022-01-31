@@ -4,6 +4,37 @@ Ansible Utils Collection Release Notes
 
 .. contents:: Topics
 
+v2.5.0
+======
+
+Minor Changes
+-------------
+
+- 'keep_keys' filter plugin added.
+- 'remove_keys' filter plugin added.
+- 'replace_keys' filter plugin added.
+- Add cli_merge ipaddr filter plugin.
+- Add ip4_hex filter plugin.
+- Add ipaddr filter plugin.
+- Add ipmath filter plugin.
+- Add ipsubnet filter plugin.
+- Add ipv4 filter plugin.
+- Add ipv6 filter plugin.
+- Add ipwrap filter plugin.
+- Add network_in_network filter plugin.
+- Add network_in_usable filter plugin.
+- Add next_nth_usable filter plugin.
+- Add nthhost filter plugin.
+- Add previous_nth_usable filter plugin.
+- Add reduce_on_network filter plugin.
+- Add slaac,hwaddr,mac filter plugin.
+- New validate sub-plugin "config" to validate device configuration against user-defined rules (https://github.com/ansible-collections/ansible.network/issues/15).
+
+Documentation Changes
+---------------------
+
+- Enhancement in documentation and docstring.
+
 v2.4.3
 ======
 
