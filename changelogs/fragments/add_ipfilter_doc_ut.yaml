@@ -1,0 +1,5 @@
+---
+minor_changes:
+  - Add example for IPv6 in ipsubnet filter documentation.
+  - Fix typo in ipsubnet documentation.
+  - Add unit tests for ipsubnet filter.
