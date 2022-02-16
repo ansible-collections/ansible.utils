@@ -231,7 +231,8 @@ class TestCli_Parse(unittest.TestCase):
         self.assertEqual(self._plugin._task.args["text"], expected)
 
     def test_fn_set_text_absent(self):
-        """Check task args text is set to stdout"""
+        """ Check task args text is set to stdout
+        """
         self._plugin._result["stdout"] = None
         self._plugin._task.args = {}
         self._plugin._set_text()
