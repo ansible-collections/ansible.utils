@@ -529,7 +529,7 @@ class TestCli_Parse(unittest.TestCase):
 
     @patch("ansible.module_utils.connection.Connection.__rpc__")
     def test_fn_run_pass_missing_parser_in_parser(self, mock_rpc):
-        """Check full module run using parser w/o
+        """ Check full module run using parser w/o
         a parser function defined in the parser
         defined in the parser
         """
