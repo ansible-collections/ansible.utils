@@ -215,7 +215,8 @@ class TestCli_Parse(unittest.TestCase):
         )
 
     def test_fn_set_parser_command_absent(self):
-        """Confirm parser/command is not added"""
+        """ Confirm parser/command is not added
+        """
         self._plugin._task.args = {"parser": {}}
         self._plugin._set_parser_command()
         self.assertNotIn("command", self._plugin._task.args["parser"])
