@@ -238,7 +238,8 @@ class TestCli_Parse(unittest.TestCase):
         self.assertNotIn("text", self._plugin._task.args)
 
     def test_fn_os_from_task_vars(self):
-        """Confirm os is set based on task vars"""
+        """ Confirm os is set based on task vars
+        """
         checks = [
             ("ansible_network_os", "cisco.nxos.nxos", "nxos"),
             ("ansible_network_os", "NXOS", "nxos"),
