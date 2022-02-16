@@ -251,7 +251,7 @@ class TestCli_Parse(unittest.TestCase):
             self.assertEqual(result, check[2])
 
     def test_fn_update_template_path_not_exist(self):
-        """Check the creation of the template_path if
+        """ Check the creation of the template_path if
         it doesn't exist in the user provided data
         """
         self._plugin._task.args = {
