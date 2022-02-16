@@ -301,7 +301,8 @@ class TestCli_Parse(unittest.TestCase):
         )
 
     def test_fn_get_template_contents_pass(self):
-        """Check the retrieval of the template contents"""
+        """ Check the retrieval of the template contents
+        """
         temp = tempfile.NamedTemporaryFile()
         contents = "abcdef"
         with open(temp.name, "w") as fileh:
