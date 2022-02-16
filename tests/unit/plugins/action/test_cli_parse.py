@@ -564,7 +564,8 @@ class TestCli_Parse(unittest.TestCase):
 
     @patch("ansible.module_utils.connection.Connection.__rpc__")
     def test_fn_run_net_device_error(self, mock_rpc):
-        """Check full module run mock error from network device"""
+        """ Check full module run mock error from network device
+        """
         msg = "I was mocked"
         mock_rpc.side_effect = AnsibleConnectionError(msg)
         self._plugin._connection.socket_path = (
