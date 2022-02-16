@@ -483,7 +483,8 @@ class TestCli_Parse(unittest.TestCase):
         self.assertEqual(result, expected)
 
     def test_fn_run_fail_missing_parser(self):
-        """Confirm clean fail with missing parser"""
+        """ Confirm clean fail with missing parser
+        """
         self._plugin._task.args = {"text": None, "parser": {"name": "a.b.c"}}
         task_vars = {"inventory_hostname": "mockdevice"}
         result = self._plugin.run(task_vars=task_vars)
