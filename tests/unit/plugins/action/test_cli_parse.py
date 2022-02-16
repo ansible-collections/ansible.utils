@@ -354,7 +354,8 @@ class TestCli_Parse(unittest.TestCase):
         self.assertEqual(self._plugin._result["stdout_lines"], response)
 
     def test_fn_run_command_lx_rc1(self):
-        """Check run command for non network"""
+        """ Check run command for non network
+        """
         response = "abc"
         self._plugin._connection.socket_path = None
         self._plugin._low_level_execute_command = MagicMock()
