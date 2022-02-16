@@ -99,7 +99,8 @@ class TestCli_Parse(unittest.TestCase):
         self.assertEqual(valid, True)
 
     def test_fn_check_argspec_fail_no_test_or_command(self):
-        """Confirm failed argpsec w/o text or command"""
+        """ Confirm failed argpsec w/o text or command
+        """
         kwargs = {
             "parser": {
                 "name": "ansible.utils.textfsm",
