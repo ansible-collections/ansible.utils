@@ -371,7 +371,8 @@ class TestCli_Parse(unittest.TestCase):
 
     @patch("ansible.module_utils.connection.Connection.__rpc__")
     def test_fn_run_command_network(self, mock_rpc):
-        """Check run command for network"""
+        """ Check run command for network
+        """
         expected = "abc"
         mock_rpc.return_value = expected
         self._plugin._connection.socket_path = (
