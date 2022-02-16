@@ -281,7 +281,7 @@ class TestCli_Parse(unittest.TestCase):
         )
 
     def test_fn_update_template_path_mock_find_needle(self):
-        """Check the creation of the template_path
+        """ Check the creation of the template_path
         mock the find needle fn so the template doesn't
         need to be in the default template folder
         """
