@@ -72,7 +72,8 @@ class TestCli_Parse(unittest.TestCase):
             return fhand.read()
 
     def test_fn_debug(self):
-        """Confirm debug doesn't fail and return None"""
+        """ Confirm debug doesn't fail and return None
+        """
         msg = "some message"
         result = self._plugin._debug(msg)
         self.assertEqual(result, None)
