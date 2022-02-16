@@ -58,7 +58,7 @@ class TestCli_Parse(unittest.TestCase):
 
     @staticmethod
     def _load_fixture(filename):
-        """Load a fixture from the filesystem
+        """ Load a fixture from the filesystem
 
         :param filename: The name of the file to load
         :type filename: str
