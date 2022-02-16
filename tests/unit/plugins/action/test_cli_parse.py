@@ -323,7 +323,8 @@ class TestCli_Parse(unittest.TestCase):
         )
 
     def test_fn_get_template_contents_not_specified(self):
-        """Check the none when template_path not specified"""
+        """ Check the none when template_path not specified
+        """
         self._plugin._task.args = {"parser": {}}
         result = self._plugin._get_template_contents()
         self.assertIsNone(result)
