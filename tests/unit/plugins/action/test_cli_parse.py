@@ -175,7 +175,8 @@ class TestCli_Parse(unittest.TestCase):
             self.assertTrue(callable(parser.parse))
 
     def test_fn_load_parser_fail(self):
-        """Confirm missing parser fails gracefully"""
+        """ Confirm missing parser fails gracefully
+        """
         self._plugin._task.args = {
             "text": "anything",
             "parser": {"name": "a.b.c"},
