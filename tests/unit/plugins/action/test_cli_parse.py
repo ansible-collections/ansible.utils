@@ -313,7 +313,8 @@ class TestCli_Parse(unittest.TestCase):
         self.assertEqual(result, contents)
 
     def test_fn_get_template_contents_missing(self):
-        """Check the retrieval of the template contents"""
+        """ Check the retrieval of the template contents
+        """
         self._plugin._task.args = {"parser": {"template_path": "non-exist"}}
         with self.assertRaises(Exception) as error:
             self._plugin._get_template_contents()
