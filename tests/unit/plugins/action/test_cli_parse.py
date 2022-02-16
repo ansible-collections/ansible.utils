@@ -148,7 +148,7 @@ class TestCli_Parse(unittest.TestCase):
         self.assertIn("including collection", self._plugin._result["msg"])
 
     def test_fn_extended_check_argspec_missing_tpath_or_command(self):
-        """Confirm failed argpsec missing template_path
+        """ Confirm failed argpsec missing template_path
         or command when text provided
         """
         self._plugin._task.args = {
