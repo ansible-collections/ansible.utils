@@ -492,7 +492,7 @@ class TestCli_Parse(unittest.TestCase):
 
     @patch("ansible.module_utils.connection.Connection.__rpc__")
     def test_fn_run_pass_missing_parser_constants(self, mock_rpc):
-        """Check full module run using parser w/o
+        """ Check full module run using parser w/o
         DEFAULT_TEMPLATE_EXTENSION or PROVIDE_TEMPLATE_CONTENTS
         defined in the parser
         """
