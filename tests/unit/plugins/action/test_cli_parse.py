@@ -458,7 +458,8 @@ class TestCli_Parse(unittest.TestCase):
         self.assertIn("including collection", self._plugin._result["msg"])
 
     def test_fn_run_fail_command(self):
-        """Confirm clean fail with rc 1"""
+        """ Confirm clean fail with rc 1
+        """
         self._plugin._connection.socket_path = None
         self._plugin._low_level_execute_command = MagicMock()
         self._plugin._low_level_execute_command.return_value = {
