@@ -384,7 +384,8 @@ class TestCli_Parse(unittest.TestCase):
         self.assertEqual(self._plugin._result["stdout_lines"], [expected])
 
     def test_fn_run_command_not_specified(self):
-        """Check run command for network"""
+        """ Check run command for network
+        """
         self._plugin._task.args = {"command": None}
         result = self._plugin._run_command()
         self.assertIsNone(result)
