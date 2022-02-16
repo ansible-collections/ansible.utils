@@ -203,7 +203,8 @@ class TestCli_Parse(unittest.TestCase):
         )
 
     def test_fn_set_parser_command_present(self):
-        """Confirm parser/command is not changed if provided"""
+        """ Confirm parser/command is not changed if provided
+        """
         self._plugin._task.args = {
             "command": "anything",
             "parser": {"command": "something", "name": "a.b.c"},
