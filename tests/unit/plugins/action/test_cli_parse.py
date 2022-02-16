@@ -332,7 +332,8 @@ class TestCli_Parse(unittest.TestCase):
         self.assertNotIn("stdout_lines", self._plugin._result)
 
     def test_fn_prune_result_not_exist(self):
-        """Test the removal of stdout and stdout_lines from the _result"""
+        """ Test the removal of stdout and stdout_lines from the _result
+        """
         self._plugin._prune_result()
         self.assertNotIn("stdout", self._plugin._result)
         self.assertNotIn("stdout_lines", self._plugin._result)
