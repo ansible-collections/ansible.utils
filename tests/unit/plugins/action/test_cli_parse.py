@@ -445,7 +445,8 @@ class TestCli_Parse(unittest.TestCase):
         self.assertNotIn("ansible_facts", result)
 
     def test_fn_run_fail_argspec(self):
-        """Check full module run with invalid params"""
+        """ Check full module run with invalid params
+        """
         self._plugin._task.args = {
             "text": "anything",
             "parser": {
