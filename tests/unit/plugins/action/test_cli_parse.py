@@ -162,7 +162,8 @@ class TestCli_Parse(unittest.TestCase):
         )
 
     def test_fn_load_parser_pass(self):
-        """Confirm each each of the parsers loads from the filesystem"""
+        """ Confirm each each of the parsers loads from the filesystem
+        """
         parser_names = ["json", "textfsm", "ttp", "xml"]
         for parser_name in parser_names:
             self._plugin._task.args = {
