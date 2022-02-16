@@ -323,7 +323,8 @@ class TestCli_Parse(unittest.TestCase):
         self.assertIsNone(result)
 
     def test_fn_prune_result_pass(self):
-        """Test the removal of stdout and stdout_lines from the _result"""
+        """ Test the removal of stdout and stdout_lines from the _result
+        """
         self._plugin._result["stdout"] = "abc"
         self._plugin._result["stdout_lines"] = "abc"
         self._plugin._prune_result()
