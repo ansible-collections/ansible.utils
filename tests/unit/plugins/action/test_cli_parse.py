@@ -221,7 +221,8 @@ class TestCli_Parse(unittest.TestCase):
         self.assertNotIn("command", self._plugin._task.args["parser"])
 
     def test_fn_set_text_present(self):
-        """Check task args text is set to stdout"""
+        """ Check task args text is set to stdout
+        """
         expected = "output"
         self._plugin._result["stdout"] = expected
         self._plugin._task.args = {}
