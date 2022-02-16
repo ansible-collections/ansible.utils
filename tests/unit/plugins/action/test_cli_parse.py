@@ -420,7 +420,8 @@ class TestCli_Parse(unittest.TestCase):
 
     @patch("ansible.module_utils.connection.Connection.__rpc__")
     def test_fn_run_pass_wo_fact(self, mock_rpc):
-        """Check full module run with valid params"""
+        """ Check full module run with valid params
+        """
         mock_out = self._load_fixture("nxos_show_version.txt")
         mock_rpc.return_value = mock_out
         self._plugin._connection.socket_path = (
