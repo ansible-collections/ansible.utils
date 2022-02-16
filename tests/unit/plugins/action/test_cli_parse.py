@@ -78,7 +78,8 @@ class TestCli_Parse(unittest.TestCase):
         self.assertEqual(result, None)
 
     def test_fn_ail_json(self):
-        """Confirm fail json replaces basic.py in msg"""
+        """ Confirm fail json replaces basic.py in msg
+        """
         msg = "text (basic.py)"
         with self.assertRaises(Exception) as error:
             self._plugin._fail_json(msg)
