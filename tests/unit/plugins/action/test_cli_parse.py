@@ -85,7 +85,8 @@ class TestCli_Parse(unittest.TestCase):
         self.assertEqual("text cli_parse", str(error.exception))
 
     def test_fn_check_argspec_pass(self):
-        """Confirm a valid argspec passes"""
+        """ Confirm a valid argspec passes
+        """
         kwargs = {
             "text": "text",
             "parser": {
