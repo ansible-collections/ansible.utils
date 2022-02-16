@@ -134,7 +134,8 @@ class TestCli_Parse(unittest.TestCase):
         )
 
     def test_fn_extended_check_argspec_parser_name_not_coll(self):
-        """Confirm failed argpsec parser not collection format"""
+        """ Confirm failed argpsec parser not collection format
+        """
         self._plugin._task.args = {
             "text": "anything",
             "parser": {
