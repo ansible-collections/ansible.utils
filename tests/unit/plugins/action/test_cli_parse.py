@@ -119,7 +119,8 @@ class TestCli_Parse(unittest.TestCase):
         )
 
     def test_fn_check_argspec_fail_no_parser_name(self):
-        """Confirm failed argspec no parser name"""
+        """ Confirm failed argspec no parser name
+        """
         kwargs = {"text": "anything", "parser": {"command": "show version"}}
         valid, result, updated_params = check_argspec(
             DOCUMENTATION,
