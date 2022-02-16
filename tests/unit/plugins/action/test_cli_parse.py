@@ -188,7 +188,7 @@ class TestCli_Parse(unittest.TestCase):
         self.assertIn("No module named", self._plugin._result["msg"])
 
     def test_fn_set_parser_command_missing(self):
-        """Confirm parser/command is set if missing
+        """ Confirm parser/command is set if missing
         and command provided
         """
         self._plugin._task.args = {
