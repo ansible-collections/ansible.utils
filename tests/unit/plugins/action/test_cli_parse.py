@@ -266,7 +266,7 @@ class TestCli_Parse(unittest.TestCase):
         )
 
     def test_fn_update_template_path_not_exist_os(self):
-        """Check the creation of the template_path if
+        """ Check the creation of the template_path if
         it doesn't exist in the user provided data
         name based on os provided in task
         """
