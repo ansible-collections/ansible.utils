@@ -1,0 +1,7 @@
+---
+bugfixes:
+  - >-
+    unit-testing - adds the python netaddr module as a requirement that
+    ansible-test will install when operating in container (--docker) or python
+    virtual environment (--venv) mode.
+    (https://github.com/ansible-collections/ansible.utils/issues/142)
