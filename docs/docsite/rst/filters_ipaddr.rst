@@ -1,11 +1,10 @@
 
-.. _filters_ipaddr:
 
 Using the ipaddr filter
-=======================
+========================
 
 
-``ipaddr()`` is a Jinja2 filter designed to provide an interface to the `netaddr`_
+``ipaddr()`` is a Jinja2 filter designed to provide an interface to the `netaddr <https://pypi.org/project/netaddr/>`_
 Python package from within Ansible. It can operate on strings or lists of
 items, test various data to check if they are valid IP addresses, and manipulate
 the input data to extract requested information. ``ipaddr()`` works with both
@@ -16,7 +15,7 @@ available to manipulate IP subnets and MAC addresses.
 
 	The ``ipaddr()`` filter migrated to the `ansible.utils <https://galaxy.ansible.com/ansible/utils>`_ collection. Follow the installation instructions to install that collection.
 
-To use this filter in Ansible, you need to install the `netaddr`_ Python library on
+To use this filter in Ansible, you need to install the ``netaddr`` Python library on
 a computer on which you use Ansible (it is not required on remote hosts).
 It can usually be installed with either your system package manager or using
 ``pip``:
@@ -25,10 +24,8 @@ It can usually be installed with either your system package manager or using
 
     pip install netaddr
 
-.. _netaddr: https://pypi.org/project/netaddr/
-
 .. contents:: Topics
-   :local:
+    :local:
    :depth: 2
    :backlinks: top
 
@@ -271,7 +268,6 @@ end of the range.
     # {{ test_list | ansible.utils.ipaddr('net') | ansible.utils.ipaddr('400') }}
     ['2001:db8:32c:faad::190/64']
 
-
 Getting information from host/prefix values
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -381,7 +377,6 @@ This result can be converted to canonical form with ``ipaddr()`` to produce a su
     # {{ net_mask | ansible.utils.ipaddr('net') }}
     '192.168.0.0/24'
 
-
 Getting information about the network in CIDR notation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -468,7 +463,7 @@ You can convert IP addresses to PTR records:
 Converting IPv4 address to a 6to4 address
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-A `6to4`_ tunnel is a way to access the IPv6 Internet from an IPv4-only network. If you
+A `6to4 <https://en.wikipedia.org/wiki/6to4>`_ tunnel is a way to access the IPv6 Internet from an IPv4-only network. If you
 have a public IPv4 address, you can automatically configure its IPv6
 equivalent in the ``2002::/16`` network range. After conversion you will gain
 access to a ``2002:xxxx:xxxx::/48`` subnet which could be split into 65535
@@ -481,8 +476,6 @@ be automatically converted to a router address (with a ``::1/48`` host address).
 
     # {{ '193.0.2.0' | ansible.utils.ipaddr('6to4') }}
     2002:c100:0200::1/48
-
-.. _6to4: https://en.wikipedia.org/wiki/6to4
 
 
 Finding IP addresses within a range
@@ -641,7 +634,6 @@ Here are a few simple examples:
     2000:ffff:ffff:ffff:ffff:ffff:ffff:fffb
 
 
-
 Subnet manipulation
 ^^^^^^^^^^^^^^^^^^^
 
@@ -762,7 +754,6 @@ Because of the size of IPv6 subnets, iteration over all of them to find the
 correct one may take some time on slower computers, depending on the size
 difference between the subnets.
 
-
 Subnet Merging
 ^^^^^^^^^^^^^^
 
@@ -838,12 +829,13 @@ the filter ``slaac()`` generates an IPv6 address for a given network and a MAC A
     # {{ 'fdcf:1894:23b5:d38c:0000:0000:0000:0000' | slaac('c2:31:b3:83:bf:2b') }}
     fdcf:1894:23b5:d38c:c031:b3ff:fe83:bf2b
 
+
 .. seealso::
 
    `ansible.utils <https://galaxy.ansible.com/ansible/utils>`_
        Ansible network collection for common code
    :ref:`about_playbooks`
-       An introduction to playbooks
+        An introduction to playbooks
    :ref:`playbooks_filters`
        Introduction to Jinja2 filters and their uses
    :ref:`playbooks_conditionals`
@@ -855,7 +847,7 @@ the filter ``slaac()`` generates an IPv6 address for a given network and a MAC A
    :ref:`playbooks_reuse_roles`
        Playbook organization by roles
    :ref:`playbooks_best_practices`
-         Tips and tricks for playbooks
+       Tips and tricks for playbooks
    `User Mailing List <https://groups.google.com/group/ansible-devel>`_
        Have a question?  Stop by the google group!
    :ref:`communication_irc`

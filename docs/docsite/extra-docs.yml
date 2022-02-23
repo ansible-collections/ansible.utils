@@ -1,5 +1,5 @@
 ---
 sections:
-- title: ansible.utils Scenario Guide
-  toctree:
-    - filters_ipaddr
+  - title: ansible.utils Scenario Guide
+    toctree:
+      - filters_ipaddr
