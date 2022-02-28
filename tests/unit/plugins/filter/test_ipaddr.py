@@ -7,6 +7,7 @@
 Unit test file for ipaddr filter plugins
 """
 from __future__ import absolute_import, division, print_function
+
 __metaclass__ = type
 
 import sys
@@ -15,41 +16,31 @@ import pytest
 import unittest
 from ansible.errors import AnsibleFilterError
 from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddr_utils import (
-    ipaddr
+    ipaddr,
 )
 from ansible_collections.ansible.utils.plugins.filter.next_nth_usable import (
-    next_nth_usable
+    next_nth_usable,
 )
-from ansible_collections.ansible.utils.plugins.filter.ipsubnet import (
-    ipsubnet
-)
+from ansible_collections.ansible.utils.plugins.filter.ipsubnet import ipsubnet
 from ansible_collections.ansible.utils.plugins.filter.previous_nth_usable import (
-    previous_nth_usable
+    previous_nth_usable,
 )
 from ansible_collections.ansible.utils.plugins.filter.network_in_usable import (
-    network_in_usable
+    network_in_usable,
 )
 from ansible_collections.ansible.utils.plugins.filter.network_in_network import (
-    network_in_network
+    network_in_network,
 )
-from ansible_collections.ansible.utils.plugins.filter.nthhost import (
-    nthhost
-)
+from ansible_collections.ansible.utils.plugins.filter.nthhost import nthhost
 from ansible_collections.ansible.utils.plugins.filter.reduce_on_network import (
-    reduce_on_network
+    reduce_on_network,
 )
 from ansible_collections.ansible.utils.plugins.filter.cidr_merge import (
-    cidr_merge
+    cidr_merge,
 )
-from ansible_collections.ansible.utils.plugins.filter.ipmath import (
-    ipmath
-)
-from ansible_collections.ansible.utils.plugins.filter.slaac import (
-    slaac
-)
-from ansible_collections.ansible.utils.plugins.filter.ip4_hex import (
-    ip4_hex
-)
+from ansible_collections.ansible.utils.plugins.filter.ipmath import ipmath
+from ansible_collections.ansible.utils.plugins.filter.slaac import slaac
+from ansible_collections.ansible.utils.plugins.filter.ip4_hex import ip4_hex
 
 
 netaddr = pytest.importorskip("netaddr")
@@ -124,12 +115,8 @@ class TestIpFilter(unittest.TestCase):
         )
 
     def test_ipaddr_address_query(self):
-        self.assertEqual(
-            ipaddr("192.0.2.230", "address"), "192.0.2.230"
-        )
-        self.assertEqual(
-            ipaddr("192.0.2.230/24", "address"), "192.0.2.230"
-        )
+        self.assertEqual(ipaddr("192.0.2.230", "address"), "192.0.2.230")
+        self.assertEqual(ipaddr("192.0.2.230/24", "address"), "192.0.2.230")
         self.assertIsNone(ipaddr("192.0.2.0/24", "address"))
         self.assertEqual(ipaddr("192.0.2.0/31", "address"), "192.0.2.0")
         self.assertEqual(ipaddr("2001::1", "address"), "2001::1")
@@ -263,13 +250,9 @@ class TestIpFilter(unittest.TestCase):
         self.assertIsNone(ipaddr("192.168.1.12", "public"))
         self.assertIsNone(ipaddr("127.0.1.25", "public"))
         self.assertIsNone(ipaddr("255.255.240.0", "public"))
+        self.assertEqual(ipaddr("76.120.99.190", "public"), "76.120.99.190")
         self.assertEqual(
-            ipaddr("76.120.99.190", "public"), "76.120.99.190"
-        )
-        self.assertEqual(
-            ipaddr(
-                ["192.168.1.12", "127.0.1.25", "255.255.240.0"], "public"
-            ),
+            ipaddr(["192.168.1.12", "127.0.1.25", "255.255.240.0"], "public"),
             [],
         )
         self.assertEqual(
@@ -348,15 +331,11 @@ class TestIpFilter(unittest.TestCase):
 
         # No prefix means /32
         address = "1.12.1.34"
-        self.assertEqual(
-            ipaddr(address, "address/prefix"), "1.12.1.34/32"
-        )
+        self.assertEqual(ipaddr(address, "address/prefix"), "1.12.1.34/32")
 
         # Hostmask also works
         address = "1.12.1.36/255.255.255.240"
-        self.assertEqual(
-            ipaddr(address, "address/prefix"), "1.12.1.36/28"
-        )
+        self.assertEqual(ipaddr(address, "address/prefix"), "1.12.1.36/28")
         # But not hostmasks that don't make a valid CIDR prefix
         address = "1.12.1.36/255.255.255.88"
         self.assertFalse(ipaddr(address, "address/prefix"))
@@ -417,9 +396,7 @@ class TestIpFilter(unittest.TestCase):
         )
 
     def test_ipaddr_link_local_query(self):
-        self.assertEqual(
-            ipaddr("169.254.0.12", "link-local"), "169.254.0.12"
-        )
+        self.assertEqual(ipaddr("169.254.0.12", "link-local"), "169.254.0.12")
         self.assertIsNone(ipaddr("192.0.2.12", "link-local"))
         self.assertEqual(ipaddr("fe80::9", "link-local"), "fe80::9")
         self.assertIsNone(ipaddr("2001::", "link-local"))
@@ -446,39 +423,23 @@ class TestIpFilter(unittest.TestCase):
 
     def test_network_prefix(self):
         address = "1.12.1.0/24"
-        self.assertEqual(
-            ipaddr(address, "network/prefix"), "1.12.1.0/24"
-        )
+        self.assertEqual(ipaddr(address, "network/prefix"), "1.12.1.0/24")
         address = "1.12.1.0/25"
-        self.assertEqual(
-            ipaddr(address, "network/prefix"), "1.12.1.0/25"
-        )
+        self.assertEqual(ipaddr(address, "network/prefix"), "1.12.1.0/25")
         # address = '1.12.1.34'
         # self.assertFalse(ipaddr.ipaddr(address, 'last_usable'), 'Not a network address')
         address = "1.12.1.36/28"
-        self.assertEqual(
-            ipaddr(address, "network/prefix"), "1.12.1.32/28"
-        )
+        self.assertEqual(ipaddr(address, "network/prefix"), "1.12.1.32/28")
         address = "1.12.1.36/255.255.255.240"
-        self.assertEqual(
-            ipaddr(address, "network/prefix"), "1.12.1.32/28"
-        )
+        self.assertEqual(ipaddr(address, "network/prefix"), "1.12.1.32/28")
         address = "1.12.1.36/31"
-        self.assertEqual(
-            ipaddr(address, "network/prefix"), "1.12.1.36/31"
-        )
+        self.assertEqual(ipaddr(address, "network/prefix"), "1.12.1.36/31")
         address = "1.12.1.37/31"
-        self.assertEqual(
-            ipaddr(address, "network/prefix"), "1.12.1.36/31"
-        )
+        self.assertEqual(ipaddr(address, "network/prefix"), "1.12.1.36/31")
         address = "1.12.1.36/32"
-        self.assertEqual(
-            ipaddr(address, "network/prefix"), "1.12.1.36/32"
-        )
+        self.assertEqual(ipaddr(address, "network/prefix"), "1.12.1.36/32")
         address = "1.12.1.254/24"
-        self.assertEqual(
-            ipaddr(address, "network/prefix"), "1.12.1.0/24"
-        )
+        self.assertEqual(ipaddr(address, "network/prefix"), "1.12.1.0/24")
 
     def test_network_netmask(self):
         address = "1.12.1.0/24"
@@ -487,35 +448,29 @@ class TestIpFilter(unittest.TestCase):
         )
         address = "1.12.1.0/25"
         self.assertEqual(
-            ipaddr(address, "network_netmask"),
-            "1.12.1.0 255.255.255.128",
+            ipaddr(address, "network_netmask"), "1.12.1.0 255.255.255.128"
         )
         # address = '1.12.1.34'
         # self.assertFalse(ipaddr.ipaddr(address, 'last_usable'), 'Not a network address')
         address = "1.12.1.36/28"
         self.assertEqual(
-            ipaddr(address, "network_netmask"),
-            "1.12.1.32 255.255.255.240",
+            ipaddr(address, "network_netmask"), "1.12.1.32 255.255.255.240"
         )
         address = "1.12.1.36/255.255.255.240"
         self.assertEqual(
-            ipaddr(address, "network_netmask"),
-            "1.12.1.32 255.255.255.240",
+            ipaddr(address, "network_netmask"), "1.12.1.32 255.255.255.240"
         )
         address = "1.12.1.36/31"
         self.assertEqual(
-            ipaddr(address, "network_netmask"),
-            "1.12.1.36 255.255.255.254",
+            ipaddr(address, "network_netmask"), "1.12.1.36 255.255.255.254"
         )
         address = "1.12.1.37/31"
         self.assertEqual(
-            ipaddr(address, "network_netmask"),
-            "1.12.1.36 255.255.255.254",
+            ipaddr(address, "network_netmask"), "1.12.1.36 255.255.255.254"
         )
         address = "1.12.1.36/32"
         self.assertEqual(
-            ipaddr(address, "network_netmask"),
-            "1.12.1.36 255.255.255.255",
+            ipaddr(address, "network_netmask"), "1.12.1.36 255.255.255.255"
         )
         address = "1.12.1.254/24"
         self.assertEqual(
@@ -607,31 +562,21 @@ class TestIpFilter(unittest.TestCase):
         address = "1.12.1.0/24"
         self.assertEqual(ipaddr(address, "previous_usable"), None)
         address = "1.12.1.36/24"
-        self.assertEqual(
-            ipaddr(address, "previous_usable"), "1.12.1.35"
-        )
+        self.assertEqual(ipaddr(address, "previous_usable"), "1.12.1.35")
         # address = '1.12.1.34'
         # self.assertFalse(ipaddr.ipaddr(address, 'last_usable'), 'Not a network address')
         address = "1.12.1.36/28"
-        self.assertEqual(
-            ipaddr(address, "previous_usable"), "1.12.1.35"
-        )
+        self.assertEqual(ipaddr(address, "previous_usable"), "1.12.1.35")
         address = "1.12.1.36/255.255.255.240"
-        self.assertEqual(
-            ipaddr(address, "previous_usable"), "1.12.1.35"
-        )
+        self.assertEqual(ipaddr(address, "previous_usable"), "1.12.1.35")
         address = "1.12.1.36/31"
         self.assertEqual(ipaddr(address, "previous_usable"), None)
         address = "1.12.1.37/31"
-        self.assertEqual(
-            ipaddr(address, "previous_usable"), "1.12.1.36"
-        )
+        self.assertEqual(ipaddr(address, "previous_usable"), "1.12.1.36")
         address = "1.12.1.36/32"
         self.assertEqual(ipaddr(address, "previous_usable"), None)
         address = "1.12.1.254/24"
-        self.assertEqual(
-            ipaddr(address, "previous_usable"), "1.12.1.253"
-        )
+        self.assertEqual(ipaddr(address, "previous_usable"), "1.12.1.253")
 
     def test_ipmath(self):
         self.assertEqual(ipmath("192.168.1.5", 5), "192.168.1.10")
@@ -847,27 +792,19 @@ class TestIpFilter(unittest.TestCase):
     def test_reduce_on_network(self):
         subnet = "1.12.1.0/28"
         addresses = ["1.12.1.0", "1.12.0.10"]
-        self.assertEqual(
-            reduce_on_network(addresses, subnet), [addresses[0]]
-        )
+        self.assertEqual(reduce_on_network(addresses, subnet), [addresses[0]])
         addresses = ["1.12.2.0", "1.12.1.236"]
         self.assertEqual(reduce_on_network(addresses, subnet), [])
 
         subnet = "1.12.1.32/28"
         addresses = ["1.12.1.32/28", "1.12.1.47", "1.12.1.48/31"]
-        self.assertEqual(
-            reduce_on_network(addresses, subnet), addresses[:-1]
-        )
+        self.assertEqual(reduce_on_network(addresses, subnet), addresses[:-1])
 
         subnet = "1.12.1.36/32"
         addresses = ["1.12.1.31", "1.12.1.36", "1.12.1.35", "1.12.1.40"]
-        self.assertEqual(
-            reduce_on_network(addresses, subnet), [addresses[1]]
-        )
+        self.assertEqual(reduce_on_network(addresses, subnet), [addresses[1]])
         subnet = "1.12.1.32/255.255.255.240"
-        self.assertEqual(
-            reduce_on_network(addresses, subnet), addresses[1:]
-        )
+        self.assertEqual(reduce_on_network(addresses, subnet), addresses[1:])
 
     def test_slaac(self):
         mac = "00:50:b6:aa:99:e2"
