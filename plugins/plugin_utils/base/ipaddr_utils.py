@@ -671,9 +671,6 @@ def _linux_query(v):
 
 def _postgresql_query(v):
     v.dialect = netaddr.mac_pgsql
-    import epdb
-
-    epdb.serve()
     return str(v)
 
 
