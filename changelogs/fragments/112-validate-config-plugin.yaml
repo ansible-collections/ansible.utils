@@ -1,4 +1,0 @@
----
-minor_changes:
-  - New validate sub-plugin "config" to validate device configuration against user-defined rules
-    (https://github.com/ansible-collections/ansible.network/issues/15).
