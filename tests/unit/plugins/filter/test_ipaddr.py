@@ -47,12 +47,6 @@ from ansible_collections.ansible.utils.plugins.filter.ipmath import (
 from ansible_collections.ansible.utils.plugins.filter.slaac import (
     slaac
 )
-from ansible_collections.ansible.utils.plugins.filter.hwaddr import (
-    hwaddr
-)
-from ansible_collections.ansible.utils.plugins.filter.macaddr import (
-    macaddr
-)
 from ansible_collections.ansible.utils.plugins.filter.ip4_hex import (
     ip4_hex
 )
@@ -886,7 +880,6 @@ class TestIpFilter(unittest.TestCase):
             slaac("fd00:1234:5678:9abc:def0::/20", mac),
             "fd00:1000::250:b6ff:feaa:99e2",
         )
-
 
     def test_ip4_hex(self):
         self.assertEqual(ip4_hex("192.0.2.24"), "c0000218")
