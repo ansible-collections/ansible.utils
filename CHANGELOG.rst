@@ -4,6 +4,14 @@ Ansible Utils Collection Release Notes
 
 .. contents:: Topics
 
+v2.5.1
+======
+
+Documentation Changes
+---------------------
+
+- `in_any_network` - plugin doc fix for redundant line.
+
 v2.5.0
 ======
 
