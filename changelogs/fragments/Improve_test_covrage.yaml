@@ -1,0 +1,3 @@
+---
+trivial:
+    - Add more testcases for ipaddr filter plugins.
