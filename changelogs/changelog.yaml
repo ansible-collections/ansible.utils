@@ -223,3 +223,12 @@ releases:
     - docfix_minor_corrections.yaml
     - recursive_filter_plugins.yaml
     release_date: '2022-01-31'
+  2.5.1:
+    changes:
+      doc_changes:
+      - '`in_any_network` - plugin doc fix for redundant line.'
+    fragments:
+    - Improve_test_covrage.yaml
+    - minor_doc_update.yaml
+    - unit_test_container_venv.yaml
+    release_date: '2022-03-01'
