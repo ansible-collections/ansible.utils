@@ -118,7 +118,7 @@ Common return values are documented `here <https://docs.ansible.com/ansible/late
                 </td>
                 <td></td>
                 <td>
-                            <div>Returns nth host from network</div>
+                            <div>Returns the SLAAC address within a network for a given HW/MAC address.</div>
                     <br/>
                 </td>
             </tr>
