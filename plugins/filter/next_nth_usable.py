@@ -91,10 +91,9 @@ EXAMPLES = r"""
 
 RETURN = """
   data:
-    type: list
-    elements: str
+    type: str
     description:
-      - Returns list with values valid for a particular query.
+      - Returns the next nth usable ip within a network described by value.
 """
 
 

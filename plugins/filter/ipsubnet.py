@@ -231,10 +231,9 @@ tasks:
 
 RETURN = """
   data:
-    type: list
-    elements: str
+    type: raw
     description:
-      - Returns list with values valid for a particular query.
+      - Returns values valid for a particular query.
 """
 
 

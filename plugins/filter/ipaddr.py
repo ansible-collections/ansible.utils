@@ -51,8 +51,7 @@ DOCUMENTATION = """
         value:
             description:
             - list of subnets or individual address or any other values input for ipaddr plugin
-            type: list
-            elements: str
+            type: raw
             required: True
         query:
             description:
@@ -240,10 +239,9 @@ EXAMPLES = r"""
 
 RETURN = """
   data:
-    type: list
-    elements: str
+    type: raw
     description:
-      - Returns list with values valid for a particular query.
+      - Returns values valid for a particular query.
 """
 
 

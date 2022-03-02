@@ -53,8 +53,7 @@ DOCUMENTATION = """
             description:
             - list of subnets or individual address or any other values input. Example. ['192.24.2.1', 'host.fqdn',
               '::1', '192.168.32.0/24', 'fe80::100/10', True, '', '42540766412265424405338506004571095040/64']
-            type: list
-            elements: str
+            type: raw
             required: True
         query:
             description:
@@ -136,10 +135,9 @@ EXAMPLES = r"""
 
 RETURN = """
   data:
-    type: list
-    elements: str
+    type: raw
     description:
-      - Returns list with values valid for a particular query.
+      - Returns values valid for a particular query.
 """
 
 
