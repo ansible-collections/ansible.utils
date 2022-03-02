@@ -35,7 +35,7 @@ VALID_OUTPUT = [
     "192.168.32.0/24",
     "[fe80::100]/10",
     "[2001:db8:32c:faad::]/64",
-    "True",
+    True,
 ]
 
 
@@ -55,4 +55,4 @@ class TestIpWrap(unittest.TestCase):
 
         args = ["", "::1", ""]
         result = _ipwrap(*args)
-        self.assertEqual(result, ["[::1]"])
+        self.assertEqual(result, "[::1]")
