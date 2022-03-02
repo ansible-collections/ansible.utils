@@ -33,3 +33,11 @@
 - name: Assert result for ipv4 filter with address query.
   assert:
     that: "{{ result3 == result3_val }}"
+
+- name: ipv4 filter with single value
+  ansible.builtin.set_fact:
+    result4: "{{ '192.24.2.1' | ansible.utils.ipv4('ipv6') }}"
+
+- name: Assert result for ipv4 filter with single value
+  assert:
+    that: "{{ result4 == '::ffff:192.24.2.1/128' }}"
