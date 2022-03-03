@@ -13,6 +13,7 @@ from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddr_utils im
     _need_netaddr,
 )
 from ansible.errors import AnsibleFilterError
+from ansible.errors import AnsibleError
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     AnsibleArgSpecValidator,
 )
@@ -251,6 +252,25 @@ def _ipaddr(*args, **kwargs):
     keys = ["value", "query", "version", "alias"]
     data = dict(zip(keys, args[1:]))
     data.update(kwargs)
+    try:
+        if isinstance(data['value'], str):
+            pass
+        elif isinstance(data['value'], list):
+            pass
+        else:
+            raise AnsibleError(
+                "Unrecognized type <{0}> for ipaddr filter <{1}>".format(
+                    type(data["value"]), "value"
+                )
+            )
+
+    except (TypeError, ValueError) as e:
+        raise AnsibleError(
+            "Unrecognized type <{0}> for ipaddr filter <{1}>".format(
+                type(data["value"]), "value"
+            )
+        )
+
     aav = AnsibleArgSpecValidator(
         data=data, schema=DOCUMENTATION, name="ipaddr"
     )

@@ -14,6 +14,7 @@ from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddr_utils im
     _need_netaddr,
 )
 from ansible.errors import AnsibleFilterError
+from ansible.errors import AnsibleError
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     AnsibleArgSpecValidator,
 )
@@ -147,6 +148,26 @@ def _ipwrap(*args, **kwargs):
     keys = ["value"]
     data = dict(zip(keys, args[1:]))
     data.update(kwargs)
+    try:
+        if isinstance(data['value'], str):
+            pass
+        elif isinstance(data['value'], list):
+            pass
+        elif isinstance(data['value'], bool):
+            pass
+        else:
+            raise AnsibleError(
+                "Unrecognized type <{0}> for ipwrap filter <{1}>".format(
+                    type(data["value"]), "value"
+                )
+            )
+
+    except (TypeError, ValueError) as e:
+        raise AnsibleError(
+            "Unrecognized type <{0}> for ipwrap filter <{1}>".format(
+                type(data["value"]), "value"
+            )
+        )
     aav = AnsibleArgSpecValidator(
         data=data, schema=DOCUMENTATION, name="ipwrap"
     )
