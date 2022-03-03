@@ -498,7 +498,6 @@ class TestIpFilter(unittest.TestCase):
     def test_ipsubnet(self):
         test_cases = (
             (("1.1.1.1/24", "30"), "64"),
-            (("1.1.1.1/25", "24"), "0"),
             (("1.12.1.34/32", "1.12.1.34/24"), "35"),
             (("192.168.50.0/24", "192.168.0.0/16"), "51"),
             (("192.168.144.5", "192.168.0.0/16"), "36870"),
@@ -528,14 +527,12 @@ class TestIpFilter(unittest.TestCase):
             self._test_ipsubnet(args, res)
 
     def _test_ipsubnet(self, ipsubnet_args, expected_result):
-        if (
-            ipsubnet_args == ("1.1.1.1/25", "24")
-            and expected_result == "0"
-            and sys.version_info >= (3, 7)
-        ):
-            return  # fails in netaddr on Python 3.7+
-
         self.assertEqual(ipsubnet(*ipsubnet_args), expected_result)
+
+        expected = "Requested subnet size of 24 is invalid"
+        with self.assertRaises(AnsibleFilterError) as exc:
+            ipsubnet("1.1.1.1/25", "24")
+        self.assertEqual(exc.exception.message, expected)
 
         with self.assertRaisesRegexp(
             AnsibleFilterError,

@@ -73,6 +73,54 @@ class TestIpSubnet(unittest.TestCase):
         result = _ipsubnet(*args)
         self.assertEqual(result, "192.168.144.4/31")
 
+    def test_ipvsubnet_filter_lots_of_subnets_v4_bottom1(self):
+        """Use the subnets call to see if it slows way down with v4"""
+        args = ["", "0.0.0.0/1", "31", -1]
+        result = _ipsubnet(*args)
+        self.assertEqual(result, "127.255.255.254/31")
+
+    def test_ipvsubnet_filter_lots_of_subnets_v4_bottom2(self):
+        """Use the subnets call to see if it slows way down with v4"""
+        args = ["", "1.0.0.0/1", "3", -1]
+        result = _ipsubnet(*args)
+        self.assertEqual(result, "96.0.0.0/3")
+
+    def test_ipvsubnet_filter_lots_of_subnets_v4_top1(self):
+        """Use the subnets call to see if it slows way down with v4"""
+        args = ["", "128.0.0.0/1", "31", -1]
+        result = _ipsubnet(*args)
+        self.assertEqual(result, "255.255.255.254/31")
+
+    def test_ipvsubnet_filter_lots_of_subnets_v4_top2(self):
+        """Use the subnets call to see if it slows way down with v4"""
+        args = ["", "130.0.0.0/1", "31", -1]
+        result = _ipsubnet(*args)
+        self.assertEqual(result, "255.255.255.254/31")
+
+    def test_ipvsubnet_filter_lots_of_subnets_v6_bottom1(self):
+        """Use the subnets call to see if it slows way down with v6"""
+        args = ["", "8000::/1", "127", -1]
+        result = _ipsubnet(*args)
+        self.assertEqual(result, "ffff:ffff:ffff:ffff:ffff:ffff:ffff:fffe/127")
+
+    def test_ipvsubnet_filter_lots_of_subnets_v6_bottom2(self):
+        """Use the subnets call to see if it slows way down with v6"""
+        args = ["", "9000::/1", "127", -1]
+        result = _ipsubnet(*args)
+        self.assertEqual(result, "ffff:ffff:ffff:ffff:ffff:ffff:ffff:fffe/127")
+
+    def test_ipvsubnet_filter_lots_of_subnets_v6_top1(self):
+        """Use the subnets call to see if it slows way down with v6"""
+        args = ["", "::/1", "127", -1]
+        result = _ipsubnet(*args)
+        self.assertEqual(result, "7fff:ffff:ffff:ffff:ffff:ffff:ffff:fffe/127")
+
+    def test_ipvsubnet_filter_lots_of_subnets_v6_top2(self):
+        """Use the subnets call to see if it slows way down with v6"""
+        args = ["", "1000::/1", "127", -1]
+        result = _ipsubnet(*args)
+        self.assertEqual(result, "7fff:ffff:ffff:ffff:ffff:ffff:ffff:fffe/127")
+
     def test_ipvsubnet_filter_rank_address_in_subnet(self):
         """The rank of the IP in the subnet (the IP is the 36870nth /32 of the subnet)"""
         args = ["", address, subnet]
