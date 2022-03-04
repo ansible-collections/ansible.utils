@@ -253,9 +253,9 @@ def _ipaddr(*args, **kwargs):
     data = dict(zip(keys, args[1:]))
     data.update(kwargs)
     try:
-        if isinstance(data['value'], str):
+        if isinstance(data["value"], str):
             pass
-        elif isinstance(data['value'], list):
+        elif isinstance(data["value"], list):
             pass
         else:
             raise AnsibleError(
