@@ -14,6 +14,7 @@ from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddr_utils im
     _need_netaddr,
 )
 from ansible.errors import AnsibleFilterError
+from ansible.errors import AnsibleError
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     AnsibleArgSpecValidator,
 )
@@ -53,8 +54,7 @@ DOCUMENTATION = """
             description:
             - list of subnets or individual address or any other values input. Example. ['192.24.2.1', 'host.fqdn',
               '::1', '192.168.32.0/24', 'fe80::100/10', True, '', '42540766412265424405338506004571095040/64']
-            type: list
-            elements: str
+            type: raw
             required: True
         query:
             description:
@@ -136,10 +136,9 @@ EXAMPLES = r"""
 
 RETURN = """
   data:
-    type: list
-    elements: str
+    type: raw
     description:
-      - Returns list with values valid for a particular query.
+      - Returns values valid for a particular query.
 """
 
 
@@ -149,6 +148,26 @@ def _ipwrap(*args, **kwargs):
     keys = ["value"]
     data = dict(zip(keys, args[1:]))
     data.update(kwargs)
+    try:
+        if isinstance(data["value"], str):
+            pass
+        elif isinstance(data["value"], list):
+            pass
+        elif isinstance(data["value"], bool):
+            pass
+        else:
+            raise AnsibleError(
+                "Unrecognized type <{0}> for ipwrap filter <{1}>".format(
+                    type(data["value"]), "value"
+                )
+            )
+
+    except (TypeError, ValueError):
+        raise AnsibleError(
+            "Unrecognized type <{0}> for ipwrap filter <{1}>".format(
+                type(data["value"]), "value"
+            )
+        )
     aav = AnsibleArgSpecValidator(
         data=data, schema=DOCUMENTATION, name="ipwrap"
     )

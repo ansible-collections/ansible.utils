@@ -120,6 +120,7 @@ EXAMPLES = r"""
 
 RETURN = """
   data:
+    type: raw
     description:
       - Returns a minified list of subnets or a single subnet that spans all of the inputs.
 """

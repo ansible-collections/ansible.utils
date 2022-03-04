@@ -79,7 +79,7 @@ RETURN = """
   data:
     type: str
     description:
-      - Returns nth host from network
+      - Returns the SLAAC address within a network for a given HW/MAC address.
 
 """
 
