@@ -232,3 +232,12 @@ releases:
     - minor_doc_update.yaml
     - unit_test_container_venv.yaml
     release_date: '2022-03-01'
+  2.5.2:
+    changes:
+      bugfixes:
+      - Fix issue in ipaddr,ipv4,ipv6,ipwrap filters.(https://github.com/ansible-collections/ansible.utils/issues/148).
+      - ipaddr - Add valid network for link-local (https://github.com/ansible-collections/ansible.netcommon/issues/350).
+      - ipaddr - Fix issue of breaking ipaddr filter with netcommon 2.6.0(https://github.com/ansible-collections/ansible.netcommon/issues/375).
+    fragments:
+    - bugfix_ipaddr_filter.yaml
+    release_date: '2022-03-04'

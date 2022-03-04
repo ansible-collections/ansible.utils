@@ -4,6 +4,16 @@ Ansible Utils Collection Release Notes
 
 .. contents:: Topics
 
+v2.5.2
+======
+
+Bugfixes
+--------
+
+- Fix issue in ipaddr,ipv4,ipv6,ipwrap filters.(https://github.com/ansible-collections/ansible.utils/issues/148).
+- ipaddr - Add valid network for link-local (https://github.com/ansible-collections/ansible.netcommon/issues/350).
+- ipaddr - Fix issue of breaking ipaddr filter with netcommon 2.6.0(https://github.com/ansible-collections/ansible.netcommon/issues/375).
+
 v2.5.1
 ======
 
