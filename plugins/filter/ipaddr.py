@@ -264,7 +264,7 @@ def _ipaddr(*args, **kwargs):
                 )
             )
 
-    except (TypeError, ValueError) as e:
+    except (TypeError, ValueError):
         raise AnsibleError(
             "Unrecognized type <{0}> for ipaddr filter <{1}>".format(
                 type(data["value"]), "value"
