@@ -18,7 +18,7 @@ DOCUMENTATION = """
     version_added: "2.5.2"
     short_description: Consolidate facts together on common attributes.
     description:
-        - This plugin presents a collective structured data including all supplied facts grouping on common attributes mentioned.
+        - This plugin presents collective structured data including all supplied facts grouping on common attributes mentioned.
         - All other boolean parameter defaults to False unless parameters is explicitly mentioned.
         - Using the parameters below- C(data_source|ansible.utils.consolidate(fail_missing_match_key=False)))
     options:
@@ -1221,9 +1221,7 @@ def _consolidate(*args, **kwargs):
     ]
     data = dict(zip(keys, args[1:]))
     data.update(kwargs)
-    aav = AnsibleArgSpecValidator(
-        data=data, schema=DOCUMENTATION, name="consolidate"
-    )
+    aav = AnsibleArgSpecValidator(data=data, schema=DOCUMENTATION, name="consolidate")
     valid, errors, updated_data = aav.validate()
     if not valid:
         raise AnsibleFilterError(errors)

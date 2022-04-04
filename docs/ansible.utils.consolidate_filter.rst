@@ -17,7 +17,7 @@ Version added: 2.5.2
 
 Synopsis
 --------
-- This plugin presents a collective structured data including all supplied facts grouping on common attributes mentioned.
+- This plugin presents collective structured data including all supplied facts grouping on common attributes mentioned.
 - All other boolean parameter defaults to False unless parameters is explicitly mentioned.
 - Using the parameters below- ``data_source|ansible.utils.consolidate(fail_missing_match_key=False``))
 
