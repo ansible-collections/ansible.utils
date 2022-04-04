@@ -1,12 +1,12 @@
 #
 # -*- coding: utf-8 -*-
-# Copyright 2021 Red Hat
+# Copyright 2022 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 #
 
 """
-The keep_keys plugin code
+The consolidate plugin code
 """
 from __future__ import absolute_import, division, print_function
 
@@ -27,17 +27,15 @@ def _raise_error(filter, msg):
 
 
 def fail_on_filter(validator_func):
+    """decorator to fail on supplied filters"""
+
     def update_err(*args, **kwargs):
 
         res, err = validator_func(*args, **kwargs)
         if err.get("match_key_err"):
-            _raise_error(
-                "fail_missing_match_key", ", ".join(err["match_key_err"])
-            )
+            _raise_error("fail_missing_match_key", ", ".join(err["match_key_err"]))
         if err.get("match_val_err"):
-            _raise_error(
-                "fail_missing_match_value", ", ".join(err["match_val_err"])
-            )
+            _raise_error("fail_missing_match_value", ", ".join(err["match_val_err"]))
         if err.get("duplicate_err"):
             _raise_error("fail_duplicate", ", ".join(err["duplicate_err"]))
         return res
@@ -49,13 +47,9 @@ def fail_on_filter(validator_func):
 def check_missing_match_key_duplicate(
     data_sources, fail_missing_match_key, fail_duplicate
 ):
-    """Validate the operation
-    :param operation: The operation
-    :type operation: str
-    :raises: AnsibleFilterError
-    """
+    """Checks if the match_key specified is present in all the supplied data,
+    also checks for duplicate data accross all the data sources"""
     results, errors_match_key, errors_duplicate = [], [], []
-    # Check for missing and duplicate match key
     for ds_idx, data_source in enumerate(data_sources):
         match_key = data_source["match_key"]
         ds_values = []
@@ -71,9 +65,7 @@ def check_missing_match_key_duplicate(
                 continue
 
         if sorted(set(ds_values)) != sorted(ds_values) and fail_duplicate:
-            errors_duplicate.append(
-                f"Duplicate values in data source {ds_idx}"
-            )
+            errors_duplicate.append(f"Duplicate values in data source {ds_idx}")
         results.append(set(ds_values))
     return results, {
         "match_key_err": errors_match_key,
@@ -82,11 +74,19 @@ def check_missing_match_key_duplicate(
 
 
 @fail_on_filter
-def check_missing_match_values(results, fail_missing_match_value):
+def check_missing_match_values(matched_keys, fail_missing_match_value):
+    """Checks values to match be consistent over all the whole data source
+
+    Args:
+        matched_keys (list): list of unique keys based on specified match_keys
+        fail_missing_match_value (bool): Fail if match_key value is missing in a data set
+    Returns:
+        set: set of unique values
+    """
     errors_match_values = []
-    all_values = set(itertools.chain.from_iterable(results))
+    all_values = set(itertools.chain.from_iterable(matched_keys))
     if fail_missing_match_value:
-        for ds_idx, ds_values in enumerate(results):
+        for ds_idx, ds_values in enumerate(matched_keys):
             missing_match = all_values - ds_values
             if missing_match:
                 errors_match_values.append(
@@ -96,13 +96,21 @@ def check_missing_match_values(results, fail_missing_match_value):
 
 
 def consolidate_facts(data_sources, all_values):
+    """Iterate over all the data sources and consolidate the data
+
+    Args:
+        data_sources (list): supplied data sources
+        all_values (set): a set of keys to iterate over
+
+    Returns:
+        list: list of consolidated data
+    """
+
     consolidated_facts = {}
     for data_source in data_sources:
         match_key = data_source["match_key"]
         source = data_source["prefix"]
-        data_dict = {
-            d[match_key]: d for d in data_source["data"] if match_key in d
-        }
+        data_dict = {d[match_key]: d for d in data_source["data"] if match_key in d}
         for value in sorted(all_values):
             if value not in consolidated_facts:
                 consolidated_facts[value] = {}
@@ -116,19 +124,21 @@ def consolidate(
     fail_missing_match_value=False,
     fail_duplicate=False,
 ):
-    """keep selective keys recursively from a given data"
-    :param data: The data passed in (data|keep_keys(...))
-    :type data: raw
-    :param target: List of keys on with operation is to be performed
-    :type data: list
-    :type elements: string
-    :param matching_parameter: matching type of the target keys with data keys
-    :type data: str
+    """Calls data validation and consolidation functions
+
+    Args:
+        data_source (list): list of dicts as data sources
+        fail_missing_match_key (bool, optional): Fails if match_keys not present in data set. Defaults to False.
+        fail_missing_match_value (bool, optional): Fails if matching attribute missing in a data. Defaults to False.
+        fail_duplicate (bool, optional): Fails if duplicate data present in a data. Defaults to False.
+
+    Returns:
+        list: list of dicts of validated and consolidated data
     """
-    # write code here
+
     key_sets = check_missing_match_key_duplicate(
         data_source, fail_missing_match_key, fail_duplicate
     )
     key_vals = check_missing_match_values(key_sets, fail_missing_match_value)
-    datapr = consolidate_facts(data_source, key_vals)
-    return datapr
+    consolidated_facts = consolidate_facts(data_source, key_vals)
+    return consolidated_facts

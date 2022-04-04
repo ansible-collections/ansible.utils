@@ -1,6 +1,6 @@
 #
 # -*- coding: utf-8 -*-
-# Copyright 2021 Red Hat
+# Copyright 2022 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 #
@@ -1234,7 +1234,7 @@ def _consolidate(*args, **kwargs):
 
 
 class FilterModule(object):
-    """keep_keys"""
+    """consolidate"""
 
     def filters(self):
 
