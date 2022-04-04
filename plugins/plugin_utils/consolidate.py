@@ -18,24 +18,39 @@ import itertools
 
 def _raise_error(filter, msg):
     """Raise an error message, prepend with filter name
-    :param msg: The message
-    :type msg: str
-    :raises: AnsibleError
+
+    Args:
+        filter (str): Filter name
+        msg (str): Message specific to filter supplied
+
+    Raises:
+        AnsibleFilterError: AnsibleError with filter name and message
     """
     error = f"Error when using plugin 'consolidate': '{filter}' reported {msg}"
     raise AnsibleFilterError(error)
 
 
 def fail_on_filter(validator_func):
-    """decorator to fail on supplied filters"""
+    """decorator to fail on supplied filters
+
+    Args:
+        validator_func (func): Function that generates failure messages
+
+    Returns:
+        raw: Value without errors if generated and not failed
+    """
 
     def update_err(*args, **kwargs):
 
         res, err = validator_func(*args, **kwargs)
         if err.get("match_key_err"):
-            _raise_error("fail_missing_match_key", ", ".join(err["match_key_err"]))
+            _raise_error(
+                "fail_missing_match_key", ", ".join(err["match_key_err"])
+            )
         if err.get("match_val_err"):
-            _raise_error("fail_missing_match_value", ", ".join(err["match_val_err"]))
+            _raise_error(
+                "fail_missing_match_value", ", ".join(err["match_val_err"])
+            )
         if err.get("duplicate_err"):
             _raise_error("fail_duplicate", ", ".join(err["duplicate_err"]))
         return res
@@ -48,7 +63,15 @@ def check_missing_match_key_duplicate(
     data_sources, fail_missing_match_key, fail_duplicate
 ):
     """Checks if the match_key specified is present in all the supplied data,
-    also checks for duplicate data accross all the data sources"""
+    also checks for duplicate data accross all the data sources
+
+    Args:
+        data_sources (list): list of dicts as data sources
+        fail_missing_match_key (bool): Fails if match_keys not present in data set
+        fail_duplicate (bool): Fails if duplicate data present in a data
+    Returns:
+        list: list of unique keys based on specified match_keys
+    """
     results, errors_match_key, errors_duplicate = [], [], []
     for ds_idx, data_source in enumerate(data_sources):
         match_key = data_source["match_key"]
@@ -65,7 +88,9 @@ def check_missing_match_key_duplicate(
                 continue
 
         if sorted(set(ds_values)) != sorted(ds_values) and fail_duplicate:
-            errors_duplicate.append(f"Duplicate values in data source {ds_idx}")
+            errors_duplicate.append(
+                f"Duplicate values in data source {ds_idx}"
+            )
         results.append(set(ds_values))
     return results, {
         "match_key_err": errors_match_key,
@@ -110,7 +135,9 @@ def consolidate_facts(data_sources, all_values):
     for data_source in data_sources:
         match_key = data_source["match_key"]
         source = data_source["prefix"]
-        data_dict = {d[match_key]: d for d in data_source["data"] if match_key in d}
+        data_dict = {
+            d[match_key]: d for d in data_source["data"] if match_key in d
+        }
         for value in sorted(all_values):
             if value not in consolidated_facts:
                 consolidated_facts[value] = {}

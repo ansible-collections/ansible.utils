@@ -1208,15 +1208,10 @@ try:
 except ImportError:
     from jinja2.filters import environmentfilter as pass_environment
 
-# import debugpy
-
-# debugpy.listen(3000)
-# debugpy.wait_for_client()
-
 
 @pass_environment
 def _consolidate(*args, **kwargs):
-    """keep specific keys from a data recursively"""
+    """Consolidate facts together on common attributes"""
 
     keys = [
         "data_source",
@@ -1226,7 +1221,9 @@ def _consolidate(*args, **kwargs):
     ]
     data = dict(zip(keys, args[1:]))
     data.update(kwargs)
-    aav = AnsibleArgSpecValidator(data=data, schema=DOCUMENTATION, name="consolidate")
+    aav = AnsibleArgSpecValidator(
+        data=data, schema=DOCUMENTATION, name="consolidate"
+    )
     valid, errors, updated_data = aav.validate()
     if not valid:
         raise AnsibleFilterError(errors)
@@ -1234,9 +1231,9 @@ def _consolidate(*args, **kwargs):
 
 
 class FilterModule(object):
-    """consolidate"""
+    """Consolidate"""
 
     def filters(self):
 
-        """a mapping of filter names to functions"""
+        """A mapping of filter names to functions"""
         return {"consolidate": _consolidate}
