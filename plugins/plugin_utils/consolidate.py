@@ -31,9 +31,13 @@ def fail_on_filter(validator_func):
 
         res, err = validator_func(*args, **kwargs)
         if err.get("match_key_err"):
-            _raise_error("fail_missing_match_key", ", ".join(err["match_key_err"]))
+            _raise_error(
+                "fail_missing_match_key", ", ".join(err["match_key_err"])
+            )
         if err.get("match_val_err"):
-            _raise_error("fail_missing_match_value", ", ".join(err["match_val_err"]))
+            _raise_error(
+                "fail_missing_match_value", ", ".join(err["match_val_err"])
+            )
         if err.get("duplicate_err"):
             _raise_error("fail_duplicate", ", ".join(err["duplicate_err"]))
         return res
@@ -67,7 +71,9 @@ def check_missing_match_key_duplicate(
                 continue
 
         if sorted(set(ds_values)) != sorted(ds_values) and fail_duplicate:
-            errors_duplicate.append(f"Duplicate values in data source {ds_idx}")
+            errors_duplicate.append(
+                f"Duplicate values in data source {ds_idx}"
+            )
         results.append(set(ds_values))
     return results, {
         "match_key_err": errors_match_key,
@@ -94,7 +100,9 @@ def consolidate_facts(data_sources, all_values):
     for data_source in data_sources:
         match_key = data_source["match_key"]
         source = data_source["prefix"]
-        data_dict = {d[match_key]: d for d in data_source["data"] if match_key in d}
+        data_dict = {
+            d[match_key]: d for d in data_source["data"] if match_key in d
+        }
         for value in sorted(all_values):
             if value not in consolidated_facts:
                 consolidated_facts[value] = {}

@@ -101,7 +101,7 @@ RETURN = """
 
 @_need_ipaddress
 def _unspecified(ip):
-    """ Test for an unspecified IP address """
+    """Test for an unspecified IP address"""
 
     params = {"ip": ip}
     _validate_args("unspecified", DOCUMENTATION, params)
@@ -113,7 +113,7 @@ def _unspecified(ip):
 
 
 class TestModule(object):
-    """ network jinja test"""
+    """network jinja test"""
 
     test_map = {"unspecified": _unspecified}
 

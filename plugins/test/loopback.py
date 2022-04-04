@@ -85,7 +85,7 @@ RETURN = """
 
 @_need_ipaddress
 def _loopback(ip):
-    """ Test if an IP address is a loopback """
+    """Test if an IP address is a loopback"""
 
     params = {"ip": ip}
     _validate_args("loopback", DOCUMENTATION, params)
@@ -97,7 +97,7 @@ def _loopback(ip):
 
 
 class TestModule(object):
-    """ network jinja test"""
+    """network jinja test"""
 
     test_map = {"loopback": _loopback}
 

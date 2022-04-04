@@ -103,7 +103,7 @@ def _ip_address(ip):
 
 
 class TestModule(object):
-    """ network jinja test"""
+    """network jinja test"""
 
     test_map = {"ip_address": _ip_address}
 

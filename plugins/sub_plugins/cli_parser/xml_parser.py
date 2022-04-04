@@ -52,7 +52,7 @@ except ImportError:
 
 
 class CliParser(CliParserBase):
-    """ The xml parser class
+    """The xml parser class
     Convert an xml string to structured data using xmltodict
     """
 
@@ -61,8 +61,7 @@ class CliParser(CliParserBase):
 
     @staticmethod
     def _check_reqs():
-        """ Check the prerequisites for the xml parser
-        """
+        """Check the prerequisites for the xml parser"""
         errors = []
         if not HAS_XMLTODICT:
             errors.append(missing_required_lib("xmltodict"))
@@ -70,7 +69,7 @@ class CliParser(CliParserBase):
         return errors
 
     def parse(self, *_args, **_kwargs):
-        """ Std entry point for a cli_parse parse execution
+        """Std entry point for a cli_parse parse execution
 
         :return: Errors or parsed text as structured data
         :rtype: dict

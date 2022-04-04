@@ -28,7 +28,7 @@ class TestIpAddr(unittest.TestCase):
         self.assertEqual(result, "192.168.1.10")
 
     def test_find_previous_fifth_address(self):
-        """Get the previous fifth address """
+        """Get the previous fifth address"""
 
         args = ["", "192.168.1.5", -10]
         result = _ipmath(*args)

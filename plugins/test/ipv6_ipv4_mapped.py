@@ -88,7 +88,7 @@ RETURN = """
 
 @_need_ipaddress
 def _ipv6_ipv4_mapped(ip):
-    """ Test if something appears to be a mapped IPv6 to IPv4 mapped address """
+    """Test if something appears to be a mapped IPv6 to IPv4 mapped address"""
 
     params = {"ip": ip}
     _validate_args("ipv6_ipv4_mapped", DOCUMENTATION, params)
@@ -102,7 +102,7 @@ def _ipv6_ipv4_mapped(ip):
 
 
 class TestModule(object):
-    """ network jinja test"""
+    """network jinja test"""
 
     test_map = {"ipv6_ipv4_mapped": _ipv6_ipv4_mapped}
 

@@ -333,7 +333,9 @@ def _consolidate(*args, **kwargs):
     ]
     data = dict(zip(keys, args[1:]))
     data.update(kwargs)
-    aav = AnsibleArgSpecValidator(data=data, schema=DOCUMENTATION, name="consolidate")
+    aav = AnsibleArgSpecValidator(
+        data=data, schema=DOCUMENTATION, name="consolidate"
+    )
     valid, errors, updated_data = aav.validate()
     if not valid:
         raise AnsibleFilterError(errors)
