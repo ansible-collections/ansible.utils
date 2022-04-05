@@ -2,4 +2,4 @@
 minor_changes:
   - "'consolidate' filter plugin added."
 trivial:
-  - Fix sanity issues and update black vesion.
+  - Fix sanity issues and update black version.
