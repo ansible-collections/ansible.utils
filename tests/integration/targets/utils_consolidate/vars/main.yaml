@@ -106,4 +106,3 @@ combined_facts:
     l3_interfaces:
       name: Loopback999
     ospf_interfaces: {}
-
