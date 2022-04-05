@@ -1,0 +1,134 @@
+---
+- name: Build the data structure
+  ansible.builtin.set_fact:
+    data_source:
+      - data:
+          [
+            { "name": "Loopback888" },
+            { "name": "Loopback999" },
+            { "name": "GigabitEthernet0/0" },
+            { "name": "GigabitEthernet0/1" },
+            { "name": "GigabitEthernet0/2" },
+          ]
+        match_key: name
+        prefix: acl_interfaces
+      - data:
+          [
+            {
+              "description": "Configured by Ansible Team",
+              "enabled": False,
+              "name": "Loopback888",
+            },
+            {
+              "description": "Configured by Ansible Team",
+              "enabled": False,
+              "name": "Loopback888",
+            },
+            { "enabled": True, "name": "Loopback999" },
+            {
+              "description": "Configured and Managed By Ansible Team",
+              "enabled": True,
+              "name": "GigabitEthernet0/0",
+            },
+            {
+              "description": "This is a user template",
+              "enabled": True,
+              "name": "GigabitEthernet0/1",
+            },
+            {
+              "description": "This is a user template",
+              "enabled": True,
+              "name": "GigabitEthernet0/2",
+            },
+          ]
+        match_key: name
+        prefix: interfaces
+      - data:
+          [
+            { "name": "GigabitEthernet0/0" },
+            {
+              "mode": "access",
+              "name": "GigabitEthernet0/1",
+              "trunk":
+                {
+                  "allowed_vlans":
+                    [
+                      "11",
+                      "12",
+                      "59",
+                      "67",
+                      "75",
+                      "77",
+                      "81",
+                      "100",
+                      "400-408",
+                      "411-413",
+                      "415",
+                      "418",
+                      "982",
+                      "986",
+                      "988",
+                      "993",
+                    ],
+                },
+            },
+            {
+              "mode": "trunk",
+              "name": "GigabitEthernet0/2",
+              "trunk":
+                {
+                  "allowed_vlans":
+                    [
+                      "11",
+                      "12",
+                      "59",
+                      "67",
+                      "75",
+                      "77",
+                      "81",
+                      "100",
+                      "400-408",
+                      "411-413",
+                      "415",
+                      "418",
+                      "982",
+                      "986",
+                      "988",
+                      "993",
+                    ],
+                  "encapsulation": "dot1q",
+                },
+            },
+          ]
+        match_key: name
+        prefix: l2_interfaces
+      - data:
+          [
+            {
+              "ipv4": [{ "address": "192.168.0.76/24" }],
+              "name": "GigabitEthernet0/0",
+            },
+            { "name": "GigabitEthernet0/1" },
+            { "name": "GigabitEthernet0/2" },
+            { "name": "Loopback888" },
+            { "name": "Loopback999" },
+          ]
+        match_key: name
+        prefix: l3_interfaces
+      - data:
+          [
+            { "no_name": True },
+            { "name": "GigabitEthernet0/1" },
+            { "name": "GigabitEthernet100/100" },
+          ]
+        match_key: name
+        prefix: ospf_interfaces
+
+- name: Combine all the dictionaries based on match_keys
+  set_fact:
+    combined: "{{ data_source|ansible.utils.consolidate(fail_missing_match_value=False) }}"
+
+- name: Assert result dicts
+  assert:
+    that:
+      - combined == combined_facts
