@@ -28,16 +28,20 @@ DOCUMENTATION = """
         - For example C(facts_source|ansible.utils.consolidate(fail_missing_match_key=False))), in this case C(facts_source) represents this option.
         type: list
         elements: dict
+        required: True
         suboptions:
           data:
             description: Specify facts data that gets consolidated.
             type: raw
+            required: True
           match_key:
             description: Specify key to match on.
             type: str
+            required: True
           prefix:
             description: Specify the prefix with which the result set be created.
             type: str
+            required: True
       fail_missing_match_key:
         description: Fail if match_key is not found in a specific data set.
         type: bool
