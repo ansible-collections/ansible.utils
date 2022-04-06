@@ -200,8 +200,7 @@ def ipwrap(value, query=""):
 
 
 class FilterModule(object):
-    """IP address and network manipulation filters
-    """
+    """IP address and network manipulation filters"""
 
     filter_map = {
         # IP addresses and networks
@@ -209,7 +208,7 @@ class FilterModule(object):
     }
 
     def filters(self):
-        """ ipwrap filter """
+        """ipwrap filter"""
         if HAS_NETADDR:
             return self.filter_map
         else:

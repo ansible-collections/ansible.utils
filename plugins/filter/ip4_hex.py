@@ -109,7 +109,7 @@ def _ip4_hex(*args, **kwargs):
 
 
 def ip4_hex(arg, delimiter=""):
-    """ Convert an IPv4 address to Hexadecimal notation """
+    """Convert an IPv4 address to Hexadecimal notation"""
     numbers = list(map(int, arg.split(".")))
     return "{0:02x}{sep}{1:02x}{sep}{2:02x}{sep}{3:02x}".format(
         *numbers, sep=delimiter
@@ -117,8 +117,7 @@ def ip4_hex(arg, delimiter=""):
 
 
 class FilterModule(object):
-    """IP address and network manipulation filters
-    """
+    """IP address and network manipulation filters"""
 
     filter_map = {
         # IP addresses and networks
@@ -126,7 +125,7 @@ class FilterModule(object):
     }
 
     def filters(self):
-        """ ip4_hex filter """
+        """ip4_hex filter"""
         if HAS_NETADDR:
             return self.filter_map
         else:

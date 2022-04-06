@@ -29,8 +29,7 @@ except ImportError:
 
 
 def ip_network(ip):
-    """ PY2 compat shim, PY2 requires unicode
-    """
+    """PY2 compat shim, PY2 requires unicode"""
 
     if not HAS_IPADDRESS:
         raise AnsibleError(missing_required_lib("ipaddress"))
@@ -39,8 +38,7 @@ def ip_network(ip):
 
 
 def ip_address(ip):
-    """ PY2 compat shim, PY2 requires unicode
-    """
+    """PY2 compat shim, PY2 requires unicode"""
 
     if not HAS_IPADDRESS:
         raise AnsibleError(missing_required_lib("ipaddress"))
@@ -71,8 +69,7 @@ def _is_subnet_of(network_a, network_b):
 
 
 def _validate_args(plugin, doc, params):
-    """ argspec validator utility function
-    """
+    """argspec validator utility function"""
 
     valid, argspec_result, updated_params = check_argspec(
         doc, plugin + " test", **params

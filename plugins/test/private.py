@@ -76,7 +76,7 @@ RETURN = """
 
 @_need_ipaddress
 def _private(ip):
-    """ Test if an IP address is private """
+    """Test if an IP address is private"""
 
     params = {"ip": ip}
     _validate_args("private", DOCUMENTATION, params)
@@ -88,7 +88,7 @@ def _private(ip):
 
 
 class TestModule(object):
-    """ network jinja test"""
+    """network jinja test"""
 
     test_map = {"private": _private}
 

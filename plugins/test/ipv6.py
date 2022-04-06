@@ -102,7 +102,7 @@ def _ipv6(ip):
 
 
 class TestModule(object):
-    """ network jinja test"""
+    """network jinja test"""
 
     test_map = {"ipv6": _ipv6}
 

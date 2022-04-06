@@ -53,7 +53,7 @@ except ImportError:
 
 
 class CliParser(CliParserBase):
-    """ The ttp parser class
+    """The ttp parser class
     Convert raw text to structured data using ttp
     """
 
@@ -62,7 +62,7 @@ class CliParser(CliParserBase):
 
     @staticmethod
     def _check_reqs():
-        """ Check the prerequisites for the ttp parser
+        """Check the prerequisites for the ttp parser
 
         :return dict: A dict with errors or a template_path
         """
@@ -74,7 +74,7 @@ class CliParser(CliParserBase):
         return {"errors": errors}
 
     def parse(self, *_args, **_kwargs):
-        """ Std entry point for a cli_parse parse execution
+        """Std entry point for a cli_parse parse execution
 
         :return: Errors or parsed text as structured data
         :rtype: dict

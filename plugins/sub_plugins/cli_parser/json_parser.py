@@ -44,7 +44,7 @@ from ansible_collections.ansible.utils.plugins.plugin_utils.base.cli_parser impo
 
 
 class CliParser(CliParserBase):
-    """ The json parser class
+    """The json parser class
     Convert a string containing valid json into an object
     """
 
@@ -52,7 +52,7 @@ class CliParser(CliParserBase):
     PROVIDE_TEMPLATE_CONTENTS = False
 
     def parse(self, *_args, **_kwargs):
-        """ Std entry point for a cli_parse parse execution
+        """Std entry point for a cli_parse parse execution
 
         :return: Errors or parsed text as structured data
         :rtype: dict

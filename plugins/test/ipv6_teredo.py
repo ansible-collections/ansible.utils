@@ -90,7 +90,7 @@ RETURN = """
 
 @_need_ipaddress
 def _ipv6_teredo(ip):
-    """ Test if something is an IPv6 teredo address """
+    """Test if something is an IPv6 teredo address"""
 
     params = {"ip": ip}
     _validate_args("ipv6_teredo", DOCUMENTATION, params)
@@ -104,7 +104,7 @@ def _ipv6_teredo(ip):
 
 
 class TestModule(object):
-    """ network jinja test"""
+    """network jinja test"""
 
     test_map = {"ipv6_teredo": _ipv6_teredo}
 
