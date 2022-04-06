@@ -26,7 +26,9 @@ def _raise_error(filter, msg):
     Raises:
         AnsibleFilterError: AnsibleError with filter name and message
     """
-    error = f"Error when using plugin 'consolidate': '{filter}' reported {msg}"
+    error = "Error when using plugin 'consolidate': '{filter}' reported {msg}".format(
+        filter=filter, msg=msg
+    )
     raise AnsibleFilterError(error)
 
 
@@ -83,13 +85,17 @@ def check_missing_match_key_duplicate(
             except KeyError:
                 if fail_missing_match_key:
                     errors_match_key.append(
-                        f"Missing match key '{match_key}' in data source {ds_idx} in list entry {dd_idx}"
+                        "Missing match key '{match_key}' in data source {ds_idx} in list entry {dd_idx}".format(
+                            match_key=match_key, ds_idx=ds_idx, dd_idx=dd_idx
+                        )
                     )
                 continue
 
         if sorted(set(ds_values)) != sorted(ds_values) and fail_duplicate:
             errors_duplicate.append(
-                f"Duplicate values in data source {ds_idx}"
+                "Duplicate values in data source {ds_idx}".format(
+                    ds_idx=ds_idx
+                )
             )
         results.append(set(ds_values))
     return results, {
@@ -114,8 +120,11 @@ def check_missing_match_values(matched_keys, fail_missing_match_value):
         for ds_idx, ds_values in enumerate(matched_keys):
             missing_match = all_values - ds_values
             if missing_match:
+                m_matches = ", ".join(missing_match)
                 errors_match_values.append(
-                    f"Missing match value {', '.join(missing_match)} in data source {ds_idx}"
+                    "Missing match value {m_matches} in data source {ds_idx}".format(
+                        ds_idx=ds_idx, m_matches=m_matches
+                    )
                 )
     return all_values, {"match_val_err": errors_match_values}
 
