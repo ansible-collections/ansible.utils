@@ -15,7 +15,7 @@ __metaclass__ = type
 DOCUMENTATION = """
     name: consolidate
     author: Sagar Paul (@KB-perByte)
-    version_added: "2.5.2"
+    version_added: "2.6.0"
     short_description: Consolidate facts together on common attributes.
     description:
         - This plugin presents collective structured data including all supplied facts grouping on common attributes mentioned.

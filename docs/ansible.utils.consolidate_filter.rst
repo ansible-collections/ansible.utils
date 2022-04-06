@@ -8,7 +8,7 @@ ansible.utils.consolidate
 **Consolidate facts together on common attributes.**
 
 
-Version added: 2.5.2
+Version added: 2.6.0
 
 .. contents::
    :local:
