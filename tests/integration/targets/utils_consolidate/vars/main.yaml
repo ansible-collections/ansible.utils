@@ -1,50 +1,11 @@
 ---
 combined_facts:
-  GigabitEthernet0/0:
-    acl_interfaces:
-      name: GigabitEthernet0/0
-    interfaces:
-      description: Configured and Managed By Ansible Team
-      enabled: true
-      name: GigabitEthernet0/0
-    l2_interfaces:
-      name: GigabitEthernet0/0
-    l3_interfaces:
-      ipv4:
-      - address: 10.8.38.76/24
-      name: GigabitEthernet0/0
-    ospf_interfaces: {}
   GigabitEthernet0/1:
     acl_interfaces:
       name: GigabitEthernet0/1
     interfaces:
       description: This is a user template
       enabled: true
-      name: GigabitEthernet0/1
-    l2_interfaces:
-      mode: access
-      name: GigabitEthernet0/1
-      trunk:
-        allowed_vlans:
-        - '11'
-        - '12'
-        - '59'
-        - '67'
-        - '75'
-        - '77'
-        - '81'
-        - '100'
-        - 400-408
-        - 411-413
-        - '415'
-        - '418'
-        - '982'
-        - '986'
-        - '988'
-        - '993'
-    l3_interfaces:
-      name: GigabitEthernet0/1
-    ospf_interfaces:
       name: GigabitEthernet0/1
   GigabitEthernet0/2:
     acl_interfaces:
@@ -53,56 +14,3 @@ combined_facts:
       description: This is a user template
       enabled: true
       name: GigabitEthernet0/2
-    l2_interfaces:
-      mode: trunk
-      name: GigabitEthernet0/2
-      trunk:
-        allowed_vlans:
-        - '11'
-        - '12'
-        - '59'
-        - '67'
-        - '75'
-        - '77'
-        - '81'
-        - '100'
-        - 400-408
-        - 411-413
-        - '415'
-        - '418'
-        - '982'
-        - '986'
-        - '988'
-        - '993'
-        encapsulation: dot1q
-    l3_interfaces:
-      name: GigabitEthernet0/2
-    ospf_interfaces: {}
-  GigabitEthernet100/100:
-    acl_interfaces: {}
-    interfaces: {}
-    l2_interfaces: {}
-    l3_interfaces: {}
-    ospf_interfaces:
-      name: GigabitEthernet100/100
-  Loopback888:
-    acl_interfaces:
-      name: Loopback888
-    interfaces:
-      description: Configured by Ansible Team
-      enabled: false
-      name: Loopback888
-    l2_interfaces: {}
-    l3_interfaces:
-      name: Loopback888
-    ospf_interfaces: {}
-  Loopback999:
-    acl_interfaces:
-      name: Loopback999
-    interfaces:
-      enabled: true
-      name: Loopback999
-    l2_interfaces: {}
-    l3_interfaces:
-      name: Loopback999
-    ospf_interfaces: {}
