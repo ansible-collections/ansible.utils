@@ -1,0 +1,4 @@
+---
+trivial:
+  - Update black version to latest
+  - Exempt update-docs from pre-commit.ci
