@@ -1,0 +1,3 @@
+---
+trivial:
+  - Exempt update-docs from pre-commit.ci
