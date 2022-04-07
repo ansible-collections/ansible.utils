@@ -90,7 +90,7 @@ def _ipv4_hostmask(ip):
 
 
 class TestModule(object):
-    """ network jinja test"""
+    """network jinja test"""
 
     test_map = {"ipv4_hostmask": _ipv4_hostmask}
 

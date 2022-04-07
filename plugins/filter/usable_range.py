@@ -188,7 +188,7 @@ def _usable_range(ip):
 
 
 class FilterModule(object):
-    """ usable_range  """
+    """usable_range"""
 
     def filters(self):
 

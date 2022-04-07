@@ -104,7 +104,7 @@ def _in_any_network(ip, networks):
 
 
 class TestModule(object):
-    """ network jinja test"""
+    """network jinja test"""
 
     test_map = {"in_any_network": _in_any_network}
 

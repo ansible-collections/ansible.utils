@@ -180,7 +180,7 @@ def _get_path(*args, **kwargs):
 
 
 class FilterModule(object):
-    """ path filters """
+    """path filters"""
 
     def filters(self):
         return {"get_path": _get_path}

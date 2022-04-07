@@ -177,8 +177,7 @@ def cidr_merge(value, action="merge"):
 
 
 class FilterModule(object):
-    """IP address and network manipulation filters
-    """
+    """IP address and network manipulation filters"""
 
     filter_map = {
         # IP addresses and networks

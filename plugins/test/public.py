@@ -74,7 +74,7 @@ RETURN = """
 
 @_need_ipaddress
 def _public(ip):
-    """ Test if an IP address is public """
+    """Test if an IP address is public"""
 
     params = {"ip": ip}
     _validate_args("public", DOCUMENTATION, params)
@@ -86,7 +86,7 @@ def _public(ip):
 
 
 class TestModule(object):
-    """ network jinja test"""
+    """network jinja test"""
 
     test_map = {"public": _public}
 

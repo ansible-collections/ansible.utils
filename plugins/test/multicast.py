@@ -100,7 +100,7 @@ RETURN = """
 
 @_need_ipaddress
 def _multicast(ip):
-    """ Test for a multicast IP address """
+    """Test for a multicast IP address"""
 
     params = {"ip": ip}
     _validate_args("multicast", DOCUMENTATION, params)
@@ -112,7 +112,7 @@ def _multicast(ip):
 
 
 class TestModule(object):
-    """ network jinja test"""
+    """network jinja test"""
 
     test_map = {"multicast": _multicast}
 

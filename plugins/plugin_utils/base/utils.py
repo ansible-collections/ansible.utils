@@ -18,8 +18,7 @@ from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_valid
 
 
 def _validate_args(plugin, doc, params):
-    """ argspec validator utility function
-    """
+    """argspec validator utility function"""
 
     valid, argspec_result, updated_params = check_argspec(
         doc, plugin + " test", **params

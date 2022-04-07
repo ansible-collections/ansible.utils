@@ -75,7 +75,7 @@ RETURN = """
 
 @_need_ipaddress
 def _reserved(ip):
-    """ Test for a reserved IP address """
+    """Test for a reserved IP address"""
 
     params = {"ip": ip}
     _validate_args("reserved", DOCUMENTATION, params)
@@ -87,7 +87,7 @@ def _reserved(ip):
 
 
 class TestModule(object):
-    """ network jinja test"""
+    """network jinja test"""
 
     test_map = {"reserved": _reserved}
 

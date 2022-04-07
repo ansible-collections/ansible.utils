@@ -160,8 +160,7 @@ def ipv4(value, query=""):
 
 
 class FilterModule(object):
-    """IP address and network manipulation filters
-    """
+    """IP address and network manipulation filters"""
 
     filter_map = {
         # IP addresses and networks
@@ -169,7 +168,7 @@ class FilterModule(object):
     }
 
     def filters(self):
-        """ ipaddr filter """
+        """ipaddr filter"""
         if netaddr:
             return self.filter_map
         else:

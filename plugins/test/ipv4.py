@@ -100,7 +100,7 @@ def _ipv4(ip):
 
 
 class TestModule(object):
-    """ network jinja test"""
+    """network jinja test"""
 
     test_map = {"ipv4": _ipv4}
 

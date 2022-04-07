@@ -253,7 +253,7 @@ def _ipsubnet(*args, **kwargs):
 
 
 def ipsubnet(value, query="", index="x"):
-    """ Manipulate IPv4/IPv6 subnets """
+    """Manipulate IPv4/IPv6 subnets"""
 
     try:
         vtype = ipaddr(value, "type")
@@ -323,8 +323,7 @@ def ipsubnet(value, query="", index="x"):
 
 
 class FilterModule(object):
-    """IP address and network manipulation filters
-    """
+    """IP address and network manipulation filters"""
 
     filter_map = {
         # IP addresses and networks
@@ -332,7 +331,7 @@ class FilterModule(object):
     }
 
     def filters(self):
-        """ ipsubnet filter """
+        """ipsubnet filter"""
         if HAS_NETADDR:
             return self.filter_map
         else:
