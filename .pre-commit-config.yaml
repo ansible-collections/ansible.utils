@@ -1,19 +1,10 @@
 ---
-<<<<<<< HEAD
 ci:
   skip:
     # pre-commit.ci has trouble with this one
     - update-docs
-    - black
     - end-of-file-fixer
     - trailing-whitespace
-||||||| parent of 681ca40 (No update docs)
-=======
-ci:
-  skip:
-    # pre-commit.ci has trouble with this one
-    - update-docs
->>>>>>> 681ca40 (No update docs)
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v3.1.0
