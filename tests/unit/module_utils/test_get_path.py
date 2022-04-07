@@ -9,12 +9,16 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 import unittest
+
+
+from ansible import __version__ as ansible_version
+from ansible.template import Templar
+from ansible.template import AnsibleUndefined
+from pkg_resources import parse_version
+
 from ansible_collections.ansible.utils.plugins.module_utils.common.get_path import (
     get_path,
 )
-
-
-from ansible.template import Templar
 
 
 class TestGetPath(unittest.TestCase):
@@ -24,25 +28,31 @@ class TestGetPath(unittest.TestCase):
     def test_get_path_pass(self):
         var = {"a": {"b": {"c": {"d": [0, 1]}}}}
         path = "a.b.c.d[0]"
-        result = get_path(
-            var, path, environment=self._environment, wantlist=False
-        )
-        expected = "0"
+        result = get_path(var, path, environment=self._environment, wantlist=False)
+        if parse_version(ansible_version).minor >= 13:
+            expected = 0
+        else:
+            expected = "0"
         self.assertEqual(result, expected)
 
     def test_get_path_pass_wantlist(self):
         var = {"a": {"b": {"c": {"d": [0, 1]}}}}
         path = "a.b.c.d[0]"
-        result = get_path(
-            var, path, environment=self._environment, wantlist=True
-        )
-        expected = ["0"]
+        result = get_path(var, path, environment=self._environment, wantlist=True)
+        if parse_version(ansible_version).minor >= 13:
+            expected = [0]
+        else:
+            expected = ["0"]
         self.assertEqual(result, expected)
 
     def test_get_path_fail(self):
         var = {"a": {"b": {"c": {"d": [0, 1]}}}}
         path = "a.b.e"
-        expected = "dict object' has no attribute 'e'"
-        with self.assertRaises(Exception) as exc:
-            get_path(var, path, environment=self._environment, wantlist=False)
-        self.assertIn(expected, str(exc.exception))
+        if parse_version(ansible_version).minor >= 13:
+            result = get_path(var, path, environment=self._environment, wantlist=False)
+            assert isinstance(result, AnsibleUndefined)
+        else:
+            with self.assertRaises(AttributeError) as context:
+                get_path(var, path, environment=self._environment, wantlist=False)
+            expected = "dict object' has no attribute 'e'"
+            self.assertEqual(str(context.exception), expected)
