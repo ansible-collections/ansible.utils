@@ -123,7 +123,7 @@ RETURN = """
 
 @_need_ipaddress
 def _resolvable(host):
-    """ Test if an IP or name can be resolved via /etc/hosts or DNS """
+    """Test if an IP or name can be resolved via /etc/hosts or DNS"""
 
     params = {"host": host}
     _validate_args("resolvable", DOCUMENTATION, params)
@@ -148,7 +148,7 @@ def _resolvable(host):
 
 
 class TestModule(object):
-    """ network jinja tests """
+    """network jinja tests"""
 
     test_map = {"resolvable": _resolvable}
 

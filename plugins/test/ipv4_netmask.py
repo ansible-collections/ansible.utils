@@ -89,7 +89,7 @@ RETURN = """
 
 @_need_ipaddress
 def _ipv4_netmask(mask):
-    """ Test for a valid IPv4 netmask"""
+    """Test for a valid IPv4 netmask"""
 
     params = {"mask": mask}
     _validate_args("ipv4_netmask", DOCUMENTATION, params)
@@ -102,7 +102,7 @@ def _ipv4_netmask(mask):
 
 
 class TestModule(object):
-    """ network jinja test"""
+    """network jinja test"""
 
     test_map = {"ipv4_netmask": _ipv4_netmask}
 

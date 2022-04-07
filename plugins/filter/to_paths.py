@@ -141,7 +141,7 @@ def _to_paths(*args, **kwargs):
 
 
 class FilterModule(object):
-    """ path filters """
+    """path filters"""
 
     def filters(self):
         return {"to_paths": _to_paths}

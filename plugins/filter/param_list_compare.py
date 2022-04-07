@@ -212,7 +212,7 @@ def param_list_compare(*args, **kwargs):
 
 
 class FilterModule(object):
-    """ param_list_compare  """
+    """param_list_compare"""
 
     def filters(self):
         """a mapping of filter names to functions"""

@@ -120,7 +120,7 @@ def _in_network(ip, network):
 
 
 class TestModule(object):
-    """ network jinja test"""
+    """network jinja test"""
 
     test_map = {"in_network": _in_network}
 

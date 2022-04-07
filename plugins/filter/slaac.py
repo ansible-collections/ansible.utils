@@ -100,7 +100,7 @@ def _slaac(*args, **kwargs):
 
 
 def slaac(value, query=""):
-    """ Get the SLAAC address within given network """
+    """Get the SLAAC address within given network"""
     try:
         vtype = ipaddr(value, "type")
         if vtype == "address":
@@ -129,8 +129,7 @@ def slaac(value, query=""):
 
 
 class FilterModule(object):
-    """IP address and network manipulation filters
-    """
+    """IP address and network manipulation filters"""
 
     filter_map = {
         # IP addresses and networks
@@ -138,7 +137,7 @@ class FilterModule(object):
     }
 
     def filters(self):
-        """ ipaddr filter """
+        """ipaddr filter"""
         if HAS_NETADDR:
             return self.filter_map
         else:

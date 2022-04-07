@@ -3,7 +3,6 @@ ci:
   skip:
     # pre-commit.ci has trouble with this one
     - update-docs
-    - black
     - end-of-file-fixer
     - trailing-whitespace
 repos:
@@ -17,7 +16,7 @@ repos:
         args: [--branch, main]
       - id: trailing-whitespace
   - repo: https://github.com/psf/black
-    rev: 19.3b0
+    rev: 22.3.0
     hooks:
       - id: black
         args: [-l, "79"]

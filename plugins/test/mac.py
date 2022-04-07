@@ -109,7 +109,7 @@ RETURN = """
 
 
 def _mac(mac):
-    """ Test if something appears to be a valid mac address """
+    """Test if something appears to be a valid mac address"""
 
     params = {"mac": mac}
     _validate_args("mac", DOCUMENTATION, params)
@@ -125,7 +125,7 @@ def _mac(mac):
 
 
 class TestModule(object):
-    """ network jinja test"""
+    """network jinja test"""
 
     test_map = {"mac": _mac}
 

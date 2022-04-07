@@ -90,7 +90,7 @@ RETURN = """
 
 @_need_ipaddress
 def _ipv6_sixtofour(ip):
-    """ Test if something appears to be a 6to4 address """
+    """Test if something appears to be a 6to4 address"""
 
     params = {"ip": ip}
     _validate_args("ipv6_sixtofour", DOCUMENTATION, params)
@@ -104,7 +104,7 @@ def _ipv6_sixtofour(ip):
 
 
 class TestModule(object):
-    """ network jinja test"""
+    """network jinja test"""
 
     test_map = {"ipv6_sixtofour": _ipv6_sixtofour}
 

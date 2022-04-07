@@ -141,7 +141,7 @@ def _from_xml(*args, **kwargs):
 
 
 class FilterModule(object):
-    """ from_xml  """
+    """from_xml"""
 
     def filters(self):
 

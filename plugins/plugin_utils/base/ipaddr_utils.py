@@ -368,7 +368,7 @@ def _wrap_query(v, vtype, value):
 
 
 def ipaddr(value, query="", version=False, alias="ipaddr"):
-    """ Check if string is an IP address or network and filter it """
+    """Check if string is an IP address or network and filter it"""
 
     query_func_extra_args = {
         "": ("vtype",),
@@ -686,7 +686,7 @@ def _win_query(v):
 
 # ---- HWaddr / MAC address filters ----
 def hwaddr(value, query="", alias="hwaddr"):
-    """ Check if string is a HW/MAC address and filter it """
+    """Check if string is a HW/MAC address and filter it"""
 
     query_func_extra_args = {"": ("value",)}
 

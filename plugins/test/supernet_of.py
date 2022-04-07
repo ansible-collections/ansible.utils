@@ -82,7 +82,7 @@ RETURN = """
 
 @_need_ipaddress
 def _supernet_of(network_a, network_b):
-    """ Test if an network is a supernet of another network """
+    """Test if an network is a supernet of another network"""
 
     params = {"network_a": network_a, "network_b": network_b}
     _validate_args("supernet_of", DOCUMENTATION, params)
@@ -94,7 +94,7 @@ def _supernet_of(network_a, network_b):
 
 
 class TestModule(object):
-    """ network jinja test """
+    """network jinja test"""
 
     test_map = {"supernet_of": _supernet_of}
 
