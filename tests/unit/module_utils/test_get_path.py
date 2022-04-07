@@ -55,7 +55,8 @@ class TestGetPath(unittest.TestCase):
             result = get_path(var, path, environment=self._environment, wantlist=False)
             assert isinstance(result, AnsibleUndefined)
         else:
-            with self.assertRaises(AttributeError) as context:
+            with self.assertRaises(Exception) as exc:
                 get_path(var, path, environment=self._environment, wantlist=False)
             expected = "dict object' has no attribute 'e'"
-            self.assertEqual(str(context.exception), expected)
+            self.assertIn(expected, str(exc.exception))
+
