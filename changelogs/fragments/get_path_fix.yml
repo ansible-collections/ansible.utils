@@ -1,0 +1,3 @@
+---
+trivial:
+  - Fix get_paths tests for ansible-core 2.13+
