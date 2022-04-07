@@ -2,3 +2,5 @@
 trivial:
   - Exempt update-docs from pre-commit.ci
   - Disable black temporarily until it can be upgraded
+  - Disable end-of-file-fixer
+  - Disable trailing-whitespace
