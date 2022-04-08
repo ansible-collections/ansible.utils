@@ -1,14 +1,14 @@
 ---
 - name: Build the data structure
   ansible.builtin.set_fact:
-    data_source:
+    data_sources:
       - data:
           [
             { "name": "GigabitEthernet0/1" },
             { "name": "GigabitEthernet0/2" },
           ]
         match_key: name
-        prefix: acl_interfaces
+        name: acl_interfaces
       - data:
           [
             {
@@ -23,11 +23,11 @@
             },
           ]
         match_key: name
-        prefix: interfaces
+        name: interfaces
 
 - name: Combine all the dictionaries based on match_keys
   ansible.builtin.set_fact:
-    combined: "{{ data_source|ansible.utils.consolidate(fail_missing_match_value=False) }}"
+    combined: "{{ data_sources|ansible.utils.consolidate(fail_missing_match_value=False) }}"
 
 - name: Assert result dicts
   assert:

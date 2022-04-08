@@ -33,7 +33,7 @@ def _raise_error(filter, msg):
 
 
 def fail_on_filter(validator_func):
-    """decorator to fail on supplied filters
+    """Decorator to fail on supplied filters
 
     Args:
         validator_func (func): Function that generates failure messages
@@ -43,7 +43,11 @@ def fail_on_filter(validator_func):
     """
 
     def update_err(*args, **kwargs):
+        """Filters return value or raises error as per supplied parameters
 
+        Returns:
+            any: Return value to the function call
+        """
         res, err = validator_func(*args, **kwargs)
         if err.get("match_key_err"):
             _raise_error(
@@ -64,8 +68,8 @@ def fail_on_filter(validator_func):
 def check_missing_match_key_duplicate(
     data_sources, fail_missing_match_key, fail_duplicate
 ):
-    """Checks if the match_key specified is present in all the supplied data,
-    also checks for duplicate data accross all the data sources
+    """Check if the match_key specified is present in all the supplied data,
+    also check for duplicate data accross all the data sources
 
     Args:
         data_sources (list): list of dicts as data sources
@@ -75,11 +79,11 @@ def check_missing_match_key_duplicate(
         list: list of unique keys based on specified match_keys
     """
     results, errors_match_key, errors_duplicate = [], [], []
-    for ds_idx, data_source in enumerate(data_sources):
+    for ds_idx, data_source in enumerate(data_sources, start=1):
         match_key = data_source["match_key"]
         ds_values = []
 
-        for dd_idx, data_dict in enumerate(data_source["data"]):
+        for dd_idx, data_dict in enumerate(data_source["data"], start=1):
             try:
                 ds_values.append(data_dict[match_key])
             except KeyError:
@@ -117,7 +121,7 @@ def check_missing_match_values(matched_keys, fail_missing_match_value):
     errors_match_values = []
     all_values = set(itertools.chain.from_iterable(matched_keys))
     if fail_missing_match_value:
-        for ds_idx, ds_values in enumerate(matched_keys):
+        for ds_idx, ds_values in enumerate(matched_keys, start=1):
             missing_match = all_values - ds_values
             if missing_match:
                 m_matches = ", ".join(missing_match)
@@ -143,7 +147,7 @@ def consolidate_facts(data_sources, all_values):
     consolidated_facts = {}
     for data_source in data_sources:
         match_key = data_source["match_key"]
-        source = data_source["prefix"]
+        source = data_source["name"]
         data_dict = {
             d[match_key]: d for d in data_source["data"] if match_key in d
         }
@@ -155,7 +159,7 @@ def consolidate_facts(data_sources, all_values):
 
 
 def consolidate(
-    data_source,
+    data_sources,
     fail_missing_match_key=False,
     fail_missing_match_value=False,
     fail_duplicate=False,
@@ -173,8 +177,8 @@ def consolidate(
     """
 
     key_sets = check_missing_match_key_duplicate(
-        data_source, fail_missing_match_key, fail_duplicate
+        data_sources, fail_missing_match_key, fail_duplicate
     )
     key_vals = check_missing_match_values(key_sets, fail_missing_match_value)
-    consolidated_facts = consolidate_facts(data_source, key_vals)
+    consolidated_facts = consolidate_facts(data_sources, key_vals)
     return consolidated_facts

@@ -19,7 +19,7 @@ Synopsis
 --------
 - This plugin presents collective structured data including all supplied facts grouping on common attributes mentioned.
 - All other boolean parameter defaults to False unless parameters is explicitly mentioned.
-- Using the parameters below- ``data_source|ansible.utils.consolidate(fail_missing_match_key=False``))
+- Using the parameters below- ``data_sources|ansible.utils.consolidate(fail_missing_match_key=False``))
 
 
 
@@ -39,7 +39,7 @@ Parameters
             <tr>
                 <td colspan="2">
                     <div class="ansibleOptionAnchor" id="parameter-"></div>
-                    <b>data_source</b>
+                    <b>data_sources</b>
                     <a class="ansibleOptionLink" href="#parameter-" title="Permalink to this option"></a>
                     <div style="font-size: small">
                         <span style="color: purple">list</span>
@@ -98,7 +98,7 @@ Parameters
                     <td class="elbow-placeholder"></td>
                 <td colspan="1">
                     <div class="ansibleOptionAnchor" id="parameter-"></div>
-                    <b>prefix</b>
+                    <b>name</b>
                     <a class="ansibleOptionLink" href="#parameter-" title="Permalink to this option"></a>
                     <div style="font-size: small">
                         <span style="color: purple">string</span>
@@ -110,7 +110,7 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>Specify the prefix with which the result set be created.</div>
+                        <div>Specify the name with which the result set be created.</div>
                 </td>
             </tr>
 
@@ -126,13 +126,13 @@ Parameters
                 <td>
                         <ul style="margin: 0; padding: 0"><b>Choices:</b>
                                     <li>no</li>
-                                    <li>yes</li>
+                                    <li><div style="color: blue"><b>yes</b>&nbsp;&larr;</div></li>
                         </ul>
                 </td>
                     <td>
                     </td>
                 <td>
-                        <div>Fail if duplicate values for any key is found.</div>
+                        <div>Fail if the match key&#x27;s value exists more than once in a given data set.</div>
                 </td>
             </tr>
             <tr>
@@ -147,7 +147,7 @@ Parameters
                 <td>
                         <ul style="margin: 0; padding: 0"><b>Choices:</b>
                                     <li>no</li>
-                                    <li>yes</li>
+                                    <li><div style="color: blue"><b>yes</b>&nbsp;&larr;</div></li>
                         </ul>
                 </td>
                     <td>
@@ -168,13 +168,13 @@ Parameters
                 <td>
                         <ul style="margin: 0; padding: 0"><b>Choices:</b>
                                     <li>no</li>
-                                    <li>yes</li>
+                                    <li><div style="color: blue"><b>yes</b>&nbsp;&larr;</div></li>
                         </ul>
                 </td>
                     <td>
                     </td>
                 <td>
-                        <div>Fail if a keys to match in not same accross all data sets.</div>
+                        <div>Fail if the match key&#x27;s value is not found in every data source.</div>
                 </td>
             </tr>
     </table>
@@ -280,25 +280,25 @@ Examples
     tasks:
       - name: Build the facts collection
         set_fact:
-          data_source:
+          data_sources:
             - data: "{{ interfaces }}"
               match_key: name
-              prefix: interfaces
+              name: interfaces
             - data: "{{ l2_interfaces }}"
               match_key: name
-              prefix: l2_interfaces
+              name: l2_interfaces
             - data: "{{ l3_interfaces }}"
               match_key: name
-              prefix: l3_interfaces
+              name: l3_interfaces
 
       - name: Combine all the facts based on match_keys
         set_fact:
-          combined: "{{ data_source|ansible.utils.consolidate(fail_missing_match_value=False) }}"
+          combined: "{{ data_sources|ansible.utils.consolidate(fail_missing_match_value=False) }}"
 
     ##Output
     # ok: [localhost] => {
     #     "ansible_facts": {
-    #         "data_source": [
+    #         "data_sources": [
     #             {
     #                 "data": [
     #                     {
@@ -344,7 +344,7 @@ Examples
     #                     }
     #                 ],
     #                 "match_key": "name",
-    #                 "prefix": "interfaces"
+    #                 "name": "interfaces"
     #             },
     #             {
     #                 "data": [
@@ -402,7 +402,7 @@ Examples
     #                     }
     #                 ],
     #                 "match_key": "name",
-    #                 "prefix": "l2_interfaces"
+    #                 "name": "l2_interfaces"
     #             },
     #             {
     #                 "data": [
@@ -428,7 +428,7 @@ Examples
     #                     }
     #                 ],
     #                 "match_key": "name",
-    #                 "prefix": "l3_interfaces"
+    #                 "name": "l3_interfaces"
     #             }
     #         ]
     #     },
@@ -663,25 +663,25 @@ Examples
     tasks:
       - name: Build the facts collection
         set_fact:
-          data_source:
+          data_sources:
             - data: "{{ interfaces }}"
               match_key: name
-              prefix: interfaces
+              name: interfaces
             - data: "{{ l2_interfaces }}"
               match_key: name
-              prefix: l2_interfaces
+              name: l2_interfaces
             - data: "{{ l3_interfaces }}"
               match_key: name
-              prefix: l3_interfaces
+              name: l3_interfaces
 
       - name: Combine all the facts based on match_keys
         set_fact:
-          combined: "{{ data_source|ansible.utils.consolidate(fail_missing_match_value=True) }}"
+          combined: "{{ data_sources|ansible.utils.consolidate(fail_missing_match_value=True) }}"
 
     ##Output
     # ok: [localhost] => {
     #     "ansible_facts": {
-    #         "data_source": [
+    #         "data_sources": [
     #             {
     #                 "data": [
     #                     {
@@ -727,7 +727,7 @@ Examples
     #                     }
     #                 ],
     #                 "match_key": "name",
-    #                 "prefix": "interfaces"
+    #                 "name": "interfaces"
     #             },
     #             {
     #                 "data": [
@@ -785,7 +785,7 @@ Examples
     #                     }
     #                 ],
     #                 "match_key": "name",
-    #                 "prefix": "l2_interfaces"
+    #                 "name": "l2_interfaces"
     #             },
     #             {
     #                 "data": [
@@ -811,7 +811,7 @@ Examples
     #                     }
     #                 ],
     #                 "match_key": "name",
-    #                 "prefix": "l3_interfaces"
+    #                 "name": "l3_interfaces"
     #             }
     #         ]
     #     },
@@ -916,25 +916,25 @@ Examples
     tasks:
       - name: Build the facts collection
         set_fact:
-          data_source:
+          data_sources:
             - data: "{{ interfaces }}"
               match_key: name
-              prefix: interfaces
+              name: interfaces
             - data: "{{ l2_interfaces }}"
               match_key: name
-              prefix: l2_interfaces
+              name: l2_interfaces
             - data: "{{ l3_interfaces }}"
               match_key: name
-              prefix: l3_interfaces
+              name: l3_interfaces
 
       - name: Combine all the facts based on match_keys
         set_fact:
-          combined: "{{ data_source|ansible.utils.consolidate(fail_missing_match_key=True) }}"
+          combined: "{{ data_sources|ansible.utils.consolidate(fail_missing_match_key=True) }}"
 
     ##Output
     # ok: [localhost] => {
     #     "ansible_facts": {
-    #         "data_source": [
+    #         "data_sources": [
     #             {
     #                 "data": [
     #                     {
@@ -980,7 +980,7 @@ Examples
     #                     }
     #                 ],
     #                 "match_key": "name",
-    #                 "prefix": "interfaces"
+    #                 "name": "interfaces"
     #             },
     #             {
     #                 "data": [
@@ -1038,7 +1038,7 @@ Examples
     #                     }
     #                 ],
     #                 "match_key": "name",
-    #                 "prefix": "l2_interfaces"
+    #                 "name": "l2_interfaces"
     #             },
     #             {
     #                 "data": [
@@ -1064,7 +1064,7 @@ Examples
     #                     }
     #                 ],
     #                 "match_key": "name",
-    #                 "prefix": "l3_interfaces"
+    #                 "name": "l3_interfaces"
     #             }
     #         ]
     #     },
@@ -1173,25 +1173,25 @@ Examples
     tasks:
       - name: Build the facts collection
         set_fact:
-          data_source:
+          data_sources:
             - data: "{{ interfaces }}"
               match_key: name
-              prefix: interfaces
+              name: interfaces
             - data: "{{ l2_interfaces }}"
               match_key: name
-              prefix: l2_interfaces
+              name: l2_interfaces
             - data: "{{ l3_interfaces }}"
               match_key: name
-              prefix: l3_interfaces
+              name: l3_interfaces
 
       - name: Combine all the facts based on match_keys
         set_fact:
-          combined: "{{ data_source|ansible.utils.consolidate(fail_duplicate=True) }}"
+          combined: "{{ data_sources|ansible.utils.consolidate(fail_duplicate=True) }}"
 
     ##Output
     # ok: [localhost] => {
     #     "ansible_facts": {
-    #         "data_source": [
+    #         "data_sources": [
     #             {
     #                 "data": [
     #                     {
@@ -1237,7 +1237,7 @@ Examples
     #                     }
     #                 ],
     #                 "match_key": "name",
-    #                 "prefix": "interfaces"
+    #                 "name": "interfaces"
     #             },
     #             {
     #                 "data": [
@@ -1298,7 +1298,7 @@ Examples
     #                     }
     #                 ],
     #                 "match_key": "name",
-    #                 "prefix": "l2_interfaces"
+    #                 "name": "l2_interfaces"
     #             },
     #             {
     #                 "data": [
@@ -1324,7 +1324,7 @@ Examples
     #                     }
     #                 ],
     #                 "match_key": "name",
-    #                 "prefix": "l3_interfaces"
+    #                 "name": "l3_interfaces"
     #             }
     #         ]
     #     },

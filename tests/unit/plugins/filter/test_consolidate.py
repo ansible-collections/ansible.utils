@@ -19,7 +19,7 @@ class TestConsolidate(unittest.TestCase):
         pass
 
     def test_consolidate_plugin(self):
-        data_source = [
+        data_sources = [
             {
                 "data": [
                     {
@@ -60,7 +60,7 @@ class TestConsolidate(unittest.TestCase):
                     },
                 ],
                 "match_key": "name",
-                "prefix": "interfaces",
+                "name": "interfaces",
             },
             {
                 "data": [
@@ -116,7 +116,7 @@ class TestConsolidate(unittest.TestCase):
                     },
                 ],
                 "match_key": "name",
-                "prefix": "l2_interfaces",
+                "name": "l2_interfaces",
             },
             {
                 "data": [
@@ -130,7 +130,7 @@ class TestConsolidate(unittest.TestCase):
                     {"name": "Loopback999"},
                 ],
                 "match_key": "name",
-                "prefix": "l3_interfaces",
+                "name": "l3_interfaces",
             },
         ]
 
@@ -244,13 +244,13 @@ class TestConsolidate(unittest.TestCase):
                 "l3_interfaces": {"name": "Loopback999"},
             },
         }
-        args = ["", data_source]
+        args = ["", data_sources]
 
         result = _consolidate(*args)
         self.assertEqual(result, output)
 
     def test_fail_missing_match_key(self):
-        data_source = [
+        data_sources = [
             {
                 "data": [
                     {
@@ -291,7 +291,7 @@ class TestConsolidate(unittest.TestCase):
                     },
                 ],
                 "match_key": "name",
-                "prefix": "interfaces",
+                "name": "interfaces",
             },
             {
                 "data": [
@@ -347,7 +347,7 @@ class TestConsolidate(unittest.TestCase):
                     },
                 ],
                 "match_key": "name",
-                "prefix": "l2_interfaces",
+                "name": "l2_interfaces",
             },
             {
                 "data": [
@@ -361,21 +361,21 @@ class TestConsolidate(unittest.TestCase):
                     {"name": "Loopback999"},
                 ],
                 "match_key": "name",
-                "prefix": "l3_interfaces",
+                "name": "l3_interfaces",
             },
         ]
 
         fail_missing_match_key = True
-        args = ["", data_source, fail_missing_match_key]
+        args = ["", data_sources, fail_missing_match_key]
         with self.assertRaises(AnsibleFilterError) as error:
             _consolidate(*args)
         self.assertIn(
-            "Error when using plugin 'consolidate': 'fail_missing_match_key' reported Missing match key 'name' in data source 2 in list entry 0",
+            "Error when using plugin 'consolidate': 'fail_missing_match_key' reported Missing match key 'name' in data source 3 in list entry 1",
             str(error.exception),
         )
 
     def test_fail_missing_match_value(self):
-        data_source = [
+        data_sources = [
             {
                 "data": [
                     {
@@ -416,7 +416,7 @@ class TestConsolidate(unittest.TestCase):
                     },
                 ],
                 "match_key": "name",
-                "prefix": "interfaces",
+                "name": "interfaces",
             },
             {
                 "data": [
@@ -472,7 +472,7 @@ class TestConsolidate(unittest.TestCase):
                     },
                 ],
                 "match_key": "name",
-                "prefix": "l2_interfaces",
+                "name": "l2_interfaces",
             },
             {
                 "data": [
@@ -490,7 +490,7 @@ class TestConsolidate(unittest.TestCase):
                     {"name": "Loopback999"},
                 ],
                 "match_key": "name",
-                "prefix": "l3_interfaces",
+                "name": "l3_interfaces",
             },
         ]
 
@@ -499,7 +499,7 @@ class TestConsolidate(unittest.TestCase):
         fail_duplicate = True
         args = [
             "",
-            data_source,
+            data_sources,
             fail_missing_match_key,
             fail_missing_match_value,
             fail_duplicate,
@@ -507,6 +507,6 @@ class TestConsolidate(unittest.TestCase):
         with self.assertRaises(AnsibleFilterError) as error:
             _consolidate(*args)
         self.assertIn(
-            "Error when using plugin 'consolidate': 'fail_duplicate' reported Duplicate values in data source 2",
+            "Error when using plugin 'consolidate': 'fail_duplicate' reported Duplicate values in data source 3",
             str(error.exception),
         )
