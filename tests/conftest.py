@@ -51,7 +51,7 @@ def pytest_sessionstart(session):
     if collections_dir not in sys.path:
         monkeypatch.syspath_prepend(collections_dir)
     if os.path.isdir(name_dir):
-        return
+        shutil.rmtree(collections_dir)
        
     os.makedirs(name_dir, exist_ok=True)
 
