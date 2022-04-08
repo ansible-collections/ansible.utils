@@ -3,8 +3,6 @@ ci:
   skip:
     # pre-commit.ci has trouble with this one
     - update-docs
-    - end-of-file-fixer
-    - trailing-whitespace
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v3.1.0
