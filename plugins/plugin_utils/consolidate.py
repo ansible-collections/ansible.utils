@@ -160,9 +160,9 @@ def consolidate_facts(data_sources, all_values):
 
 def consolidate(
     data_sources,
-    fail_missing_match_key=False,
-    fail_missing_match_value=False,
-    fail_duplicate=False,
+    fail_missing_match_key,
+    fail_missing_match_value,
+    fail_duplicate,
 ):
     """Calls data validation and consolidation functions
 

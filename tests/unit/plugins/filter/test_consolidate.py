@@ -244,7 +244,16 @@ class TestConsolidate(unittest.TestCase):
                 "l3_interfaces": {"name": "Loopback999"},
             },
         }
-        args = ["", data_sources]
+        fail_missing_match_value = False
+        fail_missing_match_key = False
+        fail_duplicate = False
+        args = [
+            "",
+            data_sources,
+            fail_missing_match_key,
+            fail_missing_match_value,
+            fail_duplicate,
+        ]
 
         result = _consolidate(*args)
         self.assertEqual(result, output)
@@ -366,7 +375,7 @@ class TestConsolidate(unittest.TestCase):
         ]
 
         fail_missing_match_key = True
-        args = ["", data_sources, fail_missing_match_key]
+        args = ["", data_sources, fail_missing_match_key, False, False]
         with self.assertRaises(AnsibleFilterError) as error:
             _consolidate(*args)
         self.assertIn(
@@ -374,7 +383,7 @@ class TestConsolidate(unittest.TestCase):
             str(error.exception),
         )
 
-    def test_fail_missing_match_value(self):
+    def test_fail_duplicate(self):
         data_sources = [
             {
                 "data": [
