@@ -33,10 +33,11 @@ def get_collection_name():
 
 
 def pytest_sessionstart(session):
-    """Patch the collection finder such that it does not raise a value error.
+    """Prepare for a test session.
 
-    This does not allow for loading of any collection metadata or redirects.
-    Additionally links the collection to the collections directory.
+    In the case of > 2.9, initialize the collection finder with the collection path
+    otherwise, inject the collection path into sys.path.
+
     """
     # pylint: disable=unused-argument
 
