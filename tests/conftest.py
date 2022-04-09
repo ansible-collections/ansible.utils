@@ -10,21 +10,8 @@ import sys
 import yaml
 
 try:
-<<<<<<< HEAD
-    from ansible.utils.collection_loader._collection_finder import (
-        _get_collection_metadata,
-    )
-
-    HAS_GET_COLLECTION_METADATA = True
-||||||| parent of a914dcf (Switch to collection finder)
-    from ansible.utils.collection_loader._collection_finder import (
-        _get_collection_metadata,
-    )
-    HAS_GET_COLLECTION_METADATA = True
-=======
     from ansible.utils.collection_loader._collection_finder import _AnsibleCollectionFinder
     HAS_COLLECTION_FINDER = True
->>>>>>> a914dcf (Switch to collection finder)
 except ImportError:
     HAS_COLLECTION_FINDER = False
 
