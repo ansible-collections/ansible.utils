@@ -14,6 +14,7 @@ try:
     from ansible.utils.collection_loader._collection_finder import (
         _get_collection_metadata,
     )
+
     HAS_GET_COLLECTION_METADATA = True
 except ImportError:
     _get_collection_metadata = None
@@ -47,7 +48,7 @@ def pytest_sessionstart(session):
         return
 
     monkeypatch = pytest.MonkeyPatch()
-    
+
     original = _get_collection_metadata
 
     def get_collection_metadata(*args, **kwargs):
