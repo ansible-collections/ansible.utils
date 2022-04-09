@@ -2,6 +2,31 @@
 [tool.black]
 line-length = 79
 
+[tool.pylint]
+
+
+[tool.pylint.format]
+max-line-length = 100
+
+# pylint defaults + fh for with open .. as (f|fh)
+good-names = "i,j,k,ex,Run,_,f,fh,__metaclass__"
+jobs = 0
+
+[tool.pylint.master]
+init-hook='import sys; sys.path.append("collections")'
+
+[tool.pylint.messages_control]
+disable = [
+  "duplicate-code",
+  "fixme",
+  "too-few-public-methods",
+  "unsubscriptable-object",
+]
+enable = [
+  "useless-suppression", # Identify unneeded pylint disable statements
+
+]
+
 [tool.pytest.ini_options]
 addopts = "-n auto"
 testpaths = [

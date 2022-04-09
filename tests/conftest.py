@@ -6,7 +6,6 @@ __metaclass__ = type
 
 import os
 import sys
-import shutil
 
 import pytest
 import yaml
@@ -20,8 +19,8 @@ def get_collection_name():
     info_file = "galaxy.yml"
 
     try:
-        with open(info_file, "r") as fd:
-            galaxy_info = yaml.safe_load(fd)
+        with open(info_file, "r", encoding="utf-8") as fh:
+            galaxy_info = yaml.safe_load(fh)
     except FileNotFoundError:
         return None, None
 
@@ -29,12 +28,11 @@ def get_collection_name():
 
 
 def pytest_sessionstart(session):
-    """Patch the ansible collection finder such that it does not raise a value error.
+    """Patch the collection finder such that it does not raise a value error.
 
     This does not allow for loading of any collection metadata or redirects.
     Additionally links the collection to the collections directory.
     """
-    # pylint: disable=protected-access
     # pylint: disable=unused-argument
 
     namespace, name = get_collection_name()
@@ -52,7 +50,8 @@ def pytest_sessionstart(session):
             return {}
 
     monkeypatch.setattr(
-        "ansible.utils.collection_loader._collection_finder._get_collection_metadata",
+        "ansible.utils.collection_loader."
+        "_collection_finder._get_collection_metadata",
         get_collection_metadata,
     )
 
