@@ -10,7 +10,10 @@ import sys
 import yaml
 
 try:
-    from ansible.utils.collection_loader._collection_finder import _AnsibleCollectionFinder
+    from ansible.utils.collection_loader._collection_finder import (
+        _AnsibleCollectionFinder,
+    )
+
     HAS_COLLECTION_FINDER = True
 except ImportError:
     HAS_COLLECTION_FINDER = False
