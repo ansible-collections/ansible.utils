@@ -9,9 +9,15 @@ import sys
 
 import pytest
 import yaml
-from ansible.utils.collection_loader._collection_finder import (
-    _get_collection_metadata,
-)
+
+try:
+    from ansible.utils.collection_loader._collection_finder import (
+        _get_collection_metadata,
+    )
+    HAS_GET_COLLECTION_METADATA = True
+except ImportError:
+    _get_collection_metadata = None
+    HAS_GET_COLLECTION_METADATA = False
 
 
 def get_collection_name():
@@ -41,19 +47,22 @@ def pytest_sessionstart(session):
         return
 
     monkeypatch = pytest.MonkeyPatch()
+    
     original = _get_collection_metadata
 
     def get_collection_metadata(*args, **kwargs):
         try:
             return original(*args, **kwargs)
+
         except ValueError:
             return {}
 
-    monkeypatch.setattr(
-        "ansible.utils.collection_loader."
-        "_collection_finder._get_collection_metadata",
-        get_collection_metadata,
-    )
+    if HAS_GET_COLLECTION_METADATA:
+        monkeypatch.setattr(
+            "ansible.utils.collection_loader."
+            "_collection_finder._get_collection_metadata",
+            get_collection_metadata,
+        )
 
     parent_directory = os.path.dirname(os.path.dirname(__file__))
     collections_dir = os.path.join(parent_directory, "collections")
