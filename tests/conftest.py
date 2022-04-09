@@ -7,18 +7,26 @@ __metaclass__ = type
 import os
 import sys
 
-import pytest
 import yaml
 
 try:
+<<<<<<< HEAD
     from ansible.utils.collection_loader._collection_finder import (
         _get_collection_metadata,
     )
 
     HAS_GET_COLLECTION_METADATA = True
+||||||| parent of a914dcf (Switch to collection finder)
+    from ansible.utils.collection_loader._collection_finder import (
+        _get_collection_metadata,
+    )
+    HAS_GET_COLLECTION_METADATA = True
+=======
+    from ansible.utils.collection_loader._collection_finder import _AnsibleCollectionFinder
+    HAS_COLLECTION_FINDER = True
+>>>>>>> a914dcf (Switch to collection finder)
 except ImportError:
-    _get_collection_metadata = None
-    HAS_GET_COLLECTION_METADATA = False
+    HAS_COLLECTION_FINDER = False
 
 
 def get_collection_name():
@@ -47,41 +55,23 @@ def pytest_sessionstart(session):
         # Tests may not being run from the root of the repo.
         return
 
-    monkeypatch = pytest.MonkeyPatch()
-
-    original = _get_collection_metadata
-
-    def get_collection_metadata(*args, **kwargs):
-        try:
-            return original(*args, **kwargs)
-
-        except ValueError:
-            return {}
-
-    if HAS_GET_COLLECTION_METADATA:
-        monkeypatch.setattr(
-            "ansible.utils.collection_loader."
-            "_collection_finder._get_collection_metadata",
-            get_collection_metadata,
-        )
-
     parent_directory = os.path.dirname(os.path.dirname(__file__))
     collections_dir = os.path.join(parent_directory, "collections")
-
     name_dir = os.path.join(
         collections_dir, "ansible_collections", namespace, name
     )
 
-    if collections_dir not in sys.path:
-        monkeypatch.syspath_prepend(collections_dir)
-
     # If it's here, we will trust it was from this
-    if os.path.isdir(name_dir):
-        return
+    if not os.path.isdir(name_dir):
+        os.makedirs(name_dir, exist_ok=True)
 
-    os.makedirs(name_dir, exist_ok=True)
+        for entry in os.listdir(parent_directory):
+            if entry == "collections":
+                continue
+            os.symlink(os.path.abspath(entry), os.path.join(name_dir, entry))
 
-    for entry in os.listdir(parent_directory):
-        if entry == "collections":
-            continue
-        os.symlink(os.path.abspath(entry), os.path.join(name_dir, entry))
+    if HAS_COLLECTION_FINDER:
+        # pylint: disable=protected-access
+        _AnsibleCollectionFinder(paths=collections_dir)._install()
+    else:
+        sys.path.insert(0, collections_dir)

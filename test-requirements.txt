@@ -2,10 +2,7 @@ black==22.3.0 ; python_version > '3.5'
 coverage==4.5.4
 flake8
 ipaddress ; python_version < '3.0'
-jsonschema
 mock ; python_version < '3.5'
-netaddr
 pytest-xdist
-textfsm
-xmltodict
 yamllint
+netaddr

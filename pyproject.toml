@@ -32,3 +32,6 @@ addopts = "-n auto"
 testpaths = [
     "tests",
 ]
+filterwarnings = [
+    'ignore:AnsibleCollectionFinder has already been configured',
+]
