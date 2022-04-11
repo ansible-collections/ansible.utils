@@ -289,22 +289,22 @@ Examples
     #     "changed": false
     # }
 
-    - name: Consolidate the data source using different keys
-      ansible.builtin.set_fact:
-        consolidated: "{{ data_sources|ansible.utils.consolidate }}"
-      vars:
-        sizes:
-          - title: a
-            size: small
-          - title: b
-            size: medium
-          - title: c
-            size: large
-        additional_data_source:
-          - data: "{{ sizes }}"
-            match_key: title
-            name: sizes
-        data_sources: "{{ base_data + additional_data_source }}"
+    name: Consolidate the data source using different keys
+    ansible.builtin.set_fact:
+      consolidated: "{{ data_sources|ansible.utils.consolidate }}"
+    vars:
+      sizes:
+        - title: a
+          size: small
+        - title: b
+          size: medium
+        - title: c
+          size: large
+      additional_data_source:
+        - data: "{{ sizes }}"
+          match_key: title
+          name: sizes
+      data_sources: "{{ base_data + additional_data_source }}"
 
     ##Output
 
@@ -358,21 +358,21 @@ Examples
     #     "changed": false
     # }
 
-    - name: Consolidate the data source using the name key (fail_missing_match_key)
-      ansible.builtin.set_fact:
-        consolidated: "{{ data_sources|ansible.utils.consolidate(fail_missing_match_key=True) }}"
-      ignore_errors: true
+    name: Consolidate the data source using the name key (fail_missing_match_key)
+    ansible.builtin.set_fact:
+      consolidated: "{{ data_sources|ansible.utils.consolidate(fail_missing_match_key=True) }}"
+    ignore_errors: true
+    vars:
       vars:
-        vars:
-        sizes:
-          - size: small
-          - size: medium
-          - size: large
-        additional_data_source:
-          - data: "{{ sizes }}"
-            match_key: name
-            name: sizes
-        data_sources: "{{ base_data + additional_data_source }}"
+      sizes:
+        - size: small
+        - size: medium
+        - size: large
+      additional_data_source:
+        - data: "{{ sizes }}"
+          match_key: name
+          name: sizes
+      data_sources: "{{ base_data + additional_data_source }}"
 
     ##Output
 
@@ -383,42 +383,42 @@ Examples
     #                            missing match key 'name' in data source 3 in list entry 3"
     # }
 
-    - name: Consolidate the data source using the name key (fail_missing_match_value)
-      ansible.builtin.set_fact:
-        consolidated: "{{ data_sources|ansible.utils.consolidate(fail_missing_match_value=True) }}"
-      ignore_errors: true
-      vars:
-        sizes:
-          - name: a
-            size: small
-          - name: b
-            size: medium
-        additional_data_source:
-          - data: "{{ sizes }}"
-            match_key: name
-            name: sizes
-        data_sources: "{{ base_data + additional_data_source }}"
+    name: Consolidate the data source using the name key (fail_missing_match_value)
+    ansible.builtin.set_fact:
+      consolidated: "{{ data_sources|ansible.utils.consolidate(fail_missing_match_value=True) }}"
+    ignore_errors: true
+    vars:
+      sizes:
+        - name: a
+          size: small
+        - name: b
+          size: medium
+      additional_data_source:
+        - data: "{{ sizes }}"
+          match_key: name
+          name: sizes
+      data_sources: "{{ base_data + additional_data_source }}"
 
     # fatal: [localhost]: FAILED! => {
     #     "msg": "Error when using plugin 'consolidate': 'fail_missing_match_value'
     #                   reported missing match value c in data source 3"
     # }
 
-    - name: Consolidate the data source using the name key (fail_duplicate)
-      ansible.builtin.set_fact:
-        consolidated: "{{ data_sources|ansible.utils.consolidate(fail_duplicate=True) }}"
-      ignore_errors: true
-      vars:
-        sizes:
-          - name: a
-            size: small
-          - name: a
-            size: small
-        additional_data_source:
-          - data: "{{ sizes }}"
-            match_key: name
-            name: sizes
-        data_sources: "{{ base_data + additional_data_source }}"
+    name: Consolidate the data source using the name key (fail_duplicate)
+    ansible.builtin.set_fact:
+      consolidated: "{{ data_sources|ansible.utils.consolidate(fail_duplicate=True) }}"
+    ignore_errors: true
+    vars:
+      sizes:
+        - name: a
+          size: small
+        - name: a
+          size: small
+      additional_data_source:
+        - data: "{{ sizes }}"
+          match_key: name
+          name: sizes
+      data_sources: "{{ base_data + additional_data_source }}"
 
     # fatal: [localhost]: FAILED! => {
     #     "msg": "Error when using plugin 'consolidate': 'fail_duplicate'
