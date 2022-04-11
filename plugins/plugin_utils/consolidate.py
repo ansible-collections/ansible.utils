@@ -55,7 +55,13 @@ def fail_on_filter(validator_func):
             any: Return value to the function call
         """
         res, err = validator_func(*args, **kwargs)
-        if err:
+        if any(
+            [
+                err.get("fail_missing_match_key"),
+                err.get("fail_duplicate"),
+                err.get("fail_missing_match_value"),
+            ]
+        ):
             _raise_error(err)
         return res
 

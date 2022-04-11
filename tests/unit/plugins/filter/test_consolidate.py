@@ -379,7 +379,7 @@ class TestConsolidate(unittest.TestCase):
         with self.assertRaises(AnsibleFilterError) as error:
             _consolidate(*args)
         self.assertIn(
-            "Error when using plugin 'consolidate': 'fail_missing_match_key' reported Missing match key 'name' in data source 3 in list entry 1",
+            "Error when using plugin 'consolidate': 'fail_missing_match_key' reported missing match key 'name' in data source 3 in list entry 1",
             str(error.exception),
         )
 
@@ -516,6 +516,6 @@ class TestConsolidate(unittest.TestCase):
         with self.assertRaises(AnsibleFilterError) as error:
             _consolidate(*args)
         self.assertIn(
-            "Error when using plugin 'consolidate': 'fail_duplicate' reported Duplicate values in data source 3",
+            "Error when using plugin 'consolidate': 'fail_duplicate' reported duplicate values in data source 3",
             str(error.exception),
         )

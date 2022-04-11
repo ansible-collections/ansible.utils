@@ -188,8 +188,242 @@ Examples
 
 .. code-block:: yaml
 
-    # Consolidated facts example
-    # --------------------------
+    # Consolidated filter plugin example
+    # ----------------------------------
+
+    ##play.yml
+    tasks:
+      - name: Define some test data
+        ansible.builtin.set_fact:
+          values:
+            - name: a
+              value: 1
+            - name: b
+              value: 2
+            - name: c
+              value: 3
+          colors:
+            - name: a
+              color: red
+            - name: b
+              color: green
+            - name: c
+              color: blue
+
+      - name: Define some test data
+        ansible.builtin.set_fact:
+          base_data:
+            - data: "{{ values }}"
+              match_key: name
+              name: values
+            - data: "{{ colors }}"
+              match_key: name
+              name: colors
+
+      - name: Consolidate the data source using the name key
+        ansible.builtin.set_fact:
+          consolidated: "{{ data_sources|ansible.utils.consolidate }}"
+        vars:
+          sizes:
+            - name: a
+              size: small
+            - name: b
+              size: medium
+            - name: c
+              size: large
+          additional_data_source:
+            - data: "{{ sizes }}"
+              match_key: name
+              name: sizes
+          data_sources: "{{ base_data + additional_data_source }}"
+
+    ##Output
+
+    # ok: [localhost] => {
+    #     "ansible_facts": {
+    #         "consolidated": {
+    #             "a": {
+    #                 "colors": {
+    #                     "color": "red",
+    #                     "name": "a"
+    #                 },
+    #                 "sizes": {
+    #                     "name": "a",
+    #                     "size": "small"
+    #                 },
+    #                 "values": {
+    #                     "name": "a",
+    #                     "value": 1
+    #                 }
+    #             },
+    #             "b": {
+    #                 "colors": {
+    #                     "color": "green",
+    #                     "name": "b"
+    #                 },
+    #                 "sizes": {
+    #                     "name": "b",
+    #                     "size": "medium"
+    #                 },
+    #                 "values": {
+    #                     "name": "b",
+    #                     "value": 2
+    #                 }
+    #             },
+    #             "c": {
+    #                 "colors": {
+    #                     "color": "blue",
+    #                     "name": "c"
+    #                 },
+    #                 "sizes": {
+    #                     "name": "c",
+    #                     "size": "large"
+    #                 },
+    #                 "values": {
+    #                     "name": "c",
+    #                     "value": 3
+    #                 }
+    #             }
+    #         }
+    #     },
+    #     "changed": false
+    # }
+
+    - name: Consolidate the data source using different keys
+      ansible.builtin.set_fact:
+        consolidated: "{{ data_sources|ansible.utils.consolidate }}"
+      vars:
+        sizes:
+          - title: a
+            size: small
+          - title: b
+            size: medium
+          - title: c
+            size: large
+        additional_data_source:
+          - data: "{{ sizes }}"
+            match_key: title
+            name: sizes
+        data_sources: "{{ base_data + additional_data_source }}"
+
+    ##Output
+
+    # ok: [localhost] => {
+    #     "ansible_facts": {
+    #         "consolidated": {
+    #             "a": {
+    #                 "colors": {
+    #                     "color": "red",
+    #                     "name": "a"
+    #                 },
+    #                 "sizes": {
+    #                     "size": "small",
+    #                     "title": "a"
+    #                 },
+    #                 "values": {
+    #                     "name": "a",
+    #                     "value": 1
+    #                 }
+    #             },
+    #             "b": {
+    #                 "colors": {
+    #                     "color": "green",
+    #                     "name": "b"
+    #                 },
+    #                 "sizes": {
+    #                     "size": "medium",
+    #                     "title": "b"
+    #                 },
+    #                 "values": {
+    #                     "name": "b",
+    #                     "value": 2
+    #                 }
+    #             },
+    #             "c": {
+    #                 "colors": {
+    #                     "color": "blue",
+    #                     "name": "c"
+    #                 },
+    #                 "sizes": {
+    #                     "size": "large",
+    #                     "title": "c"
+    #                 },
+    #                 "values": {
+    #                     "name": "c",
+    #                     "value": 3
+    #                 }
+    #             }
+    #         }
+    #     },
+    #     "changed": false
+    # }
+
+    - name: Consolidate the data source using the name key (fail_missing_match_key)
+      ansible.builtin.set_fact:
+        consolidated: "{{ data_sources|ansible.utils.consolidate(fail_missing_match_key=True) }}"
+      ignore_errors: true
+      vars:
+        vars:
+        sizes:
+          - size: small
+          - size: medium
+          - size: large
+        additional_data_source:
+          - data: "{{ sizes }}"
+            match_key: name
+            name: sizes
+        data_sources: "{{ base_data + additional_data_source }}"
+
+    ##Output
+
+    # fatal: [localhost]: FAILED! => {
+    #     "msg": "Error when using plugin 'consolidate': 'fail_missing_match_key'
+    #                   reported missing match key 'name' in data source 3 in list entry 1,
+    #                            missing match key 'name' in data source 3 in list entry 2,
+    #                            missing match key 'name' in data source 3 in list entry 3"
+    # }
+
+    - name: Consolidate the data source using the name key (fail_missing_match_value)
+      ansible.builtin.set_fact:
+        consolidated: "{{ data_sources|ansible.utils.consolidate(fail_missing_match_value=True) }}"
+      ignore_errors: true
+      vars:
+        sizes:
+          - name: a
+            size: small
+          - name: b
+            size: medium
+        additional_data_source:
+          - data: "{{ sizes }}"
+            match_key: name
+            name: sizes
+        data_sources: "{{ base_data + additional_data_source }}"
+
+    # fatal: [localhost]: FAILED! => {
+    #     "msg": "Error when using plugin 'consolidate': 'fail_missing_match_value'
+    #                   reported missing match value c in data source 3"
+    # }
+
+    - name: Consolidate the data source using the name key (fail_duplicate)
+      ansible.builtin.set_fact:
+        consolidated: "{{ data_sources|ansible.utils.consolidate(fail_duplicate=True) }}"
+      ignore_errors: true
+      vars:
+        sizes:
+          - name: a
+            size: small
+          - name: a
+            size: small
+        additional_data_source:
+          - data: "{{ sizes }}"
+            match_key: name
+            name: sizes
+        data_sources: "{{ base_data + additional_data_source }}"
+
+    # fatal: [localhost]: FAILED! => {
+    #     "msg": "Error when using plugin 'consolidate': 'fail_duplicate'
+    #                   reported duplicate values in data source 3"
+    # }
 
     ##facts.yml
 
