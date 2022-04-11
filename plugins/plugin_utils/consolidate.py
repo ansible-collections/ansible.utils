@@ -16,7 +16,7 @@ from ansible.errors import AnsibleFilterError
 import itertools
 
 
-def _raise_error(filter, msg):
+def _raise_error(err):
     """Raise an error message, prepend with filter name
 
     Args:
@@ -26,9 +26,15 @@ def _raise_error(filter, msg):
     Raises:
         AnsibleFilterError: AnsibleError with filter name and message
     """
-    error = "Error when using plugin 'consolidate': '{filter}' reported {msg}".format(
-        filter=filter, msg=msg
+    tmp_err = []
+    tmplt_err = (
+        "Error when using plugin 'consolidate': '{filter}' reported {msg}"
     )
+    for filter in list(err.keys()):
+        if err.get(filter):
+            msg = ", ".join(err.get(filter))
+            tmp_err.append(tmplt_err.format(filter=filter, msg=msg))
+    error = "; ".join(tmp_err)
     raise AnsibleFilterError(error)
 
 
@@ -49,16 +55,8 @@ def fail_on_filter(validator_func):
             any: Return value to the function call
         """
         res, err = validator_func(*args, **kwargs)
-        if err.get("match_key_err"):
-            _raise_error(
-                "fail_missing_match_key", ", ".join(err["match_key_err"])
-            )
-        if err.get("match_val_err"):
-            _raise_error(
-                "fail_missing_match_value", ", ".join(err["match_val_err"])
-            )
-        if err.get("duplicate_err"):
-            _raise_error("fail_duplicate", ", ".join(err["duplicate_err"]))
+        if err:
+            _raise_error(err)
         return res
 
     return update_err
@@ -89,7 +87,7 @@ def check_missing_match_key_duplicate(
             except KeyError:
                 if fail_missing_match_key:
                     errors_match_key.append(
-                        "Missing match key '{match_key}' in data source {ds_idx} in list entry {dd_idx}".format(
+                        "missing match key '{match_key}' in data source {ds_idx} in list entry {dd_idx}".format(
                             match_key=match_key, ds_idx=ds_idx, dd_idx=dd_idx
                         )
                     )
@@ -97,14 +95,14 @@ def check_missing_match_key_duplicate(
 
         if sorted(set(ds_values)) != sorted(ds_values) and fail_duplicate:
             errors_duplicate.append(
-                "Duplicate values in data source {ds_idx}".format(
+                "duplicate values in data source {ds_idx}".format(
                     ds_idx=ds_idx
                 )
             )
         results.append(set(ds_values))
     return results, {
-        "match_key_err": errors_match_key,
-        "duplicate_err": errors_duplicate,
+        "fail_missing_match_key": errors_match_key,
+        "fail_duplicate": errors_duplicate,
     }
 
 
@@ -118,19 +116,20 @@ def check_missing_match_values(matched_keys, fail_missing_match_value):
     Returns:
         set: set of unique values
     """
-    errors_match_values = []
     all_values = set(itertools.chain.from_iterable(matched_keys))
-    if fail_missing_match_value:
-        for ds_idx, ds_values in enumerate(matched_keys, start=1):
-            missing_match = all_values - ds_values
-            if missing_match:
-                m_matches = ", ".join(missing_match)
-                errors_match_values.append(
-                    "Missing match value {m_matches} in data source {ds_idx}".format(
-                        ds_idx=ds_idx, m_matches=m_matches
-                    )
+    if not fail_missing_match_value:
+        return all_values, {}
+    errors_match_values = []
+    for ds_idx, ds_values in enumerate(matched_keys, start=1):
+        missing_match = all_values - ds_values
+        if missing_match:
+            m_matches = ", ".join(missing_match)
+            errors_match_values.append(
+                "missing match value {m_matches} in data source {ds_idx}".format(
+                    ds_idx=ds_idx, m_matches=m_matches
                 )
-    return all_values, {"match_val_err": errors_match_values}
+            )
+    return all_values, {"fail_missing_match_value": errors_match_values}
 
 
 def consolidate_facts(data_sources, all_values):
