@@ -1,6 +1,7 @@
 plugins/module_utils/common/index_of.py pylint:ansible-bad-module-import # file's use is limited to filter and lookups on control node
 tests/unit/mock/loader.py pylint:arguments-renamed
 tests/unit/module_utils/__init__.py empty-init # The __init__ may describe the package (PEP257)
+tests/unit/module_utils/fixtures/__init__.py empty-init # The __init__ may describe the package (PEP257)
 tests/unit/plugins/action/__init__.py empty-init # The __init__ may describe the package (PEP257)
 tests/unit/plugins/filter/__init__.py empty-init # The __init__ may describe the package (PEP257)
 tests/unit/plugins/test/__init__.py empty-init # The __init__ may describe the package (PEP257)
