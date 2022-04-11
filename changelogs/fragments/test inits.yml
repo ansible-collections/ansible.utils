@@ -1,0 +1,3 @@
+---
+trivial:
+  - Add `__init__.py` to several test directories.
