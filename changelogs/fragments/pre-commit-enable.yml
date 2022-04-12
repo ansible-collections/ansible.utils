@@ -1,4 +1,0 @@
----
-trivial:
-  - Enable pre-commit.ci end-of-file-fixer
-  - Enable pre-commit-ci trailing-whitespace

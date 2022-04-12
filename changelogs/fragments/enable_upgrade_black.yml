@@ -1,4 +1,0 @@
----
-trivial:
-  - Enable black via pre-commit.ci
-  - Update black version to latest

@@ -175,8 +175,8 @@ releases:
       release_summary:
         - Rereleased 2.4.2 with fix of network ee tests.
     fragments:
-      - 2.4.3.yaml
-      - fix_network_ee.yaml
+    - 2.4.3.yaml
+    - fix_network_ee.yaml
     release_date: '2021-12-07'
   2.5.0:
     changes:
@@ -241,3 +241,14 @@ releases:
     fragments:
     - bugfix_ipaddr_filter.yaml
     release_date: '2022-03-04'
+  2.6.0:
+    changes:
+      minor_changes:
+      - '''consolidate'' filter plugin added.'
+    fragments:
+    - 0-ignore.yml
+    - consolidate_filter_plugin.yml
+    - enable_upgrade_black.yml
+    - pre-commit-enable.yml
+    - pre-commit-skip.yml
+    release_date: '2022-04-12'
