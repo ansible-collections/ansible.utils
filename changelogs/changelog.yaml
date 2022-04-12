@@ -155,16 +155,14 @@ releases:
     release_date: '2021-08-28'
   2.4.1:
     changes:
-      release_summary:
-      - Rereleased 2.4.0 with trivial changes.
+      release_summary: Rereleased 2.4.0 with trivial changes.
     fragments:
     - 2.4.1.yaml
     - fix_network_ee.yaml
     release_date: '2021-09-24'
   2.4.2:
     changes:
-      release_summary:
-      - Rereleased 2.4.1 with valid requirement.txt.
+      release_summary: Rereleased 2.4.1 with valid requirement.txt.
     fragments:
     - 2.4.2.yaml
     - add_ignore_2.13.yaml
@@ -172,8 +170,7 @@ releases:
     release_date: '2021-10-07'
   2.4.3:
     changes:
-      release_summary:
-        - Rereleased 2.4.2 with fix of network ee tests.
+      release_summary: Rereleased 2.4.2 with fix of network ee tests.
     fragments:
     - 2.4.3.yaml
     - fix_network_ee.yaml

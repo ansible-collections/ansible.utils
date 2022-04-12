@@ -65,11 +65,26 @@ Documentation Changes
 v2.4.3
 ======
 
+Release Summary
+---------------
+
+Rereleased 2.4.2 with fix of network ee tests.
+
 v2.4.2
 ======
 
+Release Summary
+---------------
+
+Rereleased 2.4.1 with valid requirement.txt.
+
 v2.4.1
 ======
+
+Release Summary
+---------------
+
+Rereleased 2.4.0 with trivial changes.
 
 v2.4.0
 ======
