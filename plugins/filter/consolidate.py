@@ -1466,7 +1466,8 @@ def _consolidate(*args, **kwargs):
         "fail_missing_match_value",
         "fail_duplicate",
     ]
-    data = dict(zip(keys, args[1:]))
+    if keys:
+        data = dict(zip(keys, args[1:]))
     data.update(kwargs)
     aav = AnsibleArgSpecValidator(
         data=data, schema=DOCUMENTATION, name="consolidate"
