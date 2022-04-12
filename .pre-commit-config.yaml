@@ -5,7 +5,7 @@ ci:
     - update-docs
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v3.1.0
+    rev: v4.2.0
     hooks:
       - id: check-merge-conflict
       - id: debug-statements
@@ -19,6 +19,6 @@ repos:
       - id: black
         args: [-l, "79"]
   - repo: https://github.com/ansible-network/collection_prep
-    rev: 0.9.4
+    rev: 0.9.6
     hooks:
       - id: update-docs
