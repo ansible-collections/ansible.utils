@@ -7,3 +7,6 @@ netaddr
 pytest-ansible-units
 pytest-xdist
 yamllint
+
+# Specifc requirements for ansible-test sanity
+pycodestyle
