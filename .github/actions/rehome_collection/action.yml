@@ -18,4 +18,5 @@ runs:
       run: |
         mkdir -p ${{ inputs.dest-path }}
         mv ${{ inputs.tmp-path }}/* ${{ inputs.dest-path }}
+        ls -lR ${{ inputs.dest-path }}
         rm -Rf ${{ inputs.tmp-path }}
