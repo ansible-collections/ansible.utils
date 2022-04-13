@@ -13,7 +13,7 @@ outputs:
     value: ${{ steps.name.outputs.value }}
   tree:
     description: The collection directory tree
-    value: collections/ansible_collections/${{ steps.collection_namespace.outputs.value }}/${{ steps.collection_name.outputs.value }}
+    value: collections/ansible_collections/${{ steps.namespace.outputs.value }}/${{ steps.name.outputs.value }}
 
 runs:
   using: composite
