@@ -43,11 +43,11 @@ jobs:
 
       - name: Identify the collection
         id: collection
-        uses: ./.github/actions/identify_collection
+        uses: ./source/.github/actions/identify_collection
 
       - name: Rehome the ${{ steps.collection.outputs.known_as }} to ${{ steps.collection.outputs.tree }}
         id: rehome
-        uses: ./.github/actions/rehome_collection
+        uses: ./source/.github/actions/rehome_collection
         with:
           dest-path: ${{ stesp.collection.outputs.tree }}
 
