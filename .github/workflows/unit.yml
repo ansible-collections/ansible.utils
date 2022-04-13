@@ -25,11 +25,6 @@ jobs:
           - stable-2.12
           - stable-2.13
           - devel
-        exclude:
-          - python-version: "3.9"
-            ansible-version: "stable-2.9"
-          - python-version: "3.10"
-            ansible-version: "stable-2.9"
 
     name: "python ${{ matrix.python-version }} / ansible ${{ matrix.ansible-version }}"
     steps:
