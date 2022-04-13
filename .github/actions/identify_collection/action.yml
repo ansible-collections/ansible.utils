@@ -39,14 +39,6 @@ runs:
         echo "::set-output name=value::$(cat ${{ inputs.path }} | yq -r .name)"
       shell: bash
 
-    - name: Show the collection namespace
-      run: echo ::notice title=Collection namespace::${{ steps.namespace.outputs.value }}
-      shell: bash
-
-    - name: Show the collection name
-      run: echo ::notice title=Collection name::${{ steps.name.outputs.value }}
-      shell: bash
-
     - name: Github action python requirements
       run: pip3 uninstall yq -y
       shell: bash
