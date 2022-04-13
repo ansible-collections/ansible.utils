@@ -9,7 +9,6 @@ jobs:
   test:
     env:
       PY_COLORS: "1"
-      collection_tree: collections/ansible_collections/ansible/utils
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -31,16 +30,26 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          path: ${{ env.collection_tree }}
+          path: source
+
+      - name: Identify the collection
+        id: collection
+        uses: ./.github/actions/ansible_collection
+
+      - name: Rehome the ${{ collection.known_as }} to ${{ collection.tree }}
+        id: rehome
+        uses: ./.github/actions/ansible_collection/rehome
+        with:
+          dest-path: ${{ collection.tree }}
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v3
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Install collection requirements
+      - name: Install python requirements for ${{ collection.known_as}}
         run: python3 -m pip install -r requirements.txt -r test-requirements.txt
-        working-directory: ${{ env.collection_tree }}
+        working-directory: ${{ collection.collection_tree }}
 
       - name: Remove the ansible-core installation from pytest-ansible-units
         run: python3 -m pip uninstall -y ansible-core
@@ -54,6 +63,6 @@ jobs:
       - name: Print the python dependencies
         run: python3 -m pip list
 
-      - name: Run unit tests from source directory
+      - name: Run unit tests for ${{ collection.known_as}}
         run: pytest -v
-        working-directory: ${{ env.collection_tree }}
+        working-directory: ${{ collection.tree }}

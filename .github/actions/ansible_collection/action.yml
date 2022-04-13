@@ -1,0 +1,43 @@
+name: Retrieve collection information
+description: Extract collection infromation from the galaxy.yml file
+
+outputs:
+  known_as:
+    description: The name of the collection
+    value: ${{ steps.namespace.outputs.value }}.${{ steps.name.outputs.value }}
+  namespace:
+    description: The collection namespace
+    value: ${{ steps.namespace.outputs.value }}
+  name:
+    description: The collection name
+    value: ${{ steps.name.outputs.value }}
+  tree:
+    description: The collection directory tree
+    value: collections/ansible_collections/${{ steps.collection_namespace.outputs.value }}/${{ steps.collection_name.outputs.value }}
+
+runs:
+  using: composite
+  steps:
+    - name: Github action python requirements
+      run: pip3 install yq
+      shell: bash
+
+    - name: Extract collection namespace
+      id: namespace
+      run: |
+        echo "::set-output name=value::$(cat galaxy.yml | yq -r .namespace)"
+      shell: bash
+
+    - name: Extract collection name
+      id: name
+      run: |
+        echo "::set-output name=value::$(cat galaxy.yml | yq -r .name)"
+      shell: bash
+
+    - name: Show the collection namespace
+      run: echo ::notice title=Collection namespace::${{ steps.collection_namespace.outputs.value }}
+      shell: bash
+
+    - name: Show the collection name
+      run: echo ::notice title=Collection name::${{ steps.collection_name.outputs.value }}
+      shell: bash
