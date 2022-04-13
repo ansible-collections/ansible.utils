@@ -45,7 +45,7 @@ jobs:
         id: collection
         uses: ./.github/actions/ansible_collection
 
-      - name: Rehome the ${{ stesp.collection.outputs.known_as }} to ${{ steps.collection.outputs.tree }}
+      - name: Rehome the ${{ steps.collection.outputs.known_as }} to ${{ steps.collection.outputs.tree }}
         id: rehome
         uses: ./.github/actions/ansible_collection/rehome
         with:
