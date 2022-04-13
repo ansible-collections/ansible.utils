@@ -3,6 +3,6 @@ coverage==4.5.4
 flake8
 ipaddress ; python_version < '3.0'
 mock ; python_version < '3.5'
-netaddr
 pytest-xdist
 yamllint
+netaddr
