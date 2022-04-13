@@ -46,3 +46,7 @@ runs:
     - name: Show the collection name
       run: echo ::notice title=Collection name::${{ steps.name.outputs.value }}
       shell: bash
+
+    - name: Github action python requirements
+      run: pip3 uninstall yq -y
+      shell: bash
