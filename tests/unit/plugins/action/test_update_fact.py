@@ -20,7 +20,7 @@ from ansible_collections.ansible.utils.plugins.action.update_fact import (
 try:
     from unittest.mock import MagicMock  # pylint:disable=syntax-error
 except ImportError:
-    from mock import MagicMock
+    from mock import MagicMock  # pyright: ignore[reportMissingModuleSource]
 
 
 VALID_DATA = {
