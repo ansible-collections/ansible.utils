@@ -1,0 +1,48 @@
+name: Unit and sanity tests
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+jobs:
+  test:
+    env:
+      PY_COLORS: "1"
+      collection_tree: collections/ansible_collections/ansible/utils
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version:
+          - "3.8"
+          - "3.9"
+          - "3.10"
+        ansible-version:
+          - stable-2.9
+          - stable-2.10
+          - stable-2.11
+          - stable-2.12
+          - stable-2.13
+          - devel
+    name: "python ${{ matrix.python-version }} / ansible ${{ matrix.ansible-version }}"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          path: ${{ env.collection_tree }}
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v3
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install ansible-core (${{ matrix.ansible-version }}) after collection requirements
+        run: python3 -m pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible-version }}.tar.gz --disable-pip-version-check
+
+      - name: Print the ansible version
+        run: ansible --version
+
+      - name: Run sanity tests from source directory
+        run: ansible-test sanity --requirements --color --python ${{ matrix.python-version }}
+        working-directory: ${{ env.collection_tree }}

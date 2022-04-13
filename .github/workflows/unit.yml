@@ -53,10 +53,6 @@ jobs:
       - name: Print the python dependencies
         run: python3 -m pip list
 
-      - name: Run sanity tests from source directory
-        run: ansible-test sanity --requirements --color --python ${{ matrix.python-version }}
-        working-directory: ${{ env.collection_tree }}
-
       - name: Run unit tests from source directory
         run: pytest -v
         working-directory: ${{ env.collection_tree }}
