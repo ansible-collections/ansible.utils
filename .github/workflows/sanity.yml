@@ -51,7 +51,7 @@ jobs:
         id: rehome
         uses: ./source/.github/actions/rehome_collection
         with:
-          dest-path: ${{ stesp.collection.outputs.tree }}
+          dest-path: ${{ steps.collection.outputs.tree }}
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v3
