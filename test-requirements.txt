@@ -4,9 +4,5 @@ flake8
 ipaddress ; python_version < '3.0'
 mock ; python_version < '3.5'
 netaddr
-pytest-ansible-units
 pytest-xdist
 yamllint
-
-# Specifc requirements for ansible-test sanity
-pycodestyle

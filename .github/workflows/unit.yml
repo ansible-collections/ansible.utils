@@ -50,7 +50,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Install python requirements for ${{ steps.collection.outputs.known_as}}
-        run: python3 -m pip install -r requirements.txt -r test-requirements.txt
+        run: python3 -m pip install -r requirements.txt -r test-requirements.txt pytest-ansible-units
         working-directory: ${{ steps.collection.outputs.tree }}
 
       - name: Remove the ansible-core installation from pytest-ansible-units
