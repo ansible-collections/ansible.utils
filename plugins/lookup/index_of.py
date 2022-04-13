@@ -15,7 +15,6 @@ __metaclass__ = type
 DOCUMENTATION = """
     name: index_of
     author: Bradley Thornton (@cidrblock)
-    plugin_type: lookup
     version_added: "1.0.0"
     short_description: Find the indices of items in a list matching some criteria
     description:
@@ -27,6 +26,7 @@ DOCUMENTATION = """
       data:
         description: A list of items to enumerate and test against.
         type: list
+        elements: raw
         required: True
       test:
         description: >
