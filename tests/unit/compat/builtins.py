@@ -27,7 +27,7 @@ __metaclass__ = type
 # One unittest needs to import builtins via __import__() so we need to have
 # the string that represents it
 try:
-    import __builtin__
+    import __builtin__  # pyright: ignore[reportMissingImports] # noqa F401
 except ImportError:
     BUILTINS = "builtins"
 else:
