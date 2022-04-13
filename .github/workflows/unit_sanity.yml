@@ -12,6 +12,7 @@ jobs:
       collection_tree: collections/ansible_collections/ansible/utils
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         python-version:
           - "3.8"
