@@ -4,6 +4,15 @@ Ansible Utils Collection Release Notes
 
 .. contents:: Topics
 
+
+v2.6.0
+======
+
+Minor Changes
+-------------
+
+- 'consolidate' filter plugin added.
+
 v2.5.2
 ======
 
@@ -59,7 +68,7 @@ v2.4.3
 Release Summary
 ---------------
 
-- Rereleased 2.4.2 with fix of network ee tests.
+Rereleased 2.4.2 with fix of network ee tests.
 
 v2.4.2
 ======
@@ -67,7 +76,7 @@ v2.4.2
 Release Summary
 ---------------
 
-- Rereleased 2.4.1 with valid requirement.txt.
+Rereleased 2.4.1 with valid requirement.txt.
 
 v2.4.1
 ======
@@ -75,7 +84,7 @@ v2.4.1
 Release Summary
 ---------------
 
-- Rereleased 2.4.0 with trivial changes.
+Rereleased 2.4.0 with trivial changes.
 
 v2.4.0
 ======
