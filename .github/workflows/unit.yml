@@ -36,20 +36,20 @@ jobs:
         id: collection
         uses: ./.github/actions/ansible_collection
 
-      - name: Rehome the ${{ collection.known_as }} to ${{ collection.tree }}
+      - name: Rehome the ${{ steps.collection.outputs.known_as }} to ${{ steps.collection.outputs.tree }}
         id: rehome
         uses: ./.github/actions/ansible_collection/rehome
         with:
-          dest-path: ${{ collection.tree }}
+          dest-path: ${{ steps.collection.outputs.tree }}
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v3
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Install python requirements for ${{ collection.known_as}}
+      - name: Install python requirements for ${{ stesp.collection.outputs.known_as}}
         run: python3 -m pip install -r requirements.txt -r test-requirements.txt
-        working-directory: ${{ collection.collection_tree }}
+        working-directory: ${{ stesp.collection.outputs.collection_tree }}
 
       - name: Remove the ansible-core installation from pytest-ansible-units
         run: python3 -m pip uninstall -y ansible-core
@@ -63,6 +63,6 @@ jobs:
       - name: Print the python dependencies
         run: python3 -m pip list
 
-      - name: Run unit tests for ${{ collection.known_as}}
+      - name: Run unit tests for ${{ steps.collection.outputs.known_as}}
         run: pytest -v
-        working-directory: ${{ collection.tree }}
+        working-directory: ${{ steps.collection.outputs.tree }}
