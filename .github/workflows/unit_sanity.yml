@@ -36,12 +36,18 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Install ansible-core (${{ matrix.ansible-version }})
-        run: pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible-version }}.tar.gz --disable-pip-version-check
-
       - name: Install collection requirements
-        run: pip3 install -r requirements.txt -r test-requirements.txt
+        run: python3 -m pip install -r requirements.txt -r test-requirements.txt
         working-directory: ${{ env.collection_tree }}
+
+      - name: Install ansible-core (${{ matrix.ansible-version }}) after collection requirements
+        run: python3 -m pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible-version }}.tar.gz --disable-pip-version-check
+
+      - name: Print the ansible version
+        run: ansible --version
+
+      - name: Print the python dependencies
+        run: python3 -m pip list
 
       - name: Run sanity tests from source directory
         run: ansible-test sanity
