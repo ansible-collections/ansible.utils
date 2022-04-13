@@ -49,7 +49,7 @@ jobs:
 
       - name: Install python requirements for ${{ steps.collection.outputs.known_as}}
         run: python3 -m pip install -r requirements.txt -r test-requirements.txt
-        working-directory: ${{ stesp.collection.outputs.collection_tree }}
+        working-directory: ${{ steps.collection.outputs.collection_tree }}
 
       - name: Remove the ansible-core installation from pytest-ansible-units
         run: python3 -m pip uninstall -y ansible-core
