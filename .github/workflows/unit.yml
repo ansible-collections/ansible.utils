@@ -35,6 +35,8 @@ jobs:
       - name: Identify the collection
         id: collection
         uses: ./source/.github/actions/identify_collection
+        with:
+          path: ./source/galaxy.yml
 
       - name: Rehome the ${{ steps.collection.outputs.known_as }} to ${{ steps.collection.outputs.tree }}
         id: rehome

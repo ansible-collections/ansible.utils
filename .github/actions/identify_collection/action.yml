@@ -1,6 +1,11 @@
 name: Retrieve collection information
 description: Extract collection infromation from the galaxy.yml file
 
+inputs:
+  path:
+    description: "Path to the galaxy.yml file"
+    required: true
+
 outputs:
   known_as:
     description: The name of the collection
@@ -25,19 +30,19 @@ runs:
     - name: Extract collection namespace
       id: namespace
       run: |
-        echo "::set-output name=value::$(cat galaxy.yml | yq -r .namespace)"
+        echo "::set-output name=value::$(cat ${{ inputs.path }} | yq -r .namespace)"
       shell: bash
 
     - name: Extract collection name
       id: name
       run: |
-        echo "::set-output name=value::$(cat galaxy.yml | yq -r .name)"
+        echo "::set-output name=value::$(cat ${{ inputs.path }} | yq -r .name)"
       shell: bash
 
     - name: Show the collection namespace
-      run: echo ::notice title=Collection namespace::${{ steps.collection_namespace.outputs.value }}
+      run: echo ::notice title=Collection namespace::${{ steps.namespace.outputs.value }}
       shell: bash
 
     - name: Show the collection name
-      run: echo ::notice title=Collection name::${{ steps.collection_name.outputs.value }}
+      run: echo ::notice title=Collection name::${{ steps.name.outputs.value }}
       shell: bash
