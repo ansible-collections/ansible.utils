@@ -7,5 +7,5 @@ on:
   workflow_dispatch:
 
 jobs:
-  tests:
+  sanity:
     uses: ansible-network/github_actions/.github/workflows/sanity.yml@main
