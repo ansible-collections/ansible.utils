@@ -1,0 +1,13 @@
+name: Run tests
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  unit:
+    uses: ansible-network/github_actions/workflows/unit.yml@main
+  sanity:
+    uses: ansible-network/github_actions/workflows/sanity.yml@main
