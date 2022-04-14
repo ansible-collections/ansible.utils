@@ -7,5 +7,5 @@ on:
   workflow_dispatch:
 
 jobs:
-  units:
-    uses: ansible-network/github_actions/.github/workflows/unit.yml@main
+  unit:
+    uses: ansible-network/github_actions/.github/workflows/units.yml@main
