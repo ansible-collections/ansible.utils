@@ -1,69 +1,11 @@
-name: Sanity tests
+name: Sanity
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
   workflow_dispatch:
+
 jobs:
-  test:
-    env:
-      PY_COLORS: "1"
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        ansible-version:
-          - stable-2.9
-          - stable-2.10
-          - stable-2.11
-          - stable-2.12
-          - stable-2.13
-          - devel
-        python-version:
-          - "3.8"
-          - "3.9"
-          - "3.10"
-        exclude:
-          - ansible-version: "stable-2.9"
-            python-version: "3.9"
-          - ansible-version: "stable-2.9"
-            python-version: "3.10"
-          - ansible-version: "stable-2.10"
-            python-version: "3.10"
-          - ansible-version: "stable-2.11"
-            python-version: "3.10"
-
-    name: "python ${{ matrix.python-version }} / ansible ${{ matrix.ansible-version }}"
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          path: source
-
-      - name: Identify the collection
-        id: collection
-        uses: ./source/.github/actions/identify_collection
-        with:
-          path: ./source/galaxy.yml
-
-      - name: Rehome the ${{ steps.collection.outputs.known_as }} to ${{ steps.collection.outputs.tree }}
-        id: rehome
-        uses: ./source/.github/actions/rehome_collection
-        with:
-          dest-path: ${{ steps.collection.outputs.tree }}
-
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v3
-        with:
-          python-version: ${{ matrix.python-version }}
-
-      - name: Install ansible-core (${{ matrix.ansible-version }}) after collection requirements
-        run: python3 -m pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible-version }}.tar.gz --disable-pip-version-check
-
-      - name: Print the ansible version
-        run: ansible --version
-
-      - name: Run sanity tests for ${{ steps.collection.outputs.known_as}}
-        run: ansible-test sanity --requirements --color --python ${{ matrix.python-version }}
-        working-directory: ${{ steps.collection.outputs.tree }}
+  tests:
+    uses: ansible-network/github_actions/.github/workflows/sanity.yml@main
