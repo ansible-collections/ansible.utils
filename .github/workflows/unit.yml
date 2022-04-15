@@ -8,4 +8,4 @@ on:
 
 jobs:
   unit:
-    uses: ansible-network/github_actions/.github/workflows/units.yml@main
+    uses: ansible-network/github_actions/.github/workflows/unit.yml@main
