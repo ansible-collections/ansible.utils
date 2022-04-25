@@ -80,7 +80,7 @@ RETURN = """
 
 @_need_ipaddress
 def _subnet_of(network_a, network_b):
-    """ Test if a network is a subnet of another network """
+    """Test if a network is a subnet of another network"""
 
     params = {"network_a": network_a, "network_b": network_b}
     _validate_args("subnet_of", DOCUMENTATION, params)
@@ -92,7 +92,7 @@ def _subnet_of(network_a, network_b):
 
 
 class TestModule(object):
-    """ network jinja test """
+    """network jinja test"""
 
     test_map = {"subnet_of": _subnet_of}
 

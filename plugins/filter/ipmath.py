@@ -127,10 +127,9 @@ EXAMPLES = r"""
 
 RETURN = """
   data:
-    type: list
-    elements: str
+    type: str
     description:
-      - Returns list with values valid for a particular query.
+      - Returns result of IP math/arithmetic.
 """
 
 
@@ -170,8 +169,7 @@ def ipmath(value, amount):
 
 
 class FilterModule(object):
-    """IP address and network manipulation filters
-    """
+    """IP address and network manipulation filters"""
 
     filter_map = {
         # This filter is designed to do simple IP math/arithmetic
@@ -179,7 +177,7 @@ class FilterModule(object):
     }
 
     def filters(self):
-        """ ipmath filter"""
+        """ipmath filter"""
         if HAS_NETADDR:
             return self.filter_map
         else:

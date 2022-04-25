@@ -91,10 +91,9 @@ EXAMPLES = r"""
 
 RETURN = """
   data:
-    type: list
-    elements: str
+    type: str
     description:
-      - Returns list with values valid for a particular query.
+      - Returns the next nth usable ip within a network described by value.
 """
 
 
@@ -138,8 +137,7 @@ def next_nth_usable(value, offset):
 
 
 class FilterModule(object):
-    """IP address and network manipulation filters
-    """
+    """IP address and network manipulation filters"""
 
     filter_map = {
         # IP addresses and networks
@@ -147,7 +145,7 @@ class FilterModule(object):
     }
 
     def filters(self):
-        """ ipaddr filter """
+        """ipaddr filter"""
         if HAS_NETADDR:
             return self.filter_map
         else:

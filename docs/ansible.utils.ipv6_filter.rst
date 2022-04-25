@@ -59,8 +59,7 @@ Parameters
                     <b>value</b>
                     <a class="ansibleOptionLink" href="#parameter-" title="Permalink to this option"></a>
                     <div style="font-size: small">
-                        <span style="color: purple">list</span>
-                         / <span style="color: purple">elements=string</span>
+                        <span style="color: purple">raw</span>
                          / <span style="color: red">required</span>
                     </div>
                 </td>
@@ -172,13 +171,12 @@ Common return values are documented `here <https://docs.ansible.com/ansible/late
                     <b>data</b>
                     <a class="ansibleOptionLink" href="#return-" title="Permalink to this return value"></a>
                     <div style="font-size: small">
-                      <span style="color: purple">list</span>
-                       / <span style="color: purple">elements=string</span>
+                      <span style="color: purple">raw</span>
                     </div>
                 </td>
                 <td></td>
                 <td>
-                            <div>Returns list with values valid for a particular query.</div>
+                            <div>Returns values valid for a particular query.</div>
                     <br/>
                 </td>
             </tr>

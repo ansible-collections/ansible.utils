@@ -42,3 +42,19 @@
 - name: Assert result for ipaddr network query
   assert:
     that: "{{ result4 == ipaddr_result4 }}"
+
+- name: ipaddr filter with network/prefix query
+  ansible.builtin.set_fact:
+    result5: "{{ '192.168.0.0/23' | ansible.utils.ipaddr('network/prefix') }}"
+
+- name: Assert result for ipaddr filter with network/prefix query
+  assert:
+    that: "{{ result5 == '192.168.0.0/23' }}"
+
+- name: ipaddr filter with chained filters
+  ansible.builtin.set_fact:
+    result6: "{{ '192.168.255.0' | ansible.utils.ipaddr('network') | ansible.utils.ipmath(123) }}"
+
+- name: Assert result for ipaddr filter with chained filters
+  assert:
+    that: "{{ result6 == '192.168.255.123' }}"

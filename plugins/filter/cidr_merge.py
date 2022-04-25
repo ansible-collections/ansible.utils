@@ -120,6 +120,7 @@ EXAMPLES = r"""
 
 RETURN = """
   data:
+    type: raw
     description:
       - Returns a minified list of subnets or a single subnet that spans all of the inputs.
 """
@@ -176,8 +177,7 @@ def cidr_merge(value, action="merge"):
 
 
 class FilterModule(object):
-    """IP address and network manipulation filters
-    """
+    """IP address and network manipulation filters"""
 
     filter_map = {
         # IP addresses and networks

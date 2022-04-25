@@ -199,7 +199,7 @@ def _last_usable_query(v, vtype):
 def _link_local_query(v, value):
     v_ip = netaddr.IPAddress(str(v.ip))
     if v.version == 4:
-        if ipaddr(str(v_ip), "169.254.0.0/24"):
+        if ipaddr(str(v_ip), "169.254.0.0/16"):
             return value
 
     elif v.version == 6:
@@ -368,7 +368,7 @@ def _wrap_query(v, vtype, value):
 
 
 def ipaddr(value, query="", version=False, alias="ipaddr"):
-    """ Check if string is an IP address or network and filter it """
+    """Check if string is an IP address or network and filter it"""
 
     query_func_extra_args = {
         "": ("vtype",),
@@ -671,9 +671,6 @@ def _linux_query(v):
 
 def _postgresql_query(v):
     v.dialect = netaddr.mac_pgsql
-    import epdb
-
-    epdb.serve()
     return str(v)
 
 
@@ -689,7 +686,7 @@ def _win_query(v):
 
 # ---- HWaddr / MAC address filters ----
 def hwaddr(value, query="", alias="hwaddr"):
-    """ Check if string is a HW/MAC address and filter it """
+    """Check if string is a HW/MAC address and filter it"""
 
     query_func_extra_args = {"": ("value",)}
 

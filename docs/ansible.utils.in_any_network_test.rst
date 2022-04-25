@@ -5,7 +5,7 @@
 ansible.utils.in_any_network
 ****************************
 
-**Test if Test if an IP or network falls in any network**
+**Test if an IP or network falls in any network**
 
 
 Version added: 2.2.0

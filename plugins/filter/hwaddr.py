@@ -98,7 +98,7 @@ RETURN = """
 
 @pass_environment
 def _hwaddr(*args, **kwargs):
-    """This filter check if string is a HW/MAC address and filter it """
+    """This filter check if string is a HW/MAC address and filter it"""
     keys = ["value", "query", "alias"]
     data = dict(zip(keys, args[1:]))
     data.update(kwargs)
@@ -112,8 +112,7 @@ def _hwaddr(*args, **kwargs):
 
 
 class FilterModule(object):
-    """IP address and network manipulation filters
-    """
+    """IP address and network manipulation filters"""
 
     filter_map = {
         # IP addresses and networks
@@ -121,7 +120,7 @@ class FilterModule(object):
     }
 
     def filters(self):
-        """ ipaddr filter """
+        """ipaddr filter"""
         if HAS_NETADDR:
             return self.filter_map
         else:

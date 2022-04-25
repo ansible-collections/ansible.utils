@@ -338,7 +338,7 @@ def _index_of(*args, **kwargs):
 
 
 class FilterModule(object):
-    """ index_of  """
+    """index_of"""
 
     def filters(self):
         """a mapping of filter names to functions"""

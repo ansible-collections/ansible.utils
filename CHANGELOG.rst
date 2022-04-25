@@ -4,6 +4,33 @@ Ansible Utils Collection Release Notes
 
 .. contents:: Topics
 
+
+v2.6.0
+======
+
+Minor Changes
+-------------
+
+- 'consolidate' filter plugin added.
+
+v2.5.2
+======
+
+Bugfixes
+--------
+
+- Fix issue in ipaddr,ipv4,ipv6,ipwrap filters.(https://github.com/ansible-collections/ansible.utils/issues/148).
+- ipaddr - Add valid network for link-local (https://github.com/ansible-collections/ansible.netcommon/issues/350).
+- ipaddr - Fix issue of breaking ipaddr filter with netcommon 2.6.0(https://github.com/ansible-collections/ansible.netcommon/issues/375).
+
+v2.5.1
+======
+
+Documentation Changes
+---------------------
+
+- `in_any_network` - plugin doc fix for redundant line.
+
 v2.5.0
 ======
 
@@ -41,7 +68,7 @@ v2.4.3
 Release Summary
 ---------------
 
-- Rereleased 2.4.2 with fix of network ee tests.
+Rereleased 2.4.2 with fix of network ee tests.
 
 v2.4.2
 ======
@@ -49,7 +76,7 @@ v2.4.2
 Release Summary
 ---------------
 
-- Rereleased 2.4.1 with valid requirement.txt.
+Rereleased 2.4.1 with valid requirement.txt.
 
 v2.4.1
 ======
@@ -57,7 +84,7 @@ v2.4.1
 Release Summary
 ---------------
 
-- Rereleased 2.4.0 with trivial changes.
+Rereleased 2.4.0 with trivial changes.
 
 v2.4.0
 ======

@@ -21,7 +21,7 @@ DOCUMENTATION = """
     name: in_any_network
     author: Priyam Sahoo (@priyamsahoo)
     version_added: "2.2.0"
-    short_description: Test if Test if an IP or network falls in any network
+    short_description: Test if an IP or network falls in any network
     description:
         - This plugin checks if the provided IP or network address belongs to the provided list network addresses
     options:
@@ -104,7 +104,7 @@ def _in_any_network(ip, networks):
 
 
 class TestModule(object):
-    """ network jinja test"""
+    """network jinja test"""
 
     test_map = {"in_any_network": _in_any_network}
 

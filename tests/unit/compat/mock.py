@@ -23,7 +23,7 @@ __metaclass__ = type
 """
 Compat module for Python3.x's unittest.mock module
 """
-import _io
+import _io  # pyright: ignore[reportMissingImports]
 import sys
 
 # Python 2.7
@@ -35,12 +35,12 @@ try:
     # Allow wildcard import because we really do want to import all of mock's
     # symbols into this compat shim
     # pylint: disable=wildcard-import,unused-wildcard-import
-    from unittest.mock import *
+    from unittest.mock import *  # noqa F403
 except ImportError:
     # Python 2
     # pylint: disable=wildcard-import,unused-wildcard-import
     try:
-        from mock import *
+        from mock import *  # pyright: ignore[reportMissingModuleSource] # noqa F403
     except ImportError:
         print("You need the mock library installed on python2.x to run tests")
 
@@ -54,7 +54,7 @@ if sys.version_info >= (3,) and sys.version_info < (3, 4, 4):
         # Retrieve lines from read_data via a generator so that separate calls to
         # readline, read, and readlines are properly interleaved
         sep = b"\n" if isinstance(read_data, bytes) else "\n"
-        data_as_list = [l + sep for l in read_data.split(sep)]
+        data_as_list = [line + sep for line in read_data.split(sep)]
 
         if data_as_list[-1] == sep:
             # If the last line ended in a newline, the list comprehension will have an
@@ -107,9 +107,9 @@ if sys.version_info >= (3,) and sys.version_info < (3, 4, 4):
             )
 
         if mock is None:
-            mock = MagicMock(name="open", spec=open)
+            mock = MagicMock(name="open", spec=open)  # noqa F405
 
-        handle = MagicMock(spec=file_spec)
+        handle = MagicMock(spec=file_spec)  # noqa F405
         handle.__enter__.return_value = handle
 
         _data = _iterate_read_data(read_data)

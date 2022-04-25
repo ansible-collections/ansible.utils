@@ -114,7 +114,7 @@ RETURN = """
 
 @_need_ipaddress
 def _ip(ip):
-    """ Test if something in an IP address or network """
+    """Test if something in an IP address or network"""
 
     params = {"ip": ip}
     _validate_args("ip", DOCUMENTATION, params)
@@ -127,7 +127,7 @@ def _ip(ip):
 
 
 class TestModule(object):
-    """ network jinja test"""
+    """network jinja test"""
 
     test_map = {"ip": _ip}
 

@@ -19,13 +19,16 @@ from ansible_collections.ansible.utils.plugins.action.fact_diff import (
 try:
     from unittest.mock import MagicMock  # pylint:disable=syntax-error
 except ImportError:
-    from mock import MagicMock
+    from mock import MagicMock  # pyright: ignore[reportMissingModuleSource]
 
 
 class TestUpdate_Fact(unittest.TestCase):
     def setUp(self):
         task = MagicMock(Task)
+        # Ansible > 2.13 looks for check_mode in task
+        task.check_mode = False
         play_context = MagicMock()
+        # Ansible <= 2.13 looks for check_mode in play_context
         play_context.check_mode = False
         connection = MagicMock()
         fake_loader = {}
