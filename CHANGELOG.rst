@@ -5,6 +5,14 @@ Ansible Utils Collection Release Notes
 .. contents:: Topics
 
 
+v2.6.1
+======
+
+Release Summary
+---------------
+
+Rereleased 2.6.0 with fixes for internal testing.
+
 v2.6.0
 ======
 
