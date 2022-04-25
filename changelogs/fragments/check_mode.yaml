@@ -1,0 +1,3 @@
+---
+trivial:
+  - check_mode has been removed from play_context, set on task instead for unit tests

@@ -81,7 +81,10 @@ INVALID_JINJA = [
 class TestUpdate_Fact(unittest.TestCase):
     def setUp(self):
         task = MagicMock(Task)
+        # Ansible > 2.13 looks for check_mode in task
+        task.check_mode = False
         play_context = MagicMock()
+        # Ansible <= 2.13 looks for check_mode in play_context
         play_context.check_mode = False
         connection = MagicMock()
         fake_loader = {}
