@@ -13,47 +13,47 @@ DOCUMENTATION = """
     version_added: "1.0.0"
     short_description: Validate data with provided criteria
     description:
-        - Validate I(data) with provided I(criteria) based on the validation I(engine).
+      - Validate I(data) with provided I(criteria) based on the validation I(engine).
     options:
       data:
         type: raw
         description:
-        - Data that will be validated against I(criteria).
-        - This option represents the value that is passed to the lookup plugin as the first argument.
-          For example C(lookup(config_data, config_criteria, engine='ansible.utils.jsonschema')),
-          in this case C(config_data) represents this option.
-        - For the type of I(data) that represents this value refer to the documentation of individual validate plugins.
+          - Data that will be validated against I(criteria).
+          - This option represents the value that is passed to the lookup plugin as the first argument.
+            For example C(lookup(config_data, config_criteria, engine='ansible.utils.jsonschema')),
+            in this case C(config_data) represents this option.
+          - For the type of I(data) that represents this value refer to the documentation of individual validate plugins.
         required: True
       criteria:
         type: raw
         description:
-        - The criteria used for validation of value that represents I(data) options.
-        - This option represents the second argument passed in the lookup plugin
-          For example C(lookup(config_data, config_criteria, engine='ansible.utils.jsonschema')),
-          in this case the value of C(config_criteria) represents this option.
-        - For the type of I(criteria) that represents this value refer to the documentation of individual
-          validate plugins.
+          - The criteria used for validation of value that represents I(data) options.
+          - This option represents the second argument passed in the lookup plugin
+            For example C(lookup(config_data, config_criteria, engine='ansible.utils.jsonschema')),
+            in this case the value of C(config_criteria) represents this option.
+          - For the type of I(criteria) that represents this value refer to the documentation of individual
+            validate plugins.
         required: True
       engine:
         type: str
         description:
-        - The name of the validate plugin to use.
-        - This option can be passed in lookup plugin as a key, value pair.
-          For example C(lookup(config_data, config_criteria, engine='ansible.utils.jsonschema')), in
-          this case the value C(ansible.utils.jsonschema) represents the engine to be use for data validation.
-          If the value is not provided the default value that is C(ansible.utils.jsonschema) will be used.
-        - The value should be in fully qualified collection name format that is
-          C(<org-name>.<collection-name>.<validate-plugin-name>).
+          - The name of the validate plugin to use.
+          - This option can be passed in lookup plugin as a key, value pair.
+            For example C(lookup(config_data, config_criteria, engine='ansible.utils.jsonschema')), in
+            this case the value C(ansible.utils.jsonschema) represents the engine to be use for data validation.
+            If the value is not provided the default value that is C(ansible.utils.jsonschema) will be used.
+          - The value should be in fully qualified collection name format that is
+            C(<org-name>.<collection-name>.<validate-plugin-name>).
         default: ansible.utils.jsonschema
     notes:
-    - For the type of options I(data) and I(criteria) refer to the individual validate plugin
-      documentation that is represented in the value of I(engine) option.
-    - For additional plugin configuration options refer to the individual validate plugin
-      documentation that is represented by the value of I(engine) option.
-    - The plugin configuration option can be either passed as C(key=value) pairs within lookup plugin
-      or task or environment variables.
-    - The precedence the validate plugin configurable option is the variable passed within lookup plugin
-      as C(key=value) pairs followed by task variables followed by environment variables.
+      - For the type of options I(data) and I(criteria) refer to the individual validate plugin
+        documentation that is represented in the value of I(engine) option.
+      - For additional plugin configuration options refer to the individual validate plugin
+        documentation that is represented by the value of I(engine) option.
+      - The plugin configuration option can be either passed as C(key=value) pairs within lookup plugin
+        or task or environment variables.
+      - The precedence the validate plugin configurable option is the variable passed within lookup plugin
+        as C(key=value) pairs followed by task variables followed by environment variables.
 """
 
 EXAMPLES = r"""

@@ -18,25 +18,26 @@ DOCUMENTATION = """
     version_added: "1.0.0"
     short_description: Retrieve the value in a variable using a path
     description:
-        - Use a I(path) to retrieve a nested value from a I(var)
-        - B(get_path) is also available as a B(filter plugin) for convenience
-        - Using the parameters below- C(lookup('ansible.utils.get_path', var, path, wantlist))
+      - Use a I(path) to retrieve a nested value from a I(var)
+      - B(get_path) is also available as a B(filter plugin) for convenience
+      - Using the parameters below- C(lookup('ansible.utils.get_path', var, path, wantlist))
     options:
       var:
-        description: The variable from which the value should be extracted.
+        description: 
+          - The variable from which the value should be extracted.
         type: raw
         required: True
       path:
-        description: >
-            The I(path) in the I(var) to retrieve the value of.
-            The I(path) needs to a be a valid jinja path.
+        description:
+          - The I(path) in the I(var) to retrieve the value of.
+          - The I(path) needs to a be a valid jinja path.
         type: str
         required: True
       wantlist:
-        description: >
-            If set to C(True), the return value will always be a list.
-            This can also be accomplished using C(query) or C(q) instead of C(lookup).
-            U(https://docs.ansible.com/ansible/latest/plugins/lookup.html).
+        description:
+          - If set to C(True), the return value will always be a list.
+          - This can also be accomplished using C(query) or C(q) instead of C(lookup).
+          - U(https://docs.ansible.com/ansible/latest/plugins/lookup.html).
         type: bool
 
     notes:
