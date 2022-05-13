@@ -109,9 +109,10 @@ class LookupModule(LookupBase):
         if kwargs.get("engine"):
             params.update({"engine": kwargs["engine"]})
 
+        schema = [v for k, v in globals() if k.lower() == "documentation"]
         valid, argspec_result, updated_params = check_argspec(
-            DOCUMENTATION,
-            "validate lookup",
+            schema=schema[0],
+            name="validate lookup",
             schema_conditionals=ARGSPEC_CONDITIONALS,
             **params
         )

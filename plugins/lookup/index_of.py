@@ -340,8 +340,10 @@ class LookupModule(LookupBase):
             ]
             terms = dict(zip(keys, terms))
         terms.update(kwargs)
+
+        schema = [v for k, v in globals() if k.lower() == "documentation"]
         aav = AnsibleArgSpecValidator(
-            data=terms, schema=DOCUMENTATION, name="index_of"
+            data=terms, schema=schema[0], name="index_of"
         )
         valid, errors, updated_data = aav.validate()
         if not valid:
