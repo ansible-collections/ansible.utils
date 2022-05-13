@@ -17,7 +17,7 @@ DOCUMENTATION = """
     author: Bradley Thornton (@cidrblock)
     version_added: "1.0.0"
     short_description: Find the indices of items in a list matching some criteria
-    description:
+    description: foo
       - This plugin returns the indices of items matching some criteria in a list.
       - When working with a list of dictionaries, the key to evaluate can be specified.
       - B(index_of) is also available as a B(filter plugin) for convenience.
@@ -39,7 +39,7 @@ DOCUMENTATION = """
       value:
         description:
           - The value used to test each list item against.
-          - Not required for simple tests (eg: C(true), C(false), C(even), C(odd))
+          - Not required for simple tests (e.g. C(true), C(false), C(even), C(odd))
           - May be a C(string), C(boolean), C(number), C(regular expression) C(dict) and so on, depending on the B(test) used.
         type: raw
       key:
