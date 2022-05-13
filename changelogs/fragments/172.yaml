@@ -1,0 +1,4 @@
+---
+trivial:
+  - Enable GH action for unit ans sanity tests
+  - Several minor doc string updates to get sanity to pass with devel/milestone
