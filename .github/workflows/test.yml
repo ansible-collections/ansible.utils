@@ -1,0 +1,26 @@
+name: Test collection
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  sanity:
+    uses: ansible-network/github_actions/.github/workflows/sanity.yml@main
+  unit-galaxy:
+    uses: ansible-network/github_actions/.github/workflows/unit_simple.yml@main
+
+  all_green:
+    if: ${{ always() }}
+    needs:
+      - sanity
+      - unit-galaxy
+    runs-on: ubuntu-latest
+    steps:
+      - run: >-
+          python -c "assert set([
+          '${{ needs.sanity.result }}',
+          '${{ needs.unit-galaxy.result }}'
+          ]) == {'success'}"
