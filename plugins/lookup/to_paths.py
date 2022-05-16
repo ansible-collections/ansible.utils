@@ -18,25 +18,27 @@ DOCUMENTATION = """
     version_added: "1.0.0"
     short_description: Flatten a complex object into a dictionary of paths and values
     description:
-        - Flatten a complex object into a dictionary of paths and values.
-        - Paths are dot delimited whenever possible.
-        - Brackets are used for list indices and keys that contain special characters.
-        - B(to_paths) is also available as a filter plugin.
-        - Using the parameters below- C(lookup('ansible.utils.to_paths', var, prepend, wantlist))
+      - Flatten a complex object into a dictionary of paths and values.
+      - Paths are dot delimited whenever possible.
+      - Brackets are used for list indices and keys that contain special characters.
+      - B(to_paths) is also available as a filter plugin.
+      - Using the parameters below- C(lookup('ansible.utils.to_paths', var, prepend, wantlist))
     options:
       var:
-        description: The value of I(var) will be used.
+        description:
+          - The value of I(var) will be used.
         type: raw
         required: True
       prepend:
-        description: Prepend each path entry. Useful to add the initial I(var) name.
+        description:
+          - Prepend each path entry. Useful to add the initial I(var) name.
         type: str
         required: False
       wantlist:
-        description: >
-            If set to I(True), the return value will always be a list.
-            This can also be accomplished using C(query) or B(q) instead of C(lookup).
-            U(https://docs.ansible.com/ansible/latest/plugins/lookup.html)
+        description:
+          - If set to I(True), the return value will always be a list.
+          - This can also be accomplished using C(query) or B(q) instead of C(lookup).
+          - U(https://docs.ansible.com/ansible/latest/plugins/lookup.html)
         type: bool
 
     notes:
@@ -141,8 +143,10 @@ class LookupModule(LookupBase):
             keys = ["var", "prepend"]
             terms = dict(zip(keys, terms))
         terms.update(kwargs)
+
+        schema = [v for k, v in globals() if k.lower() == "documentation"]
         aav = AnsibleArgSpecValidator(
-            data=terms, schema=DOCUMENTATION, name="to_paths"
+            data=terms, schema=schema[0], name="to_paths"
         )
         valid, errors, updated_data = aav.validate()
         if not valid:
