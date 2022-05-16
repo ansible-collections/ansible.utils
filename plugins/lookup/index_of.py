@@ -17,45 +17,47 @@ DOCUMENTATION = """
     author: Bradley Thornton (@cidrblock)
     version_added: "1.0.0"
     short_description: Find the indices of items in a list matching some criteria
-    description:
-        - This plugin returns the indices of items matching some criteria in a list.
-        - When working with a list of dictionaries, the key to evaluate can be specified.
-        - B(index_of) is also available as a B(filter plugin) for convenience.
-        - Using the parameters below- C(lookup('ansible.utils.index_of', data, test, value, key, fail_on_missing, wantlist)).
+    description: foo
+      - This plugin returns the indices of items matching some criteria in a list.
+      - When working with a list of dictionaries, the key to evaluate can be specified.
+      - B(index_of) is also available as a B(filter plugin) for convenience.
+      - Using the parameters below- C(lookup('ansible.utils.index_of', data, test, value, key, fail_on_missing, wantlist)).
     options:
       data:
-        description: A list of items to enumerate and test against.
+        description:
+          - A list of items to enumerate and test against.
         type: list
         elements: raw
         required: True
       test:
-        description: >
-            The name of the test to run against the list, a valid jinja2 test or ansible test plugin.
-            Jinja2 includes the following tests U(http://jinja.palletsprojects.com/templates/#builtin-tests).
-            An overview of tests included in ansible U(https://docs.ansible.com/ansible/latest/user_guide/playbooks_tests.html).
+        description:
+          - The name of the test to run against the list, a valid jinja2 test or ansible test plugin.
+          - Jinja2 includes the following tests U(http://jinja.palletsprojects.com/templates/#builtin-tests).
+          - An overview of tests included in ansible U(https://docs.ansible.com/ansible/latest/user_guide/playbooks_tests.html).
         type: str
         required: True
       value:
-        description: >
-            The value used to test each list item against.
-            Not required for simple tests (eg: C(true), C(false), C(even), C(odd))
-            May be a C(string), C(boolean), C(number), C(regular expression) C(dict) and so on, depending on the B(test) used.
+        description:
+          - The value used to test each list item against.
+          - Not required for simple tests (e.g. C(true), C(false), C(even), C(odd))
+          - May be a C(string), C(boolean), C(number), C(regular expression) C(dict) and so on, depending on the B(test) used.
         type: raw
       key:
-        description: >
-            When the data provided is a list of dictionaries, run the test against this dictionary key.
-            When using a I(key), the I(data) must only contain dictionaries.
-            See I(fail_on_missing) below to determine the behaviour when the I(key) is missing from a dictionary in the I(data).
+        description:
+          - When the data provided is a list of dictionaries, run the test against this dictionary key.
+          - When using a I(key), the I(data) must only contain dictionaries.
+          - See I(fail_on_missing) below to determine the behaviour when the I(key) is missing from a dictionary in the I(data).
         type: str
       fail_on_missing:
-        description: When provided a list of dictionaries, fail if the key is missing from one or more of the dictionaries.
+        description:
+        - When provided a list of dictionaries, fail if the key is missing from one or more of the dictionaries.
         type: bool
       wantlist:
-        description: >
-            When only a single entry in the I(data) is matched, the index of that entry is returned as an integer.
-            If set to C(True), the return value will always be a list, even if only a single entry is matched.
-            This can also be accomplished using C(query) or C(q) instead of C(lookup).
-            U(https://docs.ansible.com/ansible/latest/plugins/lookup.html)
+        description:
+          - When only a single entry in the I(data) is matched, the index of that entry is returned as an integer.
+          - If set to C(True), the return value will always be a list, even if only a single entry is matched.
+          - This can also be accomplished using C(query) or C(q) instead of C(lookup).
+          - U(https://docs.ansible.com/ansible/latest/plugins/lookup.html)
         type: bool
 
     notes:
@@ -338,8 +340,10 @@ class LookupModule(LookupBase):
             ]
             terms = dict(zip(keys, terms))
         terms.update(kwargs)
+
+        schema = [v for k, v in globals() if k.lower() == "documentation"]
         aav = AnsibleArgSpecValidator(
-            data=terms, schema=DOCUMENTATION, name="index_of"
+            data=terms, schema=schema[0], name="index_of"
         )
         valid, errors, updated_data = aav.validate()
         if not valid:
