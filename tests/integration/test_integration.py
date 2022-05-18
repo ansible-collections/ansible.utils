@@ -25,6 +25,7 @@ def run(localhost_project, environment):
         str(localhost_project.log_file),
         "--cdcp",
         str(localhost_project.collection_doc_cache),
+        "-vvv",
     ]
     process = subprocess.run(
         args=args,
