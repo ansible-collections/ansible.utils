@@ -23,8 +23,8 @@ def run(localhost_project, environment):
         "debug",
         "--lf",
         str(localhost_project.log_file),
-        "--skip-tags",
-        "local,nxapi",
+        "--cdcp",
+        str(localhost_project.collection_doc_cache),
     ]
     process = subprocess.run(
         args=args,
