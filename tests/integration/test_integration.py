@@ -44,5 +44,4 @@ def run(localhost_project, environment):
 
 
 def test_integration(localhost_project, environment, monkeypatch):
-    monkeypatch.setenv("ANSIBLE_LOCALHOST_WARNING", "False")
     run(localhost_project, environment)
