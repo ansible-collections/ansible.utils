@@ -4,3 +4,7 @@
 gcc-c++ [doc test platform:rpm]
 python3-devel [test platform:rpm]
 python3 [test platform:rpm]
+
+# lxml, added for py 3.11 prior to release
+libxml2-dev [test platform:dpkg]
+libxslt1-dev [test platform:dpkg]
