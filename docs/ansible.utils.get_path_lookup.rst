@@ -51,7 +51,8 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>The <em>path</em> in the <em>var</em> to retrieve the value of. The <em>path</em> needs to a be a valid jinja path.</div>
+                        <div>The <em>path</em> in the <em>var</em> to retrieve the value of.</div>
+                        <div>The <em>path</em> needs to a be a valid jinja path.</div>
                 </td>
             </tr>
             <tr>
@@ -90,7 +91,9 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>If set to <code>True</code>, the return value will always be a list. This can also be accomplished using <code>query</code> or <code>q</code> instead of <code>lookup</code>. <a href='https://docs.ansible.com/ansible/latest/plugins/lookup.html'>https://docs.ansible.com/ansible/latest/plugins/lookup.html</a>.</div>
+                        <div>If set to <code>True</code>, the return value will always be a list.</div>
+                        <div>This can also be accomplished using <code>query</code> or <code>q</code> instead of <code>lookup</code>.</div>
+                        <div><a href='https://docs.ansible.com/ansible/latest/plugins/lookup.html'>https://docs.ansible.com/ansible/latest/plugins/lookup.html</a>.</div>
                 </td>
             </tr>
     </table>

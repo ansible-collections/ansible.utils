@@ -91,7 +91,9 @@ Parameters
                     <td>
                     </td>
                 <td>
-                        <div>If set to <em>True</em>, the return value will always be a list. This can also be accomplished using <code>query</code> or <b>q</b> instead of <code>lookup</code>. <a href='https://docs.ansible.com/ansible/latest/plugins/lookup.html'>https://docs.ansible.com/ansible/latest/plugins/lookup.html</a></div>
+                        <div>If set to <em>True</em>, the return value will always be a list.</div>
+                        <div>This can also be accomplished using <code>query</code> or <b>q</b> instead of <code>lookup</code>.</div>
+                        <div><a href='https://docs.ansible.com/ansible/latest/plugins/lookup.html'>https://docs.ansible.com/ansible/latest/plugins/lookup.html</a></div>
                 </td>
             </tr>
     </table>

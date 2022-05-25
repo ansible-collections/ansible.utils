@@ -1,8 +1,4 @@
 ---
-ci:
-  skip:
-    # pre-commit.ci has trouble with this one
-    - update-docs
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.2.0
