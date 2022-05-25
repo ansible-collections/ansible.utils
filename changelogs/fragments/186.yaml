@@ -1,0 +1,3 @@
+---
+trivial:
+  - Enable update-docs via pre-commit
