@@ -177,7 +177,7 @@ class FilterModule(object):
 
     filter_map = {
         # IP addresses and networks
-        "cidr_merge": _cidr_merge
+        "cidr_merge": _cidr_merge,
     }
 
     def filters(self):

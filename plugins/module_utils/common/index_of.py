@@ -169,18 +169,22 @@ def index_of(
                     res.append(idx)
             elif fail_on_missing:
                 msg = ("'{key}' was not found in '{dyct}' at [{index}]").format(
-                    key=key, dyct=dyct, index=idx
+                    key=key,
+                    dyct=dyct,
+                    index=idx,
                 )
                 errors.append(msg)
         if errors:
             _raise_error(
                 ("{errors}. fail_on_missing={fom}").format(
-                    errors=_list_to_and_str(errors), fom=str(fail_on_missing)
-                )
+                    errors=_list_to_and_str(errors),
+                    fom=str(fail_on_missing),
+                ),
             )
     else:
         msg = "Unknown key type, key ({key}) was a {type}. ".format(
-            key=key, type=type(_to_well_known_type(key)).__name__
+            key=key,
+            type=type(_to_well_known_type(key)).__name__,
         )
         _raise_error(msg)
     if len(res) == 1 and not wantlist:

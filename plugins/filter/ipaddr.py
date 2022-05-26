@@ -263,13 +263,14 @@ def _ipaddr(*args, **kwargs):
         else:
             raise AnsibleError(
                 "Unrecognized type <{0}> for ipaddr filter <{1}>".format(
-                    type(data["value"]), "value"
-                )
+                    type(data["value"]),
+                    "value",
+                ),
             )
 
     except (TypeError, ValueError):
         raise AnsibleError(
-            "Unrecognized type <{0}> for ipaddr filter <{1}>".format(type(data["value"]), "value")
+            "Unrecognized type <{0}> for ipaddr filter <{1}>".format(type(data["value"]), "value"),
         )
 
     aav = AnsibleArgSpecValidator(data=data, schema=DOCUMENTATION, name="ipaddr")
@@ -284,7 +285,7 @@ class FilterModule(object):
 
     filter_map = {
         # IP addresses and networks
-        "ipaddr": _ipaddr
+        "ipaddr": _ipaddr,
     }
 
     def filters(self):

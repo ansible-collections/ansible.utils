@@ -135,7 +135,7 @@ class FilterModule(object):
 
     filter_map = {
         # IP addresses and networks
-        "slaac": _slaac
+        "slaac": _slaac,
     }
 
     def filters(self):

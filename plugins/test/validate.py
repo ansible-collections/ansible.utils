@@ -90,7 +90,7 @@ def validate(*args, **kwargs):
     if not len(args):
         raise AnsibleError(
             "Missing either 'data' value in test plugin input,"
-            "refer ansible.utils.validate test plugin documentation for details"
+            "refer ansible.utils.validate test plugin documentation for details",
         )
 
     params = {"data": args[0]}
@@ -107,7 +107,7 @@ def validate(*args, **kwargs):
             "{argspec_result} with errors: {argspec_errors}".format(
                 argspec_result=argspec_result.get("msg"),
                 argspec_errors=argspec_result.get("errors"),
-            )
+            ),
         )
 
     validator_engine, validator_result = _load_validator(
@@ -118,7 +118,7 @@ def validate(*args, **kwargs):
     )
     if validator_result.get("failed"):
         raise AnsibleError(
-            "validate lookup plugin failed with errors: %s" % validator_result.get("msg")
+            "validate lookup plugin failed with errors: %s" % validator_result.get("msg"),
         )
 
     try:
@@ -130,7 +130,7 @@ def validate(*args, **kwargs):
             "Unhandled exception from validator '{validator}'. Error: {err}".format(
                 validator=updated_params["engine"],
                 err=to_text(exc, errors="surrogate_then_replace"),
-            )
+            ),
         )
 
     errors = to_list(result.get("errors", []))

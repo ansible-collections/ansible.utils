@@ -88,7 +88,7 @@ class CliParser(CliParserBase):
         cli_output = self._task_args.get("text")
 
         network_os = self._task_args.get("parser").get("os") or self._task_vars.get(
-            "ansible_network_os"
+            "ansible_network_os",
         )
         # the nxos | xml includes a odd garbage line at the end, so remove it
         if not network_os:

@@ -160,7 +160,7 @@ def ipmath(value, amount):
 
     if not isinstance(amount, int):
         msg = ("You must pass an integer for arithmetic; " "{0} is not a valid integer").format(
-            amount
+            amount,
         )
         raise AnsibleFilterError(msg)
 
@@ -172,7 +172,7 @@ class FilterModule(object):
 
     filter_map = {
         # This filter is designed to do simple IP math/arithmetic
-        "ipmath": _ipmath
+        "ipmath": _ipmath,
     }
 
     def filters(self):

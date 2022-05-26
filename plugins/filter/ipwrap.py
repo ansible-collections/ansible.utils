@@ -162,13 +162,14 @@ def _ipwrap(*args, **kwargs):
         else:
             raise AnsibleError(
                 "Unrecognized type <{0}> for ipwrap filter <{1}>".format(
-                    type(data["value"]), "value"
-                )
+                    type(data["value"]),
+                    "value",
+                ),
             )
 
     except (TypeError, ValueError):
         raise AnsibleError(
-            "Unrecognized type <{0}> for ipwrap filter <{1}>".format(type(data["value"]), "value")
+            "Unrecognized type <{0}> for ipwrap filter <{1}>".format(type(data["value"]), "value"),
         )
     aav = AnsibleArgSpecValidator(data=data, schema=DOCUMENTATION, name="ipwrap")
     valid, errors, updated_data = aav.validate()
@@ -204,7 +205,7 @@ class FilterModule(object):
 
     filter_map = {
         # IP addresses and networks
-        "ipwrap": _ipwrap
+        "ipwrap": _ipwrap,
     }
 
     def filters(self):

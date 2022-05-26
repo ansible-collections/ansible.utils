@@ -29,5 +29,5 @@ def _validate_args(plugin, doc, params):
             "{argspec_result} with errors: {argspec_errors}".format(
                 argspec_result=argspec_result.get("msg"),
                 argspec_errors=argspec_result.get("errors"),
-            )
+            ),
         )

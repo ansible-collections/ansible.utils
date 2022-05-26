@@ -103,7 +103,7 @@ class Validate(ValidateBase):
             msg = (
                 "'data' option value is invalid, value should a valid JSON."
                 " Failed to read with error '{err}'".format(
-                    err=to_text(exe, errors="surrogate_then_replace")
+                    err=to_text(exe, errors="surrogate_then_replace"),
                 )
             )
             raise AnsibleError(msg)
@@ -121,7 +121,7 @@ class Validate(ValidateBase):
             msg = (
                 "'criteria' option value is invalid, value should a valid JSON."
                 " Failed to read with error '{err}'".format(
-                    err=to_text(exe, errors="surrogate_then_replace")
+                    err=to_text(exe, errors="surrogate_then_replace"),
                 )
             )
             raise AnsibleError(msg)
@@ -158,19 +158,23 @@ class Validate(ValidateBase):
         for criteria in self._criteria:
             if draft == "draft3":
                 validator = jsonschema.Draft3Validator(
-                    criteria, format_checker=jsonschema.draft3_format_checker
+                    criteria,
+                    format_checker=jsonschema.draft3_format_checker,
                 )
             elif draft == "draft4":
                 validator = jsonschema.Draft4Validator(
-                    criteria, format_checker=jsonschema.draft4_format_checker
+                    criteria,
+                    format_checker=jsonschema.draft4_format_checker,
                 )
             elif draft == "draft6":
                 validator = jsonschema.Draft6Validator(
-                    criteria, format_checker=jsonschema.draft6_format_checker
+                    criteria,
+                    format_checker=jsonschema.draft6_format_checker,
                 )
             else:
                 validator = jsonschema.Draft7Validator(
-                    criteria, format_checker=jsonschema.draft7_format_checker
+                    criteria,
+                    format_checker=jsonschema.draft7_format_checker,
                 )
 
             validation_errors = sorted(validator.iter_errors(self._data), key=lambda e: e.path)

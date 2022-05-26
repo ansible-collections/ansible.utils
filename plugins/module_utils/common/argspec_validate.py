@@ -216,7 +216,7 @@ class AnsibleArgSpecValidator:
         if invalid_keys:
             valid = False
             errors = "Invalid schema. Invalid keys found: {ikeys}".format(
-                ikeys=",".join(invalid_keys)
+                ikeys=",".join(invalid_keys),
             )
             updated_data = {}
         else:
@@ -239,8 +239,8 @@ class AnsibleArgSpecValidator:
                 valid = False
                 errors = [
                     "Invalid schema. Invalid keys found: {ikeys}".format(
-                        ikeys=",".join(invalid_keys)
-                    )
+                        ikeys=",".join(invalid_keys),
+                    ),
                 ]
                 updated_data = {}
                 return valid, errors, updated_data

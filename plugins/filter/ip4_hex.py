@@ -119,7 +119,7 @@ class FilterModule(object):
 
     filter_map = {
         # IP addresses and networks
-        "ip4_hex": _ip4_hex
+        "ip4_hex": _ip4_hex,
     }
 
     def filters(self):

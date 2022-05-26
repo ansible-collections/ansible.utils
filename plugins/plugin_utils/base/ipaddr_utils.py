@@ -301,7 +301,7 @@ def _public_query(v, value):
             not v_ip.is_loopback(),
             not v_ip.is_netmask(),
             not v_ip.is_hostmask(),
-        ]
+        ],
     ):
         return value
 
@@ -462,7 +462,7 @@ def ipaddr(value, query="", version=False, alias="ipaddr"):
         # TODO: and raise exception commented out below
         display.warning(
             "The value '%s' is not a valid IP address or network, passing this value to ipaddr filter"
-            " might result in breaking change in future." % value
+            " might result in breaking change in future." % value,
         )
         return False
 
@@ -600,7 +600,8 @@ def _need_netaddr(f_name, *args, **kwargs):
     verify python's netaddr for these filters to work
     """
     raise AnsibleFilterError(
-        "The %s filter requires python's netaddr be " "installed on the ansible controller" % f_name
+        "The %s filter requires python's netaddr be "
+        "installed on the ansible controller" % f_name,
     )
 
 

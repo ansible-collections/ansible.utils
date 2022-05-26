@@ -119,7 +119,7 @@ class FilterModule(object):
 
     filter_map = {
         # IP addresses and networks
-        "macaddr": _macaddr
+        "macaddr": _macaddr,
     }
 
     def filters(self):

@@ -158,12 +158,14 @@ def _ipv6(*args, **kwargs):
             pass
         else:
             raise AnsibleError(
-                "Unrecognized type <{0}> for ipv6 filter <{1}>".format(type(data["value"]), "value")
+                "Unrecognized type <{0}> for ipv6 filter <{1}>".format(
+                    type(data["value"]), "value"
+                ),
             )
 
     except (TypeError, ValueError):
         raise AnsibleError(
-            "Unrecognized type <{0}> for ipv6 filter <{1}>".format(type(data["value"]), "value")
+            "Unrecognized type <{0}> for ipv6 filter <{1}>".format(type(data["value"]), "value"),
         )
     aav = AnsibleArgSpecValidator(data=data, schema=DOCUMENTATION, name="ipv6")
     valid, errors, updated_data = aav.validate()
@@ -181,7 +183,7 @@ class FilterModule(object):
 
     filter_map = {
         # IP addresses and networks
-        "ipv6": _ipv6
+        "ipv6": _ipv6,
     }
 
     def filters(self):

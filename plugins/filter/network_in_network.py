@@ -151,7 +151,7 @@ class FilterModule(object):
 
     filter_map = {
         # IP addresses and networks
-        "network_in_network": _network_in_network
+        "network_in_network": _network_in_network,
     }
 
     def filters(self):
