@@ -14,14 +14,13 @@
 - name: "{{ parser }} Confirm response"
   assert:
     that:
-    - "{{ POpqMQoJWTiDpEW is defined }}"
-    - "{{ nxos_ttp_text['parsed'][0][0] | selectattr('interface', 'search', 'mgmt0') | list | length }}"
-    - "{{ nxos_ttp_text['parsed'] == nxos_ttp_text_parsed }}"
-
+      - "{{ POpqMQoJWTiDpEW is defined }}"
+      - "{{ nxos_ttp_text['parsed'][0][0] | selectattr('interface', 'search', 'mgmt0') | list | length }}"
+      - "{{ nxos_ttp_text['parsed'] == nxos_ttp_text_parsed }}"
 
 - name: "{{ parser }} Pass text and custom variable"
   ansible.utils.cli_parse:
-    text:  "{{ lookup('ansible.builtin.file', '{{ role_path }}/files/nxos_show_interface.txt') }}"
+    text: "{{ lookup('ansible.builtin.file', '{{ role_path }}/files/nxos_show_interface.txt') }}"
     parser:
       name: ansible.utils.ttp
       template_path: "{{ role_path }}/templates/nxos_show_interface.ttp"
@@ -38,7 +37,7 @@
 
 - name: "{{ parser }} Pass text and ttp_results modified"
   ansible.utils.cli_parse:
-    text:  "{{ lookup('ansible.builtin.file', '{{ role_path }}/files/nxos_show_interface.txt') }}"
+    text: "{{ lookup('ansible.builtin.file', '{{ role_path }}/files/nxos_show_interface.txt') }}"
     parser:
       name: ansible.utils.ttp
       template_path: "{{ role_path }}/templates/nxos_show_interface.ttp"

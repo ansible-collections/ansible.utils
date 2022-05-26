@@ -58,7 +58,7 @@
   vars:
     params:
       data: "{{ data }}"
-      test: '>'
+      test: ">"
       value: 1
 
 # TASK [Find numbers greater than 1, using with] *****************************
@@ -66,7 +66,6 @@
 #   msg: 2 is > than 1
 # ok: [nxos101] => (item=2) =>
 #   msg: 3 is > than 1
-
 
 #### Working with lists of dictionaries
 
@@ -110,14 +109,13 @@
     msg: "The device named {{ data[item].name }} is a {{ data[item].type }}"
   loop: "{{ lookup('ansible.utils.index_of', data, 'regex', expression, 'name') }}"
   vars:
-    expression: '\.corp$'  # ends with .corp
+    expression: '\.corp$' # ends with .corp
 
 # TASK [Find the index of all devices with a .corp name] *********************
 # ok: [nxos101] => (item=2) =>
 #   msg: The device named fw01.example.corp is a firewall
 # ok: [nxos101] => (item=3) =>
 #   msg: The device named fw02.example.corp is a firewall
-
 
 #### Working with complex structures from resource modules
 
@@ -169,7 +167,6 @@
 # ok: [nxos101] => (item=[{'interface_idx': '128', 'address_idxs': [0]}, 0]) =>
 #   msg: mgmt0 has ip 192.168.101.14/24
 
-
 #### Working with deeply nested data
 
 - ansible.builtin.set_fact:
@@ -216,7 +213,6 @@
                     enabled: false
                     index: 3
                   index: 3
-
 
 - name: Find the description of loopback111, subinterface index 10
   debug:

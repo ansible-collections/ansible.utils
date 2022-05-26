@@ -21,7 +21,6 @@
 #   ansible_facts:
 #     value: '0'
 
-
 #### Working with hostvars
 
 - name: Retrieve a value deep inside all of the host's vars
@@ -36,7 +35,6 @@
 #   ansible_facts:
 #     as_filter: '0'
 #     as_lookup: '0'
-
 
 #### Used alongside ansible.utils.to_paths
 
@@ -53,7 +51,6 @@
   vars:
     path: "{{ item }}"
     value: "{{ lookup('ansible.utils.get_path', hostvars[inventory_hostname], item) }}"
-
 # TASK [Get the paths for the object] *******************************
 # ok: [nxos101] => changed=false
 #   ansible_facts:
@@ -73,7 +70,6 @@
 # ok: [nxos101] => (item=a.b.c.e[1]) =>
 #   msg: The value of path a.b.c.e[1] in vars is False
 
-
 #### Working with complex structures and transforming results
 
 # - name: Retrieve the current interface config
@@ -91,7 +87,6 @@
 #   - by_name['Ethernet1/1'].description
 #   - by_name['Ethernet1/2'].description|upper
 #   - by_name['Ethernet1/3'].description|default('')
-
 
 # TASK [Get the description of several interfaces] ******************
 # ok: [nxos101] => (item=by_name['Ethernet1/1'].description) => changed=false

@@ -23,7 +23,7 @@ show_interfaces:
       rate:
         in_rate: 0
         out_rate: 0
-    description: '# interface is configures with Ansible'
+    description: "# interface is configures with Ansible"
     duplex_mode: full
     enabled: false
     line_protocol: up

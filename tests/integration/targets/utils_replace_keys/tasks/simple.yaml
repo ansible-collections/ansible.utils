@@ -13,20 +13,20 @@
         duplex: auto
         enabled: true
         vifs:
-        - vlan_id: 100
-          description: Eth1 - VIF 100
-          mtu: 400
-          enabled: true
-        - vlan_id: 101
-          description: Eth1 - VIF 101
-          enabled: true
+          - vlan_id: 100
+            description: Eth1 - VIF 100
+            mtu: 400
+            enabled: true
+          - vlan_id: 101
+            description: Eth1 - VIF 101
+            enabled: true
       - interface_name: eth2
         description: Configured by Ansible - Interface 2 (ADMIN DOWN)
         mtu: 600
         enabled: false
 
 - debug:
-      msg:  "{{ data|ansible.utils.replace_keys(target=[{'before':'interface_name', 'after':'name'}]) }}"
+    msg: "{{ data|ansible.utils.replace_keys(target=[{'before':'interface_name', 'after':'name'}]) }}"
   register: result
 
 - name: Assert result dicts

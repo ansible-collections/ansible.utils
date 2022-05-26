@@ -26,7 +26,6 @@
   assert:
     that: "{{ result2 == ipaddr_result2 }}"
 
-
 - name: ipaddr filter with public network query
   ansible.builtin.set_fact:
     result3: "{{ value|ansible.utils.ipaddr('public') }}"

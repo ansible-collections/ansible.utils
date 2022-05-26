@@ -26,7 +26,6 @@
 - name: Use prepend to add the initial variable name
   ansible.builtin.set_fact:
     paths: "{{ a|ansible.utils.to_paths(prepend='a') }}"
-
 # TASK [Use prepend to add the initial variable name] **************************
 # ok: [nxos101] => changed=false
 #   ansible_facts:
@@ -35,7 +34,6 @@
 #       a.b.c.d[1]: 1
 #       a.b.c.e[0]: true
 #       a.b.c.e[1]: false
-
 
 #### Using a complex object
 

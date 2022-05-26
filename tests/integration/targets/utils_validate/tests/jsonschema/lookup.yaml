@@ -81,11 +81,11 @@
 
 - name: read data and criteria from file
   ansible.builtin.set_fact:
-   data: "{{ lookup('ansible.builtin.file', 'data/show_interface.json') }}"
-   oper_status_up_criteria: "{{ lookup('ansible.builtin.file', 'criteria/oper_status_up.json') }}"
-   enabled_check_criteria: "{{ lookup('ansible.builtin.file', 'criteria/enabled_check.json') }}"
-   crc_error_check_criteria: "{{ lookup('ansible.builtin.file', 'criteria/crc_error_check.json') }}"
-   in_rate_check_criteria: "{{ lookup('ansible.builtin.file', 'criteria/in_rate_check.json') }}"
+    data: "{{ lookup('ansible.builtin.file', 'data/show_interface.json') }}"
+    oper_status_up_criteria: "{{ lookup('ansible.builtin.file', 'criteria/oper_status_up.json') }}"
+    enabled_check_criteria: "{{ lookup('ansible.builtin.file', 'criteria/enabled_check.json') }}"
+    crc_error_check_criteria: "{{ lookup('ansible.builtin.file', 'criteria/crc_error_check.json') }}"
+    in_rate_check_criteria: "{{ lookup('ansible.builtin.file', 'criteria/in_rate_check.json') }}"
 
 - name: validate data using jsonschema engine (invalid data read from file)
   ansible.builtin.set_fact:
