@@ -10,10 +10,12 @@ The consolidate plugin code
 """
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
-from ansible.errors import AnsibleFilterError
 import itertools
+
+from ansible.errors import AnsibleFilterError
 
 
 def _raise_error(err):
@@ -27,9 +29,7 @@ def _raise_error(err):
         AnsibleFilterError: AnsibleError with filter name and message
     """
     tmp_err = []
-    tmplt_err = (
-        "Error when using plugin 'consolidate': '{filter}' reported {msg}"
-    )
+    tmplt_err = "Error when using plugin 'consolidate': '{filter}' reported {msg}"
     for filter in list(err.keys()):
         if err.get(filter):
             msg = ", ".join(err.get(filter))
@@ -69,9 +69,7 @@ def fail_on_filter(validator_func):
 
 
 @fail_on_filter
-def check_missing_match_key_duplicate(
-    data_sources, fail_missing_match_key, fail_duplicate
-):
+def check_missing_match_key_duplicate(data_sources, fail_missing_match_key, fail_duplicate):
     """Check if the match_key specified is present in all the supplied data,
     also check for duplicate data accross all the data sources
 
@@ -101,9 +99,7 @@ def check_missing_match_key_duplicate(
 
         if sorted(set(ds_values)) != sorted(ds_values) and fail_duplicate:
             errors_duplicate.append(
-                "duplicate values in data source {ds_idx}".format(
-                    ds_idx=ds_idx
-                )
+                "duplicate values in data source {ds_idx}".format(ds_idx=ds_idx)
             )
         results.append(set(ds_values))
     return results, {
@@ -153,9 +149,7 @@ def consolidate_facts(data_sources, all_values):
     for data_source in data_sources:
         match_key = data_source["match_key"]
         source = data_source["name"]
-        data_dict = {
-            d[match_key]: d for d in data_source["data"] if match_key in d
-        }
+        data_dict = {d[match_key]: d for d in data_source["data"] if match_key in d}
         for value in sorted(all_values):
             if value not in consolidated_facts:
                 consolidated_facts[value] = {}

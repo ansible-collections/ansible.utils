@@ -7,16 +7,20 @@
 filter plugin file for ipaddr filters: ipv4
 """
 from __future__ import absolute_import, division, print_function
+
 from functools import partial
-from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddr_utils import (
-    ipaddr,
-    _need_netaddr,
-    _first_last,
-)
+
 from ansible.errors import AnsibleFilterError
+
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     AnsibleArgSpecValidator,
 )
+from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddr_utils import (
+    _first_last,
+    _need_netaddr,
+    ipaddr,
+)
+
 
 __metaclass__ = type
 
@@ -103,9 +107,7 @@ def _next_nth_usable(*args, **kwargs):
     keys = ["value", "offset"]
     data = dict(zip(keys, args[1:]))
     data.update(kwargs)
-    aav = AnsibleArgSpecValidator(
-        data=data, schema=DOCUMENTATION, name="next_nth_usable"
-    )
+    aav = AnsibleArgSpecValidator(data=data, schema=DOCUMENTATION, name="next_nth_usable")
     valid, errors, updated_data = aav.validate()
     if not valid:
         raise AnsibleFilterError(errors)
@@ -149,6 +151,4 @@ class FilterModule(object):
         if HAS_NETADDR:
             return self.filter_map
         else:
-            return dict(
-                (f, partial(_need_netaddr, f)) for f in self.filter_map
-            )
+            return dict((f, partial(_need_netaddr, f)) for f in self.filter_map)

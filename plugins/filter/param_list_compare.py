@@ -1,5 +1,6 @@
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 DOCUMENTATION = """
@@ -154,9 +155,11 @@ RETURN = """
 """
 
 from ansible.errors import AnsibleFilterError
+
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     check_argspec,
 )
+
 
 ARGSPEC_CONDITIONALS = {}
 
@@ -173,10 +176,7 @@ def param_list_compare(*args, **kwargs):
         )
 
     valid, argspec_result, updated_params = check_argspec(
-        DOCUMENTATION,
-        "param_list_compare filter",
-        schema_conditionals=ARGSPEC_CONDITIONALS,
-        **data
+        DOCUMENTATION, "param_list_compare filter", schema_conditionals=ARGSPEC_CONDITIONALS, **data
     )
     if not valid:
         raise AnsibleFilterError(
@@ -191,12 +191,8 @@ def param_list_compare(*args, **kwargs):
     alls = [x for x in other if x == "all"]
     bangs = [x[1:] for x in other if x.startswith("!")]
     rbangs = [x for x in other if x.startswith("!")]
-    remain = [
-        x for x in other if x not in alls and x not in rbangs and x in base
-    ]
-    unsupported = [
-        x for x in other if x not in alls and x not in rbangs and x not in base
-    ]
+    remain = [x for x in other if x not in alls and x not in rbangs and x in base]
+    unsupported = [x for x in other if x not in alls and x not in rbangs and x not in base]
 
     if alls:
         combined = base

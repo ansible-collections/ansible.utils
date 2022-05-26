@@ -5,26 +5,22 @@
 
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 import ast
 import re
-from ansible.plugins.action import ActionBase
 
-from ansible.module_utils.common._collections_compat import (
-    MutableMapping,
-    MutableSequence,
-)
-
+from ansible.errors import AnsibleActionFail
 from ansible.module_utils._text import to_native
+from ansible.module_utils.common._collections_compat import MutableMapping, MutableSequence
+from ansible.plugins.action import ActionBase
 from jinja2 import Template, TemplateSyntaxError
-from ansible_collections.ansible.utils.plugins.modules.update_fact import (
-    DOCUMENTATION,
-)
+
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     AnsibleArgSpecValidator,
 )
-from ansible.errors import AnsibleActionFail
+from ansible_collections.ansible.utils.plugins.modules.update_fact import DOCUMENTATION
 
 
 class ActionModule(ActionBase):
@@ -120,9 +116,8 @@ class ActionModule(ActionBase):
             try:
                 new_obj = obj[first]
             except (KeyError, TypeError):
-                msg = (
-                    "Error: the key '{first}' was not found "
-                    "in {obj}.".format(obj=obj, first=first)
+                msg = "Error: the key '{first}' was not found " "in {obj}.".format(
+                    obj=obj, first=first
                 )
                 raise AnsibleActionFail(msg)
             self.set_value(new_obj, rest, val)
@@ -167,9 +162,7 @@ class ActionModule(ActionBase):
             obj, path = parts[0], parts[1:]
             results.add(obj)
             if obj not in task_vars["vars"]:
-                msg = "'{obj}' was not found in the current facts.".format(
-                    obj=obj
-                )
+                msg = "'{obj}' was not found in the current facts.".format(obj=obj)
                 raise AnsibleActionFail(msg)
             retrieved = task_vars["vars"].get(obj)
             if path:

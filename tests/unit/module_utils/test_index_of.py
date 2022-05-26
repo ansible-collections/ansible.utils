@@ -6,14 +6,15 @@
 
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 
 import unittest
-from ansible_collections.ansible.utils.plugins.module_utils.common.index_of import (
-    index_of,
-)
+
 from ansible.template import Templar
+
+from ansible_collections.ansible.utils.plugins.module_utils.common.index_of import index_of
 
 
 class TestIndexOfFilter(unittest.TestCase):
@@ -45,9 +46,7 @@ class TestIndexOfFilter(unittest.TestCase):
     def test_fail_on_missing(self):
         obj, test, value, key = [{"a": True}, {"c": False}], "==", True, "a"
         with self.assertRaises(Exception) as exc:
-            index_of(
-                obj, test, value, key, fail_on_missing=True, tests=self._tests
-            )
+            index_of(obj, test, value, key, fail_on_missing=True, tests=self._tests)
         self.assertIn("'a' was not found", str(exc.exception))
 
     def test_just_test(self):

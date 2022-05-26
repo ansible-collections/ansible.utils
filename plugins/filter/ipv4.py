@@ -7,16 +7,19 @@
 filter plugin file for ipaddr filters: ipv4
 """
 from __future__ import absolute_import, division, print_function
+
 from functools import partial
-from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddr_utils import (
-    ipaddr,
-    _need_netaddr,
-)
-from ansible.errors import AnsibleFilterError
-from ansible.errors import AnsibleError
+
+from ansible.errors import AnsibleError, AnsibleFilterError
+
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     AnsibleArgSpecValidator,
 )
+from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddr_utils import (
+    _need_netaddr,
+    ipaddr,
+)
+
 
 __metaclass__ = type
 
@@ -137,16 +140,12 @@ def _ipv4(*args, **kwargs):
             pass
         else:
             raise AnsibleError(
-                "Unrecognized type <{0}> for ipv4 filter <{1}>".format(
-                    type(data["value"]), "value"
-                )
+                "Unrecognized type <{0}> for ipv4 filter <{1}>".format(type(data["value"]), "value")
             )
 
     except (TypeError, ValueError):
         raise AnsibleError(
-            "Unrecognized type <{0}> for ipv4 filter <{1}>".format(
-                type(data["value"]), "value"
-            )
+            "Unrecognized type <{0}> for ipv4 filter <{1}>".format(type(data["value"]), "value")
         )
     aav = AnsibleArgSpecValidator(data=data, schema=DOCUMENTATION, name="ipv4")
     valid, errors, updated_data = aav.validate()
@@ -172,6 +171,4 @@ class FilterModule(object):
         if netaddr:
             return self.filter_map
         else:
-            return dict(
-                (f, partial(_need_netaddr, f)) for f in self.filter_map
-            )
+            return dict((f, partial(_need_netaddr, f)) for f in self.filter_map)

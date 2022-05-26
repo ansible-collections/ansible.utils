@@ -3,6 +3,7 @@ The base class for validator
 """
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 import os
@@ -10,16 +11,14 @@ import os
 from importlib import import_module
 
 from ansible.errors import AnsibleError
+from ansible.module_utils._text import to_native, to_text
 from ansible.module_utils.six import iteritems
-from ansible.module_utils._text import to_text, to_native
 
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     check_argspec,
 )
+from ansible_collections.ansible.utils.plugins.module_utils.common.utils import to_list
 
-from ansible_collections.ansible.utils.plugins.module_utils.common.utils import (
-    to_list,
-)
 
 try:
     import yaml
@@ -48,8 +47,10 @@ class ValidateBase(object):
         self._sub_plugin_options = {}
 
         cref = dict(zip(["corg", "cname", "plugin"], engine.split(".")))
-        validatorlib = "ansible_collections.{corg}.{cname}.plugins.sub_plugins.validate.{plugin}".format(
-            **cref
+        validatorlib = (
+            "ansible_collections.{corg}.{cname}.plugins.sub_plugins.validate.{plugin}".format(
+                **cref
+            )
         )
 
         validatordoc = getattr(import_module(validatorlib), "DOCUMENTATION")
@@ -140,9 +141,7 @@ class ValidateBase(object):
         return self._sub_plugin_options.get(name)
 
 
-def _load_validator(
-    engine, data, criteria, plugin_vars=None, cls_name="Validate", kwargs=None
-):
+def _load_validator(engine, data, criteria, plugin_vars=None, cls_name="Validate", kwargs=None):
     """
     Load the validate plugin from engine name
     :param engine: Name of the validate engine in format <org-name>.<collection-name>.<validate-plugin>
@@ -161,14 +160,12 @@ def _load_validator(
 
     if len(engine.split(".")) != 3:
         result["failed"] = True
-        result[
-            "msg"
-        ] = "Parser name should be provided as a full name including collection"
+        result["msg"] = "Parser name should be provided as a full name including collection"
         return None, result
 
     cref = dict(zip(["corg", "cname", "plugin"], engine.split(".")))
-    validatorlib = "ansible_collections.{corg}.{cname}.plugins.sub_plugins.validate.{plugin}".format(
-        **cref
+    validatorlib = (
+        "ansible_collections.{corg}.{cname}.plugins.sub_plugins.validate.{plugin}".format(**cref)
     )
 
     try:

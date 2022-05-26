@@ -7,14 +7,18 @@
 filter plugin file for ipaddr filters: cidr_merge
 """
 from __future__ import absolute_import, division, print_function
+
 from functools import partial
-from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddress_utils import (
-    _need_netaddr,
-)
+
 from ansible.errors import AnsibleFilterError
+
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     AnsibleArgSpecValidator,
 )
+from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddress_utils import (
+    _need_netaddr,
+)
+
 
 __metaclass__ = type
 
@@ -132,9 +136,7 @@ def _cidr_merge(*args, **kwargs):
     keys = ["value", "action"]
     data = dict(zip(keys, args[1:]))
     data.update(kwargs)
-    aav = AnsibleArgSpecValidator(
-        data=data, schema=DOCUMENTATION, name="cidr_merge"
-    )
+    aav = AnsibleArgSpecValidator(data=data, schema=DOCUMENTATION, name="cidr_merge")
     valid, errors, updated_data = aav.validate()
     if not valid:
         raise AnsibleFilterError(errors)
@@ -143,9 +145,7 @@ def _cidr_merge(*args, **kwargs):
 
 def cidr_merge(value, action="merge"):
     if not hasattr(value, "__iter__"):
-        raise AnsibleFilterError(
-            "cidr_merge: expected iterable, got " + repr(value)
-        )
+        raise AnsibleFilterError("cidr_merge: expected iterable, got " + repr(value))
 
     if action == "merge":
         try:
@@ -161,16 +161,12 @@ def cidr_merge(value, action="merge"):
             try:
                 return str(netaddr.IPNetwork(value[0]))
             except Exception as e:
-                raise AnsibleFilterError(
-                    "cidr_merge: error in netaddr:\n%s" % e
-                )
+                raise AnsibleFilterError("cidr_merge: error in netaddr:\n%s" % e)
         else:
             try:
                 return str(netaddr.spanning_cidr(value))
             except Exception as e:
-                raise AnsibleFilterError(
-                    "cidr_merge: error in netaddr:\n%s" % e
-                )
+                raise AnsibleFilterError("cidr_merge: error in netaddr:\n%s" % e)
 
     else:
         raise AnsibleFilterError("cidr_merge: invalid action '%s'" % action)
@@ -189,6 +185,4 @@ class FilterModule(object):
             return self.filter_map
         else:
             # Need to install python's netaddr for these filters to work
-            return dict(
-                (f, partial(_need_netaddr, f)) for f in self.filter_map
-            )
+            return dict((f, partial(_need_netaddr, f)) for f in self.filter_map)

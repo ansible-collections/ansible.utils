@@ -9,6 +9,7 @@ flatten a complex object to dot bracket notation
 """
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 DOCUMENTATION = """
@@ -148,13 +149,12 @@ EXAMPLES = r"""
 """
 
 from ansible.errors import AnsibleFilterError
-from ansible_collections.ansible.utils.plugins.module_utils.common.get_path import (
-    get_path,
-)
 
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     AnsibleArgSpecValidator,
 )
+from ansible_collections.ansible.utils.plugins.module_utils.common.get_path import get_path
+
 
 try:
     from jinja2.filters import pass_environment
@@ -169,9 +169,7 @@ def _get_path(*args, **kwargs):
     data = dict(zip(keys, args))
     data.update(kwargs)
     environment = data.pop("environment")
-    aav = AnsibleArgSpecValidator(
-        data=data, schema=DOCUMENTATION, name="get_path"
-    )
+    aav = AnsibleArgSpecValidator(data=data, schema=DOCUMENTATION, name="get_path")
     valid, errors, updated_data = aav.validate()
     if not valid:
         raise AnsibleFilterError(errors)

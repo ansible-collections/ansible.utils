@@ -5,6 +5,7 @@
 
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 DOCUMENTATION = """
@@ -28,10 +29,10 @@ EXAMPLES = r"""
 """
 
 import re
+
 from ansible.plugins.callback import CallbackBase
-from ansible_collections.ansible.utils.plugins.plugin_utils.base.fact_diff import (
-    FactDiffBase,
-)
+
+from ansible_collections.ansible.utils.plugins.plugin_utils.base.fact_diff import FactDiffBase
 
 
 class FactDiff(FactDiffBase):
@@ -58,16 +59,12 @@ class FactDiff(FactDiffBase):
             self._before = [
                 line
                 for line in self._before
-                if not any(
-                    regex.match(str(line)) for regex in self._skip_lines
-                )
+                if not any(regex.match(str(line)) for regex in self._skip_lines)
             ]
             self._after = [
                 line
                 for line in self._after
-                if not any(
-                    regex.match(str(line)) for regex in self._skip_lines
-                )
+                if not any(regex.match(str(line)) for regex in self._skip_lines)
             ]
         if isinstance(self._before, list):
             self._debug("'before' is a list, joining with \n")
@@ -85,7 +82,5 @@ class FactDiff(FactDiffBase):
         if self._errors:
             return {"errors": " ".join(self._errors)}
         self._xform()
-        diff = CallbackBase()._get_diff(
-            {"before": self._before, "after": self._after}
-        )
+        diff = CallbackBase()._get_diff({"before": self._before, "after": self._after})
         return {"diff": diff}

@@ -9,9 +9,11 @@ Unit test file for netaddr test plugin: ipv6
 
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 import unittest
+
 from ansible_collections.ansible.utils.plugins.test.ipv6 import _ipv6
 
 

@@ -9,13 +9,14 @@ Unit test file for netaddr test plugin: in_one_network
 
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 import unittest
+
 from ansible.errors import AnsibleError
-from ansible_collections.ansible.utils.plugins.test.in_one_network import (
-    _in_one_network,
-)
+
+from ansible_collections.ansible.utils.plugins.test.in_one_network import _in_one_network
 
 
 class TestInOneNetwork(unittest.TestCase):
@@ -39,12 +40,8 @@ class TestInOneNetwork(unittest.TestCase):
     def test_valid_data(self):
         """Check passing valid data as per criteria"""
 
-        result = _in_one_network(
-            ip="10.1.1.1", networks=["10.0.0.0/8", "192.168.1.0/24"]
-        )
+        result = _in_one_network(ip="10.1.1.1", networks=["10.0.0.0/8", "192.168.1.0/24"])
         self.assertEqual(result, True)
 
-        result = _in_one_network(
-            ip="8.8.8.8", networks=["10.0.0.0/8", "10.1.1.0/24"]
-        )
+        result = _in_one_network(ip="8.8.8.8", networks=["10.0.0.0/8", "10.1.1.0/24"])
         self.assertEqual(result, False)

@@ -9,9 +9,11 @@ Unit test file for netaddr test plugin: private
 
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 import unittest
+
 from ansible_collections.ansible.utils.plugins.test.private import _private
 
 

@@ -9,12 +9,12 @@ Unit test file for netaddr test plugin: ipv6_ipv4_mapped
 
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 import unittest
-from ansible_collections.ansible.utils.plugins.test.ipv6_ipv4_mapped import (
-    _ipv6_ipv4_mapped,
-)
+
+from ansible_collections.ansible.utils.plugins.test.ipv6_ipv4_mapped import _ipv6_ipv4_mapped
 
 
 class TestIpV6IpV4Mapped(unittest.TestCase):

@@ -8,39 +8,28 @@ Unit test file for ipaddr filter plugins
 """
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 import sys
+import unittest
+
 import pytest
 
-import unittest
 from ansible.errors import AnsibleFilterError
-from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddr_utils import (
-    ipaddr,
-)
-from ansible_collections.ansible.utils.plugins.filter.next_nth_usable import (
-    next_nth_usable,
-)
-from ansible_collections.ansible.utils.plugins.filter.ipsubnet import ipsubnet
-from ansible_collections.ansible.utils.plugins.filter.previous_nth_usable import (
-    previous_nth_usable,
-)
-from ansible_collections.ansible.utils.plugins.filter.network_in_usable import (
-    network_in_usable,
-)
-from ansible_collections.ansible.utils.plugins.filter.network_in_network import (
-    network_in_network,
-)
-from ansible_collections.ansible.utils.plugins.filter.nthhost import nthhost
-from ansible_collections.ansible.utils.plugins.filter.reduce_on_network import (
-    reduce_on_network,
-)
-from ansible_collections.ansible.utils.plugins.filter.cidr_merge import (
-    cidr_merge,
-)
-from ansible_collections.ansible.utils.plugins.filter.ipmath import ipmath
-from ansible_collections.ansible.utils.plugins.filter.slaac import slaac
+
+from ansible_collections.ansible.utils.plugins.filter.cidr_merge import cidr_merge
 from ansible_collections.ansible.utils.plugins.filter.ip4_hex import ip4_hex
+from ansible_collections.ansible.utils.plugins.filter.ipmath import ipmath
+from ansible_collections.ansible.utils.plugins.filter.ipsubnet import ipsubnet
+from ansible_collections.ansible.utils.plugins.filter.network_in_network import network_in_network
+from ansible_collections.ansible.utils.plugins.filter.network_in_usable import network_in_usable
+from ansible_collections.ansible.utils.plugins.filter.next_nth_usable import next_nth_usable
+from ansible_collections.ansible.utils.plugins.filter.nthhost import nthhost
+from ansible_collections.ansible.utils.plugins.filter.previous_nth_usable import previous_nth_usable
+from ansible_collections.ansible.utils.plugins.filter.reduce_on_network import reduce_on_network
+from ansible_collections.ansible.utils.plugins.filter.slaac import slaac
+from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddr_utils import ipaddr
 
 
 netaddr = pytest.importorskip("netaddr")
@@ -48,14 +37,10 @@ netaddr = pytest.importorskip("netaddr")
 
 class TestIpFilter(unittest.TestCase):
     def test_cidr_merge(self):
-        with pytest.raises(
-            AnsibleFilterError, match="cidr_merge: expected iterable, got None"
-        ):
+        with pytest.raises(AnsibleFilterError, match="cidr_merge: expected iterable, got None"):
             cidr_merge(None)
 
-        with pytest.raises(
-            AnsibleFilterError, match="cidr_merge: invalid action 'floop'"
-        ):
+        with pytest.raises(AnsibleFilterError, match="cidr_merge: invalid action 'floop'"):
             cidr_merge([], "floop")
 
         self.assertEqual(cidr_merge([]), [])
@@ -90,9 +75,7 @@ class TestIpFilter(unittest.TestCase):
         self.assertFalse(ipaddr("fd::e", "6to4"))
         self.assertFalse(ipaddr("fd::e/20", "6to4"))
 
-        self.assertEqual(
-            ipaddr("2002:c000:02e6::1", "6to4"), "2002:c000:02e6::1"
-        )
+        self.assertEqual(ipaddr("2002:c000:02e6::1", "6to4"), "2002:c000:02e6::1")
         self.assertEqual(ipaddr(v6_address, "6to4"), v6_address)
         self.assertEqual(
             ipaddr(
@@ -254,35 +237,21 @@ class TestIpFilter(unittest.TestCase):
 
     def test_range_usable(self):
         address = "1.12.1.0/24"
-        self.assertEqual(
-            ipaddr(address, "range_usable"), "1.12.1.1-1.12.1.254"
-        )
+        self.assertEqual(ipaddr(address, "range_usable"), "1.12.1.1-1.12.1.254")
         address = "1.12.1.0/25"
-        self.assertEqual(
-            ipaddr(address, "range_usable"), "1.12.1.1-1.12.1.126"
-        )
+        self.assertEqual(ipaddr(address, "range_usable"), "1.12.1.1-1.12.1.126")
         address = "1.12.1.36/28"
-        self.assertEqual(
-            ipaddr(address, "range_usable"), "1.12.1.33-1.12.1.46"
-        )
+        self.assertEqual(ipaddr(address, "range_usable"), "1.12.1.33-1.12.1.46")
         address = "1.12.1.36/255.255.255.240"
-        self.assertEqual(
-            ipaddr(address, "range_usable"), "1.12.1.33-1.12.1.46"
-        )
+        self.assertEqual(ipaddr(address, "range_usable"), "1.12.1.33-1.12.1.46")
         address = "1.12.1.36/31"
-        self.assertEqual(
-            ipaddr(address, "range_usable"), "1.12.1.36-1.12.1.37"
-        )
+        self.assertEqual(ipaddr(address, "range_usable"), "1.12.1.36-1.12.1.37")
         address = "1.12.1.37/31"
-        self.assertEqual(
-            ipaddr(address, "range_usable"), "1.12.1.36-1.12.1.37"
-        )
+        self.assertEqual(ipaddr(address, "range_usable"), "1.12.1.36-1.12.1.37")
         address = "1.12.1.36/32"
         self.assertEqual(ipaddr(address, "range_usable"), None)
         address = "1.12.1.254/24"
-        self.assertEqual(
-            ipaddr(address, "range_usable"), "1.12.1.1-1.12.1.254"
-        )
+        self.assertEqual(ipaddr(address, "range_usable"), "1.12.1.1-1.12.1.254")
 
     def test_address_prefix(self):
         # Regular address
@@ -346,33 +315,21 @@ class TestIpFilter(unittest.TestCase):
         address = "1.12.1.0/25"
         self.assertEqual(ipaddr(address, "ip_netmask"), None)
         address = "1.12.1.36/28"
-        self.assertEqual(
-            ipaddr(address, "ip_netmask"), "1.12.1.36 255.255.255.240"
-        )
+        self.assertEqual(ipaddr(address, "ip_netmask"), "1.12.1.36 255.255.255.240")
         address = "1.12.1.36/255.255.255.240"
-        self.assertEqual(
-            ipaddr(address, "ip_netmask"), "1.12.1.36 255.255.255.240"
-        )
+        self.assertEqual(ipaddr(address, "ip_netmask"), "1.12.1.36 255.255.255.240")
         address = "1.12.1.36/31"
-        self.assertEqual(
-            ipaddr(address, "ip_netmask"), "1.12.1.36 255.255.255.254"
-        )
+        self.assertEqual(ipaddr(address, "ip_netmask"), "1.12.1.36 255.255.255.254")
         address = "1.12.1.37/31"
-        self.assertEqual(
-            ipaddr(address, "ip_netmask"), "1.12.1.37 255.255.255.254"
-        )
+        self.assertEqual(ipaddr(address, "ip_netmask"), "1.12.1.37 255.255.255.254")
         address = "1.12.1.36/32"
         self.assertEqual(ipaddr(address, "ip_netmask"), None)
         address = "1.12.1.254/24"
-        self.assertEqual(
-            ipaddr(address, "ip_netmask"), "1.12.1.254 255.255.255.0"
-        )
+        self.assertEqual(ipaddr(address, "ip_netmask"), "1.12.1.254 255.255.255.0")
 
     def test_ipv6_query(self):
         self.assertEqual(ipaddr("fd00:123::97", "ipv6"), "fd00:123::97")
-        self.assertEqual(
-            ipaddr("192.0.2.230", "ipv6"), "::ffff:192.0.2.230/128"
-        )
+        self.assertEqual(ipaddr("192.0.2.230", "ipv6"), "::ffff:192.0.2.230/128")
 
     def test_ipaddr_link_local_query(self):
         self.assertEqual(ipaddr("169.254.0.12", "link-local"), "169.254.0.12")
@@ -418,71 +375,39 @@ class TestIpFilter(unittest.TestCase):
 
     def test_network_netmask(self):
         address = "1.12.1.0/24"
-        self.assertEqual(
-            ipaddr(address, "network_netmask"), "1.12.1.0 255.255.255.0"
-        )
+        self.assertEqual(ipaddr(address, "network_netmask"), "1.12.1.0 255.255.255.0")
         address = "1.12.1.0/25"
-        self.assertEqual(
-            ipaddr(address, "network_netmask"), "1.12.1.0 255.255.255.128"
-        )
+        self.assertEqual(ipaddr(address, "network_netmask"), "1.12.1.0 255.255.255.128")
         address = "1.12.1.36/28"
-        self.assertEqual(
-            ipaddr(address, "network_netmask"), "1.12.1.32 255.255.255.240"
-        )
+        self.assertEqual(ipaddr(address, "network_netmask"), "1.12.1.32 255.255.255.240")
         address = "1.12.1.36/255.255.255.240"
-        self.assertEqual(
-            ipaddr(address, "network_netmask"), "1.12.1.32 255.255.255.240"
-        )
+        self.assertEqual(ipaddr(address, "network_netmask"), "1.12.1.32 255.255.255.240")
         address = "1.12.1.36/31"
-        self.assertEqual(
-            ipaddr(address, "network_netmask"), "1.12.1.36 255.255.255.254"
-        )
+        self.assertEqual(ipaddr(address, "network_netmask"), "1.12.1.36 255.255.255.254")
         address = "1.12.1.37/31"
-        self.assertEqual(
-            ipaddr(address, "network_netmask"), "1.12.1.36 255.255.255.254"
-        )
+        self.assertEqual(ipaddr(address, "network_netmask"), "1.12.1.36 255.255.255.254")
         address = "1.12.1.36/32"
-        self.assertEqual(
-            ipaddr(address, "network_netmask"), "1.12.1.36 255.255.255.255"
-        )
+        self.assertEqual(ipaddr(address, "network_netmask"), "1.12.1.36 255.255.255.255")
         address = "1.12.1.254/24"
-        self.assertEqual(
-            ipaddr(address, "network_netmask"), "1.12.1.0 255.255.255.0"
-        )
+        self.assertEqual(ipaddr(address, "network_netmask"), "1.12.1.0 255.255.255.0")
 
     def test_network_wildcard(self):
         address = "1.12.1.0/24"
-        self.assertEqual(
-            ipaddr(address, "network_wildcard"), "1.12.1.0 0.0.0.255"
-        )
+        self.assertEqual(ipaddr(address, "network_wildcard"), "1.12.1.0 0.0.0.255")
         address = "1.12.1.0/25"
-        self.assertEqual(
-            ipaddr(address, "network_wildcard"), "1.12.1.0 0.0.0.127"
-        )
+        self.assertEqual(ipaddr(address, "network_wildcard"), "1.12.1.0 0.0.0.127")
         address = "1.12.1.36/28"
-        self.assertEqual(
-            ipaddr(address, "network_wildcard"), "1.12.1.32 0.0.0.15"
-        )
+        self.assertEqual(ipaddr(address, "network_wildcard"), "1.12.1.32 0.0.0.15")
         address = "1.12.1.36/255.255.255.240"
-        self.assertEqual(
-            ipaddr(address, "network_wildcard"), "1.12.1.32 0.0.0.15"
-        )
+        self.assertEqual(ipaddr(address, "network_wildcard"), "1.12.1.32 0.0.0.15")
         address = "1.12.1.36/31"
-        self.assertEqual(
-            ipaddr(address, "network_wildcard"), "1.12.1.36 0.0.0.1"
-        )
+        self.assertEqual(ipaddr(address, "network_wildcard"), "1.12.1.36 0.0.0.1")
         address = "1.12.1.37/31"
-        self.assertEqual(
-            ipaddr(address, "network_wildcard"), "1.12.1.36 0.0.0.1"
-        )
+        self.assertEqual(ipaddr(address, "network_wildcard"), "1.12.1.36 0.0.0.1")
         address = "1.12.1.36/32"
-        self.assertEqual(
-            ipaddr(address, "network_wildcard"), "1.12.1.36 0.0.0.0"
-        )
+        self.assertEqual(ipaddr(address, "network_wildcard"), "1.12.1.36 0.0.0.0")
         address = "1.12.1.254/24"
-        self.assertEqual(
-            ipaddr(address, "network_wildcard"), "1.12.1.0 0.0.0.255"
-        )
+        self.assertEqual(ipaddr(address, "network_wildcard"), "1.12.1.0 0.0.0.255")
 
     def test_next_usable(self):
         address = "1.12.1.0/24"
@@ -558,19 +483,14 @@ class TestIpFilter(unittest.TestCase):
         self.assertEqual(ipmath("2001::1", 9), "2001::a")
         self.assertEqual(ipmath("2001::1", 10), "2001::b")
         self.assertEqual(ipmath("2001::5", -3), "2001::2")
-        self.assertEqual(
-            ipmath("2001::5", -10), "2000:ffff:ffff:ffff:ffff:ffff:ffff:fffb"
-        )
+        self.assertEqual(ipmath("2001::5", -10), "2000:ffff:ffff:ffff:ffff:ffff:ffff:fffb")
 
         expected = "You must pass a valid IP address; invalid_ip is invalid"
         with self.assertRaises(AnsibleFilterError) as exc:
             ipmath("invalid_ip", 8)
         self.assertEqual(exc.exception.message, expected)
 
-        expected = (
-            "You must pass an integer for arithmetic; "
-            "some_number is not a valid integer"
-        )
+        expected = "You must pass an integer for arithmetic; some_number is not a valid integer"
         with self.assertRaises(AnsibleFilterError) as exc:
             ipmath("1.2.3.4", "some_number")
         self.assertEqual(exc.exception.message, expected)
@@ -636,9 +556,7 @@ class TestIpFilter(unittest.TestCase):
         address = "1.12.1.36/24"
         self.assertEqual(nthhost(address, 10), "1.12.1.10")
         address = "1.12.1.34"
-        self.assertFalse(
-            nthhost(address, "last_usable"), "Not a network address"
-        )
+        self.assertFalse(nthhost(address, "last_usable"), "Not a network address")
         address = "1.12.1.36/28"
         self.assertEqual(nthhost(address, 4), "1.12.1.36")
         address = "1.12.1.36/255.255.255.240"

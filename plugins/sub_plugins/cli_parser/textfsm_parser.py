@@ -6,6 +6,7 @@ https://github.com/google/textfsm
 """
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 DOCUMENTATION = """
@@ -40,9 +41,9 @@ import os
 
 from ansible.module_utils._text import to_native
 from ansible.module_utils.basic import missing_required_lib
-from ansible_collections.ansible.utils.plugins.plugin_utils.base.cli_parser import (
-    CliParserBase,
-)
+
+from ansible_collections.ansible.utils.plugins.plugin_utils.base.cli_parser import CliParserBase
+
 
 try:
     import textfsm
@@ -94,9 +95,7 @@ class CliParser(CliParserBase):
         template_path = self._task_args.get("parser").get("template_path")
         if template_path and not os.path.isfile(template_path):
             return {
-                "errors": "error while reading template_path file {file}".format(
-                    file=template_path
-                )
+                "errors": "error while reading template_path file {file}".format(file=template_path)
             }
         try:
             template = open(self._task_args.get("parser").get("template_path"))

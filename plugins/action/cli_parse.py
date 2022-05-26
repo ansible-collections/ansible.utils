@@ -8,24 +8,24 @@ The action plugin file for cli_parse
 """
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 import json
+
 from importlib import import_module
 
 from ansible.errors import AnsibleActionFail
 from ansible.module_utils._text import to_native, to_text
-from ansible.module_utils.connection import (
-    Connection,
-    ConnectionError as AnsibleConnectionError,
-)
+from ansible.module_utils.connection import Connection
+from ansible.module_utils.connection import ConnectionError as AnsibleConnectionError
 from ansible.plugins.action import ActionBase
-from ansible_collections.ansible.utils.plugins.modules.cli_parse import (
-    DOCUMENTATION,
-)
+
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     check_argspec,
 )
+from ansible_collections.ansible.utils.plugins.modules.cli_parse import DOCUMENTATION
+
 
 # python 2.7 compat for FileNotFoundError
 try:
@@ -35,9 +35,7 @@ except NameError:
 
 
 ARGSPEC_CONDITIONALS = {
-    "argument_spec": {
-        "parser": {"mutually_exclusive": [["command", "template_path"]]}
-    },
+    "argument_spec": {"parser": {"mutually_exclusive": [["command", "template_path"]]}},
     "required_one_of": [["command", "text"]],
     "mutually_exclusive": [["command", "text"]],
 }
@@ -61,9 +59,7 @@ class ActionModule(ActionBase):
         :param msg: The message
         :type msg: str
         """
-        msg = "<{phost}> [cli_parse] {msg}".format(
-            phost=self._playhost, msg=msg
-        )
+        msg = "<{phost}> [cli_parse] {msg}".format(phost=self._playhost, msg=msg)
         self._display.vvvv(msg)
 
     def _fail_json(self, msg):
@@ -108,9 +104,7 @@ class ActionModule(ActionBase):
         :rtype: CliParser
         """
         requested_parser = self._task.args.get("parser").get("name")
-        cref = dict(
-            zip(["corg", "cname", "plugin"], requested_parser.split("."))
-        )
+        cref = dict(zip(["corg", "cname", "plugin"], requested_parser.split(".")))
         if cref["cname"] == "netcommon" and cref["plugin"] in [
             "json",
             "textfsm",
@@ -121,9 +115,7 @@ class ActionModule(ActionBase):
             msg = (
                 "Use 'ansible.utils.{plugin}' for parser name instead of '{requested_parser}'."
                 " This feature will be removed from 'ansible.netcommon' collection in a release"
-                " after 2022-11-01".format(
-                    plugin=cref["plugin"], requested_parser=requested_parser
-                )
+                " after 2022-11-01".format(plugin=cref["plugin"], requested_parser=requested_parser)
             )
             self._display.warning(msg)
 
@@ -147,13 +139,13 @@ class ActionModule(ActionBase):
                 "ntc",
                 "pyats",
             ]:
-                parserlib = "ansible_collections.{corg}.{cname}.plugins.cli_parsers.{plugin}_parser".format(
-                    **cref
+                parserlib = (
+                    "ansible_collections.{corg}.{cname}.plugins.cli_parsers.{plugin}_parser".format(
+                        **cref
+                    )
                 )
                 try:
-                    parsercls = getattr(
-                        import_module(parserlib), self.PARSER_CLS_NAME
-                    )
+                    parsercls = getattr(import_module(parserlib), self.PARSER_CLS_NAME)
                     parser = parsercls(
                         task_args=self._task.args,
                         task_vars=task_vars,
@@ -162,24 +154,18 @@ class ActionModule(ActionBase):
                     return parser
                 except Exception as exc:
                     self._result["failed"] = True
-                    self._result["msg"] = "Error loading parser: {err}".format(
-                        err=to_native(exc)
-                    )
+                    self._result["msg"] = "Error loading parser: {err}".format(err=to_native(exc))
                     return None
 
             self._result["failed"] = True
-            self._result["msg"] = "Error loading parser: {err}".format(
-                err=to_native(exc)
-            )
+            self._result["msg"] = "Error loading parser: {err}".format(err=to_native(exc))
             return None
 
     def _set_parser_command(self):
         """Set the /parser/command in the task args based on /command if needed"""
         if self._task.args.get("command"):
             if not self._task.args.get("parser").get("command"):
-                self._task.args.get("parser")["command"] = self._task.args.get(
-                    "command"
-                )
+                self._task.args.get("parser")["command"] = self._task.args.get("command")
 
     def _set_text(self):
         """Set the /text in the task_args based on the command run"""
@@ -205,11 +191,7 @@ class ActionModule(ActionBase):
                     )
                 else:
                     oper_sys = self._task_vars.get(hvar)
-                    self._debug(
-                        "OS set to {os}, using {key}".format(
-                            os=oper_sys.lower(), key=hvar
-                        )
-                    )
+                    self._debug("OS set to {os}, using {key}".format(os=oper_sys.lower(), key=hvar))
         return oper_sys.lower()
 
     def _update_template_path(self, template_extension):
@@ -224,18 +206,10 @@ class ActionModule(ActionBase):
                 oper_sys = self._task.args.get("parser").get("os")
             else:
                 oper_sys = self._os_from_task_vars()
-            cmd_as_fname = (
-                self._task.args.get("parser").get("command").replace(" ", "_")
-            )
-            fname = "{os}_{cmd}.{ext}".format(
-                os=oper_sys, cmd=cmd_as_fname, ext=template_extension
-            )
+            cmd_as_fname = self._task.args.get("parser").get("command").replace(" ", "_")
+            fname = "{os}_{cmd}.{ext}".format(os=oper_sys, cmd=cmd_as_fname, ext=template_extension)
             source = self._find_needle("templates", fname)
-            self._debug(
-                "template_path in task args updated to {source}".format(
-                    source=source
-                )
-            )
+            self._debug("template_path in task args updated to {source}".format(source=source))
             self._task.args["parser"]["template_path"] = source
 
     def _get_template_contents(self):
@@ -254,9 +228,7 @@ class ActionModule(ActionBase):
                             file_handler.read(), errors="surrogate_or_strict"
                         )
                     except UnicodeError:
-                        raise AnsibleActionFail(
-                            "Template source files must be utf-8 encoded"
-                        )
+                        raise AnsibleActionFail("Template source files must be utf-8 encoded")
             except FileNotFoundError as exc:
                 raise AnsibleActionFail(
                     "Failed to open template '{tpath}'. Error: {err}".format(
@@ -364,9 +336,7 @@ class ActionModule(ActionBase):
 
         if result.get("errors"):
             self._prune_result()
-            self._result.update(
-                {"failed": True, "msg": " ".join(result["errors"])}
-            )
+            self._result.update({"failed": True, "msg": " ".join(result["errors"])})
         else:
             self._result["parsed"] = result["parsed"]
             set_fact = self._task.args.get("set_fact")

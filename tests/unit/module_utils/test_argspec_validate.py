@@ -6,12 +6,15 @@
 
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 import unittest
+
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     AnsibleArgSpecValidator,
 )
+
 from .fixtures.docstring import DOCUMENTATION
 
 
@@ -98,16 +101,12 @@ class TestSortList(unittest.TestCase):
             data=data,
             schema=DOCUMENTATION,
             schema_format="doc",
-            schema_conditionals={
-                "required_together": [["param_str", "param_bool"]]
-            },
+            schema_conditionals={"required_together": [["param_str", "param_bool"]]},
             name="test_action",
         )
         valid, errors, _updated_data = aav.validate()
         self.assertFalse(valid)
-        self.assertIn(
-            "parameters are required together: param_str, param_bool", errors
-        )
+        self.assertIn("parameters are required together: param_str, param_bool", errors)
 
     def test_unsupported_param(self):
         data = {"param_str": "string", "not_valid": "string"}
@@ -122,9 +121,7 @@ class TestSortList(unittest.TestCase):
         self.assertFalse(valid)
         if isinstance(errors, list):
             # for ansibleargspecvalidator 2.11 its returning errors as list
-            self.assertIn(
-                "not_valid. Supported parameters include:", errors[0]
-            )
+            self.assertIn("not_valid. Supported parameters include:", errors[0])
         else:
             self.assertIn(
                 "Unsupported parameters for 'test_action' module: not_valid",

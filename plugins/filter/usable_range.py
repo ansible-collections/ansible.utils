@@ -8,15 +8,15 @@ Filter plugin file for usable_range
 """
 
 from __future__ import absolute_import, division, print_function
+
 from ipaddress import IPv4Network, IPv6Network
 
 from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddress_utils import (
-    ip_network,
     _need_ipaddress,
+    ip_network,
 )
-from ansible_collections.ansible.utils.plugins.plugin_utils.base.utils import (
-    _validate_args,
-)
+from ansible_collections.ansible.utils.plugins.plugin_utils.base.utils import _validate_args
+
 
 __metaclass__ = type
 
@@ -165,23 +165,15 @@ def _usable_range(ip):
 
     try:
         if ip_network(ip).version == 4:
-            ips = [
-                to_text(usable_ips)
-                for usable_ips in IPv4Network(ensure_text(ip))
-            ]
+            ips = [to_text(usable_ips) for usable_ips in IPv4Network(ensure_text(ip))]
             no_of_ips = IPv4Network(ensure_text(ip)).num_addresses
         if ip_network(ip).version == 6:
-            ips = [
-                to_text(usable_ips)
-                for usable_ips in IPv6Network(ensure_text(ip))
-            ]
+            ips = [to_text(usable_ips) for usable_ips in IPv6Network(ensure_text(ip))]
             no_of_ips = IPv6Network(ensure_text(ip)).num_addresses
 
     except Exception as e:
         raise AnsibleFilterError(
-            "Error while using plugin 'usable_range': {msg}".format(
-                msg=to_text(e)
-            )
+            "Error while using plugin 'usable_range': {msg}".format(msg=to_text(e))
         )
 
     return {"usable_ips": ips, "number_of_ips": no_of_ips}

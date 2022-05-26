@@ -5,6 +5,7 @@
 
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 DOCUMENTATION = """
     name: validate
@@ -74,15 +75,13 @@ RETURN = """
 
 from ansible.errors import AnsibleError
 from ansible.module_utils._text import to_text
-from ansible_collections.ansible.utils.plugins.plugin_utils.base.validate import (
-    _load_validator,
-)
-from ansible_collections.ansible.utils.plugins.module_utils.common.utils import (
-    to_list,
-)
+
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     check_argspec,
 )
+from ansible_collections.ansible.utils.plugins.module_utils.common.utils import to_list
+from ansible_collections.ansible.utils.plugins.plugin_utils.base.validate import _load_validator
+
 
 ARGSPEC_CONDITIONALS = {}
 
@@ -101,10 +100,7 @@ def validate(*args, **kwargs):
             params.update({item: kwargs[item]})
 
     valid, argspec_result, updated_params = check_argspec(
-        DOCUMENTATION,
-        "validate test",
-        schema_conditionals=ARGSPEC_CONDITIONALS,
-        **params
+        DOCUMENTATION, "validate test", schema_conditionals=ARGSPEC_CONDITIONALS, **params
     )
     if not valid:
         raise AnsibleError(
@@ -122,8 +118,7 @@ def validate(*args, **kwargs):
     )
     if validator_result.get("failed"):
         raise AnsibleError(
-            "validate lookup plugin failed with errors: %s"
-            % validator_result.get("msg")
+            "validate lookup plugin failed with errors: %s" % validator_result.get("msg")
         )
 
     try:

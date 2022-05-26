@@ -9,13 +9,15 @@ Unit test file for cidr_merge filter plugin
 
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 import unittest
+
 from ansible.errors import AnsibleFilterError
-from ansible_collections.ansible.utils.plugins.filter.cidr_merge import (
-    _cidr_merge,
-)
+
+from ansible_collections.ansible.utils.plugins.filter.cidr_merge import _cidr_merge
+
 
 INVALID_DATA_MERGE = ["0.1234.34.44", "1.00000.2.000.22"]
 
@@ -62,6 +64,4 @@ class TestCidrMerge(unittest.TestCase):
         kwargs = {}
         with self.assertRaises(AnsibleFilterError) as error:
             _cidr_merge(*args, **kwargs)
-        self.assertIn(
-            "cidr_merge: invalid action 'span1'", str(error.exception)
-        )
+        self.assertIn("cidr_merge: invalid action 'span1'", str(error.exception))

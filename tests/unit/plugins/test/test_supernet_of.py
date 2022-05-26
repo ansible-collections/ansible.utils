@@ -9,12 +9,12 @@ Unit test file for netaddr test plugin: supernet_of
 
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 import unittest
-from ansible_collections.ansible.utils.plugins.test.supernet_of import (
-    _supernet_of,
-)
+
+from ansible_collections.ansible.utils.plugins.test.supernet_of import _supernet_of
 
 
 class TestSupernetOf(unittest.TestCase):
@@ -46,7 +46,5 @@ class TestSupernetOf(unittest.TestCase):
         result = _supernet_of(network_a="10.1.1.0/24", network_b="10.0.0.0/8")
         self.assertEqual(result, False)
 
-        result = _supernet_of(
-            network_a="10.0.0.0/8", network_b="192.168.1.0/24"
-        )
+        result = _supernet_of(network_a="10.0.0.0/8", network_b="192.168.1.0/24")
         self.assertEqual(result, False)

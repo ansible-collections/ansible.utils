@@ -9,12 +9,15 @@ The utils file for all ipaddr filters
 
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 
-from ansible.utils.display import Display
 import types
+
 from ansible.errors import AnsibleFilterError
+from ansible.utils.display import Display
+
 
 try:
     import netaddr
@@ -263,9 +266,7 @@ def _peer_query(v, vtype):
             if int(v.ip) % 4 == 0:
                 raise AnsibleFilterError("Network address of /30 has no peer")
             if int(v.ip) % 4 == 3:
-                raise AnsibleFilterError(
-                    "Broadcast address of /30 has no peer"
-                )
+                raise AnsibleFilterError("Broadcast address of /30 has no peer")
             return str(netaddr.IPAddress(int(v.ip) ^ 3))
         raise AnsibleFilterError("Not a point-to-point network")
 
@@ -589,9 +590,7 @@ def ipaddr(value, query="", version=False, alias="ipaddr"):
                 return value
 
         except Exception:
-            raise AnsibleFilterError(
-                alias + ": unknown filter type: %s" % query
-            )
+            raise AnsibleFilterError(alias + ": unknown filter type: %s" % query)
 
     return False
 
@@ -601,8 +600,7 @@ def _need_netaddr(f_name, *args, **kwargs):
     verify python's netaddr for these filters to work
     """
     raise AnsibleFilterError(
-        "The %s filter requires python's netaddr be "
-        "installed on the ansible controller" % f_name
+        "The %s filter requires python's netaddr be " "installed on the ansible controller" % f_name
     )
 
 
@@ -710,9 +708,7 @@ def hwaddr(value, query="", alias="hwaddr"):
     except Exception:
         v = None
         if query and query != "bool":
-            raise AnsibleFilterError(
-                alias + ": not a hardware address: %s" % value
-            )
+            raise AnsibleFilterError(alias + ": not a hardware address: %s" % value)
 
     extras = []
     for arg in query_func_extra_args.get(query, tuple()):

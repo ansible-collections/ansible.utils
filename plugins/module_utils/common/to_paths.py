@@ -9,13 +9,12 @@ flatten a complex object to dot bracket notation
 """
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 import re
-from ansible.module_utils.common._collections_compat import (
-    Mapping,
-    MutableMapping,
-)
+
+from ansible.module_utils.common._collections_compat import Mapping, MutableMapping
 
 
 def to_paths(var, prepend, wantlist):
@@ -43,9 +42,7 @@ def to_paths(var, prepend, wantlist):
         elif isinstance(data, list):
             if data:
                 for idx, val in enumerate(data):
-                    flatten(
-                        val, "{name}[{idx}]".format(name=name, idx=idx), out
-                    )
+                    flatten(val, "{name}[{idx}]".format(name=name, idx=idx), out)
             elif name:
                 out[name] = []
             else:

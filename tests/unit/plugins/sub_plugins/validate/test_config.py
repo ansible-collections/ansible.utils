@@ -3,14 +3,15 @@
 
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
-from ansible.module_utils._text import to_text
-from ansible.errors import AnsibleError
-from ansible_collections.ansible.utils.plugins.plugin_utils.base.validate import (
-    _load_validator,
-)
 import pytest
+
+from ansible.errors import AnsibleError
+from ansible.module_utils._text import to_text
+
+from ansible_collections.ansible.utils.plugins.plugin_utils.base.validate import _load_validator
 
 
 @pytest.fixture(name="test_rule")
@@ -20,9 +21,7 @@ def criterion():
 
 @pytest.fixture(name="validator")
 def config_validator():
-    engine, result = _load_validator(
-        engine="ansible.utils.config", data="", criteria=[]
-    )
+    engine, result = _load_validator(engine="ansible.utils.config", data="", criteria=[])
     return engine
 
 
@@ -38,9 +37,7 @@ def test_check_args_missing_key(validator, test_rule, key):
     except AnsibleError as exc:
         error = to_text(exc)
 
-    assert error == 'Criteria {rule} missing "{key}" key'.format(
-        rule=original, key=key
-    )
+    assert error == 'Criteria {rule} missing "{key}" key'.format(rule=original, key=key)
 
 
 def test_invalid_yaml(validator):
@@ -53,9 +50,7 @@ def test_invalid_yaml(validator):
     except AnsibleError as exc:
         error = to_text(exc)
 
-    expected_error = (
-        "'criteria' option value is invalid, value should be valid YAML."
-    )
+    expected_error = "'criteria' option value is invalid, value should be valid YAML."
     # Don't test for exact error string, varies with Python version
     assert error.startswith(expected_error)
 
@@ -71,10 +66,8 @@ def test_invalid_action(validator, test_rule):
     except AnsibleError as exc:
         error = to_text(exc)
 
-    expected_error = (
-        'Action in criteria {item} is not one of "warn" or "fail"'.format(
-            item=original
-        )
+    expected_error = 'Action in criteria {item} is not one of "warn" or "fail"'.format(
+        item=original
     )
     assert error == expected_error
 

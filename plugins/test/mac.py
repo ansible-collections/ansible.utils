@@ -8,10 +8,11 @@ Test plugin file for netaddr tests: mac
 """
 
 from __future__ import absolute_import, division, print_function
-from ansible_collections.ansible.utils.plugins.plugin_utils.base.utils import (
-    _validate_args,
-)
+
 import re
+
+from ansible_collections.ansible.utils.plugins.plugin_utils.base.utils import _validate_args
+
 
 __metaclass__ = type
 

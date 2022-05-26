@@ -3,16 +3,16 @@
 
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 from collections import OrderedDict
 
 import pytest
 
+from ansible_collections.ansible.utils.plugins.sub_plugins.cli_parser.xml_parser import CliParser
 from ansible_collections.ansible.utils.tests.unit.compat import unittest
-from ansible_collections.ansible.utils.plugins.sub_plugins.cli_parser.xml_parser import (
-    CliParser,
-)
+
 
 xmltodict = pytest.importorskip("xmltodict")
 
@@ -21,9 +21,7 @@ class TestXmlParser(unittest.TestCase):
     def test_valid_xml(self):
         xml = "<tag1><tag2 arg='foo'>text</tag2></tag1>"
         xml_dict = OrderedDict(
-            tag1=OrderedDict(
-                tag2=OrderedDict([("@arg", "foo"), ("#text", "text")])
-            )
+            tag1=OrderedDict(tag2=OrderedDict([("@arg", "foo"), ("#text", "text")]))
         )
         task_args = {"text": xml, "parser": {"os": "none"}}
         parser = CliParser(task_args=task_args, task_vars=[], debug=False)

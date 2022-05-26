@@ -6,12 +6,12 @@
 
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 import unittest
-from ansible_collections.ansible.utils.plugins.module_utils.common.utils import (
-    dict_merge,
-)
+
+from ansible_collections.ansible.utils.plugins.module_utils.common.utils import dict_merge
 
 
 class TestDict_merge(unittest.TestCase):

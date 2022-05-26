@@ -5,13 +5,14 @@
 
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 import unittest
+
 from ansible.errors import AnsibleFilterError
-from ansible_collections.ansible.utils.plugins.filter.remove_keys import (
-    _remove_keys,
-)
+
+from ansible_collections.ansible.utils.plugins.filter.remove_keys import _remove_keys
 
 
 class TestReplaceKeys(unittest.TestCase):
@@ -305,6 +306,4 @@ class TestReplaceKeys(unittest.TestCase):
         args = ["", "string data", target]
         with self.assertRaises(AnsibleFilterError) as error:
             _remove_keys(*args)
-        self.assertIn(
-            "Error when using plugin 'remove_keys'", str(error.exception)
-        )
+        self.assertIn("Error when using plugin 'remove_keys'", str(error.exception))

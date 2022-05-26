@@ -9,12 +9,14 @@ Unit test file for ipwrap filter plugin
 
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 import unittest
-from ansible_collections.ansible.utils.plugins.filter.ip4_hex import _ip4_hex
 
 from ansible.errors import AnsibleFilterError
+
+from ansible_collections.ansible.utils.plugins.filter.ip4_hex import _ip4_hex
 
 
 class TestIpWrap(unittest.TestCase):

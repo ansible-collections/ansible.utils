@@ -3,39 +3,28 @@
 
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 import os
 import tempfile
+
+from ansible.module_utils.connection import ConnectionError as AnsibleConnectionError
 from ansible.playbook.task import Task
 from ansible.template import Templar
 
-from ansible_collections.ansible.utils.tests.unit.compat import unittest
-from ansible_collections.ansible.utils.tests.unit.compat.mock import (
-    MagicMock,
-    patch,
-)
-from ansible_collections.ansible.utils.tests.unit.mock.loader import (
-    DictDataLoader,
-)
 from ansible_collections.ansible.utils.plugins.action.cli_parse import (
+    ARGSPEC_CONDITIONALS,
     ActionModule,
-)
-from ansible_collections.ansible.utils.plugins.modules.cli_parse import (
-    DOCUMENTATION,
 )
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     check_argspec,
 )
-from ansible_collections.ansible.utils.plugins.action.cli_parse import (
-    ARGSPEC_CONDITIONALS,
-)
-from ansible_collections.ansible.utils.plugins.plugin_utils.base.cli_parser import (
-    CliParserBase,
-)
-from ansible.module_utils.connection import (
-    ConnectionError as AnsibleConnectionError,
-)
+from ansible_collections.ansible.utils.plugins.modules.cli_parse import DOCUMENTATION
+from ansible_collections.ansible.utils.plugins.plugin_utils.base.cli_parser import CliParserBase
+from ansible_collections.ansible.utils.tests.unit.compat import unittest
+from ansible_collections.ansible.utils.tests.unit.compat.mock import MagicMock, patch
+from ansible_collections.ansible.utils.tests.unit.mock.loader import DictDataLoader
 
 
 class TestCli_Parse(unittest.TestCase):
@@ -65,9 +54,7 @@ class TestCli_Parse(unittest.TestCase):
         :return: The file contents
         :rtype: str
         """
-        fixture_name = os.path.join(
-            os.path.dirname(__file__), "fixtures", filename
-        )
+        fixture_name = os.path.join(os.path.dirname(__file__), "fixtures", filename)
         with open(fixture_name) as fhand:
             return fhand.read()
 
@@ -107,24 +94,16 @@ class TestCli_Parse(unittest.TestCase):
             }
         }
         valid, result, updated_params = check_argspec(
-            DOCUMENTATION,
-            "cli_parse module",
-            schema_conditionals=ARGSPEC_CONDITIONALS,
-            **kwargs
+            DOCUMENTATION, "cli_parse module", schema_conditionals=ARGSPEC_CONDITIONALS, **kwargs
         )
 
-        self.assertIn(
-            "one of the following is required: command, text", result["errors"]
-        )
+        self.assertIn("one of the following is required: command, text", result["errors"])
 
     def test_fn_check_argspec_fail_no_parser_name(self):
         """Confirm failed argspec no parser name"""
         kwargs = {"text": "anything", "parser": {"command": "show version"}}
         valid, result, updated_params = check_argspec(
-            DOCUMENTATION,
-            "cli_parse module",
-            schema_conditionals=ARGSPEC_CONDITIONALS,
-            **kwargs
+            DOCUMENTATION, "cli_parse module", schema_conditionals=ARGSPEC_CONDITIONALS, **kwargs
         )
         self.assertIn(
             "missing required arguments: name found in parser",
@@ -154,9 +133,7 @@ class TestCli_Parse(unittest.TestCase):
         }
         self._plugin._extended_check_argspec()
         self.assertTrue(self._plugin._result["failed"])
-        self.assertIn(
-            "provided when parsing text", self._plugin._result["msg"]
-        )
+        self.assertIn("provided when parsing text", self._plugin._result["msg"])
 
     def test_fn_load_parser_pass(self):
         """Confirm each each of the parsers loads from the filesystem"""
@@ -191,9 +168,7 @@ class TestCli_Parse(unittest.TestCase):
             "parser": {"name": "a.b.c"},
         }
         self._plugin._set_parser_command()
-        self.assertEqual(
-            self._plugin._task.args["parser"]["command"], "anything"
-        )
+        self.assertEqual(self._plugin._task.args["parser"]["command"], "anything")
 
     def test_fn_set_parser_command_present(self):
         """Confirm parser/command is not changed if provided"""
@@ -202,9 +177,7 @@ class TestCli_Parse(unittest.TestCase):
             "parser": {"command": "something", "name": "a.b.c"},
         }
         self._plugin._set_parser_command()
-        self.assertEqual(
-            self._plugin._task.args["parser"]["command"], "something"
-        )
+        self.assertEqual(self._plugin._task.args["parser"]["command"], "something")
 
     def test_fn_set_parser_command_absent(self):
         """Confirm parser/command is not added"""
@@ -244,9 +217,7 @@ class TestCli_Parse(unittest.TestCase):
         """Check the creation of the template_path if
         it doesn't exist in the user provided data
         """
-        self._plugin._task.args = {
-            "parser": {"command": "a command", "name": "a.b.c"}
-        }
+        self._plugin._task.args = {"parser": {"command": "a command", "name": "a.b.c"}}
         self._plugin._task_vars = {"ansible_network_os": "cisco.nxos.nxos"}
         with self.assertRaises(Exception) as error:
             self._plugin._update_template_path("yaml")
@@ -280,13 +251,9 @@ class TestCli_Parse(unittest.TestCase):
         )
         self._plugin._find_needle = MagicMock()
         self._plugin._find_needle.return_value = template_path
-        self._plugin._task.args = {
-            "parser": {"command": "show version", "os": "nxos"}
-        }
+        self._plugin._task.args = {"parser": {"command": "show version", "os": "nxos"}}
         self._plugin._update_template_path("yaml")
-        self.assertEqual(
-            self._plugin._task.args["parser"]["template_path"], template_path
-        )
+        self.assertEqual(self._plugin._task.args["parser"]["template_path"], template_path)
 
     def test_fn_get_template_contents_pass(self):
         """Check the retrieval of the template contents"""
@@ -304,9 +271,7 @@ class TestCli_Parse(unittest.TestCase):
         self._plugin._task.args = {"parser": {"template_path": "non-exist"}}
         with self.assertRaises(Exception) as error:
             self._plugin._get_template_contents()
-        self.assertIn(
-            "Failed to open template 'non-exist'", str(error.exception)
-        )
+        self.assertIn("Failed to open template 'non-exist'", str(error.exception))
 
     def test_fn_get_template_contents_not_specified(self):
         """Check the none when template_path not specified"""
@@ -364,9 +329,7 @@ class TestCli_Parse(unittest.TestCase):
         """Check run command for network"""
         expected = "abc"
         mock_rpc.return_value = expected
-        self._plugin._connection.socket_path = (
-            tempfile.NamedTemporaryFile().name
-        )
+        self._plugin._connection.socket_path = tempfile.NamedTemporaryFile().name
         self._plugin._task.args = {"command": "command"}
         self._plugin._run_command()
         self.assertEqual(self._plugin._result["stdout"], expected)
@@ -383,9 +346,7 @@ class TestCli_Parse(unittest.TestCase):
         """Check full module run with valid params"""
         mock_out = self._load_fixture("nxos_show_version.txt")
         mock_rpc.return_value = mock_out
-        self._plugin._connection.socket_path = (
-            tempfile.NamedTemporaryFile().name
-        )
+        self._plugin._connection.socket_path = tempfile.NamedTemporaryFile().name
         template_path = os.path.join(
             os.path.dirname(__file__), "fixtures", "nxos_show_version.textfsm"
         )
@@ -402,18 +363,14 @@ class TestCli_Parse(unittest.TestCase):
         self.assertEqual(result["stdout"], mock_out)
         self.assertEqual(result["stdout_lines"], mock_out.splitlines())
         self.assertEqual(result["parsed"][0]["version"], "9.2(2)")
-        self.assertEqual(
-            result["ansible_facts"]["new_fact"][0]["version"], "9.2(2)"
-        )
+        self.assertEqual(result["ansible_facts"]["new_fact"][0]["version"], "9.2(2)")
 
     @patch("ansible.module_utils.connection.Connection.__rpc__")
     def test_fn_run_pass_wo_fact(self, mock_rpc):
         """Check full module run with valid params"""
         mock_out = self._load_fixture("nxos_show_version.txt")
         mock_rpc.return_value = mock_out
-        self._plugin._connection.socket_path = (
-            tempfile.NamedTemporaryFile().name
-        )
+        self._plugin._connection.socket_path = tempfile.NamedTemporaryFile().name
         template_path = os.path.join(
             os.path.dirname(__file__), "fixtures", "nxos_show_version.textfsm"
         )
@@ -494,9 +451,7 @@ class TestCli_Parse(unittest.TestCase):
         mock_out = self._load_fixture("nxos_show_version.txt")
         mock_rpc.return_value = mock_out
 
-        self._plugin._connection.socket_path = (
-            tempfile.NamedTemporaryFile().name
-        )
+        self._plugin._connection.socket_path = tempfile.NamedTemporaryFile().name
         template_path = os.path.join(
             os.path.dirname(__file__), "fixtures", "nxos_empty_parser.textfsm"
         )
@@ -530,9 +485,7 @@ class TestCli_Parse(unittest.TestCase):
         mock_out = self._load_fixture("nxos_show_version.textfsm")
         mock_rpc.return_value = mock_out
 
-        self._plugin._connection.socket_path = (
-            tempfile.NamedTemporaryFile().name
-        )
+        self._plugin._connection.socket_path = tempfile.NamedTemporaryFile().name
         template_path = os.path.join(
             os.path.dirname(__file__), "fixtures", "nxos_empty_parser.textfsm"
         )
@@ -553,9 +506,7 @@ class TestCli_Parse(unittest.TestCase):
         """Check full module run mock error from network device"""
         msg = "I was mocked"
         mock_rpc.side_effect = AnsibleConnectionError(msg)
-        self._plugin._connection.socket_path = (
-            tempfile.NamedTemporaryFile().name
-        )
+        self._plugin._connection.socket_path = tempfile.NamedTemporaryFile().name
         self._plugin._task.args = {
             "command": "show version",
             "parser": {"name": "ansible.utils.textfsm"},

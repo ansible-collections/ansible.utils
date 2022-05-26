@@ -9,12 +9,14 @@ The index_of plugin common code
 """
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 import json
 
-from ansible.module_utils.six import string_types, integer_types
 from ansible.module_utils._text import to_native
+from ansible.module_utils.six import integer_types, string_types
+
 
 # Note, this file can only be used on the control node
 # where ansible is installed
@@ -99,9 +101,7 @@ def _run_test(entry, test, right, tests):
 
     j2_test = tests.get(test)
     if not j2_test:
-        msg = "{msg} Error was: the test '{test}' was not found.".format(
-            msg=msg, test=test
-        )
+        msg = "{msg} Error was: the test '{test}' was not found.".format(msg=msg, test=test)
         _raise_error(msg)
     else:
         try:
@@ -110,9 +110,7 @@ def _run_test(entry, test, right, tests):
             else:
                 result = j2_test(entry, right)
         except Exception as exc:
-            msg = "{msg} Error was: {error}".format(
-                msg=msg, error=to_native(exc)
-            )
+            msg = "{msg} Error was: {error}".format(msg=msg, error=to_native(exc))
             _raise_error(msg)
 
     if invert:
@@ -156,9 +154,7 @@ def index_of(
     elif isinstance(key, (string_types, integer_types, bool)):
 
         if not all(isinstance(entry, dict) for entry in data):
-            all_tipes = [
-                type(_to_well_known_type(entry)).__name__ for entry in data
-            ]
+            all_tipes = [type(_to_well_known_type(entry)).__name__ for entry in data]
             msg = (
                 "When a key name is provided, all list entries are required to "
                 "be dictionaries, got {str_tipes}"
@@ -172,9 +168,9 @@ def index_of(
                 if result:
                     res.append(idx)
             elif fail_on_missing:
-                msg = (
-                    "'{key}' was not found in '{dyct}' at [{index}]"
-                ).format(key=key, dyct=dyct, index=idx)
+                msg = ("'{key}' was not found in '{dyct}' at [{index}]").format(
+                    key=key, dyct=dyct, index=idx
+                )
                 errors.append(msg)
         if errors:
             _raise_error(

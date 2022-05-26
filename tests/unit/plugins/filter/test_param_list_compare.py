@@ -6,13 +6,14 @@
 
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 import unittest
+
 from ansible.errors import AnsibleFilterError
-from ansible_collections.ansible.utils.plugins.filter.param_list_compare import (
-    param_list_compare,
-)
+
+from ansible_collections.ansible.utils.plugins.filter.param_list_compare import param_list_compare
 
 
 class TestParam_list_compare_merge(unittest.TestCase):

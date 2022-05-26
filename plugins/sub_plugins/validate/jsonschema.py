@@ -5,6 +5,7 @@
 
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 DOCUMENTATION = """
@@ -40,18 +41,14 @@ DOCUMENTATION = """
 
 import json
 
+from ansible.errors import AnsibleError
 from ansible.module_utils._text import to_text
 from ansible.module_utils.basic import missing_required_lib
-from ansible.errors import AnsibleError
 from ansible.module_utils.six import string_types
 
-from ansible_collections.ansible.utils.plugins.plugin_utils.base.validate import (
-    ValidateBase,
-)
+from ansible_collections.ansible.utils.plugins.module_utils.common.utils import to_list
+from ansible_collections.ansible.utils.plugins.plugin_utils.base.validate import ValidateBase
 
-from ansible_collections.ansible.utils.plugins.module_utils.common.utils import (
-    to_list,
-)
 
 # PY2 compatibility for JSONDecodeError
 try:
@@ -176,40 +173,28 @@ class Validate(ValidateBase):
                     criteria, format_checker=jsonschema.draft7_format_checker
                 )
 
-            validation_errors = sorted(
-                validator.iter_errors(self._data), key=lambda e: e.path
-            )
+            validation_errors = sorted(validator.iter_errors(self._data), key=lambda e: e.path)
 
             if validation_errors:
                 if "errors" not in self._result:
                     self._result["errors"] = []
 
                 for validation_error in validation_errors:
-                    if isinstance(
-                        validation_error, jsonschema.ValidationError
-                    ):
+                    if isinstance(validation_error, jsonschema.ValidationError):
                         error = {
                             "message": validation_error.message,
-                            "data_path": to_path(
-                                validation_error.absolute_path
-                            ),
-                            "json_path": json_path(
-                                validation_error.absolute_path
-                            ),
-                            "schema_path": to_path(
-                                validation_error.relative_schema_path
-                            ),
+                            "data_path": to_path(validation_error.absolute_path),
+                            "json_path": json_path(validation_error.absolute_path),
+                            "schema_path": to_path(validation_error.relative_schema_path),
                             "relative_schema": validation_error.schema,
                             "expected": validation_error.validator_value,
                             "validator": validation_error.validator,
                             "found": validation_error.instance,
                         }
                         self._result["errors"].append(error)
-                        error_message = (
-                            "At '{schema_path}' {message}. ".format(
-                                schema_path=error["schema_path"],
-                                message=error["message"],
-                            )
+                        error_message = "At '{schema_path}' {message}. ".format(
+                            schema_path=error["schema_path"],
+                            message=error["message"],
                         )
                         error_messages.append(error_message)
         if error_messages:

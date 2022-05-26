@@ -5,6 +5,7 @@ This is the json parser for use with the cli_parse module and action plugin
 """
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 DOCUMENTATION = """
@@ -38,9 +39,8 @@ import json
 
 from ansible.module_utils._text import to_native
 from ansible.module_utils.six import string_types
-from ansible_collections.ansible.utils.plugins.plugin_utils.base.cli_parser import (
-    CliParserBase,
-)
+
+from ansible_collections.ansible.utils.plugins.plugin_utils.base.cli_parser import CliParserBase
 
 
 class CliParser(CliParserBase):

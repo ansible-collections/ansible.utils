@@ -9,6 +9,7 @@ The index_of filter plugin
 """
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 DOCUMENTATION = """
@@ -298,12 +299,12 @@ EXAMPLES = r"""
 """
 
 from ansible.errors import AnsibleFilterError
-from ansible_collections.ansible.utils.plugins.module_utils.common.index_of import (
-    index_of,
-)
+
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     AnsibleArgSpecValidator,
 )
+from ansible_collections.ansible.utils.plugins.module_utils.common.index_of import index_of
+
 
 try:
     from jinja2.filters import pass_environment
@@ -327,9 +328,7 @@ def _index_of(*args, **kwargs):
     data = dict(zip(keys, args))
     data.update(kwargs)
     environment = data.pop("environment")
-    aav = AnsibleArgSpecValidator(
-        data=data, schema=DOCUMENTATION, name="index_of"
-    )
+    aav = AnsibleArgSpecValidator(data=data, schema=DOCUMENTATION, name="index_of")
     valid, errors, updated_data = aav.validate()
     if not valid:
         raise AnsibleFilterError(errors)
