@@ -115,7 +115,8 @@ class Validate(ValidateBase):
                 except re.error as exc:
                     issues.append(
                         'Failed to compile regex "{rule}": {exc}'.format(
-                            rule=item["rule"], exc=exc
+                            rule=item["rule"],
+                            exc=exc,
                         ),
                     )
 

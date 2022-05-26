@@ -159,7 +159,8 @@ def _ipv6(*args, **kwargs):
         else:
             raise AnsibleError(
                 "Unrecognized type <{0}> for ipv6 filter <{1}>".format(
-                    type(data["value"]), "value"
+                    type(data["value"]),
+                    "value",
                 ),
             )
 
