@@ -6,6 +6,7 @@ https://github.com/martinblech/xmltodict
 """
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 DOCUMENTATION = """
@@ -38,9 +39,8 @@ EXAMPLES = r"""
 
 from ansible.module_utils._text import to_native
 from ansible.module_utils.basic import missing_required_lib
-from ansible_collections.ansible.utils.plugins.plugin_utils.base.cli_parser import (
-    CliParserBase,
-)
+
+from ansible_collections.ansible.utils.plugins.plugin_utils.base.cli_parser import CliParserBase
 
 
 try:
@@ -87,9 +87,9 @@ class CliParser(CliParserBase):
 
         cli_output = self._task_args.get("text")
 
-        network_os = self._task_args.get("parser").get(
-            "os"
-        ) or self._task_vars.get("ansible_network_os")
+        network_os = self._task_args.get("parser").get("os") or self._task_vars.get(
+            "ansible_network_os"
+        )
         # the nxos | xml includes a odd garbage line at the end, so remove it
         if not network_os:
             self._debug("network_os value is not set")

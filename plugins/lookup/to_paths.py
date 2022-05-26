@@ -9,6 +9,7 @@ The to_paths lookup plugin
 """
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 
@@ -129,12 +130,11 @@ RETURN = """
 
 from ansible.errors import AnsibleLookupError
 from ansible.plugins.lookup import LookupBase
-from ansible_collections.ansible.utils.plugins.module_utils.common.to_paths import (
-    to_paths,
-)
+
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     AnsibleArgSpecValidator,
 )
+from ansible_collections.ansible.utils.plugins.module_utils.common.to_paths import to_paths
 
 
 class LookupModule(LookupBase):
@@ -144,12 +144,8 @@ class LookupModule(LookupBase):
             terms = dict(zip(keys, terms))
         terms.update(kwargs)
 
-        schema = [
-            v for k, v in globals().items() if k.lower() == "documentation"
-        ]
-        aav = AnsibleArgSpecValidator(
-            data=terms, schema=schema[0], name="to_paths"
-        )
+        schema = [v for k, v in globals().items() if k.lower() == "documentation"]
+        aav = AnsibleArgSpecValidator(data=terms, schema=schema[0], name="to_paths")
         valid, errors, updated_data = aav.validate()
         if not valid:
             raise AnsibleLookupError(errors)

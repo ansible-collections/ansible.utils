@@ -10,6 +10,7 @@ The keep_keys filter plugin
 """
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 DOCUMENTATION = """
@@ -293,12 +294,12 @@ tasks:
 """
 
 from ansible.errors import AnsibleFilterError
-from ansible_collections.ansible.utils.plugins.plugin_utils.keep_keys import (
-    keep_keys,
-)
+
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     AnsibleArgSpecValidator,
 )
+from ansible_collections.ansible.utils.plugins.plugin_utils.keep_keys import keep_keys
+
 
 try:
     from jinja2.filters import pass_environment
@@ -313,9 +314,7 @@ def _keep_keys(*args, **kwargs):
     keys = ["data", "target", "matching_parameter"]
     data = dict(zip(keys, args[1:]))
     data.update(kwargs)
-    aav = AnsibleArgSpecValidator(
-        data=data, schema=DOCUMENTATION, name="keep_keys"
-    )
+    aav = AnsibleArgSpecValidator(data=data, schema=DOCUMENTATION, name="keep_keys")
     valid, errors, updated_data = aav.validate()
     if not valid:
         raise AnsibleFilterError(errors)

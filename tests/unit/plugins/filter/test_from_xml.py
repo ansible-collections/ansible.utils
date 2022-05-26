@@ -5,12 +5,15 @@
 
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 import unittest
-from ansible.errors import AnsibleError
-from ansible.errors import AnsibleFilterError
+
+from ansible.errors import AnsibleError, AnsibleFilterError
+
 from ansible_collections.ansible.utils.plugins.filter.from_xml import _from_xml
+
 
 INVALID_DATA = '<netconf-state xmlns="urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring">'
 

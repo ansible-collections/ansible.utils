@@ -10,9 +10,11 @@ The to_xml plugin
 """
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 from ansible.errors import AnsibleFilterError
+
 
 try:
     import xmltodict

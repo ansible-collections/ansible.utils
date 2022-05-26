@@ -7,14 +7,16 @@
 filter plugin file for ipaddr filters: ip4_hex
 """
 from __future__ import absolute_import, division, print_function
+
 from functools import partial
-from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddr_utils import (
-    _need_netaddr,
-)
+
 from ansible.errors import AnsibleFilterError
+
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     AnsibleArgSpecValidator,
 )
+from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddr_utils import _need_netaddr
+
 
 __metaclass__ = type
 
@@ -99,9 +101,7 @@ def _ip4_hex(*args, **kwargs):
     keys = ["arg", "delimiter"]
     data = dict(zip(keys, args[1:]))
     data.update(kwargs)
-    aav = AnsibleArgSpecValidator(
-        data=data, schema=DOCUMENTATION, name="ip4_hex"
-    )
+    aav = AnsibleArgSpecValidator(data=data, schema=DOCUMENTATION, name="ip4_hex")
     valid, errors, updated_data = aav.validate()
     if not valid:
         raise AnsibleFilterError(errors)
@@ -111,9 +111,7 @@ def _ip4_hex(*args, **kwargs):
 def ip4_hex(arg, delimiter=""):
     """Convert an IPv4 address to Hexadecimal notation"""
     numbers = list(map(int, arg.split(".")))
-    return "{0:02x}{sep}{1:02x}{sep}{2:02x}{sep}{3:02x}".format(
-        *numbers, sep=delimiter
-    )
+    return "{0:02x}{sep}{1:02x}{sep}{2:02x}{sep}{3:02x}".format(*numbers, sep=delimiter)
 
 
 class FilterModule(object):
@@ -129,6 +127,4 @@ class FilterModule(object):
         if HAS_NETADDR:
             return self.filter_map
         else:
-            return dict(
-                (f, partial(_need_netaddr, f)) for f in self.filter_map
-            )
+            return dict((f, partial(_need_netaddr, f)) for f in self.filter_map)

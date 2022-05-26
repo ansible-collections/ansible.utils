@@ -1,5 +1,6 @@
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 import subprocess
@@ -39,9 +40,7 @@ def run(localhost_project, environment):
         print(process.stdout.decode("utf-8"))
         print(process.stderr.decode("utf-8"))
 
-        pytest.fail(
-            reason=f"Integration test failed: {localhost_project.role}"
-        )
+        pytest.fail(reason=f"Integration test failed: {localhost_project.role}")
 
 
 def test_integration(localhost_project, environment, monkeypatch):

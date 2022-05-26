@@ -5,17 +5,18 @@
 
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 import copy
 import unittest
-from jinja2 import Template, TemplateSyntaxError
+
 from ansible.playbook.task import Task
 from ansible.template import Templar
+from jinja2 import Template, TemplateSyntaxError
 
-from ansible_collections.ansible.utils.plugins.action.update_fact import (
-    ActionModule,
-)
+from ansible_collections.ansible.utils.plugins.action.update_fact import ActionModule
+
 
 try:
     from unittest.mock import MagicMock  # pylint:disable=syntax-error
@@ -104,18 +105,14 @@ class TestUpdate_Fact(unittest.TestCase):
         self._plugin._task.args = {"a": 10}
         with self.assertRaises(Exception) as error:
             self._plugin.run(task_vars=None)
-        self.assertIn(
-            "missing required arguments: updates", str(error.exception)
-        )
+        self.assertIn("missing required arguments: updates", str(error.exception))
 
     def test_argspec_none(self):
         """Check passing a dict"""
         self._plugin._task.args = {}
         with self.assertRaises(Exception) as error:
             self._plugin.run(task_vars=None)
-        self.assertIn(
-            "missing required arguments: updates", str(error.exception)
-        )
+        self.assertIn("missing required arguments: updates", str(error.exception))
 
     def test_valid_jinja(self):
         for test in VALID_TESTS:
@@ -140,9 +137,7 @@ class TestUpdate_Fact(unittest.TestCase):
         self._plugin._task.args = {"updates": [{"path": "a.b.c", "value": 5}]}
         with self.assertRaises(Exception) as error:
             self._plugin.run(task_vars={"vars": {}})
-        self.assertIn(
-            "'a' was not found in the current facts.", str(error.exception)
-        )
+        self.assertIn("'a' was not found in the current facts.", str(error.exception))
 
     def test_run_simple(self):
         """Confirm a valid argspec passes"""
@@ -156,9 +151,7 @@ class TestUpdate_Fact(unittest.TestCase):
 
     def test_run_multiple(self):
         """Confirm multiple paths passes"""
-        task_vars = {
-            "vars": {"a": {"b1": [1, 2, 3], "b2": {"c": "123", "d": False}}}
-        }
+        task_vars = {"vars": {"a": {"b1": [1, 2, 3], "b2": {"c": "123", "d": False}}}}
         expected = {"a": {"b1": [1, 2, 3, 4], "b2": {"c": 456, "d": True}}}
         expected.update({"changed": True})
         self._plugin._task.args = {
@@ -197,9 +190,7 @@ class TestUpdate_Fact(unittest.TestCase):
         expected = copy.deepcopy(task_vars["vars"])
         expected["a"]["b"].append(4)
         expected.update({"changed": True})
-        self._plugin._task.args = {
-            "updates": [{"path": "a['b'][3]", "value": 4}]
-        }
+        self._plugin._task.args = {"updates": [{"path": "a['b'][3]", "value": 4}]}
         result = self._plugin.run(task_vars=task_vars)
         self.assertEqual(result, expected)
 
@@ -209,9 +200,7 @@ class TestUpdate_Fact(unittest.TestCase):
         expected = copy.deepcopy(task_vars["vars"])
         expected["a"]["b"].append(4)
         expected.update({"changed": True})
-        self._plugin._task.args = {
-            "updates": [{"path": 'a["b"][3]', "value": 4}]
-        }
+        self._plugin._task.args = {"updates": [{"path": 'a["b"][3]', "value": 4}]}
         result = self._plugin.run(task_vars=task_vars)
         self.assertEqual(result, expected)
 
@@ -231,9 +220,7 @@ class TestUpdate_Fact(unittest.TestCase):
         expected = copy.deepcopy(task_vars["vars"])
         expected["a"]["0"][0] = 0
         expected.update({"changed": True})
-        self._plugin._task.args = {
-            "updates": [{"path": 'a["0"].0', "value": 0}]
-        }
+        self._plugin._task.args = {"updates": [{"path": 'a["0"].0', "value": 0}]}
         result = self._plugin.run(task_vars=task_vars)
         self.assertEqual(result, expected)
 
@@ -246,9 +233,7 @@ class TestUpdate_Fact(unittest.TestCase):
 
     def test_run_invalid_path_bracket_after_dot(self):
         """Invalid path format"""
-        self._plugin._task.args = {
-            "updates": [{"path": "a.['b']", "value": 0}]
-        }
+        self._plugin._task.args = {"updates": [{"path": "a.['b']", "value": 0}]}
         with self.assertRaises(Exception) as error:
             self._plugin.run(task_vars={"vars": {}})
         self.assertIn("malformed", str(error.exception))
@@ -276,9 +261,7 @@ class TestUpdate_Fact(unittest.TestCase):
         expected = copy.deepcopy(task_vars["vars"])
         expected["a"]["b"] = [1, 2, 3]
         expected.update({"changed": False})
-        self._plugin._task.args = {
-            "updates": [{"path": "a.b", "value": [1, 2, 3]}]
-        }
+        self._plugin._task.args = {"updates": [{"path": "a.b", "value": [1, 2, 3]}]}
         result = self._plugin.run(task_vars=task_vars)
         self.assertEqual(result, expected)
 
@@ -293,14 +276,10 @@ class TestUpdate_Fact(unittest.TestCase):
     def test_run_list_not_int(self):
         """Confirm error when key not found"""
         task_vars = {"vars": {"a": {"b": [1]}}}
-        self._plugin._task.args = {
-            "updates": [{"path": "a.b['0']", "value": 2}]
-        }
+        self._plugin._task.args = {"updates": [{"path": "a.b['0']", "value": 2}]}
         with self.assertRaises(Exception) as error:
             self._plugin.run(task_vars=task_vars)
-        self.assertIn(
-            "index provided was not an integer", str(error.exception)
-        )
+        self.assertIn("index provided was not an integer", str(error.exception))
 
     def test_run_list_not_long(self):
         """List not long enough"""
@@ -308,9 +287,7 @@ class TestUpdate_Fact(unittest.TestCase):
         self._plugin._task.args = {"updates": [{"path": "a.b.2", "value": 2}]}
         with self.assertRaises(Exception) as error:
             self._plugin.run(task_vars=task_vars)
-        self.assertIn(
-            "not long enough for item #2 to be set", str(error.exception)
-        )
+        self.assertIn("not long enough for item #2 to be set", str(error.exception))
 
     def test_not_mutable_sequence_or_mapping(self):
         """Confirm graceful fail when immutable object
@@ -349,9 +326,7 @@ class TestUpdate_Fact(unittest.TestCase):
         self._plugin._task.args = {"updates": [{"path": "123", "value": 1}]}
         with self.assertRaises(Exception) as error:
             self._plugin.run(task_vars=task_vars)
-        self.assertIn(
-            "'123' was not found in the current facts", str(error.exception)
-        )
+        self.assertIn("'123' was not found in the current facts", str(error.exception))
 
     def test_run_not_dotted_success_same(self):
         """Test with a not dotted key, no change"""
@@ -368,8 +343,6 @@ class TestUpdate_Fact(unittest.TestCase):
         expected = copy.deepcopy(task_vars["vars"])
         expected["a"]["True"] = 1
         expected.update({"changed": True})
-        self._plugin._task.args = {
-            "updates": [{"path": "a['True']", "value": 1}]
-        }
+        self._plugin._task.args = {"updates": [{"path": "a['True']", "value": 1}]}
         result = self._plugin.run(task_vars=task_vars)
         self.assertEqual(result, expected)

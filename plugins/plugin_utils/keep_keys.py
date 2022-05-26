@@ -10,9 +10,11 @@ The keep_keys plugin code
 """
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 import re
+
 from ansible.errors import AnsibleFilterError
 
 
@@ -28,10 +30,7 @@ def _raise_error(msg):
 
 def keep_keys_from_dict_n_list(data, target, matching_parameter):
     if isinstance(data, list):
-        list_data = [
-            keep_keys_from_dict_n_list(each, target, matching_parameter)
-            for each in data
-        ]
+        list_data = [keep_keys_from_dict_n_list(each, target, matching_parameter) for each in data]
         return list_data
     if isinstance(data, dict):
         keep = {}
@@ -53,9 +52,7 @@ def keep_keys_from_dict_n_list(data, target, matching_parameter):
                         if k == key:
                             keep[k], match = val, True
                 else:
-                    list_data = keep_keys_from_dict_n_list(
-                        val, target, matching_parameter
-                    )
+                    list_data = keep_keys_from_dict_n_list(val, target, matching_parameter)
                     if isinstance(list_data, list) and not match:
                         list_data = [r for r in list_data if r not in ([], {})]
                         if all(isinstance(s, str) for s in list_data):

@@ -5,18 +5,20 @@
 
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 import re
+
 from importlib import import_module
-from ansible.plugins.action import ActionBase
+
 from ansible.module_utils._text import to_native
-from ansible_collections.ansible.utils.plugins.modules.fact_diff import (
-    DOCUMENTATION,
-)
+from ansible.plugins.action import ActionBase
+
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     AnsibleArgSpecValidator,
 )
+from ansible_collections.ansible.utils.plugins.modules.fact_diff import DOCUMENTATION
 
 
 class ActionModule(ActionBase):
@@ -69,8 +71,10 @@ class ActionModule(ActionBase):
             return None
         cref = dict(zip(["corg", "cname", "plugin"], plugin.split(".")))
         cref.update(directory=directory)
-        parserlib = "ansible_collections.{corg}.{cname}.plugins.sub_plugins.{directory}.{plugin}".format(
-            **cref
+        parserlib = (
+            "ansible_collections.{corg}.{cname}.plugins.sub_plugins.{directory}.{plugin}".format(
+                **cref
+            )
         )
         try:
             class_obj = getattr(import_module(parserlib), class_name)
@@ -82,9 +86,7 @@ class ActionModule(ActionBase):
             return class_instance
         except Exception as exc:
             self._result["failed"] = True
-            self._result[
-                "msg"
-            ] = "Error loading plugin '{plugin}': {err}".format(
+            self._result["msg"] = "Error loading plugin '{plugin}': {err}".format(
                 plugin=plugin, err=to_native(exc)
             )
             return None
@@ -116,9 +118,7 @@ class ActionModule(ActionBase):
             return self._result
 
         self._plugin = self._task.args["plugin"]["name"]
-        plugin_instance = self._load_plugin(
-            self._plugin, "fact_diff", "FactDiff"
-        )
+        plugin_instance = self._load_plugin(self._plugin, "fact_diff", "FactDiff")
         if self._result.get("failed"):
             return self._result
 

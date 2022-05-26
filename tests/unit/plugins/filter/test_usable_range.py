@@ -9,13 +9,15 @@ Unit test file for usable_range filter plugin
 
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 import unittest
+
 from ansible.errors import AnsibleError
-from ansible_collections.ansible.utils.plugins.filter.usable_range import (
-    _usable_range,
-)
+
+from ansible_collections.ansible.utils.plugins.filter.usable_range import _usable_range
+
 
 INVALID_DATA_1 = [
     "helloworld",

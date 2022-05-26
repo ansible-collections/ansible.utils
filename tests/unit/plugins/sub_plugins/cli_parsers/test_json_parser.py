@@ -3,14 +3,13 @@
 
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 import json
 
+from ansible_collections.ansible.utils.plugins.sub_plugins.cli_parser.json_parser import CliParser
 from ansible_collections.ansible.utils.tests.unit.compat import unittest
-from ansible_collections.ansible.utils.plugins.sub_plugins.cli_parser.json_parser import (
-    CliParser,
-)
 
 
 class TestJsonParser(unittest.TestCase):

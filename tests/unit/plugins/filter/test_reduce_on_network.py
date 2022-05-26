@@ -9,13 +9,14 @@ Unit test file for reduce_on_network filter plugin
 
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 import unittest
+
 from ansible.errors import AnsibleError
-from ansible_collections.ansible.utils.plugins.filter.reduce_on_network import (
-    _reduce_on_network,
-)
+
+from ansible_collections.ansible.utils.plugins.filter.reduce_on_network import _reduce_on_network
 
 
 class Test_reduce_on_network(unittest.TestCase):
@@ -30,9 +31,7 @@ class Test_reduce_on_network(unittest.TestCase):
         kwargs = {}
         with self.assertRaises(AnsibleError) as error:
             _reduce_on_network(*args, **kwargs)
-        self.assertIn(
-            "missing required arguments: value", str(error.exception)
-        )
+        self.assertIn("missing required arguments: value", str(error.exception))
 
     def test_reduce_on_network_filter_1(self):
         """reduce_on_network filter"""

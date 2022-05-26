@@ -9,16 +9,20 @@ The utils file for all netaddr tests
 
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
+from functools import wraps
+
+from ansible import errors
 from ansible.errors import AnsibleError
 from ansible.module_utils.basic import missing_required_lib
 from ansible.module_utils.six import ensure_text
-from functools import wraps
+
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     check_argspec,
 )
-from ansible import errors
+
 
 try:
     import ipaddress
@@ -71,9 +75,7 @@ def _is_subnet_of(network_a, network_b):
 def _validate_args(plugin, doc, params):
     """argspec validator utility function"""
 
-    valid, argspec_result, updated_params = check_argspec(
-        doc, plugin + " test", **params
-    )
+    valid, argspec_result, updated_params = check_argspec(doc, plugin + " test", **params)
 
     if not valid:
         raise AnsibleError(
@@ -86,6 +88,5 @@ def _validate_args(plugin, doc, params):
 
 def _need_netaddr(f_name, *args, **kwargs):
     raise errors.AnsibleFilterError(
-        "The %s filter requires python's netaddr be "
-        "installed on the ansible controller" % f_name
+        "The %s filter requires python's netaddr be " "installed on the ansible controller" % f_name
     )

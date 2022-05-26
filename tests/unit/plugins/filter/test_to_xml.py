@@ -5,19 +5,20 @@
 
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 import unittest
-from ansible.errors import AnsibleError
-from ansible.errors import AnsibleFilterError
+
+from ansible.errors import AnsibleError, AnsibleFilterError
+
 from ansible_collections.ansible.utils.plugins.filter.to_xml import _to_xml
+
 
 INVALID_DATA = '<netconf-state xmlns="urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring">'
 
 VALID_DATA = {
-    "interface-configurations": {
-        "@xmlns": "http://cisco.com/ns/yang/Cisco-IOS-XR-ifmgr-cfg"
-    }
+    "interface-configurations": {"@xmlns": "http://cisco.com/ns/yang/Cisco-IOS-XR-ifmgr-cfg"}
 }
 
 OUTPUT = """<?xml version="1.0" encoding="utf-8"?>
@@ -36,9 +37,7 @@ class TestToXml(unittest.TestCase):
         kwargs = {}
         with self.assertRaises(AnsibleError) as error:
             _to_xml(*args, **kwargs)
-        self.assertIn(
-            "we were unable to convert to dict", str(error.exception)
-        )
+        self.assertIn("we were unable to convert to dict", str(error.exception))
 
     def test_valid_data(self):
         """Check passing valid data as per criteria"""

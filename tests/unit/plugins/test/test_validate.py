@@ -5,12 +5,15 @@
 
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 import unittest
 
 from ansible.errors import AnsibleError
+
 from ansible_collections.ansible.utils.plugins.test.validate import validate
+
 
 DATA = {
     "GigabitEthernet0/0/0/0": {
@@ -51,11 +54,7 @@ CRITERIA_CRC_ERROR_CHECK = {
         "^.*": {
             "type": "object",
             "properties": {
-                "counters": {
-                    "properties": {
-                        "in_crc_errors": {"type": "number", "maximum": 0}
-                    }
-                }
+                "counters": {"properties": {"in_crc_errors": {"type": "number", "maximum": 0}}}
             },
         }
     },
@@ -63,9 +62,7 @@ CRITERIA_CRC_ERROR_CHECK = {
 
 CRITERIA_ENABLED_CHECK = {
     "type": "object",
-    "patternProperties": {
-        "^.*": {"type": "object", "properties": {"enabled": {"enum": [True]}}}
-    },
+    "patternProperties": {"^.*": {"type": "object", "properties": {"enabled": {"enum": [True]}}}},
 }
 
 CRITERIA_OPER_STATUS_UP_CHECK = {
@@ -86,11 +83,7 @@ CRITERIA_IN_RATE_CHECK = {
             "properties": {
                 "counters": {
                     "properties": {
-                        "rate": {
-                            "properties": {
-                                "in_rate": {"type": "number", "maximum": 0}
-                            }
-                        }
+                        "rate": {"properties": {"in_rate": {"type": "number", "maximum": 0}}}
                     }
                 }
             },
@@ -141,9 +134,7 @@ class TestValidate(unittest.TestCase):
         }
         with self.assertRaises(AnsibleError) as error:
             validate(*args, **kwargs)
-        self.assertIn(
-            "'criteria' option value is invalid", str(error.exception)
-        )
+        self.assertIn("'criteria' option value is invalid", str(error.exception))
 
     def test_invalid_validate_plugin_config_options(self):
         """Check passing invalid validate plugin options"""

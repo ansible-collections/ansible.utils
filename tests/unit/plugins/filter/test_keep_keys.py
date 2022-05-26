@@ -5,13 +5,14 @@
 
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 import unittest
+
 from ansible.errors import AnsibleFilterError
-from ansible_collections.ansible.utils.plugins.filter.keep_keys import (
-    _keep_keys,
-)
+
+from ansible_collections.ansible.utils.plugins.filter.keep_keys import _keep_keys
 
 
 class TestKeepKeys(unittest.TestCase):
@@ -228,6 +229,4 @@ class TestKeepKeys(unittest.TestCase):
         args = ["", "string data", target]
         with self.assertRaises(AnsibleFilterError) as error:
             _keep_keys(*args)
-        self.assertIn(
-            "Error when using plugin 'keep_keys'", str(error.exception)
-        )
+        self.assertIn("Error when using plugin 'keep_keys'", str(error.exception))

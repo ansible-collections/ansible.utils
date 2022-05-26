@@ -9,12 +9,12 @@ Unit test file for network_in_usable filter plugin
 
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 import unittest
-from ansible_collections.ansible.utils.plugins.filter.network_in_usable import (
-    _network_in_usable,
-)
+
+from ansible_collections.ansible.utils.plugins.filter.network_in_usable import _network_in_usable
 
 
 class Test_Network_In_Usable(unittest.TestCase):

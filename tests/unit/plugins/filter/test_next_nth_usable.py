@@ -9,12 +9,12 @@ Unit test file for ipwrap filter plugin
 
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 import unittest
-from ansible_collections.ansible.utils.plugins.filter.next_nth_usable import (
-    _next_nth_usable,
-)
+
+from ansible_collections.ansible.utils.plugins.filter.next_nth_usable import _next_nth_usable
 
 
 class Test_Next_Nth_Usable(unittest.TestCase):

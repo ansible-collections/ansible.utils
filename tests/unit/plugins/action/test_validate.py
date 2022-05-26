@@ -5,16 +5,17 @@
 
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 import unittest
+
+from ansible.errors import AnsibleActionFail
 from ansible.playbook.task import Task
 from ansible.template import Templar
-from ansible.errors import AnsibleActionFail
 
-from ansible_collections.ansible.utils.plugins.action.validate import (
-    ActionModule,
-)
+from ansible_collections.ansible.utils.plugins.action.validate import ActionModule
+
 
 try:
     from unittest.mock import MagicMock  # pylint:disable=syntax-error
@@ -61,11 +62,7 @@ CRITERIA_CRC_ERROR_CHECK = {
         "^.*": {
             "type": "object",
             "properties": {
-                "counters": {
-                    "properties": {
-                        "in_crc_errors": {"type": "number", "maximum": 0}
-                    }
-                }
+                "counters": {"properties": {"in_crc_errors": {"type": "number", "maximum": 0}}}
             },
         }
     },
@@ -73,9 +70,7 @@ CRITERIA_CRC_ERROR_CHECK = {
 
 CRITERIA_ENABLED_CHECK = {
     "type": "object",
-    "patternProperties": {
-        "^.*": {"type": "object", "properties": {"enabled": {"enum": [True]}}}
-    },
+    "patternProperties": {"^.*": {"type": "object", "properties": {"enabled": {"enum": [True]}}}},
 }
 
 CRITERIA_OPER_STATUS_UP_CHECK = {
@@ -96,11 +91,7 @@ CRITERIA_IN_RATE_CHECK = {
             "properties": {
                 "counters": {
                     "properties": {
-                        "rate": {
-                            "properties": {
-                                "in_rate": {"type": "number", "maximum": 0}
-                            }
-                        }
+                        "rate": {"properties": {"in_rate": {"type": "number", "maximum": 0}}}
                     }
                 }
             },
@@ -182,9 +173,7 @@ class TestValidate(unittest.TestCase):
 
         with self.assertRaises(AnsibleActionFail) as error:
             self._plugin.run(task_vars=None)
-        self.assertIn(
-            "'criteria' option value is invalid", str(error.exception)
-        )
+        self.assertIn("'criteria' option value is invalid", str(error.exception))
 
     def test_invalid_validate_plugin_config_options(self):
         """Check passing invalid validate plugin options"""
@@ -195,9 +184,7 @@ class TestValidate(unittest.TestCase):
             "criteria": CRITERIA_IN_RATE_CHECK,
         }
 
-        result = self._plugin.run(
-            task_vars={"ansible_validate_jsonschema_draft": "draft0"}
-        )
+        result = self._plugin.run(task_vars={"ansible_validate_jsonschema_draft": "draft0"})
         self.assertIn(
             "value of draft must be one of: draft3, draft4, draft6, draft7, got: draft0",
             result["msg"],
@@ -212,9 +199,7 @@ class TestValidate(unittest.TestCase):
             "criteria": CRITERIA_IN_RATE_CHECK,
         }
 
-        result = self._plugin.run(
-            task_vars={"ansible_validate_jsonschema_draft": "draft3"}
-        )
+        result = self._plugin.run(task_vars={"ansible_validate_jsonschema_draft": "draft3"})
         self.assertIn("All checks passed", result["msg"])
 
     def test_validate_plugin_config_options_with_draft4(self):
@@ -226,9 +211,7 @@ class TestValidate(unittest.TestCase):
             "criteria": CRITERIA_IN_RATE_CHECK,
         }
 
-        result = self._plugin.run(
-            task_vars={"ansible_validate_jsonschema_draft": "draft4"}
-        )
+        result = self._plugin.run(task_vars={"ansible_validate_jsonschema_draft": "draft4"})
         self.assertIn("All checks passed", result["msg"])
 
     def test_validate_plugin_config_options_with_draft6(self):
@@ -240,9 +223,7 @@ class TestValidate(unittest.TestCase):
             "criteria": CRITERIA_IN_RATE_CHECK,
         }
 
-        result = self._plugin.run(
-            task_vars={"ansible_validate_jsonschema_draft": "draft6"}
-        )
+        result = self._plugin.run(task_vars={"ansible_validate_jsonschema_draft": "draft6"})
         self.assertIn("All checks passed", result["msg"])
 
     def test_invalid_data(self):
@@ -263,9 +244,7 @@ class TestValidate(unittest.TestCase):
             "patternProperties.^.*.properties.counters.properties.in_crc_errors.maximum",
             result["msg"],
         )
-        self.assertIn(
-            "patternProperties.^.*.properties.enabled.enum", result["msg"]
-        )
+        self.assertIn("patternProperties.^.*.properties.enabled.enum", result["msg"])
         self.assertIn(
             "'patternProperties.^.*.properties.oper_status.pattern",
             result["msg"],

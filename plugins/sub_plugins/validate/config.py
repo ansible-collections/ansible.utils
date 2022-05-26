@@ -5,6 +5,7 @@
 
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 DOCUMENTATION = """
@@ -47,17 +48,13 @@ EXAMPLES = r"""
 
 import re
 
-from ansible.module_utils._text import to_text
 from ansible.errors import AnsibleError
+from ansible.module_utils._text import to_text
 from ansible.module_utils.six import string_types
 
-from ansible_collections.ansible.utils.plugins.plugin_utils.base.validate import (
-    ValidateBase,
-)
+from ansible_collections.ansible.utils.plugins.module_utils.common.utils import to_list
+from ansible_collections.ansible.utils.plugins.plugin_utils.base.validate import ValidateBase
 
-from ansible_collections.ansible.utils.plugins.module_utils.common.utils import (
-    to_list,
-)
 
 try:
     import yaml
@@ -90,9 +87,7 @@ class Validate(ValidateBase):
 
         try:
             if isinstance(self._criteria, string_types):
-                self._criteria = yaml.load(
-                    str(self._criteria), Loader=SafeLoader
-                )
+                self._criteria = yaml.load(str(self._criteria), Loader=SafeLoader)
         except yaml.parser.ParserError as exc:
             msg = (
                 "'criteria' option value is invalid, value should be valid YAML."
@@ -105,31 +100,21 @@ class Validate(ValidateBase):
         issues = []
         for item in to_list(self._criteria):
             if "name" not in item:
-                issues.append(
-                    'Criteria {item} missing "name" key'.format(item=item)
-                )
+                issues.append('Criteria {item} missing "name" key'.format(item=item))
             if "action" not in item:
-                issues.append(
-                    'Criteria {item} missing "action" key'.format(item=item)
-                )
+                issues.append('Criteria {item} missing "action" key'.format(item=item))
             elif item["action"] not in ("warn", "fail"):
                 issues.append(
-                    'Action in criteria {item} is not one of "warn" or "fail"'.format(
-                        item=item
-                    )
+                    'Action in criteria {item} is not one of "warn" or "fail"'.format(item=item)
                 )
             if "rule" not in item:
-                issues.append(
-                    'Criteria {item} missing "rule" key'.format(item=item)
-                )
+                issues.append('Criteria {item} missing "rule" key'.format(item=item))
             else:
                 try:
                     item["rule"] = re.compile(item["rule"])
                 except re.error as exc:
                     issues.append(
-                        'Failed to compile regex "{rule}": {exc}'.format(
-                            rule=item["rule"], exc=exc
-                        )
+                        'Failed to compile regex "{rule}": {exc}'.format(rule=item["rule"], exc=exc)
                     )
 
         if issues:
@@ -168,16 +153,10 @@ class Validate(ValidateBase):
                 match = criteria["rule"].search(line)
                 if match:
                     if criteria["action"] == "warn":
-                        warnings.append(
-                            format_message(match, line_number, criteria)
-                        )
+                        warnings.append(format_message(match, line_number, criteria))
                     if criteria["action"] == "fail":
-                        errors.append(
-                            {"message": criteria["name"], "found": line}
-                        )
-                        error_messages.append(
-                            format_message(match, line_number, criteria)
-                        )
+                        errors.append({"message": criteria["name"], "found": line})
+                        error_messages.append(format_message(match, line_number, criteria))
 
         if errors:
             if "errors" not in self._result:

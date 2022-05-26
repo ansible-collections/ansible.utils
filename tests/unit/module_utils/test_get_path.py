@@ -6,15 +6,14 @@
 
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 import unittest
-from ansible_collections.ansible.utils.plugins.module_utils.common.get_path import (
-    get_path,
-)
-
 
 from ansible.template import Templar
+
+from ansible_collections.ansible.utils.plugins.module_utils.common.get_path import get_path
 
 
 class TestGetPath(unittest.TestCase):
@@ -24,18 +23,14 @@ class TestGetPath(unittest.TestCase):
     def test_get_path_pass(self):
         var = {"a": {"b": {"c": {"d": [0, 1]}}}}
         path = "a.b.c.d[0]"
-        result = get_path(
-            var, path, environment=self._environment, wantlist=False
-        )
+        result = get_path(var, path, environment=self._environment, wantlist=False)
         expected = "0"
         self.assertEqual(result, expected)
 
     def test_get_path_pass_wantlist(self):
         var = {"a": {"b": {"c": {"d": [0, 1]}}}}
         path = "a.b.c.d[0]"
-        result = get_path(
-            var, path, environment=self._environment, wantlist=True
-        )
+        result = get_path(var, path, environment=self._environment, wantlist=True)
         expected = ["0"]
         self.assertEqual(result, expected)
 

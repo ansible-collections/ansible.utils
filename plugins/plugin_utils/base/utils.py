@@ -9,9 +9,11 @@ The utils file for all netaddr tests
 
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 from ansible.errors import AnsibleError
+
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     check_argspec,
 )
@@ -20,9 +22,7 @@ from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_valid
 def _validate_args(plugin, doc, params):
     """argspec validator utility function"""
 
-    valid, argspec_result, updated_params = check_argspec(
-        doc, plugin + " test", **params
-    )
+    valid, argspec_result, updated_params = check_argspec(doc, plugin + " test", **params)
 
     if not valid:
         raise AnsibleError(

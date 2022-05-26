@@ -9,6 +9,7 @@ The index_of lookup plugin
 """
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 
@@ -319,12 +320,11 @@ RETURN = """
 
 from ansible.errors import AnsibleLookupError
 from ansible.plugins.lookup import LookupBase
-from ansible_collections.ansible.utils.plugins.module_utils.common.index_of import (
-    index_of,
-)
+
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     AnsibleArgSpecValidator,
 )
+from ansible_collections.ansible.utils.plugins.module_utils.common.index_of import index_of
 
 
 class LookupModule(LookupBase):
@@ -341,12 +341,8 @@ class LookupModule(LookupBase):
             terms = dict(zip(keys, terms))
         terms.update(kwargs)
 
-        schema = [
-            v for k, v in globals().items() if k.lower() == "documentation"
-        ]
-        aav = AnsibleArgSpecValidator(
-            data=terms, schema=schema[0], name="index_of"
-        )
+        schema = [v for k, v in globals().items() if k.lower() == "documentation"]
+        aav = AnsibleArgSpecValidator(data=terms, schema=schema[0], name="index_of")
         valid, errors, updated_data = aav.validate()
         if not valid:
             raise AnsibleLookupError(errors)

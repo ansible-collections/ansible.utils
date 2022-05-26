@@ -5,6 +5,7 @@
 
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 from copy import deepcopy
@@ -21,9 +22,7 @@ def sort_list(val):
             if len(set(sorted_keys)) != 1:
                 raise ValueError("dictionaries do not match")
 
-            return sorted(
-                val, key=lambda d: tuple(d[k] for k in sorted_keys[0])
-            )
+            return sorted(val, key=lambda d: tuple(d[k] for k in sorted_keys[0]))
         return sorted(val)
     return val
 

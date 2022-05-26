@@ -8,12 +8,14 @@ Test plugin file for netaddr tests: subnet_of
 """
 
 from __future__ import absolute_import, division, print_function
+
 from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddress_utils import (
-    ip_network,
-    _need_ipaddress,
     _is_subnet_of,
+    _need_ipaddress,
     _validate_args,
+    ip_network,
 )
+
 
 __metaclass__ = type
 

@@ -3,25 +3,25 @@
 
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 import os
 
 import pytest
 
-from ansible_collections.ansible.utils.tests.unit.compat import unittest
 from ansible_collections.ansible.utils.plugins.sub_plugins.cli_parser.textfsm_parser import (
     CliParser,
 )
+from ansible_collections.ansible.utils.tests.unit.compat import unittest
+
 
 textfsm = pytest.importorskip("textfsm")
 
 
 class TestTextfsmParser(unittest.TestCase):
     def test_textfsm_parser(self):
-        nxos_cfg_path = os.path.join(
-            os.path.dirname(__file__), "fixtures", "nxos_show_version.cfg"
-        )
+        nxos_cfg_path = os.path.join(os.path.dirname(__file__), "fixtures", "nxos_show_version.cfg")
         nxos_template_path = os.path.join(
             os.path.dirname(__file__), "fixtures", "nxos_show_version.textfsm"
         )
@@ -63,9 +63,5 @@ class TestTextfsmParser(unittest.TestCase):
         }
         parser = CliParser(task_args=task_args, task_vars=[], debug=False)
         result = parser.parse()
-        errors = {
-            "errors": "error while reading template_path file {0}".format(
-                fake_path
-            )
-        }
+        errors = {"errors": "error while reading template_path file {0}".format(fake_path)}
         self.assertEqual(result, errors)
