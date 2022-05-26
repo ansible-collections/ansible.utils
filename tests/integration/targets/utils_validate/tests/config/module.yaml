@@ -1,20 +1,20 @@
 ---
 - name: Set up data and criteria
   ansible.builtin.set_fact:
-   fail_config: "{{ lookup('ansible.builtin.file', 'data/fail.cfg') }}"
-   warn_config: "{{ lookup('ansible.builtin.file', 'data/warn.cfg') }}"
-   pass_config: "{{ lookup('ansible.builtin.file', 'data/pass.cfg') }}"
-   rules: "{{ lookup('ansible.builtin.file', 'criteria/rules.yaml') }}"
-   bad_rules:
-     - name: Invalid action
-       action: flunge
-       rule: Flunge it!
-     - name: No action
-       rule: Rule
-     - name: No rule
-       action: fail
-     - rule: No name
-       action: fail
+    fail_config: "{{ lookup('ansible.builtin.file', 'data/fail.cfg') }}"
+    warn_config: "{{ lookup('ansible.builtin.file', 'data/warn.cfg') }}"
+    pass_config: "{{ lookup('ansible.builtin.file', 'data/pass.cfg') }}"
+    rules: "{{ lookup('ansible.builtin.file', 'criteria/rules.yaml') }}"
+    bad_rules:
+      - name: Invalid action
+        action: flunge
+        rule: Flunge it!
+      - name: No action
+        rule: Rule
+      - name: No rule
+        action: fail
+      - rule: No name
+        action: fail
 
 - name: validate configuration using config (with errors)
   ansible.utils.validate:

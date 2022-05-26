@@ -19,7 +19,6 @@
   vars:
     msg: "'5' is not a valid boolean"
 
-
 - name: Check argspec validation with lookup
   ansible.builtin.set_fact:
     _result: "{{ lookup('ansible.utils.to_paths') }}"

@@ -6,7 +6,7 @@
     recurse: false
     use_regex: true
     patterns:
-      - '^(?!_|main).+$'
+      - "^(?!_|main).+$"
   delegate_to: localhost
   register: found
 
