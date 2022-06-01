@@ -143,7 +143,7 @@ class FilterModule(object):
 
     filter_map = {
         # IP addresses and networks
-        "next_nth_usable": _next_nth_usable
+        "next_nth_usable": _next_nth_usable,
     }
 
     def filters(self):

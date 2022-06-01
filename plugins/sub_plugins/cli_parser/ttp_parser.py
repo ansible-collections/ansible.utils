@@ -98,7 +98,9 @@ class CliParser(CliParserBase):
         )
         if template_path and not os.path.isfile(template_path):
             return {
-                "errors": "error while reading template_path file {file}".format(file=template_path)
+                "errors": "error while reading template_path file {file}".format(
+                    file=template_path,
+                ),
             }
 
         try:

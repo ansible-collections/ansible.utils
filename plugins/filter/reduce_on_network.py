@@ -141,7 +141,7 @@ class FilterModule(object):
 
     filter_map = {
         # IP addresses and networks
-        "reduce_on_network": _reduce_on_network
+        "reduce_on_network": _reduce_on_network,
     }
 
     def filters(self):

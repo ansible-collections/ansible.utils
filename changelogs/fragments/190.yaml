@@ -1,0 +1,3 @@
+---
+trivial:
+  - Add trailing comma support to pre-commit

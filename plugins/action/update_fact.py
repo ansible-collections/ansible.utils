@@ -35,7 +35,9 @@ class ActionModule(ActionBase):
 
     def _check_argspec(self):
         aav = AnsibleArgSpecValidator(
-            data=self._task.args, schema=DOCUMENTATION, name=self._task.action
+            data=self._task.args,
+            schema=DOCUMENTATION,
+            name=self._task.action,
         )
         valid, errors, self._task.args = aav.validate()
         if not valid:
@@ -117,7 +119,8 @@ class ActionModule(ActionBase):
                 new_obj = obj[first]
             except (KeyError, TypeError):
                 msg = "Error: the key '{first}' was not found " "in {obj}.".format(
-                    obj=obj, first=first
+                    obj=obj,
+                    first=first,
                 )
                 raise AnsibleActionFail(msg)
             self.set_value(new_obj, rest, val)
@@ -135,7 +138,8 @@ class ActionModule(ActionBase):
                     raise AnsibleActionFail(msg)
                 if first > len(obj):
                     msg = "Error: {obj} not long enough for item #{first} to be set.".format(
-                        obj=obj, first=first
+                        obj=obj,
+                        first=first,
                     )
                     raise AnsibleActionFail(msg)
                 if first == len(obj):

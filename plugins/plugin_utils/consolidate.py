@@ -60,7 +60,7 @@ def fail_on_filter(validator_func):
                 err.get("fail_missing_match_key"),
                 err.get("fail_duplicate"),
                 err.get("fail_missing_match_value"),
-            ]
+            ],
         ):
             _raise_error(err)
         return res
@@ -92,14 +92,16 @@ def check_missing_match_key_duplicate(data_sources, fail_missing_match_key, fail
                 if fail_missing_match_key:
                     errors_match_key.append(
                         "missing match key '{match_key}' in data source {ds_idx} in list entry {dd_idx}".format(
-                            match_key=match_key, ds_idx=ds_idx, dd_idx=dd_idx
-                        )
+                            match_key=match_key,
+                            ds_idx=ds_idx,
+                            dd_idx=dd_idx,
+                        ),
                     )
                 continue
 
         if sorted(set(ds_values)) != sorted(ds_values) and fail_duplicate:
             errors_duplicate.append(
-                "duplicate values in data source {ds_idx}".format(ds_idx=ds_idx)
+                "duplicate values in data source {ds_idx}".format(ds_idx=ds_idx),
             )
         results.append(set(ds_values))
     return results, {
@@ -128,8 +130,9 @@ def check_missing_match_values(matched_keys, fail_missing_match_value):
             m_matches = ", ".join(missing_match)
             errors_match_values.append(
                 "missing match value {m_matches} in data source {ds_idx}".format(
-                    ds_idx=ds_idx, m_matches=m_matches
-                )
+                    ds_idx=ds_idx,
+                    m_matches=m_matches,
+                ),
             )
     return all_values, {"fail_missing_match_value": errors_match_values}
 
@@ -176,7 +179,9 @@ def consolidate(
     """
 
     key_sets = check_missing_match_key_duplicate(
-        data_sources, fail_missing_match_key, fail_duplicate
+        data_sources,
+        fail_missing_match_key,
+        fail_duplicate,
     )
     key_vals = check_missing_match_values(key_sets, fail_missing_match_value)
     consolidated_facts = consolidate_facts(data_sources, key_vals)

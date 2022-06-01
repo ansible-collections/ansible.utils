@@ -92,7 +92,7 @@ class Validate(ValidateBase):
             msg = (
                 "'criteria' option value is invalid, value should be valid YAML."
                 " Failed to read with error '{err}'".format(
-                    err=to_text(exc, errors="surrogate_then_replace")
+                    err=to_text(exc, errors="surrogate_then_replace"),
                 )
             )
             raise AnsibleError(msg)
@@ -105,7 +105,7 @@ class Validate(ValidateBase):
                 issues.append('Criteria {item} missing "action" key'.format(item=item))
             elif item["action"] not in ("warn", "fail"):
                 issues.append(
-                    'Action in criteria {item} is not one of "warn" or "fail"'.format(item=item)
+                    'Action in criteria {item} is not one of "warn" or "fail"'.format(item=item),
                 )
             if "rule" not in item:
                 issues.append('Criteria {item} missing "rule" key'.format(item=item))
@@ -114,7 +114,10 @@ class Validate(ValidateBase):
                     item["rule"] = re.compile(item["rule"])
                 except re.error as exc:
                     issues.append(
-                        'Failed to compile regex "{rule}": {exc}'.format(rule=item["rule"], exc=exc)
+                        'Failed to compile regex "{rule}": {exc}'.format(
+                            rule=item["rule"],
+                            exc=exc,
+                        ),
                     )
 
         if issues:

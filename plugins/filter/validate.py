@@ -86,7 +86,7 @@ def validate(*args, **kwargs):
     if len(args) < 2:
         raise AnsibleFilterError(
             "Missing either 'data' or 'criteria' value in filter input,"
-            " refer 'ansible.utils.validate' filter plugin documentation for details"
+            " refer 'ansible.utils.validate' filter plugin documentation for details",
         )
 
     params = {"data": args[0], "criteria": args[1]}
@@ -101,7 +101,7 @@ def validate(*args, **kwargs):
             "{argspec_result} with errors: {argspec_errors}".format(
                 argspec_result=argspec_result.get("msg"),
                 argspec_errors=argspec_result.get("errors"),
-            )
+            ),
         )
 
     validator_engine, validator_result = _load_validator(
@@ -113,8 +113,8 @@ def validate(*args, **kwargs):
     if validator_result.get("failed"):
         raise AnsibleFilterError(
             "validate lookup plugin failed with errors: {msg}".format(
-                msg=validator_result.get("msg")
-            )
+                msg=validator_result.get("msg"),
+            ),
         )
 
     try:
@@ -126,7 +126,7 @@ def validate(*args, **kwargs):
             "Unhandled exception from validator '{validator}'. Error: {err}".format(
                 validator=updated_params["engine"],
                 err=to_text(exc, errors="surrogate_then_replace"),
-            )
+            ),
         )
 
     return to_list(result.get("errors", []))

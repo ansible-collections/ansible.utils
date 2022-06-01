@@ -143,7 +143,7 @@ class FilterModule(object):
 
     filter_map = {
         # IP addresses and networks
-        "nthhost": _nthhost
+        "nthhost": _nthhost,
     }
 
     def filters(self):

@@ -67,7 +67,7 @@ class ValidateBase(object):
                     err=to_text(exc, errors="surrogate_or_strict"),
                     engine=self._engine,
                     argspec=doc,
-                )
+                ),
             )
         options = argspec_obj.get("options", {})
 
@@ -98,7 +98,7 @@ class ValidateBase(object):
                             " should to be type dict".format(
                                 var_name_type=type(var_name_entry),
                                 var_name_entry=var_name_entry,
-                            )
+                            ),
                         )
                     var_name = var_name_entry.get("name")
                     if var_name and var_name in self._plugin_vars:
@@ -116,7 +116,7 @@ class ValidateBase(object):
                             " should to be type dict".format(
                                 env_name_entry_type=type(env_name_entry),
                                 env_name_entry=env_name_entry,
-                            )
+                            ),
                         )
                     env_name = env_name_entry.get("name")
                     if env_name in os.environ:
@@ -131,7 +131,7 @@ class ValidateBase(object):
                 "{argspec_result} with errors: {argspec_errors}".format(
                     argspec_result=argspec_result.get("msg"),
                     argspec_errors=argspec_result.get("errors"),
-                )
+                ),
             )
 
         if updated_params:
@@ -183,6 +183,7 @@ def _load_validator(engine, data, criteria, plugin_vars=None, cls_name="Validate
         result[
             "msg"
         ] = "For engine '{engine}' error loading the corresponding validate plugin: {err}".format(
-            engine=engine, err=to_native(exc)
+            engine=engine,
+            err=to_native(exc),
         )
         return None, result

@@ -172,7 +172,7 @@ def param_list_compare(*args, **kwargs):
     if len(data) < 2:
         raise AnsibleFilterError(
             "Missing either 'base' or 'other value in filter input,"
-            "refer 'ansible.utils.param_list_compare' filter plugin documentation for details"
+            "refer 'ansible.utils.param_list_compare' filter plugin documentation for details",
         )
 
     valid, argspec_result, updated_params = check_argspec(
@@ -183,7 +183,7 @@ def param_list_compare(*args, **kwargs):
             "{argspec_result} with errors: {argspec_errors}".format(
                 argspec_result=argspec_result.get("msg"),
                 argspec_errors=argspec_result.get("errors"),
-            )
+            ),
         )
     base = data["base"]
     other = data["target"]

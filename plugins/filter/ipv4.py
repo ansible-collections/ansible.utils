@@ -140,12 +140,15 @@ def _ipv4(*args, **kwargs):
             pass
         else:
             raise AnsibleError(
-                "Unrecognized type <{0}> for ipv4 filter <{1}>".format(type(data["value"]), "value")
+                "Unrecognized type <{0}> for ipv4 filter <{1}>".format(
+                    type(data["value"]),
+                    "value",
+                ),
             )
 
     except (TypeError, ValueError):
         raise AnsibleError(
-            "Unrecognized type <{0}> for ipv4 filter <{1}>".format(type(data["value"]), "value")
+            "Unrecognized type <{0}> for ipv4 filter <{1}>".format(type(data["value"]), "value"),
         )
     aav = AnsibleArgSpecValidator(data=data, schema=DOCUMENTATION, name="ipv4")
     valid, errors, updated_data = aav.validate()
@@ -163,7 +166,7 @@ class FilterModule(object):
 
     filter_map = {
         # IP addresses and networks
-        "ipv4": _ipv4
+        "ipv4": _ipv4,
     }
 
     def filters(self):

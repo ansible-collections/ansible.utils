@@ -21,7 +21,9 @@ class TestTextfsmParser(unittest.TestCase):
     def test_ttp_parser(self):
         nxos_cfg_path = os.path.join(os.path.dirname(__file__), "fixtures", "nxos_show_version.cfg")
         nxos_template_path = os.path.join(
-            os.path.dirname(__file__), "fixtures", "nxos_show_version.ttp"
+            os.path.dirname(__file__),
+            "fixtures",
+            "nxos_show_version.ttp",
         )
 
         with open(nxos_cfg_path) as fhand:
@@ -45,7 +47,7 @@ class TestTextfsmParser(unittest.TestCase):
                 "os": "7.0(3)I7(1)",
                 "platform": "9000v",
                 "uptime": "12 day(s), 23 hour(s), 48 minute(s), 10 second(s)",
-            }
+            },
         ]
         self.assertEqual(result["parsed"][0][0], parsed_output)
 

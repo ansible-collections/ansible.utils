@@ -67,7 +67,7 @@ def test_invalid_action(validator, test_rule):
         error = to_text(exc)
 
     expected_error = 'Action in criteria {item} is not one of "warn" or "fail"'.format(
-        item=original
+        item=original,
     )
     assert error == expected_error
 

@@ -153,7 +153,7 @@ class FilterModule(object):
 
     filter_map = {
         # IP addresses and networks
-        "network_in_usable": _network_in_usable
+        "network_in_usable": _network_in_usable,
     }
 
     def filters(self):

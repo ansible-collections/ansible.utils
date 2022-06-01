@@ -48,7 +48,9 @@ class ActionModule(ActionBase):
         :type msg: str
         """
         msg = "<{phost}> [fact_diff][{plugin}] {msg}".format(
-            phost=self._playhost, plugin=self._plugin, msg=msg
+            phost=self._playhost,
+            plugin=self._plugin,
+            msg=msg,
         )
         self._display.vvvv(msg)
 
@@ -87,7 +89,8 @@ class ActionModule(ActionBase):
         except Exception as exc:
             self._result["failed"] = True
             self._result["msg"] = "Error loading plugin '{plugin}': {err}".format(
-                plugin=plugin, err=to_native(exc)
+                plugin=plugin,
+                err=to_native(exc),
             )
             return None
 
@@ -101,7 +104,8 @@ class ActionModule(ActionBase):
 
         except Exception as exc:
             msg = "Unhandled exception from plugin '{plugin}'. Error: {err}".format(
-                plugin=self._task.args["plugin"]["name"], err=to_native(exc)
+                plugin=self._task.args["plugin"]["name"],
+                err=to_native(exc),
             )
             self._result["failed"] = True
             self._result["msg"] = msg
@@ -134,6 +138,6 @@ class ActionModule(ActionBase):
                 "changed": bool(result["diff"]),
                 "diff_lines": diff_text.splitlines(),
                 "diff_text": diff_text,
-            }
+            },
         )
         return self._result

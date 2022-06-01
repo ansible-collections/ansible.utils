@@ -118,7 +118,7 @@ class FilterModule(object):
 
     filter_map = {
         # IP addresses and networks
-        "hwaddr": _hwaddr
+        "hwaddr": _hwaddr,
     }
 
     def filters(self):

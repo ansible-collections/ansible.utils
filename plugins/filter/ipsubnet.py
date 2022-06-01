@@ -327,7 +327,7 @@ class FilterModule(object):
 
     filter_map = {
         # IP addresses and networks
-        "ipsubnet": _ipsubnet
+        "ipsubnet": _ipsubnet,
     }
 
     def filters(self):

@@ -82,11 +82,12 @@ def _validate_args(plugin, doc, params):
             "{argspec_result} with errors: {argspec_errors}".format(
                 argspec_result=argspec_result.get("msg"),
                 argspec_errors=argspec_result.get("errors"),
-            )
+            ),
         )
 
 
 def _need_netaddr(f_name, *args, **kwargs):
     raise errors.AnsibleFilterError(
-        "The %s filter requires python's netaddr be " "installed on the ansible controller" % f_name
+        "The %s filter requires python's netaddr be "
+        "installed on the ansible controller" % f_name,
     )

@@ -186,8 +186,8 @@ class ActionModule(ActionBase):
                     oper_sys = self._task_vars.get(hvar, "").split(".")[-1]
                     self._debug(
                         "OS set to {os}, derived from ansible_network_os".format(
-                            os=oper_sys.lower()
-                        )
+                            os=oper_sys.lower(),
+                        ),
                     )
                 else:
                     oper_sys = self._task_vars.get(hvar)
@@ -225,15 +225,17 @@ class ActionModule(ActionBase):
                 with open(template_path, "rb") as file_handler:
                     try:
                         template_contents = to_text(
-                            file_handler.read(), errors="surrogate_or_strict"
+                            file_handler.read(),
+                            errors="surrogate_or_strict",
                         )
                     except UnicodeError:
                         raise AnsibleActionFail("Template source files must be utf-8 encoded")
             except FileNotFoundError as exc:
                 raise AnsibleActionFail(
                     "Failed to open template '{tpath}'. Error: {err}".format(
-                        tpath=template_path, err=to_native(exc)
-                    )
+                        tpath=template_path,
+                        err=to_native(exc),
+                    ),
                 )
         return template_contents
 
@@ -330,8 +332,9 @@ class ActionModule(ActionBase):
         except Exception as exc:
             raise AnsibleActionFail(
                 "Unhandled exception from parser '{parser}'. Error: {err}".format(
-                    parser=self._parser_name, err=to_native(exc)
-                )
+                    parser=self._parser_name,
+                    err=to_native(exc),
+                ),
             )
 
         if result.get("errors"):

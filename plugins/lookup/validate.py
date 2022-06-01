@@ -100,7 +100,7 @@ class LookupModule(LookupBase):
         if len(terms) < 2:
             raise AnsibleLookupError(
                 "missing either 'data' or 'criteria' value in lookup input,"
-                " refer ansible.utils.validate lookup plugin documentation for details"
+                " refer ansible.utils.validate lookup plugin documentation for details",
             )
 
         params = {"data": terms[0], "criteria": terms[1]}
@@ -119,7 +119,7 @@ class LookupModule(LookupBase):
                 "{argspec_result} with errors: {argspec_errors}".format(
                     argspec_result=argspec_result.get("msg"),
                     argspec_errors=argspec_result.get("errors"),
-                )
+                ),
             )
 
         validator_engine, validator_result = _load_validator(
@@ -132,8 +132,8 @@ class LookupModule(LookupBase):
         if validator_result.get("failed"):
             raise AnsibleLookupError(
                 "validate lookup plugin failed with errors: {validator_result}".format(
-                    validator_result=validator_result.get("msg")
-                )
+                    validator_result=validator_result.get("msg"),
+                ),
             )
 
         try:
@@ -145,7 +145,7 @@ class LookupModule(LookupBase):
                 "Unhandled exception from validator '{validator}'. Error: {err}".format(
                     validator=updated_params["engine"],
                     err=to_text(exc, errors="surrogate_then_replace"),
-                )
+                ),
             )
 
         return to_list(result.get("errors", []))

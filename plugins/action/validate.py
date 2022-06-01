@@ -84,7 +84,7 @@ class ActionModule(ActionBase):
                 "Unhandled exception from validator '{validator}'. Error: {err}".format(
                     validator=self._validator_engine,
                     err=to_text(exc, errors="surrogate_then_replace"),
-                )
+                ),
             )
 
         self._result["msg"] = ""

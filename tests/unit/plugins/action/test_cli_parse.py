@@ -91,7 +91,7 @@ class TestCli_Parse(unittest.TestCase):
             "parser": {
                 "name": "ansible.utils.textfsm",
                 "command": "show version",
-            }
+            },
         }
         valid, result, updated_params = check_argspec(
             DOCUMENTATION, "cli_parse module", schema_conditionals=ARGSPEC_CONDITIONALS, **kwargs
@@ -232,7 +232,7 @@ class TestCli_Parse(unittest.TestCase):
         name based on os provided in task
         """
         self._plugin._task.args = {
-            "parser": {"command": "a command", "name": "a.b.c", "os": "myos"}
+            "parser": {"command": "a command", "name": "a.b.c", "os": "myos"},
         }
         with self.assertRaises(Exception) as error:
             self._plugin._update_template_path("yaml")
@@ -247,7 +247,9 @@ class TestCli_Parse(unittest.TestCase):
         need to be in the default template folder
         """
         template_path = os.path.join(
-            os.path.dirname(__file__), "fixtures", "nxos_show_version.yaml"
+            os.path.dirname(__file__),
+            "fixtures",
+            "nxos_show_version.yaml",
         )
         self._plugin._find_needle = MagicMock()
         self._plugin._find_needle.return_value = template_path
@@ -348,7 +350,9 @@ class TestCli_Parse(unittest.TestCase):
         mock_rpc.return_value = mock_out
         self._plugin._connection.socket_path = tempfile.NamedTemporaryFile().name
         template_path = os.path.join(
-            os.path.dirname(__file__), "fixtures", "nxos_show_version.textfsm"
+            os.path.dirname(__file__),
+            "fixtures",
+            "nxos_show_version.textfsm",
         )
         self._plugin._task.args = {
             "command": "show version",
@@ -372,7 +376,9 @@ class TestCli_Parse(unittest.TestCase):
         mock_rpc.return_value = mock_out
         self._plugin._connection.socket_path = tempfile.NamedTemporaryFile().name
         template_path = os.path.join(
-            os.path.dirname(__file__), "fixtures", "nxos_show_version.textfsm"
+            os.path.dirname(__file__),
+            "fixtures",
+            "nxos_show_version.textfsm",
         )
         self._plugin._task.args = {
             "command": "show version",
@@ -453,7 +459,9 @@ class TestCli_Parse(unittest.TestCase):
 
         self._plugin._connection.socket_path = tempfile.NamedTemporaryFile().name
         template_path = os.path.join(
-            os.path.dirname(__file__), "fixtures", "nxos_empty_parser.textfsm"
+            os.path.dirname(__file__),
+            "fixtures",
+            "nxos_empty_parser.textfsm",
         )
         self._plugin._task.args = {
             "command": "show version",
@@ -487,7 +495,9 @@ class TestCli_Parse(unittest.TestCase):
 
         self._plugin._connection.socket_path = tempfile.NamedTemporaryFile().name
         template_path = os.path.join(
-            os.path.dirname(__file__), "fixtures", "nxos_empty_parser.textfsm"
+            os.path.dirname(__file__),
+            "fixtures",
+            "nxos_empty_parser.textfsm",
         )
         self._plugin._task.args = {
             "command": "show version",

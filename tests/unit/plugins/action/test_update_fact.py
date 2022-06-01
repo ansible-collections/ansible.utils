@@ -28,7 +28,7 @@ VALID_DATA = {
     "a": {
         "b": {"4.4": [{"1": {5: {"foo": 123}}}], 5.5: "float5.5"},
         "127.0.0.1": "localhost",
-    }
+    },
 }
 
 VALID_TESTS = [
@@ -159,7 +159,7 @@ class TestUpdate_Fact(unittest.TestCase):
                 {"path": "a.b1.3", "value": 4},
                 {"path": "a.b2.c", "value": 456},
                 {"path": "a.b2.d", "value": True},
-            ]
+            ],
         }
         result = self._plugin.run(task_vars=task_vars)
         self.assertEqual(result, expected)

@@ -87,7 +87,7 @@ class TestConsolidate(unittest.TestCase):
                                 "986",
                                 "988",
                                 "993",
-                            ]
+                            ],
                         },
                     },
                     {
@@ -195,7 +195,7 @@ class TestConsolidate(unittest.TestCase):
                             "986",
                             "988",
                             "993",
-                        ]
+                        ],
                     },
                 },
                 "l3_interfaces": {"name": "GigabitEthernet0/1"},
@@ -327,7 +327,7 @@ class TestConsolidate(unittest.TestCase):
                                 "986",
                                 "988",
                                 "993",
-                            ]
+                            ],
                         },
                     },
                     {
@@ -452,7 +452,7 @@ class TestConsolidate(unittest.TestCase):
                                 "986",
                                 "988",
                                 "993",
-                            ]
+                            ],
                         },
                     },
                     {

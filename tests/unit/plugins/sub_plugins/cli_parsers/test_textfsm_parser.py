@@ -23,7 +23,9 @@ class TestTextfsmParser(unittest.TestCase):
     def test_textfsm_parser(self):
         nxos_cfg_path = os.path.join(os.path.dirname(__file__), "fixtures", "nxos_show_version.cfg")
         nxos_template_path = os.path.join(
-            os.path.dirname(__file__), "fixtures", "nxos_show_version.textfsm"
+            os.path.dirname(__file__),
+            "fixtures",
+            "nxos_show_version.textfsm",
         )
 
         with open(nxos_cfg_path) as fhand:
@@ -47,7 +49,7 @@ class TestTextfsmParser(unittest.TestCase):
                 "OS": "7.0(3)I7(1)",
                 "PLATFORM": "9000v",
                 "UPTIME": "12 day(s), 23 hour(s), 48 minute(s), 10 second(s)",
-            }
+            },
         ]
         self.assertEqual(result, {"parsed": parsed_output})
 

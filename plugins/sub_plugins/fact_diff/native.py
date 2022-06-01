@@ -44,7 +44,8 @@ class FactDiff(FactDiffBase):
                     self._skip_lines[idx] = re.compile(regex)
                 except re.error as exc:
                     msg = "The regex '{regex}', is not valid. The error was {err}.".format(
-                        regex=regex, err=str(exc)
+                        regex=regex,
+                        err=str(exc),
                     )
                     self._errors.append(msg)
 

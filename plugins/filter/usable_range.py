@@ -173,7 +173,7 @@ def _usable_range(ip):
 
     except Exception as e:
         raise AnsibleFilterError(
-            "Error while using plugin 'usable_range': {msg}".format(msg=to_text(e))
+            "Error while using plugin 'usable_range': {msg}".format(msg=to_text(e)),
         )
 
     return {"usable_ips": ips, "number_of_ips": no_of_ips}
