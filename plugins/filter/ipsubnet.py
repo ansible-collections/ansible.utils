@@ -282,7 +282,7 @@ def ipsubnet(value, query="", index=None):
             elif vtype == "network":
                 if query - value.prefixlen < 0:
                     msg = "Requested subnet size of {0} is invalid".format(
-                        str(query)
+                        str(query),
                     )
                     raise AnsibleFilterError(msg)
                 return str(2 ** (query - value.prefixlen))
@@ -299,12 +299,12 @@ def ipsubnet(value, query="", index=None):
                 netaddr.IPNetwork(
                     str(
                         netaddr.IPAddress(
-                            value.network.value + (index << vtotalbits - query)
-                        )
+                            value.network.value + (index << vtotalbits - query),
+                        ),
                     )
                     + "/"
-                    + str(query)
-                )
+                    + str(query),
+                ),
             )
     else:
         vtype = ipaddr(query, "type")
@@ -314,7 +314,7 @@ def ipsubnet(value, query="", index=None):
             v = ipaddr(query, "subnet")
         else:
             msg = "You must pass a valid subnet or IP address; {0} is invalid".format(
-                str(query)
+                str(query),
             )
             raise AnsibleFilterError(msg)
         query = netaddr.IPNetwork(v)
@@ -331,7 +331,7 @@ def ipsubnet(value, query="", index=None):
                     )
                     >> (vtotalbits - value.prefixlen)
                 )
-                + 1
+                + 1,
             )
         msg = "{0} is not in the subnet {1}".format(value.cidr, query.cidr)
         raise AnsibleFilterError(msg)
