@@ -45,10 +45,10 @@ def to_xml(data, engine, indent, indent_width):
     :param indent_width: Indent char multiplier default=4
     """
 
-    indent_char='\t'
+    indent_char = "\t"
 
-    if indent == 'spaces':
-        indent_char=' ' * indent_width
+    if indent == "spaces":
+        indent_char = " " * indent_width
 
     if engine == "xmltodict":
         if not HAS_XMLTODICT:
