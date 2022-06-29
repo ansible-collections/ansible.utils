@@ -18,11 +18,21 @@ from ansible_collections.ansible.utils.plugins.filter.to_xml import _to_xml
 INVALID_DATA = '<netconf-state xmlns="urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring">'
 
 VALID_DATA = {
-    "interface-configurations": {"@xmlns": "http://cisco.com/ns/yang/Cisco-IOS-XR-ifmgr-cfg"},
+    "interface-configurations": {
+        "@xmlns": "http://cisco.com/ns/yang/Cisco-IOS-XR-ifmgr-cfg",
+        "key1": "value1"
+    }
 }
 
-OUTPUT = """<?xml version="1.0" encoding="utf-8"?>
-<interface-configurations xmlns="http://cisco.com/ns/yang/Cisco-IOS-XR-ifmgr-cfg"></interface-configurations>"""
+OUTPUT_TABS = """<?xml version="1.0" encoding="utf-8"?>
+<interface-configurations xmlns="http://cisco.com/ns/yang/Cisco-IOS-XR-ifmgr-cfg">
+\t<key1>value1</key1>
+</interface-configurations>"""
+
+OUTPUT_SPACES = """<?xml version="1.0" encoding="utf-8"?>
+<interface-configurations xmlns="http://cisco.com/ns/yang/Cisco-IOS-XR-ifmgr-cfg">
+    <key1>value1</key1>
+</interface-configurations>"""
 
 
 class TestToXml(unittest.TestCase):
@@ -44,7 +54,7 @@ class TestToXml(unittest.TestCase):
         self.maxDiff = None
         args = ["", VALID_DATA, "xmltodict"]
         result = _to_xml(*args)
-        self.assertEqual(result, OUTPUT)
+        self.assertEqual(result, OUTPUT_TABS)
 
     def test_args(self):
         """Check passing invalid argspec"""
@@ -65,3 +75,22 @@ class TestToXml(unittest.TestCase):
         with self.assertRaises(AnsibleError) as error:
             _to_xml(*args, **kwargs)
         self.assertIn("engine: test is not supported", str(error.exception))
+
+    def test_indent_with_spaces(self):
+        """Check passing indent with spaces and default indent_width"""
+        self.maxDiff = None
+        args = ["", VALID_DATA, "xmltodict", "spaces", 4]
+        result = _to_xml(*args)
+        self.assertEqual(result, OUTPUT_SPACES)
+
+    def test_invalid_indent(self):
+        """Check passing invalid indent value"""
+
+        # missing required arguments
+        args = ["", VALID_DATA, "xmltodict", "test"]
+        kwargs = {}
+        with self.assertRaises(AnsibleError) as error:
+            _to_xml(*args, **kwargs)
+        self.assertIn(
+            "value of indent must be one of: tabs, spaces, got: test", str(error.exception)
+        )
