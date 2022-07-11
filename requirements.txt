@@ -1,5 +1,5 @@
 jsonschema
-textfsm
+textfsm==1.1.2
 ttp
 xmltodict
 netaddr

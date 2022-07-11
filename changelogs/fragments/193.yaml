@@ -1,0 +1,3 @@
+---
+trivial:
+  - Pinned textfsm to 1.1.2 in requirements.txt as a workaround for https://github.com/google/textfsm/issues/105.
