@@ -12,7 +12,6 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 import json
-
 from importlib import import_module
 
 from ansible.errors import AnsibleActionFail
@@ -129,6 +128,7 @@ class ActionModule(ActionBase):
             # from ansible.netcommon collection
             if cref["cname"] == "netcommon" and cref["plugin"] in [
                 "native",
+                "content_templates",
                 "ntc",
                 "pyats",
             ]:
