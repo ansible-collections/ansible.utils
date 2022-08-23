@@ -1,0 +1,3 @@
+---
+trivial:
+  - cli_parse - Fix spurious use-before-assign.

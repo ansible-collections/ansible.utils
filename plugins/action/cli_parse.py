@@ -27,13 +27,6 @@ from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_valid
 from ansible_collections.ansible.utils.plugins.modules.cli_parse import DOCUMENTATION
 
 
-# python 2.7 compat for FileNotFoundError
-try:
-    FileNotFoundError
-except NameError:
-    FileNotFoundError = IOError
-
-
 ARGSPEC_CONDITIONALS = {
     "argument_spec": {"parser": {"mutually_exclusive": [["command", "template_path"]]}},
     "required_one_of": [["command", "text"]],
