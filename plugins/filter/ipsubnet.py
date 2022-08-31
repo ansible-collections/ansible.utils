@@ -24,6 +24,9 @@ from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddr_utils im
 __metaclass__ = type
 
 
+from ansible.module_utils._text import to_text
+
+
 try:
     from jinja2.filters import pass_environment
 except ImportError:
@@ -69,7 +72,7 @@ DOCUMENTATION = """
             description: |
                 The second argument of the ipsubnet() filter is an index number; by specifying it you can get a new subnet
                 with the specified index.
-            type: str
+            type: int
     notes:
 """
 
@@ -254,71 +257,88 @@ def _ipsubnet(*args, **kwargs):
     return ipsubnet(**updated_data)
 
 
-def ipsubnet(value, query="", index="x"):
+def ipsubnet(value, query="", index=None):
     """Manipulate IPv4/IPv6 subnets"""
 
-    try:
-        vtype = ipaddr(value, "type")
-        if vtype == "address":
-            v = ipaddr(value, "cidr")
-        elif vtype == "network":
-            v = ipaddr(value, "subnet")
-
-        value = netaddr.IPNetwork(v)
-    except Exception:
+    vtype = ipaddr(value, "type")
+    if not vtype:
         return False
-    query_string = str(query)
+    elif vtype == "address":
+        v = ipaddr(value, "cidr")
+    elif vtype == "network":
+        v = ipaddr(value, "subnet")
+    value = netaddr.IPNetwork(v).cidr
+    vtype = ipaddr(value, "type")
+
     if not query:
-        return str(value)
+        return to_text(value)
 
-    elif query_string.isdigit():
-        vsize = ipaddr(v, "size")
+    vtotalbits = 128 if value.version == 6 else 32
+    if query.isdigit():
         query = int(query)
+        if query < 0 or query > vtotalbits:
+            return False
 
-        try:
-            float(index)
-            index = int(index)
+        if index is None:
+            if vtype == "address":
+                return to_text(value.supernet(query)[0])
+            elif vtype == "network":
+                if query - value.prefixlen < 0:
+                    msg = "Requested subnet size of {0} is invalid".format(
+                        to_text(query),
+                    )
+                    raise AnsibleFilterError(msg)
+                return to_text(2 ** (query - value.prefixlen))
 
-            if vsize > 1:
-                try:
-                    return str(list(value.subnet(query))[index])
-                except Exception:
-                    return False
-
-            elif vsize == 1:
-                try:
-                    return str(value.supernet(query)[index])
-                except Exception:
-                    return False
-
-        except Exception:
-            if vsize > 1:
-                try:
-                    return str(len(list(value.subnet(query))))
-                except Exception:
-                    return False
-
-            elif vsize == 1:
-                try:
-                    return str(value.supernet(query)[0])
-                except Exception:
-                    return False
-
-    elif query_string:
+        index = int(index)
+        if vtype == "address":
+            if index > vtotalbits + 1 - index or index < query - vtotalbits:
+                return False
+            return to_text(value.supernet(query)[index])
+        elif vtype == "network":
+            if index < 0:
+                index = index + 2 ** (query - value.prefixlen)
+            return to_text(
+                netaddr.IPNetwork(
+                    to_text(
+                        netaddr.IPAddress(
+                            value.network.value + (index << vtotalbits - query),
+                        ),
+                    )
+                    + "/"
+                    + to_text(query),
+                ),
+            )
+    else:
         vtype = ipaddr(query, "type")
         if vtype == "address":
             v = ipaddr(query, "cidr")
         elif vtype == "network":
             v = ipaddr(query, "subnet")
         else:
-            msg = "You must pass a valid subnet or IP address; {0} is invalid".format(query_string)
+            msg = "You must pass a valid subnet or IP address; {0} is invalid".format(
+                to_text(query),
+            )
             raise AnsibleFilterError(msg)
         query = netaddr.IPNetwork(v)
-        for i, subnet in enumerate(query.subnet(value.prefixlen), 1):
-            if subnet == value:
-                return str(i)
+        if (
+            value.value >> vtotalbits - query.prefixlen
+            == query.value >> vtotalbits - query.prefixlen
+        ):
+            return to_text(
+                (
+                    (
+                        value.value
+                        & 2 ** (value.prefixlen - query.prefixlen) - 1
+                        << (vtotalbits - value.prefixlen)
+                    )
+                    >> (vtotalbits - value.prefixlen)
+                )
+                + 1,
+            )
         msg = "{0} is not in the subnet {1}".format(value.cidr, query.cidr)
         raise AnsibleFilterError(msg)
+
     return False
 
 

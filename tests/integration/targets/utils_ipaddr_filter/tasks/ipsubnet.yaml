@@ -62,3 +62,19 @@
 - name: Assert result for ipsubnet.
   assert:
     that: "{{ result8 == '36870' }}"
+
+- name: Small subnets from a large supernet should return quickly
+  ansible.builtin.set_fact:
+    result9: "{{ '2001:db8::/56' | ansible.utils.ipsubnet(120, 0) }}"
+
+- name: Assert result for ipsubnet.
+  assert:
+    that: result9 == '2001:db8::/120'
+
+- name: Small subnets from a large supernet should return quickly at index
+  ansible.builtin.set_fact:
+    result10: "{{ '2001:db8::/56' | ansible.utils.ipsubnet(120, 4) }}"
+
+- name: Assert result for ipsubnet.
+  assert:
+    that: result10 == '2001:db8::400/120'
