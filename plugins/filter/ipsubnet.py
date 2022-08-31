@@ -26,6 +26,7 @@ __metaclass__ = type
 
 from ansible.module_utils._text import to_text
 
+
 try:
     from jinja2.filters import pass_environment
 except ImportError:
