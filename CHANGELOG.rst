@@ -5,6 +5,19 @@ Ansible Utils Collection Release Notes
 .. contents:: Topics
 
 
+v2.6.2
+======
+
+Minor Changes
+-------------
+
+- ipsubnet - the index parameter should only ever be an integer if it is provided. this changes the argument type from str to int.
+
+Bugfixes
+--------
+
+- ipsubnet - interacting with large subnets could cause performance constraints. the result would be the system would appear to hang while it built out a list of all possible subnets or stepped through all possible subnets one at a time. when sending a prefix that is a supernet of the passed in network the behavior wasn't consistent. this now returns an AnsibleFilterError in that scenario across all python releases. (https://github.com/ansible-collections/ansible.utils/issues/132)
+
 v2.6.1
 ======
 
