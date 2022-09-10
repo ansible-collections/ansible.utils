@@ -8,6 +8,12 @@
     - name: 1.replace_keys assert
       assert:
         that: result == target
+        fail_msg: |-
+          [ERR] Assertion failed
+          result:
+            {{ result|to_yaml|indent(2) }}
+          target:
+            {{ target|to_yaml|indent(2) }}
   vars:
     result: "{{ l1|ansible.utils.replace_keys(target=_target) }}"
     _target:
