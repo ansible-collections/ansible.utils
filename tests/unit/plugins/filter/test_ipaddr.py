@@ -62,7 +62,10 @@ class TestIpFilter(unittest.TestCase):
     def test_ipaddr_undefined_value(self):
         """Check ipaddr filter undefined value"""
         args = ["", AnsibleUndefined(name="my_ip"), ""]
-        with pytest.raises(AnsibleFilterError, match="Unrecognized type <<class 'ansible.template.AnsibleUndefined'>> for ipaddr filter <value>"):
+        with pytest.raises(
+            AnsibleFilterError,
+            match="Unrecognized type <<class 'ansible.template.AnsibleUndefined'>> for ipaddr filter <value>",
+        ):
             _ipaddr(*args)
 
     def test_ipaddr_empty_query(self):

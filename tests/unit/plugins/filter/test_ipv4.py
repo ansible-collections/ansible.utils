@@ -48,7 +48,10 @@ class TestIp4(unittest.TestCase):
     def test_ipv4_undefined_value(self):
         """Check ipv4 filter undefined value"""
         args = ["", AnsibleUndefined(name="my_ip"), ""]
-        with pytest.raises(AnsibleFilterError, match="Unrecognized type <<class 'ansible.template.AnsibleUndefined'>> for ipv4 filter <value>"):
+        with pytest.raises(
+            AnsibleFilterError,
+            match="Unrecognized type <<class 'ansible.template.AnsibleUndefined'>> for ipv4 filter <value>",
+        ):
             _ipv4(*args)
 
     def test_ipv4_filter_empty_query(self):

@@ -51,7 +51,10 @@ class TestIp6(unittest.TestCase):
     def test_ipv6_undefined_value(self):
         """Check ipv6 filter undefined value"""
         args = ["", AnsibleUndefined(name="my_ip"), ""]
-        with pytest.raises(AnsibleFilterError, match="Unrecognized type <<class 'ansible.template.AnsibleUndefined'>> for ipv6 filter <value>"):
+        with pytest.raises(
+            AnsibleFilterError,
+            match="Unrecognized type <<class 'ansible.template.AnsibleUndefined'>> for ipv6 filter <value>",
+        ):
             _ipv6(*args)
 
     def test_ipv6_filter_empty_query(self):

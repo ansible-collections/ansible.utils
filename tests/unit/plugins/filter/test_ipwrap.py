@@ -53,7 +53,10 @@ class TestIpWrap(unittest.TestCase):
     def test_ipwrap_undefined_value(self):
         """Check ipwrap filter undefined value"""
         args = ["", AnsibleUndefined(name="my_ip"), ""]
-        with pytest.raises(AnsibleFilterError, match="Unrecognized type <<class 'ansible.template.AnsibleUndefined'>> for ipwrap filter <value>"):
+        with pytest.raises(
+            AnsibleFilterError,
+            match="Unrecognized type <<class 'ansible.template.AnsibleUndefined'>> for ipwrap filter <value>",
+        ):
             _ipwrap(*args)
 
     def test_valid_data_list(self):
