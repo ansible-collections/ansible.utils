@@ -14,6 +14,11 @@ __metaclass__ = type
 
 import unittest
 
+import pytest
+
+from ansible.errors import AnsibleFilterError
+from ansible.template import AnsibleUndefined
+
 from ansible_collections.ansible.utils.plugins.filter.ipv6 import _ipv6
 
 
@@ -42,6 +47,12 @@ VALID_OUTPUT2 = ["::ffff:192.168.32.0", "::ffff:192.24.2.1", "fe80::100"]
 class TestIp6(unittest.TestCase):
     def setUp(self):
         pass
+
+    def test_ipv6_undefined_value(self):
+        """Check ipv6 filter undefined value"""
+        args = ["", AnsibleUndefined(name="my_ip"), ""]
+        with pytest.raises(AnsibleFilterError, match="Unrecognized type <<class 'ansible.template.AnsibleUndefined'>> for ipv6 filter <value>"):
+            _ipv6(*args)
 
     def test_ipv6_filter_empty_query(self):
         """Check ipv6 filter empty query"""

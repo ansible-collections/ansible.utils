@@ -16,9 +16,11 @@ import unittest
 import pytest
 
 from ansible.errors import AnsibleFilterError
+from ansible.template import AnsibleUndefined
 
 from ansible_collections.ansible.utils.plugins.filter.cidr_merge import cidr_merge
 from ansible_collections.ansible.utils.plugins.filter.ip4_hex import ip4_hex
+from ansible_collections.ansible.utils.plugins.filter.ipaddr import _ipaddr
 from ansible_collections.ansible.utils.plugins.filter.ipmath import ipmath
 from ansible_collections.ansible.utils.plugins.filter.ipsubnet import ipsubnet
 from ansible_collections.ansible.utils.plugins.filter.network_in_network import network_in_network
@@ -56,6 +58,12 @@ class TestIpFilter(unittest.TestCase):
         subnets = ["1.12.1.1", "1.12.1.255"]
         self.assertEqual(cidr_merge(subnets), ["1.12.1.1/32", "1.12.1.255/32"])
         self.assertEqual(cidr_merge(subnets, "span"), "1.12.1.0/24")
+
+    def test_ipaddr_undefined_value(self):
+        """Check ipaddr filter undefined value"""
+        args = ["", AnsibleUndefined(name="my_ip"), ""]
+        with pytest.raises(AnsibleFilterError, match="Unrecognized type <<class 'ansible.template.AnsibleUndefined'>> for ipaddr filter <value>"):
+            _ipaddr(*args)
 
     def test_ipaddr_empty_query(self):
         self.assertEqual(ipaddr("192.0.2.230"), "192.0.2.230")

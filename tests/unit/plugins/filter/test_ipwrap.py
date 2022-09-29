@@ -14,6 +14,11 @@ __metaclass__ = type
 
 import unittest
 
+import pytest
+
+from ansible.errors import AnsibleFilterError
+from ansible.template import AnsibleUndefined
+
 from ansible_collections.ansible.utils.plugins.filter.ipwrap import _ipwrap
 
 
@@ -44,6 +49,12 @@ VALID_OUTPUT = [
 class TestIpWrap(unittest.TestCase):
     def setUp(self):
         pass
+
+    def test_ipwrap_undefined_value(self):
+        """Check ipwrap filter undefined value"""
+        args = ["", AnsibleUndefined(name="my_ip"), ""]
+        with pytest.raises(AnsibleFilterError, match="Unrecognized type <<class 'ansible.template.AnsibleUndefined'>> for ipwrap filter <value>"):
+            _ipwrap(*args)
 
     def test_valid_data_list(self):
         """Check passing valid argspec(list)"""
