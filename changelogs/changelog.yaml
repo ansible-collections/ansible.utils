@@ -259,3 +259,30 @@ releases:
       - sanity_fix.yaml
       - test inits.yml
     release_date: "2022-04-25"
+  2.7.0:
+    changes:
+      bugfixes:
+        - ipsubnet - interacting with large subnets could cause performance constraints.
+          the result would be the system would appear to hang while it built out a list
+          of all possible subnets or stepped through all possible subnets one at a time.
+          when sending a prefix that is a supernet of the passed in network the behavior
+          wasn't consistent. this now returns an AnsibleFilterError in that scenario
+          across all python releases. (https://github.com/ansible-collections/ansible.utils/issues/132)
+      minor_changes:
+        - ipsubnet - the index parameter should only ever be an integer if it is provided.
+          this changes the argument type from str to int.
+    fragments:
+      - 172.yaml
+      - 179.yaml
+      - 180.yaml
+      - 183.yaml
+      - 184.yaml
+      - 185.yaml
+      - 186.yaml
+      - 187.yaml
+      - 188.yaml
+      - 189.yaml
+      - 190.yaml
+      - ipsubnet_performance.yaml
+      - use-before.yaml
+    release_date: "2022-10-03"
