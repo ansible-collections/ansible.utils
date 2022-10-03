@@ -7,6 +7,7 @@
 
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 import os
@@ -16,6 +17,7 @@ from ansible.plugins.connection import ConnectionBase
 from ansible.plugins.loader import connection_loader
 from ansible.utils.display import Display
 from ansible.utils.path import unfrackpath
+
 
 display = Display()
 
@@ -33,9 +35,7 @@ class PersistentConnectionBase(ConnectionBase):
     _remote_is_local = True
 
     def __init__(self, play_context, new_stdin, *args, **kwargs):
-        super(PersistentConnectionBase, self).__init__(
-            play_context, new_stdin, *args, **kwargs
-        )
+        super(PersistentConnectionBase, self).__init__(play_context, new_stdin, *args, **kwargs)
         self._messages = []
         self._conn_closed = False
 
@@ -78,8 +78,7 @@ class PersistentConnectionBase(ConnectionBase):
         if self._socket_path:
             self.queue_message(
                 "vvvv",
-                "resetting persistent connection for socket_path %s"
-                % self._socket_path,
+                "resetting persistent connection for socket_path %s" % self._socket_path,
             )
             self.close()
         self.queue_message("vvvv", "reset call on connection instance")
