@@ -29,11 +29,7 @@ DOCUMENTATION = """
         ip:
             description:
             - A string that represents the value against which the test is going to be performed
-            - For example:
-                - "0.0.0.0"
-                - "0:0:0:0:0:0:0:0"
-                - "::"
-                - "::1"
+            - 'For example: C(0.0.0.0), C(0:0:0:0:0:0:0:0), C(::), or C(::1)'
             type: str
             required: True
     notes:

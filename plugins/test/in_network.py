@@ -30,13 +30,13 @@ DOCUMENTATION = """
         ip:
             description:
             - A string that represents an IP address
-            - For example: "10.1.1.1"
+            - 'For example: C(10.1.1.1)'
             type: str
             required: True
         network:
             description:
             - A string that represents the network address in CIDR form
-            - For example: "10.0.0.0/8"
+            - 'For example: C(10.0.0.0/8)'
             type: str
             required: True
     notes:

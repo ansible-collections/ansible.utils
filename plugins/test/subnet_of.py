@@ -30,15 +30,13 @@ DOCUMENTATION = """
         network_a:
             description:
             - A string that represents the first network address
-            - For example:
-                - "10.1.1.0/24"
+            - 'For example: C(10.1.1.0/24)'
             type: str
             required: True
         network_b:
             description:
             - A string that represents the second network address
-            - For example:
-                - "10.0.0.0/8"
+            - 'For example: C(10.0.0.0/8)'
             type: str
             required: True
     notes:

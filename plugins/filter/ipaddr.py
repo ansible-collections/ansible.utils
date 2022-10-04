@@ -61,10 +61,11 @@ DOCUMENTATION = """
             description:
             - You can provide a single argument to each ipaddr() filter.
             - The filter will then treat it as a query and return values modified by that query.
-            - Types of queries include:
-                - query by name: ansible.utils.ipaddr('address'), ansible.utils.ipv4('network');
-                - query by CIDR range: ansible.utils.ipaddr('192.168.0.0/24'), ansible.utils.ipv6('2001:db8::/32');
-                - query by index number: ansible.utils.ipaddr('1'), ansible.utils.ipaddr('-1');
+            - >-
+              Types of queries include:
+              1. query by name: ansible.utils.ipaddr('address'), ansible.utils.ipv4('network');
+              2. query by CIDR range: ansible.utils.ipaddr('192.168.0.0/24'), ansible.utils.ipv6('2001:db8::/32');
+              3. query by index number: ansible.utils.ipaddr('1'), ansible.utils.ipaddr('-1');
             type: str
             default: ''
         version:
