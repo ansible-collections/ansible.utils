@@ -1,0 +1,3 @@
+---
+trivial:
+  - Fix various 2.15 sanity and unit tests. (https://github.com/ansible-collections/ansible.utils/pull/216)
