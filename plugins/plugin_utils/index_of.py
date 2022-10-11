@@ -16,6 +16,7 @@ import json
 
 from ansible.module_utils._text import to_native
 from ansible.module_utils.six import integer_types, string_types
+from jinja2.exceptions import TemplateSyntaxError
 
 
 # Note, this file can only be used on the control node
@@ -99,19 +100,25 @@ def _run_test(entry, test, right, tests):
     if not isinstance(right, list) and test == "in":
         right = [right]
 
-    j2_test = tests.get(test)
+    # JinjaPluginIntercept.get() raises an exception instead of returning None
+    # in ansible-core 2.15+
+    try:
+        j2_test = tests.get(test)
+    except TemplateSyntaxError:
+        j2_test = None
+
     if not j2_test:
         msg = "{msg} Error was: the test '{test}' was not found.".format(msg=msg, test=test)
         _raise_error(msg)
-    else:
-        try:
-            if right is None:
-                result = j2_test(entry)
-            else:
-                result = j2_test(entry, right)
-        except Exception as exc:
-            msg = "{msg} Error was: {error}".format(msg=msg, error=to_native(exc))
-            _raise_error(msg)
+
+    try:
+        if right is None:
+            result = j2_test(entry)
+        else:
+            result = j2_test(entry, right)
+    except Exception as exc:
+        msg = "{msg} Error was: {error}".format(msg=msg, error=to_native(exc))
+        _raise_error(msg)
 
     if invert:
         result = not result
