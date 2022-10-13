@@ -14,7 +14,7 @@ import unittest
 
 from ansible.template import Templar
 
-from ansible_collections.ansible.utils.plugins.module_utils.common.index_of import index_of
+from ansible_collections.ansible.utils.plugins.plugin_utils.index_of import index_of
 
 
 class TestIndexOfFilter(unittest.TestCase):

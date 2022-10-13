@@ -303,7 +303,7 @@ from ansible.errors import AnsibleFilterError
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     AnsibleArgSpecValidator,
 )
-from ansible_collections.ansible.utils.plugins.module_utils.common.index_of import index_of
+from ansible_collections.ansible.utils.plugins.plugin_utils.index_of import index_of
 
 
 try:
