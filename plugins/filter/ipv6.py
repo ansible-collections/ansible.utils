@@ -10,7 +10,7 @@ from __future__ import absolute_import, division, print_function
 
 from functools import partial
 
-from ansible.errors import AnsibleError, AnsibleFilterError
+from ansible.errors import AnsibleFilterError
 
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     AnsibleArgSpecValidator,
@@ -157,7 +157,7 @@ def _ipv6(*args, **kwargs):
         elif isinstance(data["value"], list):
             pass
         else:
-            raise AnsibleError(
+            raise AnsibleFilterError(
                 "Unrecognized type <{0}> for ipv6 filter <{1}>".format(
                     type(data["value"]),
                     "value",
@@ -165,7 +165,7 @@ def _ipv6(*args, **kwargs):
             )
 
     except (TypeError, ValueError):
-        raise AnsibleError(
+        raise AnsibleFilterError(
             "Unrecognized type <{0}> for ipv6 filter <{1}>".format(type(data["value"]), "value"),
         )
     aav = AnsibleArgSpecValidator(data=data, schema=DOCUMENTATION, name="ipv6")

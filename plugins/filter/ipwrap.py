@@ -12,7 +12,7 @@ import types
 
 from functools import partial
 
-from ansible.errors import AnsibleError, AnsibleFilterError
+from ansible.errors import AnsibleFilterError
 
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     AnsibleArgSpecValidator,
@@ -160,7 +160,7 @@ def _ipwrap(*args, **kwargs):
         elif isinstance(data["value"], bool):
             pass
         else:
-            raise AnsibleError(
+            raise AnsibleFilterError(
                 "Unrecognized type <{0}> for ipwrap filter <{1}>".format(
                     type(data["value"]),
                     "value",
@@ -168,7 +168,7 @@ def _ipwrap(*args, **kwargs):
             )
 
     except (TypeError, ValueError):
-        raise AnsibleError(
+        raise AnsibleFilterError(
             "Unrecognized type <{0}> for ipwrap filter <{1}>".format(type(data["value"]), "value"),
         )
     aav = AnsibleArgSpecValidator(data=data, schema=DOCUMENTATION, name="ipwrap")

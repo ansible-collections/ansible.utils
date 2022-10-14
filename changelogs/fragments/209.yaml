@@ -1,0 +1,3 @@
+---
+bugfixes:
+  - Fix filters to only raise AnsibleFilterError exceptions (https://github.com/ansible-collections/ansible.utils/issues/209).
