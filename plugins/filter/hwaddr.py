@@ -39,9 +39,8 @@ except ImportError:
 else:
 
     class mac_linux(netaddr.mac_unix):
-        pass
+        word_fmt = "%.2x"
 
-    mac_linux.word_fmt = "%.2x"
 
 DOCUMENTATION = """
     name: hwaddr
