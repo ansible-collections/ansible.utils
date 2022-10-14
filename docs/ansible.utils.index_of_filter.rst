@@ -132,7 +132,7 @@ Parameters
                     </td>
                 <td>
                         <div>The value used to test each list item against.</div>
-                        <div>{&#x27;Not required for simple tests (eg&#x27;: &#x27;<code>true</code>, <code>false</code>, <code>even</code>, <code>odd</code>)&#x27;}</div>
+                        <div>Not required for simple tests (eg: <code>true</code>, <code>false</code>, <code>even</code>, <code>odd</code>)</div>
                         <div>May be a <code>string</code>, <code>boolean</code>, <code>number</code>, <code>regular expression</code> <code>dict</code> and so on, depending on the <code>test</code> used</div>
                 </td>
             </tr>

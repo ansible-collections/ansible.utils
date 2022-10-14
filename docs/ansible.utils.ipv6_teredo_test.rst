@@ -50,7 +50,7 @@ Parameters
                     </td>
                 <td>
                         <div>A string that represents the value against which the test is going to be performed</div>
-                        <div>{&#x27;For example&#x27;: [&#x27;2001::c0a8:6301:1&#x27;, &#x27;2002::c0a8:6301:1&#x27;, &#x27;hello_world&#x27;]}</div>
+                        <div>For example: <code>2001::c0a8:6301:1</code>, <code>2002::c0a8:6301:1</code>, or <code>&quot;hello_world&quot;</code></div>
                 </td>
             </tr>
     </table>
