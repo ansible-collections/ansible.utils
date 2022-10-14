@@ -50,7 +50,7 @@ Parameters
                     </td>
                 <td>
                         <div>A string that represents the IP address or the host name</div>
-                        <div>{&#x27;For example&#x27;: [&#x27;docs.ansible.com&#x27;, &#x27;127.0.0.1&#x27;, &#x27;::1&#x27;]}</div>
+                        <div>For example: <code>&quot;docs.ansible.com&quot;</code>, <code>127.0.0.1</code>, or <code>::1</code></div>
                 </td>
             </tr>
     </table>

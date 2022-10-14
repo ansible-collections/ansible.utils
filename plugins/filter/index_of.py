@@ -40,7 +40,7 @@ DOCUMENTATION = """
       value:
         description:
         - The value used to test each list item against.
-        - Not required for simple tests (eg: C(true), C(false), C(even), C(odd))
+        - 'Not required for simple tests (eg: C(true), C(false), C(even), C(odd))'
         - May be a C(string), C(boolean), C(number), C(regular expression) C(dict) and so on, depending on the C(test) used
         type: raw
       key:

@@ -29,9 +29,7 @@ DOCUMENTATION = """
         ip:
             description:
             - A string that represents the value against which the test is going to be performed
-            - For example:
-                - "127.0.0.1"
-                - "2002::c0a8:6301:1"
+            - 'For example: C(127.0.0.1) or C(2002::c0a8:6301:1)'
             type: str
             required: True
     notes:

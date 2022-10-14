@@ -69,7 +69,7 @@ Parameters
                 <td>
                         <div>You can provide a single argument to each ipaddr() filter.</div>
                         <div>The filter will then treat it as a query and return values modified by that query.</div>
-                        <div>{&#x27;Types of queries include&#x27;: [{&#x27;query by name&#x27;: &quot;ansible.utils.ipaddr(&#x27;address&#x27;), ansible.utils.ipv4(&#x27;network&#x27;);&quot;}, {&#x27;query by CIDR range&#x27;: &quot;ansible.utils.ipaddr(&#x27;192.168.0.0/24&#x27;), ansible.utils.ipv6(&#x27;2001:db8::/32&#x27;);&quot;}, {&#x27;query by index number&#x27;: &quot;ansible.utils.ipaddr(&#x27;1&#x27;), ansible.utils.ipaddr(&#x27;-1&#x27;);&quot;}]}</div>
+                        <div>Types of queries include: 1. query by name: ansible.utils.ipaddr(&#x27;address&#x27;), ansible.utils.ipv4(&#x27;network&#x27;); 2. query by CIDR range: ansible.utils.ipaddr(&#x27;192.168.0.0/24&#x27;), ansible.utils.ipv6(&#x27;2001:db8::/32&#x27;); 3. query by index number: ansible.utils.ipaddr(&#x27;1&#x27;), ansible.utils.ipaddr(&#x27;-1&#x27;);</div>
                 </td>
             </tr>
             <tr>

@@ -27,11 +27,7 @@ DOCUMENTATION = """
         mac:
             description:
             - A string that represents the value against which the test is going to be performed
-            - For example:
-                - "02:16:3e:e4:16:f3"
-                - "02-16-3e-e4-16-f3"
-                - "0216.3ee4.16f3"
-                - "02163ee416f3"
+            - 'For example: C(02:16:3e:e4:16:f3), C(02-16-3e-e4-16-f3), C(0216.3ee4.16f3), or C(02163ee416f3)'
             type: str
             required: True
     notes:
