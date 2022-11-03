@@ -129,6 +129,7 @@ class ActionModule(ActionBase):
             # from ansible.netcommon collection
             if cref["cname"] == "netcommon" and cref["plugin"] in [
                 "native",
+                "content_templates",
                 "ntc",
                 "pyats",
             ]:
