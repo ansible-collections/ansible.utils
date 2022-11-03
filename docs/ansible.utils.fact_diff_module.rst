@@ -46,7 +46,7 @@ Parameters
                 <td>
                 </td>
                 <td>
-                        <div>The second fact to be used in the comparison.</div>
+                        <div>The second fact to DNM be used in the comparison.</div>
                 </td>
             </tr>
             <tr>
