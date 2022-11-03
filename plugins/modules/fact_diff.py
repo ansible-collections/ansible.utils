@@ -25,7 +25,7 @@ options:
     required: True
   after:
     description:
-      - The second fact to be used in the comparison.
+      - The second fact to DNM be used in the comparison.
     type: raw
     required: True
   plugin:
