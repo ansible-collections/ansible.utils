@@ -12,7 +12,7 @@ Minor Changes
 -------------
 
 - Add support for content template parser
-- Added new connection base class similar to ansible.netcommon's NetworkConnectionBase without the network-specific option masking (https://github.com/ansible-collections/ansible.utils/pull/211).
+- Added new connection base class similar to ansible.netcommon's NetworkConnectionBase without the network-specific option masking (https://github.com/ansible-collections/ansible.utils/pull/213).
 - ipsubnet - the index parameter should only ever be an integer if it is provided. this changes the argument type from str to int.
 
 Bugfixes
