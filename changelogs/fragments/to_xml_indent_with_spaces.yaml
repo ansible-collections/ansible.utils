@@ -1,0 +1,5 @@
+---
+minor_changes:
+  - >-
+    to_xml - Added support for using spaces to indent an XML doc via a new
+    `indent` parameter.
