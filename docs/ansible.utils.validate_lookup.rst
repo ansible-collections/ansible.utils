@@ -121,11 +121,11 @@ Examples
 
     - name: validate data in json format using jsonschema with lookup plugin by passing plugin configuration variable as key/value pairs
       ansible.builtin.set_fact:
-        data_criteria_checks: "{{ lookup(data, criteria, engine='ansible.utils.jsonschema', draft='draft7') }}"
+        data_criteria_checks: "{{ lookup('ansible.utils.validate', data, criteria, engine='ansible.utils.jsonschema', draft='draft7') }}"
 
     - name: validate data in json format using jsonschema with lookup plugin by passing plugin configuration variable as task variable
       ansible.builtin.set_fact:
-        data_criteria_checks: "{{ lookup('ansible.utils.validate', data, criteria, engine='ansible.utils.jsonschema', draft='draft7') }}"
+        data_criteria_checks: "{{ lookup('ansible.utils.validate', data, criteria, engine='ansible.utils.jsonschema', draft=ansible_validate_jsonschema_draft) }}"
       vars:
         ansible_validate_jsonschema_draft: draft3
 
