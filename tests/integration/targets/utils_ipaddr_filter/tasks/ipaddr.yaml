@@ -63,11 +63,11 @@
 
 - name: set fact 1
   set_fact:
-      ip1: "172.20.0.1"
+    ip1: "172.20.0.1"
 
 - name: Set fact 2
   set_fact:
-      ip2: "{{ ((ip1 | ipaddr('int')) + 6) | ipaddr }}"
+    ip2: "{{ ((ip1 | ipaddr('int')) + 6) | ipaddr }}"
 
 - name: Assert result for ipaddr filter
   assert:
