@@ -57,3 +57,18 @@
 - name: Assert result for ipaddr filter with chained filters
   assert:
     that: "{{ result6 == '192.168.255.123' }}"
+
+- debug:
+    msg: "Test int input for ipaddr filter"
+
+- name: set fact 1
+  set_fact:
+      ip1: "172.20.0.1"
+
+- name: Set fact 2
+  set_fact:
+      ip2: "{{ ((ip1 | ipaddr('int')) + 6) | ipaddr }}"
+
+- name: Assert result for ipaddr filter
+  assert:
+    that: "{{ ip2 == '172.20.0.7' }}"

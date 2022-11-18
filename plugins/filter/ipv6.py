@@ -156,6 +156,8 @@ def _ipv6(*args, **kwargs):
             pass
         elif isinstance(data["value"], list):
             pass
+        elif isinstance(data["value"], int):
+            pass
         else:
             raise AnsibleFilterError(
                 "Unrecognized type <{0}> for ipv6 filter <{1}>".format(
