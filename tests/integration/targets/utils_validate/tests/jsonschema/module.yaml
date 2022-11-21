@@ -52,7 +52,7 @@
     that:
       - "'errors' not in result"
       - "result['failed'] == true"
-      - "'value of draft must be one of: draft3, draft4, draft6, draft7, got: draft0' in result.msg"
+      - "'value of draft must be one of: draft3, draft4, draft6, draft7, 2019-09, 2020-12, got: draft0' in result.msg"
 
 - name: invalid engine value
   ansible.utils.validate:

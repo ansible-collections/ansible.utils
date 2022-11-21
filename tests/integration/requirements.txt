@@ -1,4 +1,4 @@
-jsonschema ; python_version >= '2.7'
+jsonschema>=4.5 ; python_version >= '2.7'
 netaddr
 ttp
 textfsm

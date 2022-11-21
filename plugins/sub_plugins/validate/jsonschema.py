@@ -22,17 +22,28 @@ DOCUMENTATION = """
         description:
         - This option provides the jsonschema specification that should be used
           for the validating the data. The I(criteria) option in the validate
-          plugin should follow the specification as mentioned by this option
-        default: draft7
+          plugin should follow the specification as mentioned by this option.
+          If this option is not specified, jsonschema will use the best validator
+          for the I($schema) field in the criteria.
         choices:
         - draft3
         - draft4
         - draft6
         - draft7
+        - 2019-09
+        - 2020-12
         env:
         - name: ANSIBLE_VALIDATE_JSONSCHEMA_DRAFT
         vars:
         - name: ansible_validate_jsonschema_draft
+      check_format:
+        description: If enabled, validate the I(format) specification in the criteria.
+        type: bool
+        default: true
+        env:
+        - name: ANSIBLE_VALIDATE_JSONSCHEMA_CHECK_FORMAT
+        vars:
+        - name: ansible_validate_jsonschema_check_format
     notes:
     - The value of I(data) option should be either a valid B(JSON) object or a B(JSON) string.
     - The value of I(criteria) should be B(list) of B(dict) or B(list) of B(strings) and each
@@ -58,6 +69,7 @@ except ImportError:
 
 try:
     import jsonschema
+    import jsonschema.validators
 
     HAS_JSONSCHEMA = True
 except ImportError:
@@ -153,29 +165,27 @@ class Validate(ValidateBase):
         error_messages = None
 
         draft = self._get_sub_plugin_options("draft")
+        check_format = self._get_sub_plugin_options("check_format")
         error_messages = []
 
         for criteria in self._criteria:
             if draft == "draft3":
-                validator = jsonschema.Draft3Validator(
-                    criteria,
-                    format_checker=jsonschema.draft3_format_checker,
-                )
+                validator = jsonschema.Draft3Validator(criteria)
             elif draft == "draft4":
-                validator = jsonschema.Draft4Validator(
-                    criteria,
-                    format_checker=jsonschema.draft4_format_checker,
-                )
+                validator = jsonschema.Draft4Validator(criteria)
             elif draft == "draft6":
-                validator = jsonschema.Draft6Validator(
-                    criteria,
-                    format_checker=jsonschema.draft6_format_checker,
-                )
+                validator = jsonschema.Draft6Validator(criteria)
+            elif draft == "draft7":
+                validator = jsonschema.Draft7Validator(criteria)
+            elif draft == "2019-09":
+                validator = jsonschema.Draft201909Validator(criteria)
+            elif draft == "2020-12":
+                validator = jsonschema.Draft202012Validator(criteria)
             else:
-                validator = jsonschema.Draft7Validator(
-                    criteria,
-                    format_checker=jsonschema.draft7_format_checker,
-                )
+                validator = jsonschema.validators.validator_for(criteria)(criteria)
+
+            if check_format:
+                validator = validator.evolve(format_checker=validator.FORMAT_CHECKER)
 
             validation_errors = sorted(validator.iter_errors(self._data), key=lambda e: e.path)
 

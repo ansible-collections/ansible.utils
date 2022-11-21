@@ -1,4 +1,4 @@
-jsonschema
+jsonschema>=4.5
 textfsm
 ttp
 xmltodict
