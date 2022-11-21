@@ -1,0 +1,3 @@
+---
+trivial:
+  - Add integration tests for remove_keys

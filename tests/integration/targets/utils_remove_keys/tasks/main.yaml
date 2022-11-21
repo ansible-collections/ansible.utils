@@ -10,5 +10,5 @@
   delegate_to: localhost
   register: found
 
-- include: "{{ item.path }}"
+- include_tasks: "{{ item.path }}"
   loop: "{{ found.files }}"
