@@ -1,0 +1,3 @@
+---
+bugfixes:
+  - Accept int input for ipaddr filters.
