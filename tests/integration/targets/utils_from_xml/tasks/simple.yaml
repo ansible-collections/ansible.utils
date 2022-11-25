@@ -13,7 +13,7 @@
           },
       }
 
-- debug:
+- ansible.builtin.debug:
     msg: "{{ data|ansible.utils.from_xml() }}"
 
 - name: Integration tests with and without default engine as xmltodict and

@@ -7,7 +7,7 @@
         "interface-configuration":
     output: "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<interface-configurations xmlns=\"http://cisco.com/ns/yang/Cisco-IOS-XR-ifmgr-cfg\">\n\t<interface-configuration></interface-configuration>\n</interface-configurations>"
 
-- debug:
+- ansible.builtin.debug:
     msg: "{{ data|ansible.utils.to_xml() }}"
 
 - name: Integration tests with and without default engine as xmltodict and

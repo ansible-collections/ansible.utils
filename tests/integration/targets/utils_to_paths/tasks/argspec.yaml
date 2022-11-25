@@ -12,7 +12,7 @@
   ignore_errors: true
   register: result
 
-- debug:
+- ansible.builtin.debug:
     var: result
 - ansible.builtin.assert:
     that: "{{ msg in result.msg }}"
@@ -25,7 +25,7 @@
   ignore_errors: true
   register: result
 
-- debug:
+- ansible.builtin.debug:
     var: result
 - ansible.builtin.assert:
     that: "{{ msg in result.msg }}"
