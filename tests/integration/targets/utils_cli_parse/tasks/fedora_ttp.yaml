@@ -4,7 +4,7 @@
     command: "df -h"
     parser:
       name: ansible.utils.ttp
-    set_fact: myfact
+    ansible.builtin.set_fact: myfact
   register: df_h_out
 
 - name: "{{ parser }} Check parser output"
