@@ -58,17 +58,17 @@
   ansible.builtin.assert:
     that: "{{ result6 == '192.168.255.123' }}"
 
-- debug:
+- ansible.builtin.debug:
     msg: "Test int input for ipaddr filter"
 
 - name: set fact 1
-  set_fact:
+  ansible.builtin.set_fact:
     ip1: "172.20.0.1"
 
 - name: Set fact 2
-  set_fact:
+  ansible.builtin.set_fact:
     ip2: "{{ ((ip1 | ansible.utils.ipaddr('int')) + 6) | ansible.utils.ipaddr }}"
 
 - name: Assert result for ipaddr filter
-  assert:
+  ansible.builtin.assert:
     that: "{{ ip2 == '172.20.0.7' }}"

@@ -44,7 +44,7 @@
       - "bgp_global"
 
 - name: Get the final list of resources
-  set_fact:
+  ansible.builtin.set_fact:
     final_network_resources: "{{ network_resources['modules']|ansible.utils.param_list_compare(provided_resources) }}"
 
 - name: Assert final network resources
