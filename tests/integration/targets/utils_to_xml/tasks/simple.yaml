@@ -11,7 +11,7 @@
     msg: "{{ data|ansible.utils.to_xml() }}"
 
 - name: Integration tests with and without default engine as xmltodict and
-  assert:
+  ansible.builtin.assert:
     that: "{{ output == item.test }}"
   loop:
     - test: "{{ data|ansible.utils.to_xml() }}"
@@ -29,7 +29,7 @@
   ignore_errors: true
   register: result
 
-- assert:
+- ansible.builtin.assert:
     that: "{{ msg in result.msg }}"
   vars:
     msg: "Error when using plugin 'to_xml': engine: dicttoxml is not supported"

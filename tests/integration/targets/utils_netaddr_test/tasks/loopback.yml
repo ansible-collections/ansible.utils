@@ -1,10 +1,10 @@
 ---
 - name: "loopback: Check if 127.10.10.10 is a valid loopback address"
-  assert:
+  ansible.builtin.assert:
     that: "{{ '127.10.10.10' is ansible.utils.loopback }}"
 
 - name: "loopback: Check if ::1 is a valid loopback address"
-  assert:
+  ansible.builtin.assert:
     that: "{{ '::1' is ansible.utils.loopback }}"
 
 - name: "loopback: Test invalidness"
@@ -12,5 +12,5 @@
     criteria_check: "{{ '10.1.1.1' is ansible.utils.loopback }}"
 
 - name: "loopback: Assert invalidness"
-  assert:
+  ansible.builtin.assert:
     that: "{{ criteria_check == false }}"

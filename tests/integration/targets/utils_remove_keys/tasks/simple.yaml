@@ -34,6 +34,6 @@
   register: result
 
 - name: Assert result dicts
-  assert:
+  ansible.builtin.assert:
     that:
       - remove['default'] == result['msg']

@@ -27,6 +27,6 @@
     combined: "{{ data_sources|ansible.utils.consolidate(fail_missing_match_value=False) }}"
 
 - name: Assert result dicts
-  assert:
+  ansible.builtin.assert:
     that:
       - combined == combined_facts

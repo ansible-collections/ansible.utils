@@ -8,7 +8,7 @@
   register: ifconfig_out
 
 - name: "{{ parser }} Check parser output"
-  assert:
+  ansible.builtin.assert:
     that: "{{ item }}"
   with_items:
     - "{{ myfact is defined }}"

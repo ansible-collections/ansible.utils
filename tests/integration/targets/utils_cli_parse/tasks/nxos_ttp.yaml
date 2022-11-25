@@ -12,7 +12,7 @@
   register: nxos_ttp_text
 
 - name: "{{ parser }} Confirm response"
-  assert:
+  ansible.builtin.assert:
     that:
       - "{{ POpqMQoJWTiDpEW is defined }}"
       - "{{ nxos_ttp_text['parsed'][0][0] | selectattr('interface', 'search', 'mgmt0') | list | length }}"
@@ -30,7 +30,7 @@
   register: nxos_ttp_vars
 
 - name: "{{ parser }} Confirm modified results"
-  assert:
+  ansible.builtin.assert:
     that: "{{ item }}"
   with_items:
     - "{{ nxos_ttp_vars['parsed'][0][0][0]['var'] == 'some_text' }}"
@@ -47,7 +47,7 @@
   register: nxos_ttp_results
 
 - name: "{{ parser }} Confirm modified results"
-  assert:
+  ansible.builtin.assert:
     that: "{{ item }}"
   with_items:
     - "{{ (nxos_ttp_results['parsed'][0]|from_yaml)[0] | selectattr('interface', 'search', 'mgmt0') | list | length }}"

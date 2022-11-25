@@ -8,7 +8,7 @@
             - 1
 
 - name: Simple test filter and lookup
-  assert:
+  ansible.builtin.assert:
     that: "{{ item.result == item.expected }}"
   loop:
     - result: "{{ vars|ansible.utils.get_path('a') }}"
@@ -48,7 +48,7 @@
             - 0
 
 - name: Simple test filter and lookup w/ wantlist
-  assert:
+  ansible.builtin.assert:
     that: "{{ item.result == item.expected }}"
   loop:
     - result: "{{ vars|ansible.utils.get_path('a.b.c.d[0]', wantlist=True) }}"

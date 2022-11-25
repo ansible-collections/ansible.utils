@@ -15,7 +15,7 @@
     result1: "{{ value|ansible.utils.ipaddr }}"
 
 - name: Assert result for ipaddr.
-  assert:
+  ansible.builtin.assert:
     that: "{{ result1 == ipaddr_result1 }}"
 
 - name: ipaddr filter with host string query
@@ -23,7 +23,7 @@
     result2: "{{ value|ansible.utils.ipaddr('host') }}"
 
 - name: Assert result for ipaddr host query
-  assert:
+  ansible.builtin.assert:
     that: "{{ result2 == ipaddr_result2 }}"
 
 - name: ipaddr filter with public network query
@@ -31,7 +31,7 @@
     result3: "{{ value|ansible.utils.ipaddr('public') }}"
 
 - name: Assert result for ipaddr public network query
-  assert:
+  ansible.builtin.assert:
     that: "{{ result3== ipaddr_result3 }}"
 
 - name: ipaddr filter with network query
@@ -39,7 +39,7 @@
     result4: "{{ value|ansible.utils.ipaddr('net') }}"
 
 - name: Assert result for ipaddr network query
-  assert:
+  ansible.builtin.assert:
     that: "{{ result4 == ipaddr_result4 }}"
 
 - name: ipaddr filter with network/prefix query
@@ -47,7 +47,7 @@
     result5: "{{ '192.168.0.0/23' | ansible.utils.ipaddr('network/prefix') }}"
 
 - name: Assert result for ipaddr filter with network/prefix query
-  assert:
+  ansible.builtin.assert:
     that: "{{ result5 == '192.168.0.0/23' }}"
 
 - name: ipaddr filter with chained filters
@@ -55,7 +55,7 @@
     result6: "{{ '192.168.255.0' | ansible.utils.ipaddr('network') | ansible.utils.ipmath(123) }}"
 
 - name: Assert result for ipaddr filter with chained filters
-  assert:
+  ansible.builtin.assert:
     that: "{{ result6 == '192.168.255.123' }}"
 
 - debug:

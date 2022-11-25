@@ -10,7 +10,7 @@
   register: nxos_json_text
 
 - name: "{{ parser }} Confirm response"
-  assert:
+  ansible.builtin.assert:
     that: "{{ item }}"
   with_items:
     - "{{ nxos_json_text['parsed'] is defined }}"

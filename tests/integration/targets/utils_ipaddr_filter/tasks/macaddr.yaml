@@ -4,7 +4,7 @@
     result1: "{{ '1a:2b:3c:4d:5e:6f'|ansible.utils.macaddr }}"
 
 - name: Assert result for macaddr.
-  assert:
+  ansible.builtin.assert:
     that: "{{ result1 == '1a:2b:3c:4d:5e:6f' }}"
 
 - name: macaddr filter test2
@@ -12,5 +12,5 @@
     result1: "{{ '1a:2b:3c:4d:5e:6f'|ansible.utils.macaddr('cisco') }}"
 
 - name: Assert result for macaddr.
-  assert:
+  ansible.builtin.assert:
     that: "{{ result1 == '1a2b.3c4d.5e6f' }}"

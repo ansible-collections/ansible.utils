@@ -3,7 +3,7 @@
   ansible.builtin.set_fact:
     is_data_valid: "{{ show_interfaces is ansible.utils.validate(engine='ansible.utils.jsonschema', criteria=[oper_status, enable_check, crc_error_check], draft='draft7') }}"
 
-- assert:
+- ansible.builtin.assert:
     that:
       - "is_data_valid == false"
 
@@ -11,7 +11,7 @@
   ansible.builtin.set_fact:
     is_data_valid: "{{ show_interfaces is ansible.utils.validate(criteria=in_rate_check) }}"
 
-- assert:
+- ansible.builtin.assert:
     that:
       - "is_data_valid == true"
 
@@ -21,7 +21,7 @@
   ignore_errors: true
   register: result
 
-- assert:
+- ansible.builtin.assert:
     that:
       - "'value of draft must be one of: draft3, draft4, draft6, draft7, got: draft0' in result.msg"
 
@@ -31,7 +31,7 @@
   ignore_errors: true
   register: result
 
-- assert:
+- ansible.builtin.assert:
     that:
       - "'errors' not in result"
       - "result['failed'] == true"
@@ -43,7 +43,7 @@
   ignore_errors: true
   register: result
 
-- assert:
+- ansible.builtin.assert:
     that:
       - "result['failed'] == true"
       - "'\\'data\\' option value is invalid' in result.msg"
@@ -54,7 +54,7 @@
   ignore_errors: true
   register: result
 
-- assert:
+- ansible.builtin.assert:
     that:
       - "result['failed'] == true"
       - "'\\'criteria\\' option value is invalid' in result.msg"
@@ -71,7 +71,7 @@
   ansible.builtin.set_fact:
     is_data_valid: "{{ show_interfaces is ansible.utils.validate(engine='ansible.utils.jsonschema', criteria=[oper_status_up_criteria, enabled_check_criteria, crc_error_check_criteria], draft='draft7') }}"
 
-- assert:
+- ansible.builtin.assert:
     that:
       - "is_data_valid == false"
 
@@ -83,7 +83,7 @@
   ansible.builtin.set_fact:
     data_criteria_checks: "{{ data|ansible.utils.validate(in_rate_check_criteria) }}"
 
-- assert:
+- ansible.builtin.assert:
     that:
       - "is_data_valid == true"
 
@@ -96,6 +96,6 @@
   ansible.builtin.set_fact:
     is_data_valid: "{{ data is ansible.utils.validate(engine='ansible.utils.jsonschema', criteria=[criteria_1], draft='draft7') }}"
 
-- assert:
+- ansible.builtin.assert:
     that:
       - "is_data_valid == true"

@@ -16,7 +16,7 @@
         value: 20
   register: updated
 
-- assert:
+- ansible.builtin.assert:
     that: "{{ updated.a == expected.a }}"
   vars:
     expected:
@@ -38,7 +38,7 @@
                 - true
   register: updated
 
-- assert:
+- ansible.builtin.assert:
     that: "{{ updated.a == expected.a }}"
   vars:
     expected:
@@ -58,7 +58,7 @@
     index: "{{ a.b.c|ansible.utils.index_of('eq', 2) }}"
   register: updated
 
-- assert:
+- ansible.builtin.assert:
     that: "{{ updated.a == expected.a }}"
   vars:
     expected:

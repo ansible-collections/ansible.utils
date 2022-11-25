@@ -24,7 +24,7 @@
         - b
 
 - name: Some basic tests
-  assert:
+  ansible.builtin.assert:
     that: "{{ item.test == item.result }}"
   loop:
     - test: "{{ complex.a|ansible.utils.index_of('eq', True) }}"
@@ -70,7 +70,7 @@
                 e1: redhat
 
 - name: Find index in list of dictionaries
-  assert:
+  ansible.builtin.assert:
     that: "{{ item.test == item.result }}"
   loop:
     - test: "{{ complex.a.b.c.d|ansible.utils.index_of('eq', 'ansible', 'e1') }}"
@@ -83,7 +83,7 @@
       result: [0]
 
 - name: Test a missing key in the list of dictionaries
-  assert:
+  ansible.builtin.assert:
     that: "{{ item.test == item.result }}"
   loop:
     - test: "{{ complex.a.b.c.d|ansible.utils.index_of('eq', True, 'e2') }}"
@@ -92,7 +92,7 @@
       result: "0"
 
 - name: Test a missing key in the list of dictionaries, fail on missing
-  assert:
+  ansible.builtin.assert:
     that: "{{ item.test == item.result }}"
   loop:
     - test: "{{ complex.a.b.c.d|ansible.utils.index_of('eq', True, 'e2', fail_on_missing=True) }}"
@@ -103,5 +103,5 @@
   register: result
 
 - name: Ensure the previous test failed
-  assert:
+  ansible.builtin.assert:
     that: "{{ result.failed and 'not found in' in result.msg }}"

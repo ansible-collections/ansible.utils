@@ -30,7 +30,7 @@
   register: result
 
 - name: Assert result dicts
-  assert:
+  ansible.builtin.assert:
     that:
       - keep['starts_with'] == result['msg']
 
@@ -65,6 +65,6 @@
   register: result
 
 - name: Assert result dicts
-  assert:
+  ansible.builtin.assert:
     that:
       - keep_default['default'] == result['msg']

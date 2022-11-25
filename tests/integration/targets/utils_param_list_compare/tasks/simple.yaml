@@ -48,7 +48,7 @@
     final_network_resources: "{{ network_resources['modules']|ansible.utils.param_list_compare(provided_resources) }}"
 
 - name: Assert final network resources
-  assert:
+  ansible.builtin.assert:
     that:
       - "{{ expected_network_resources | symmetric_difference(final_network_resources['actionable']) |length\
         \ == 0 }}"

@@ -4,7 +4,7 @@
     result1: "{{ '192.168.122.10/24'|ansible.utils.previous_nth_usable(2) }}"
 
 - name: Assert result for previous_nth_usable.
-  assert:
+  ansible.builtin.assert:
     that: "{{ result1 == '192.168.122.8' }}"
 
 - name: previous_nth_usable filter
@@ -12,5 +12,5 @@
     result1: "{{ '192.168.122.1/24'|ansible.utils.previous_nth_usable(2) }}"
 
 - name: Assert result for ipv4.
-  assert:
+  ansible.builtin.assert:
     that: "{{ result1 == '' }}"

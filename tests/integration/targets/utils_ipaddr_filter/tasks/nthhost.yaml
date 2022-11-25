@@ -4,7 +4,7 @@
     result1: "{{ '10.0.0.0/8'|ansible.utils.nthhost(305) }}"
 
 - name: Assert result for nthhost.
-  assert:
+  ansible.builtin.assert:
     that: "{{ result1 == '10.0.1.49' }}"
 
 - name: nthhost filter test2
@@ -12,5 +12,5 @@
     result1: "{{ '10.0.0.0/8'|ansible.utils.nthhost(-1) }}"
 
 - name: Assert result for nthhost
-  assert:
+  ansible.builtin.assert:
     that: "{{ result1 == '10.255.255.255' }}"
