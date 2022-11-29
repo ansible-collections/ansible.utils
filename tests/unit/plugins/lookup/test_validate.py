@@ -8,6 +8,7 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
+import sys
 import unittest
 
 from ansible.errors import AnsibleLookupError
@@ -128,6 +129,10 @@ class TestValidate(unittest.TestCase):
             self._lp.run(terms, variables, **kwargs)
         self.assertIn("'criteria' option value is invalid", str(error.exception))
 
+    @unittest.skipIf(
+        sys.version_info[:2] == (3, 6),
+        "Jsonschema's new options are not supported in this python version",
+    )
     def test_invalid_validate_plugin_config_options(self):
         """Check passing invalid validate plugin options"""
 
@@ -149,6 +154,10 @@ class TestValidate(unittest.TestCase):
         self.assertIn("GigabitEthernet0/0/0/1.enabled", result[1]["data_path"])
         self.assertIn("GigabitEthernet0/0/0/0.oper_status", result[2]["data_path"])
 
+    @unittest.skipIf(
+        sys.version_info[:2] == (3, 6),
+        "Jsonschema's new options are not supported in this python version",
+    )
     def test_valid_data(self):
         """Check passing valid data as per criteria"""
 

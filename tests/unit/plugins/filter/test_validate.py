@@ -8,6 +8,7 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
+import sys
 import unittest
 
 from ansible.errors import AnsibleFilterError
@@ -135,6 +136,10 @@ class TestValidate(unittest.TestCase):
             validate(*args, **kwargs)
         self.assertIn("'criteria' option value is invalid", str(error.exception))
 
+    @unittest.skipIf(
+        sys.version_info[:2] == (3, 6),
+        "Jsonschema's new options are not supported in this python version",
+    )
     def test_invalid_validate_plugin_config_options(self):
         """Check passing invalid validate plugin options"""
 
@@ -154,6 +159,10 @@ class TestValidate(unittest.TestCase):
             str(error.exception),
         )
 
+    @unittest.skipIf(
+        sys.version_info[:2] == (3, 6),
+        "Jsonschema's new options are not supported in this python version",
+    )
     def test_valid_data(self):
         """Check passing valid data as per criteria"""
 

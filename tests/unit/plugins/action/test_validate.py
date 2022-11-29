@@ -8,6 +8,7 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
+import sys
 import unittest
 
 from ansible.errors import AnsibleActionFail
@@ -175,6 +176,10 @@ class TestValidate(unittest.TestCase):
             self._plugin.run(task_vars=None)
         self.assertIn("'criteria' option value is invalid", str(error.exception))
 
+    @unittest.skipIf(
+        sys.version_info[:2] == (3, 6),
+        "Jsonschema's new options are not supported in this python version",
+    )
     def test_invalid_validate_plugin_config_options(self):
         """Check passing invalid validate plugin options"""
 
@@ -190,6 +195,10 @@ class TestValidate(unittest.TestCase):
             result["msg"],
         )
 
+    @unittest.skipIf(
+        sys.version_info[:2] == (3, 6),
+        "Jsonschema's new options are not supported in this python version",
+    )
     def test_validate_plugin_config_options_with_draft3(self):
         """Check passing invalid validate plugin options"""
 
@@ -202,6 +211,10 @@ class TestValidate(unittest.TestCase):
         result = self._plugin.run(task_vars={"ansible_validate_jsonschema_draft": "draft3"})
         self.assertIn("All checks passed", result["msg"])
 
+    @unittest.skipIf(
+        sys.version_info[:2] == (3, 6),
+        "Jsonschema's new options are not supported in this python version",
+    )
     def test_validate_plugin_config_options_with_draft4(self):
         """Check passing invalid validate plugin options"""
 
@@ -214,6 +227,10 @@ class TestValidate(unittest.TestCase):
         result = self._plugin.run(task_vars={"ansible_validate_jsonschema_draft": "draft4"})
         self.assertIn("All checks passed", result["msg"])
 
+    @unittest.skipIf(
+        sys.version_info[:2] == (3, 6),
+        "Jsonschema's new options are not supported in this python version",
+    )
     def test_validate_plugin_config_options_with_draft6(self):
         """Check passing invalid validate plugin options"""
 
@@ -226,6 +243,10 @@ class TestValidate(unittest.TestCase):
         result = self._plugin.run(task_vars={"ansible_validate_jsonschema_draft": "draft6"})
         self.assertIn("All checks passed", result["msg"])
 
+    @unittest.skipIf(
+        sys.version_info[:2] == (3, 6),
+        "Jsonschema's new options are not supported in this python version",
+    )
     def test_invalid_data(self):
         """Check passing invalid data as per criteria"""
 
@@ -250,6 +271,10 @@ class TestValidate(unittest.TestCase):
             result["msg"],
         )
 
+    @unittest.skipIf(
+        sys.version_info[:2] == (3, 6),
+        "Jsonschema's new options are not supported in this python version",
+    )
     def test_valid_data(self):
         """Check passing valid data as per criteria"""
 
@@ -262,6 +287,10 @@ class TestValidate(unittest.TestCase):
         result = self._plugin.run(task_vars=None)
         self.assertIn("All checks passed", result["msg"])
 
+    @unittest.skipIf(
+        sys.version_info[:2] == (3, 6),
+        "Jsonschema's new options are not supported in this python version",
+    )
     def test_support_for_format(self):
         """Check passing valid data as per criteria"""
 
