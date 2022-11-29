@@ -1,6 +1,6 @@
 ---
 - name: "ipv6_sixtofour: Check if 2002:c0a8:6301:1::1 is a valid 6to4 address"
-  assert:
+  ansible.builtin.assert:
     that: "{{ '2002:c0a8:6301:1::1' is ansible.utils.ipv6_sixtofour }}"
 
 - name: "ipv6_sixtofour: Test invalidness"
@@ -8,7 +8,7 @@
     criteria_check1: "{{ '2001:c0a8:6301:1::1' is ansible.utils.ipv6_sixtofour }}"
 
 - name: "ipv6_sixtofour: Assert invalidness"
-  assert:
+  ansible.builtin.assert:
     that: "{{ criteria_check1 == false }}"
 
 - name: "ipv6_sixtofour: Test invalidness"
@@ -16,5 +16,5 @@
     criteria_check2: "{{ 'helloworld' is ansible.utils.ipv6_sixtofour }}"
 
 - name: "ipv6_sixtofour: Assert invalidness"
-  assert:
+  ansible.builtin.assert:
     that: "{{ criteria_check2 == false }}"

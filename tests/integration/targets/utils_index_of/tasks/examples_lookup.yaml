@@ -38,7 +38,7 @@
 #     - 2
 
 #- name: Find numbers greater than 1, using loop
-#  debug:
+#  ansible.builtin.debug:
 #    msg: "{{ data[item] }} is {{ test }} than {{ value }}"
 #  loop: "{{ lookup('ansible.utils.index_of', data, test, value) }}"
 #  vars:
@@ -52,7 +52,7 @@
 #   msg: 3 is > than 1
 
 - name: Find numbers greater than 1, using with
-  debug:
+  ansible.builtin.debug:
     msg: "{{ data[item] }} is {{ params.test }} than {{ params.value }}"
   with_ansible.utils.index_of: "{{ params }}"
   vars:
@@ -92,7 +92,7 @@
 #     - 3
 
 - name: Find the index of all firewalls, use in a loop
-  debug:
+  ansible.builtin.debug:
     msg: "The type of {{ device_type }} at index {{ item }} has name {{ data[item].name }}."
   loop: "{{ lookup('ansible.utils.index_of', data, 'eq', device_type, 'type') }}"
   vars:
@@ -105,7 +105,7 @@
 #   msg: The type of firewall at index 3 has name fw02.example.corp.
 
 - name: Find the index of all devices with a .corp name
-  debug:
+  ansible.builtin.debug:
     msg: "The device named {{ data[item].name }} is a {{ data[item].type }}"
   loop: "{{ lookup('ansible.utils.index_of', data, 'regex', expression, 'name') }}"
   vars:
@@ -215,7 +215,7 @@
                   index: 3
 
 - name: Find the description of loopback111, subinterface index 10
-  debug:
+  ansible.builtin.debug:
     msg: |-
       {{ data.interfaces.interface[int_idx|int]
           .subinterfaces.subinterface[subint_idx|int]

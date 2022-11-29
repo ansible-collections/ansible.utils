@@ -1,6 +1,6 @@
 ---
 - name: "ipv4_hostmask: Check if 0.0.0.255 is a hostmask"
-  assert:
+  ansible.builtin.assert:
     that: "{{ '0.0.0.255' is ansible.utils.ipv4_hostmask }}"
 
 - name: "ipv4_hostmask: Test invalidness"
@@ -8,7 +8,7 @@
     criteria_check1: "{{ '255.255.255.0' is ansible.utils.ipv4_hostmask }}"
 
 - name: "ipv4_hostmask: Assert invalidness"
-  assert:
+  ansible.builtin.assert:
     that: "{{ criteria_check1 == false }}"
 
 - name: "ipv4_hostmask: Test invalidness"
@@ -16,5 +16,5 @@
     criteria_check2: "{{ '10.1.1.1' is ansible.utils.ipv4_hostmask }}"
 
 - name: "ipv4_hostmask: Assert invalidness"
-  assert:
+  ansible.builtin.assert:
     that: "{{ criteria_check2 == false }}"

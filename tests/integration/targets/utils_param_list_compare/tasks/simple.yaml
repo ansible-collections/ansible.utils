@@ -1,5 +1,5 @@
 ---
-- debug:
+- ansible.builtin.debug:
     msg: "START param_list_compare integration tests on connection={{ ansible_connection }}"
 
 - name: Setup supported resource module list json
@@ -44,13 +44,13 @@
       - "bgp_global"
 
 - name: Get the final list of resources
-  set_fact:
+  ansible.builtin.set_fact:
     final_network_resources: "{{ network_resources['modules']|ansible.utils.param_list_compare(provided_resources) }}"
 
 - name: Assert final network resources
-  assert:
+  ansible.builtin.assert:
     that:
       - "{{ expected_network_resources | symmetric_difference(final_network_resources['actionable']) |length\
         \ == 0 }}"
-- debug:
+- ansible.builtin.debug:
     msg: "END param_list_compare integration tests on connection={{ ansible_connection }}"

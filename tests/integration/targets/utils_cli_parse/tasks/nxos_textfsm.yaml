@@ -11,7 +11,7 @@
   register: nxos_textfsm_text
 
 - name: "{{ parser }} Confirm response"
-  assert:
+  ansible.builtin.assert:
     that: "{{ item }}"
   with_items:
     - "{{ nxos_textfsm_text['parsed'] == nxos_textfsm_text['parsed'] }}"

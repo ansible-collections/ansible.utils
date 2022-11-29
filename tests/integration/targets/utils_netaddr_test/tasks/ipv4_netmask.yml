@@ -1,6 +1,6 @@
 ---
 - name: "ipv4_netmask: Check if 255.255.255.0 is a netmask"
-  assert:
+  ansible.builtin.assert:
     that: "{{ '255.255.255.0' is ansible.utils.ipv4_netmask }}"
 
 - name: "ipv4_netmask: Test invalidness"
@@ -8,7 +8,7 @@
     criteria_check1: "{{ '0.0.0.255' is ansible.utils.ipv4_netmask }}"
 
 - name: "ipv4_netmask: Assert invalidness"
-  assert:
+  ansible.builtin.assert:
     that: "{{ criteria_check1 == false }}"
 
 - name: "ipv4_netmask: Test invalidness"
@@ -16,5 +16,5 @@
     criteria_check2: "{{ '10.1.1.1' is ansible.utils.ipv4_netmask }}"
 
 - name: "ipv4_netmask: Assert invalidness"
-  assert:
+  ansible.builtin.assert:
     that: "{{ criteria_check2 == false }}"

@@ -4,7 +4,7 @@
     result1: "{{ '192.168.0.0/24'|ansible.utils.network_in_network('192.168.0.1') }}"
 
 - name: Assert result for network_in_network.
-  assert:
+  ansible.builtin.assert:
     that: "{{ result1 == True }}"
 
 - name: network_in_network filter test2
@@ -12,7 +12,7 @@
     result1: "{{ '192.168.0.0/24'|ansible.utils.network_in_network('10.0.0.1') }}"
 
 - name: Assert result for network_in_network
-  assert:
+  ansible.builtin.assert:
     that: "{{ result1 == False }}"
 
 - name: network_in_network filter test3
@@ -20,5 +20,5 @@
     result1: "{{ '192.168.0.0/16'|ansible.utils.network_in_network('192.168.0.0/24') }}"
 
 - name: Assert result for network_in_network
-  assert:
+  ansible.builtin.assert:
     that: "{{ result1 == True }}"
