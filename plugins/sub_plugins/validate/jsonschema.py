@@ -78,21 +78,6 @@ try:
 except ImportError:
     HAS_JSONSCHEMA = False
 
-JSONSCHEMA_DRAFTS = {
-    "draft3": {"validator": "Draft3Validator", "format_checker": "draft3_format_checker"},
-    "draft4": {"validator": "Draft4Validator", "format_checker": "draft4_format_checker"},
-    "draft6": {"validator": "Draft6Validator", "format_checker": "draft6_format_checker"},
-    "draft7": {"validator": "Draft7Validator", "format_checker": "draft7_format_checker"},
-    "2019-09": {
-        "validator": "Draft201909Validator",
-        "format_checker": "draft201909_format_checker",
-    },
-    "2020-12": {
-        "validator": "Draft202012Validator",
-        "format_checker": "draft202012_format_checker",
-    },
-}
-
 
 def to_path(fpath):
     return ".".join(str(index) for index in fpath)
@@ -109,6 +94,22 @@ def json_path(absolute_path):
 
 
 class Validate(ValidateBase):
+    # All available schema versions with the format_check and validator class names.
+    _JSONSCHEMA_DRAFTS = {
+        "draft3": {"validator": "Draft3Validator", "format_checker": "draft3_format_checker"},
+        "draft4": {"validator": "Draft4Validator", "format_checker": "draft4_format_checker"},
+        "draft6": {"validator": "Draft6Validator", "format_checker": "draft6_format_checker"},
+        "draft7": {"validator": "Draft7Validator", "format_checker": "draft7_format_checker"},
+        "2019-09": {
+            "validator": "Draft201909Validator",
+            "format_checker": "draft201909_format_checker",
+        },
+        "2020-12": {
+            "validator": "Draft202012Validator",
+            "format_checker": "draft202012_format_checker",
+        },
+    }
+
     @staticmethod
     def _check_reqs():
         """Check the prerequisites are installed for jsonschema
@@ -156,6 +157,28 @@ class Validate(ValidateBase):
             )
             raise AnsibleError(msg)
 
+    def _check_drafts(self):
+        """For every possible draft check if our jsonschema version supports it and exchange the class names with
+        the actual classes. If it is not supported the draft is removed from the list.
+        """
+        for draft in list(self._JSONSCHEMA_DRAFTS.keys()):
+            draft_config = self._JSONSCHEMA_DRAFTS[draft]
+            try:
+                validator_class = getattr(jsonschema, draft_config["validator"])
+            except AttributeError:
+                display.vvv(
+                    'jsonschema draft "{draft}" not supported in this version'.format(draft=draft)
+                )
+                del self._JSONSCHEMA_DRAFTS[draft]
+                continue
+            draft_config["validator"] = validator_class
+            try:
+                format_checker_class = validator_class.FORMAT_CHECKER
+            except AttributeError:
+                # Older jsonschema version
+                format_checker_class = getattr(jsonschema, draft_config["format_checker"])
+            draft_config["format_checker"] = format_checker_class
+
     def validate(self):
         """Std entry point for a validate execution
 
@@ -171,6 +194,7 @@ class Validate(ValidateBase):
         """
         self._check_reqs()
         self._check_args()
+        self._check_drafts()
 
         try:
             self._validate_jsonschema()
@@ -189,10 +213,10 @@ class Validate(ValidateBase):
         for criteria in self._criteria:
             format_checker = None
             validator_class = None
-            if draft in JSONSCHEMA_DRAFTS:
+            if draft in self._JSONSCHEMA_DRAFTS:
                 try:
-                    validator_class = getattr(jsonschema, JSONSCHEMA_DRAFTS[draft]["validator"])
-                except AttributeError:
+                    validator_class = self._JSONSCHEMA_DRAFTS[draft]["validator"]
+                except KeyError:
                     display.vvv(
                         'No jsonschema validator for "{draft}", falling back to autodetection.'.format(
                             draft=draft,
@@ -207,15 +231,15 @@ class Validate(ValidateBase):
                 try:
                     format_checker = validator_class.FORMAT_CHECKER
                 except AttributeError:
-                    # Older jsonschema versions do not support the FORMAT_CHECKER attribute
-                    if draft in JSONSCHEMA_DRAFTS:
-                        try:
-                            format_checker = getattr(
-                                jsonschema,
-                                JSONSCHEMA_DRAFTS[draft]["format_checker"],
+                    for draft, draft_config in self._JSONSCHEMA_DRAFTS.items():
+                        if validator_class == draft_config["validator"]:
+                            display.vvv(
+                                "Using format_checker for {draft} validator".format(draft=draft)
                             )
-                        except AttributeError:
-                            display.warning("jsonschema format checks not available")
+                            format_checker = draft_config["format_checker"]
+                            break
+                    else:
+                        display.warning("jsonschema format checks not available")
 
             validator = validator_class(criteria, format_checker=format_checker)
             validation_errors = sorted(validator.iter_errors(self._data), key=lambda e: e.path)
