@@ -61,6 +61,7 @@ from ansible.utils.display import Display
 from ansible_collections.ansible.utils.plugins.module_utils.common.utils import to_list
 from ansible_collections.ansible.utils.plugins.plugin_utils.base.validate import ValidateBase
 
+
 display = Display()
 
 # PY2 compatibility for JSONDecodeError
@@ -82,9 +83,16 @@ JSONSCHEMA_DRAFTS = {
     "draft4": {"validator": "Draft4Validator", "format_checker": "draft4_format_checker"},
     "draft6": {"validator": "Draft6Validator", "format_checker": "draft6_format_checker"},
     "draft7": {"validator": "Draft7Validator", "format_checker": "draft7_format_checker"},
-    "2019-09": {"validator": "Draft201909Validator", "format_checker": "draft201909_format_checker"},
-    "2020-12": {"validator": "Draft202012Validator", "format_checker": "draft202012_format_checker"},
+    "2019-09": {
+        "validator": "Draft201909Validator",
+        "format_checker": "draft201909_format_checker",
+    },
+    "2020-12": {
+        "validator": "Draft202012Validator",
+        "format_checker": "draft202012_format_checker",
+    },
 }
+
 
 def to_path(fpath):
     return ".".join(str(index) for index in fpath)
@@ -183,9 +191,13 @@ class Validate(ValidateBase):
             validator_class = None
             if draft in JSONSCHEMA_DRAFTS:
                 try:
-                    validator_class = getattr(jsonschema, JSONSCHEMA_DRAFTS[draft]['validator'])
+                    validator_class = getattr(jsonschema, JSONSCHEMA_DRAFTS[draft]["validator"])
                 except AttributeError:
-                    display.vvv('No jsonschema validator for "{draft}", falling back to autodetection.'.format(draft=draft))
+                    display.vvv(
+                        'No jsonschema validator for "{draft}", falling back to autodetection.'.format(
+                            draft=draft
+                        )
+                    )
             if validator_class is None:
                 # Either no draft was specified or specified draft has no validator class
                 # in installed jsonschema version. Do autodetection instead.
@@ -198,7 +210,9 @@ class Validate(ValidateBase):
                     # Older jsonschema versions do not support the FORMAT_CHECKER attribute
                     if draft in JSONSCHEMA_DRAFTS:
                         try:
-                            format_checker = getattr(jsonschema, JSONSCHEMA_DRAFTS[draft]['format_checker'])
+                            format_checker = getattr(
+                                jsonschema, JSONSCHEMA_DRAFTS[draft]["format_checker"]
+                            )
                         except AttributeError:
                             display.warning("jsonschema format checks not available")
 
