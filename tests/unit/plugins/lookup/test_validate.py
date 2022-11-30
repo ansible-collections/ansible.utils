@@ -8,7 +8,6 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-import sys
 import unittest
 
 from ansible.errors import AnsibleLookupError
