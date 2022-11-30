@@ -56,10 +56,12 @@ from ansible.errors import AnsibleError
 from ansible.module_utils._text import to_text
 from ansible.module_utils.basic import missing_required_lib
 from ansible.module_utils.six import string_types
+from ansible.utils.display import Display
 
 from ansible_collections.ansible.utils.plugins.module_utils.common.utils import to_list
 from ansible_collections.ansible.utils.plugins.plugin_utils.base.validate import ValidateBase
 
+display = Display()
 
 # PY2 compatibility for JSONDecodeError
 try:
@@ -75,6 +77,14 @@ try:
 except ImportError:
     HAS_JSONSCHEMA = False
 
+JSONSCHEMA_DRAFTS = {
+    "draft3": {"validator": "Draft3Validator", "format_checker": "draft3_format_checker"},
+    "draft4": {"validator": "Draft4Validator", "format_checker": "draft4_format_checker"},
+    "draft6": {"validator": "Draft6Validator", "format_checker": "draft6_format_checker"},
+    "draft7": {"validator": "Draft7Validator", "format_checker": "draft7_format_checker"},
+    "2019-09": {"validator": "Draft201909Validator", "format_checker": "draft201909_format_checker"},
+    "2020-12": {"validator": "Draft202012Validator", "format_checker": "draft202012_format_checker"},
+}
 
 def to_path(fpath):
     return ".".join(str(index) for index in fpath)
@@ -169,24 +179,30 @@ class Validate(ValidateBase):
         error_messages = []
 
         for criteria in self._criteria:
-            if draft == "draft3":
-                validator = jsonschema.Draft3Validator(criteria)
-            elif draft == "draft4":
-                validator = jsonschema.Draft4Validator(criteria)
-            elif draft == "draft6":
-                validator = jsonschema.Draft6Validator(criteria)
-            elif draft == "draft7":
-                validator = jsonschema.Draft7Validator(criteria)
-            elif draft == "2019-09":
-                validator = jsonschema.Draft201909Validator(criteria)
-            elif draft == "2020-12":
-                validator = jsonschema.Draft202012Validator(criteria)
-            else:
-                validator = jsonschema.validators.validator_for(criteria)(criteria)
+            format_checker = None
+            validator_class = None
+            if draft in JSONSCHEMA_DRAFTS:
+                try:
+                    validator_class = getattr(jsonschema, JSONSCHEMA_DRAFTS[draft]['validator'])
+                except AttributeError:
+                    display.vvv('No jsonschema validator for "{draft}", falling back to autodetection.'.format(draft=draft))
+            if validator_class is None:
+                # Either no draft was specified or specified draft has no validator class
+                # in installed jsonschema version. Do autodetection instead.
+                validator_class = jsonschema.validators.validator_for(criteria)
 
             if check_format:
-                validator = validator.evolve(format_checker=validator.FORMAT_CHECKER)
+                try:
+                    format_checker = validator_class.FORMAT_CHECKER
+                except AttributeError:
+                    # Older jsonschema versions do not support the FORMAT_CHECKER attribute
+                    if draft in JSONSCHEMA_DRAFTS:
+                        try:
+                            format_checker = getattr(jsonschema, JSONSCHEMA_DRAFTS[draft]['format_checker'])
+                        except AttributeError:
+                            display.warning("jsonschema format checks not available")
 
+            validator = validator_class(criteria, format_checker=format_checker)
             validation_errors = sorted(validator.iter_errors(self._data), key=lambda e: e.path)
 
             if validation_errors:

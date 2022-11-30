@@ -112,10 +112,6 @@ CRITERIA_FORMAT_SUPPORT_CHECK = {
 }
 
 
-@unittest.skipIf(
-    sys.version_info[:2] == (3, 6),
-    "Jsonschema version 4.5 is not supported in this python version",
-)
 class TestValidate(unittest.TestCase):
     def setUp(self):
         task = MagicMock(Task)
