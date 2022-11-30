@@ -15,7 +15,7 @@
     result1: "{{ value|ansible.utils.ipwrap }}"
 
 - name: Assert result for ipwrap.
-  assert:
+  ansible.builtin.assert:
     that: "{{ result1 == ipwrap_result1 }}"
 
 - name: ipwrap filter with single value
@@ -23,5 +23,5 @@
     result4: "{{ 'fe80::100/10' | ansible.utils.ipwrap }}"
 
 - name: Assert result for ipv6 filter with single value
-  assert:
+  ansible.builtin.assert:
     that: "{{ result4 == '[fe80::100]/10' }}"

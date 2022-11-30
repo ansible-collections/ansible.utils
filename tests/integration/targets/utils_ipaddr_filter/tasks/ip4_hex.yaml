@@ -4,7 +4,7 @@
     result1: "{{ '192.168.1.5'|ansible.utils.ip4_hex }}"
 
 - name: Assert result for ip4_hex.
-  assert:
+  ansible.builtin.assert:
     that: "{{ result1 == 'c0a80105' }}"
 
 - name: ip4_hex with delimiter
@@ -12,5 +12,5 @@
     result1: "{{ '192.168.1.5'|ansible.utils.ip4_hex(':') }}"
 
 - name: Assert result for ip4_hex.
-  assert:
+  ansible.builtin.assert:
     that: "{{ result1 == 'c0:a8:01:05' }}"

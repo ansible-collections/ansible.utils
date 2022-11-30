@@ -11,7 +11,7 @@
   register: nxos_xml_text
 
 - name: "{{ parser }} Confirm response"
-  assert:
+  ansible.builtin.assert:
     that: "{{ item }}"
   with_items:
     - "{{ nxos_xml_text['parsed'] == nxos_xml_text_parsed }}"

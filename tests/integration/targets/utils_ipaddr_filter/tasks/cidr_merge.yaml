@@ -11,7 +11,7 @@
     result1: "{{ value|ansible.utils.cidr_merge }}"
 
 - name: Assert result for cidr_merge
-  assert:
+  ansible.builtin.assert:
     that: "{{ result1 == cidr_result1 }}"
 
 - name: cidr_merge with span action
@@ -27,5 +27,5 @@
     result2: "{{ value|ansible.utils.cidr_merge('span') }}"
 
 - name: Assert result for cidr_merge(span)
-  assert:
+  ansible.builtin.assert:
     that: "{{ result2 == cidr_result2 }}"

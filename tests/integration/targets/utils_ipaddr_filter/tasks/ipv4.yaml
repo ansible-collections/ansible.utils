@@ -15,7 +15,7 @@
     result1: "{{ value|ansible.utils.ipv4 }}"
 
 - name: Assert result for ipv4.
-  assert:
+  ansible.builtin.assert:
     that: "{{ result1 == result1_val }}"
 
 - name: convert ipv4 to ipv6 filter
@@ -23,7 +23,7 @@
     result2: "{{ value|ansible.utils.ipv4('ipv6') }}"
 
 - name: Assert result for ipv6.
-  assert:
+  ansible.builtin.assert:
     that: "{{ result2 == result2_val }}"
 
 - name: Ipv4 filter with address query
@@ -31,7 +31,7 @@
     result3: "{{ value|ansible.utils.ipv4('address') }}"
 
 - name: Assert result for ipv4 filter with address query.
-  assert:
+  ansible.builtin.assert:
     that: "{{ result3 == result3_val }}"
 
 - name: ipv4 filter with single value
@@ -39,5 +39,5 @@
     result4: "{{ '192.24.2.1' | ansible.utils.ipv4('ipv6') }}"
 
 - name: Assert result for ipv4 filter with single value
-  assert:
+  ansible.builtin.assert:
     that: "{{ result4 == '::ffff:192.24.2.1/128' }}"

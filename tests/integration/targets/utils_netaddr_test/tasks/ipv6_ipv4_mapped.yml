@@ -1,6 +1,6 @@
 ---
 - name: "ipv6_ipv4_mapped: Check if ::FFFF:10.1.1.1 is a valid IPv4-mapped IPv6 address"
-  assert:
+  ansible.builtin.assert:
     that: "{{ '::FFFF:10.1.1.1' is ansible.utils.ipv6_ipv4_mapped }}"
 
 - name: "ipv6_ipv4_mapped: Test invalidness"
@@ -8,7 +8,7 @@
     criteria_check1: "{{ '::AAAA:10.1.1.1' is ansible.utils.ipv6_ipv4_mapped }}"
 
 - name: "ipv6_ipv4_mapped: Assert invalidness"
-  assert:
+  ansible.builtin.assert:
     that: "{{ criteria_check1 == false }}"
 
 - name: "ipv6_ipv4_mapped: Test invalidness"
@@ -16,5 +16,5 @@
     criteria_check2: "{{ 'hello-world' is ansible.utils.ipv6_ipv4_mapped }}"
 
 - name: "ipv6_ipv4_mapped: Assert invalidness"
-  assert:
+  ansible.builtin.assert:
     that: "{{ criteria_check2 == false }}"

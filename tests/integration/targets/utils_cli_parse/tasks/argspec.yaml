@@ -10,7 +10,7 @@
   ignore_errors: true
 
 - name: "{{ parser }} Check argspec fail"
-  assert:
+  ansible.builtin.assert:
     that: "{{ msg in argfail.errors }}"
   vars:
     msg: "parameters are mutually exclusive: command|template_path found in parser"
@@ -26,7 +26,7 @@
   ignore_errors: true
 
 - name: "{{ parser }} Check argspec fail"
-  assert:
+  ansible.builtin.assert:
     that: "{{ msg in argfail.errors }}"
   vars:
     msg: "parameters are mutually exclusive: command|text"
@@ -40,7 +40,7 @@
   ignore_errors: true
 
 - name: "{{ parser }} Check argspec fail"
-  assert:
+  ansible.builtin.assert:
     that: "{{ msg in argfail.errors }}"
   vars:
     msg: "one of the following is required: command, text"
@@ -55,7 +55,7 @@
   ignore_errors: true
 
 - name: "{{ parser }} Check arspec fail"
-  assert:
+  ansible.builtin.assert:
     that: "{{ msg in argfail.msg }}"
   vars:
     msg: "Parser name should be provided as a full name including collection"

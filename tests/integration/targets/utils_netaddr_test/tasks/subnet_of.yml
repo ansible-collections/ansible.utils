@@ -1,6 +1,6 @@
 ---
 - name: "subnet_of: Check if 10.1.1.0/24 is a subnet of 10.0.0.0/8"
-  assert:
+  ansible.builtin.assert:
     that: "{{ '10.1.1.0/24' is ansible.utils.subnet_of '10.0.0.0/8' }}"
 
 - name: "subnet_of: Test invalidness"
@@ -8,7 +8,7 @@
     criteria_check1: "{{ '10.0.0.0/8' is ansible.utils.subnet_of '10.1.1.0/24' }}"
 
 - name: "subnet_of: Assert invalidness"
-  assert:
+  ansible.builtin.assert:
     that: "{{ criteria_check1 == false }}"
 
 - name: "subnet_of: Test invalidness"
@@ -16,5 +16,5 @@
     criteria_check2: "{{ '192.168.1.0/24' is ansible.utils.subnet_of '10.0.0.0/8' }}"
 
 - name: "subnet_of: Assert invalidness"
-  assert:
+  ansible.builtin.assert:
     that: "{{ criteria_check2 == false }}"
