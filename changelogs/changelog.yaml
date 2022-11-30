@@ -296,3 +296,16 @@ releases:
       - tests.yaml
       - use-before.yaml
     release_date: "2022-11-03"
+  2.8.0:
+    changes:
+      bugfixes:
+        - Accept int input for ipaddr filters.
+      minor_changes:
+        - to_xml - Added support for using spaces to indent an XML doc via a new `indent`
+          parameter.
+    fragments:
+      - Ansible_lint_fix1.yaml
+      - Bugfix_162_accept_int_input.yaml
+      - pre-commit.yaml
+      - to_xml_indent_with_spaces.yaml
+    release_date: "2022-11-30"

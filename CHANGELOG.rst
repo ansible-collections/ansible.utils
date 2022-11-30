@@ -5,6 +5,19 @@ Ansible Utils Collection Release Notes
 .. contents:: Topics
 
 
+v2.8.0
+======
+
+Minor Changes
+-------------
+
+- to_xml - Added support for using spaces to indent an XML doc via a new `indent` parameter.
+
+Bugfixes
+--------
+
+- Accept int input for ipaddr filters.
+
 v2.7.0
 ======
 
