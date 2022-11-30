@@ -213,15 +213,14 @@ class Validate(ValidateBase):
         for criteria in self._criteria:
             format_checker = None
             validator_class = None
-            if draft in self._JSONSCHEMA_DRAFTS:
-                try:
-                    validator_class = self._JSONSCHEMA_DRAFTS[draft]["validator"]
-                except KeyError:
-                    display.vvv(
-                        'No jsonschema validator for "{draft}", falling back to autodetection.'.format(
-                            draft=draft,
-                        ),
-                    )
+            try:
+                validator_class = self._JSONSCHEMA_DRAFTS[draft]["validator"]
+            except KeyError:
+                display.vvv(
+                    'No jsonschema validator for "{draft}", falling back to autodetection.'.format(
+                        draft=draft,
+                    ),
+                )
             if validator_class is None:
                 # Either no draft was specified or specified draft has no validator class
                 # in installed jsonschema version. Do autodetection instead.
@@ -231,6 +230,9 @@ class Validate(ValidateBase):
                 try:
                     format_checker = validator_class.FORMAT_CHECKER
                 except AttributeError:
+                    # On older jsonschema versions there is no connection between a validator and the correct format
+                    # checker. So we iterate through our known list of validators and if one matches the current class
+                    # we use the format_checker from that validator.
                     for draft, draft_config in self._JSONSCHEMA_DRAFTS.items():
                         if validator_class == draft_config["validator"]:
                             display.vvv(
