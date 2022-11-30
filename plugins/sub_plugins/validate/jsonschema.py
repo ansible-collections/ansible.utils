@@ -167,7 +167,7 @@ class Validate(ValidateBase):
                 validator_class = getattr(jsonschema, draft_config["validator"])
             except AttributeError:
                 display.vvv(
-                    'jsonschema draft "{draft}" not supported in this version'.format(draft=draft)
+                    'jsonschema draft "{draft}" not supported in this version'.format(draft=draft),
                 )
                 del self._JSONSCHEMA_DRAFTS[draft]
                 continue
@@ -234,7 +234,7 @@ class Validate(ValidateBase):
                     for draft, draft_config in self._JSONSCHEMA_DRAFTS.items():
                         if validator_class == draft_config["validator"]:
                             display.vvv(
-                                "Using format_checker for {draft} validator".format(draft=draft)
+                                "Using format_checker for {draft} validator".format(draft=draft),
                             )
                             format_checker = draft_config["format_checker"]
                             break
