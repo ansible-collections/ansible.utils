@@ -195,8 +195,8 @@ class Validate(ValidateBase):
                 except AttributeError:
                     display.vvv(
                         'No jsonschema validator for "{draft}", falling back to autodetection.'.format(
-                            draft=draft
-                        )
+                            draft=draft,
+                        ),
                     )
             if validator_class is None:
                 # Either no draft was specified or specified draft has no validator class
@@ -211,7 +211,8 @@ class Validate(ValidateBase):
                     if draft in JSONSCHEMA_DRAFTS:
                         try:
                             format_checker = getattr(
-                                jsonschema, JSONSCHEMA_DRAFTS[draft]["format_checker"]
+                                jsonschema,
+                                JSONSCHEMA_DRAFTS[draft]["format_checker"],
                             )
                         except AttributeError:
                             display.warning("jsonschema format checks not available")
