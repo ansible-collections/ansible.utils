@@ -96,17 +96,17 @@ def json_path(absolute_path):
 class Validate(ValidateBase):
     # All available schema versions with the format_check and validator class names.
     _JSONSCHEMA_DRAFTS = {
-        "draft3": {"validator": "Draft3Validator", "format_checker": "draft3_format_checker"},
-        "draft4": {"validator": "Draft4Validator", "format_checker": "draft4_format_checker"},
-        "draft6": {"validator": "Draft6Validator", "format_checker": "draft6_format_checker"},
-        "draft7": {"validator": "Draft7Validator", "format_checker": "draft7_format_checker"},
+        "draft3": {"validator_name": "Draft3Validator", "format_checker_name": "draft3_format_checker"},
+        "draft4": {"validator_name": "Draft4Validator", "format_checker_name": "draft4_format_checker"},
+        "draft6": {"validator_name": "Draft6Validator", "format_checker_name": "draft6_format_checker"},
+        "draft7": {"validator_name": "Draft7Validator", "format_checker_name": "draft7_format_checker"},
         "2019-09": {
-            "validator": "Draft201909Validator",
-            "format_checker": "draft201909_format_checker",
+            "validator_name": "Draft201909Validator",
+            "format_checker_name": "draft201909_format_checker",
         },
         "2020-12": {
-            "validator": "Draft202012Validator",
-            "format_checker": "draft202012_format_checker",
+            "validator_name": "Draft202012Validator",
+            "format_checker_name": "draft202012_format_checker",
         },
     }
 
@@ -164,7 +164,7 @@ class Validate(ValidateBase):
         for draft in list(self._JSONSCHEMA_DRAFTS.keys()):
             draft_config = self._JSONSCHEMA_DRAFTS[draft]
             try:
-                validator_class = getattr(jsonschema, draft_config["validator"])
+                validator_class = getattr(jsonschema, draft_config["validator_name"])
             except AttributeError:
                 display.vvv(
                     'jsonschema draft "{draft}" not supported in this version'.format(draft=draft),
@@ -176,7 +176,7 @@ class Validate(ValidateBase):
                 format_checker_class = validator_class.FORMAT_CHECKER
             except AttributeError:
                 # Older jsonschema version
-                format_checker_class = getattr(jsonschema, draft_config["format_checker"])
+                format_checker_class = getattr(jsonschema, draft_config["format_checker_name"])
             draft_config["format_checker"] = format_checker_class
 
     def validate(self):
