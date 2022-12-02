@@ -24,7 +24,8 @@ DOCUMENTATION = """
           for the validating the data. The I(criteria) option in the validate
           plugin should follow the specification as mentioned by this option.
           If this option is not specified, jsonschema will use the best validator
-          for the I($schema) field in the criteria.
+          for the I($schema) field in the criteria. Specifications 2019-09 and
+          2020-12 are only available from jsonschema version 4.0 onwards.
         choices:
         - draft3
         - draft4
@@ -225,14 +226,15 @@ class Validate(ValidateBase):
         for criteria in self._criteria:
             format_checker = None
             validator_class = None
-            try:
-                validator_class = self._JSONSCHEMA_DRAFTS[draft]["validator"]
-            except KeyError:
-                display.vvv(
-                    'No jsonschema validator for "{draft}", falling back to autodetection.'.format(
-                        draft=draft,
-                    ),
-                )
+            if draft is not None:
+                try:
+                    validator_class = self._JSONSCHEMA_DRAFTS[draft]["validator"]
+                except KeyError:
+                    display.warning(
+                        'No jsonschema validator available for "{draft}", falling back to autodetection. A newer version of jsonschema might support this draft.'.format(
+                            draft=draft,
+                        ),
+                    )
             if validator_class is None:
                 # Either no draft was specified or specified draft has no validator class
                 # in installed jsonschema version. Do autodetection instead.
@@ -242,8 +244,9 @@ class Validate(ValidateBase):
                 try:
                     format_checker = validator_class.FORMAT_CHECKER
                 except AttributeError:
-                    # On older jsonschema versions there is no connection between a validator and the correct format
-                    # checker. So we iterate through our known list of validators and if one matches the current class
+                    # TODO: Remove when Python 3.6 support is dropped.
+                    # On jsonschema<4.5, there is no connection between a validator and the correct format checker.
+                    # So we iterate through our known list of validators and if one matches the current class
                     # we use the format_checker from that validator.
                     for draft, draft_config in self._JSONSCHEMA_DRAFTS.items():
                         if validator_class == draft_config["validator"]:
