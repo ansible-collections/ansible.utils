@@ -96,10 +96,22 @@ def json_path(absolute_path):
 class Validate(ValidateBase):
     # All available schema versions with the format_check and validator class names.
     _JSONSCHEMA_DRAFTS = {
-        "draft3": {"validator_name": "Draft3Validator", "format_checker_name": "draft3_format_checker"},
-        "draft4": {"validator_name": "Draft4Validator", "format_checker_name": "draft4_format_checker"},
-        "draft6": {"validator_name": "Draft6Validator", "format_checker_name": "draft6_format_checker"},
-        "draft7": {"validator_name": "Draft7Validator", "format_checker_name": "draft7_format_checker"},
+        "draft3": {
+            "validator_name": "Draft3Validator",
+            "format_checker_name": "draft3_format_checker",
+        },
+        "draft4": {
+            "validator_name": "Draft4Validator",
+            "format_checker_name": "draft4_format_checker",
+        },
+        "draft6": {
+            "validator_name": "Draft6Validator",
+            "format_checker_name": "draft6_format_checker",
+        },
+        "draft7": {
+            "validator_name": "Draft7Validator",
+            "format_checker_name": "draft7_format_checker",
+        },
         "2019-09": {
             "validator_name": "Draft201909Validator",
             "format_checker_name": "draft201909_format_checker",
