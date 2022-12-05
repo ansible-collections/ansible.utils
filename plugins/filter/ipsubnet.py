@@ -308,8 +308,12 @@ def ipsubnet(value, query="", index=None):
                 return False
             return to_text(value.supernet(query)[index])
         elif vtype == "network":
+            subnets = 2 ** (query - value.prefixlen)
             if index < 0:
-                index = index + 2 ** (query - value.prefixlen)
+                index = index + subnets
+            if index < 0 or index >= subnets:
+                # subnet index out of range
+                return False
             return to_text(
                 netaddr.IPNetwork(
                     to_text(
