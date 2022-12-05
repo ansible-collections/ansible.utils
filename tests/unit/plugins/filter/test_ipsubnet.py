@@ -14,6 +14,8 @@ __metaclass__ = type
 
 import unittest
 
+import pytest
+
 from ansible_collections.ansible.utils.plugins.filter.ipsubnet import _ipsubnet
 
 
@@ -145,25 +147,33 @@ class TestIpSubnet(unittest.TestCase):
         result = _ipsubnet(*args)
         self.assertEqual(result, "5")
 
-    def test_ipvsubnet_get_subnet(self):
-        test_cases = [
-            [["", "2600:1f1c:1b3:8f00::/56", 64, 0], "2600:1f1c:1b3:8f00::/64"],
-            [["", "2600:1f1c:1b3:8f00::/56", "64", "1"], "2600:1f1c:1b3:8f01::/64"],
-            [["", "2600:1f1c:1b3:8f00::/56", "64", "2"], "2600:1f1c:1b3:8f02::/64"],
-            [["", "2600:1f1c:1b3:8f00::/56", "64", "-2"], "2600:1f1c:1b3:8ffe::/64"],
-            [["", "2600:1f1c:1b3:8f00::/56", "64", "-1"], "2600:1f1c:1b3:8fff::/64"],
-            [["", "2600:1f1c:1b3:8f00::/56", "65", "0"], "2600:1f1c:1b3:8f00::/65"],
-            [["", "2600:1f1c:1b3:8f00::/56", "65", "1"], "2600:1f1c:1b3:8f00:8000::/65"],
-            [["", "2600:1f1c:1b3:8f00::/56", "65", "2"], "2600:1f1c:1b3:8f01::/65"],
-            [["", "2600:1f1c:1b3:8f00::/56", "65", "-2"], "2600:1f1c:1b3:8fff::/65"],
-            [["", "2600:1f1c:1b3:8f00::/56", "65", "-1"], "2600:1f1c:1b3:8fff:8000::/65"],
-            [["", "2600:1f1c:1b3:8f00::/56", "64", "257"], False],  # subnet id too big for /64
-            [["", "2600:1f1c:1b3:8f00:::/56", "64", "0"], False],  # Too many colons
-            [["", "2600:1f1c:1b3:8f00::/56", "129", "0"], False],  # Must be /128 or less
-        ]
-        for args, expected in test_cases:
-            self.assertEqual(
-                _ipsubnet(*args),
-                expected,
-                msg="Testing {0}".format(args),
-            )
+
+@pytest.mark.parametrize(
+    "test_case,expected",
+    [
+        [["2600:1f1c:1b3:8f00::/56", 64, 0], "2600:1f1c:1b3:8f00::/64"],
+        [["2600:1f1c:1b3:8f00::/56", "64", "1"], "2600:1f1c:1b3:8f01::/64"],
+        [["2600:1f1c:1b3:8f00::/56", "64", "2"], "2600:1f1c:1b3:8f02::/64"],
+        [["2600:1f1c:1b3:8f00::/56", "64", "-2"], "2600:1f1c:1b3:8ffe::/64"],
+        [["2600:1f1c:1b3:8f00::/56", "64", "-1"], "2600:1f1c:1b3:8fff::/64"],
+        [["2600:1f1c:1b3:8f00::/56", "65", "0"], "2600:1f1c:1b3:8f00::/65"],
+        [["2600:1f1c:1b3:8f00::/56", "65", "1"], "2600:1f1c:1b3:8f00:8000::/65"],
+        [["2600:1f1c:1b3:8f00::/56", "65", "2"], "2600:1f1c:1b3:8f01::/65"],
+        [["2600:1f1c:1b3:8f00::/56", "65", "-2"], "2600:1f1c:1b3:8fff::/65"],
+        [["2600:1f1c:1b3:8f00::/56", "65", "-1"], "2600:1f1c:1b3:8fff:8000::/65"],
+    ],
+)
+def test_ipvsubnet_get_subnet(test_case, expected):
+    assert _ipsubnet("", *test_case) == expected
+
+
+@pytest.mark.parametrize(
+    "test_case",
+    [
+        ["2600:1f1c:1b3:8f00::/56", "64", "257"],  # subnet id too big for /64
+        ["2600:1f1c:1b3:8f00:::/56", "64", "0"],  # Too many colons
+        ["2600:1f1c:1b3:8f00::/56", "129", "0"],  # Must be /128 or less
+    ],
+)
+def test_ipvsubnet_get_subnet_fail(test_case):
+    assert _ipsubnet("", *test_case) is False
