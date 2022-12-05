@@ -112,12 +112,12 @@ def _mac(mac):
     _validate_args("mac", DOCUMENTATION, params)
 
     # IEEE EUI-48 upper and lower, commom unix
-    re1 = r"^(?i)([0-9a-f]{2}[:-]){5}[0-9a-f]{2}$"
+    re1 = r"^([0-9a-f]{2}[:-]){5}[0-9a-f]{2}$"
     # Cisco triple hextex
-    re2 = r"^(?i)([0-9a-f]{4}\.[0-9a-f]{4}\.[0-9a-f]{4})$"
+    re2 = r"^([0-9a-f]{4}\.[0-9a-f]{4}\.[0-9a-f]{4})$"
     # Bare
-    re3 = r"^(?i)[0-9a-f]{12}$"
-    regex = "{re1}|{re2}|{re3}".format(re1=re1, re2=re2, re3=re3)
+    re3 = r"^[0-9a-f]{12}$"
+    regex = "(?i){re1}|{re2}|{re3}".format(re1=re1, re2=re2, re3=re3)
     return bool(re.match(regex, mac))
 
 
