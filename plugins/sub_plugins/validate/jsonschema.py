@@ -231,7 +231,7 @@ class Validate(ValidateBase):
                     validator_class = self._JSONSCHEMA_DRAFTS[draft]["validator"]
                 except KeyError:
                     display.warning(
-                        'No jsonschema validator available for "{draft}", falling back to autodetection. A newer version of jsonschema might support this draft.'.format(
+                        'No validator available for "{draft}", falling back to autodetection. A newer version of jsonschema might support this draft.'.format(
                             draft=draft,
                         ),
                     )
