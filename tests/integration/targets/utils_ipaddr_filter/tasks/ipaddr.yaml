@@ -8,7 +8,7 @@
       - 192.168.32.0/24
       - fe80::100/10
       - "42540766412265424405338506004571095040/64"
-      - True
+      - true
 
 - name: ipaddr filter with empty string query
   ansible.builtin.set_fact:
@@ -58,7 +58,8 @@
   ansible.builtin.assert:
     that: "{{ result6 == '192.168.255.123' }}"
 
-- ansible.builtin.debug:
+- name: Debug
+  ansible.builtin.debug:
     msg: "Test int input for ipaddr filter"
 
 - name: set fact 1

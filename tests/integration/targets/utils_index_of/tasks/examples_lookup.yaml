@@ -1,6 +1,7 @@
 ---
 #### Simple examples
-- ansible.builtin.set_fact:
+- name: Set fact
+  ansible.builtin.set_fact:
     data:
       - 1
       - 2
@@ -17,7 +18,7 @@
 
 - name: Find the index of 2, ensure list is returned
   ansible.builtin.set_fact:
-    indices: "{{ lookup('ansible.utils.index_of', data, 'eq', 2, wantlist=True) }}"
+    indices: "{{ lookup('ansible.utils.index_of', data, 'eq', 2, wantlist=true) }}"
 
 # TASK [Find the index of 2, ensure list is returned] ************************
 # ok: [nxos101] => changed=false
@@ -27,7 +28,7 @@
 
 - name: Find the index of 3 using the long format
   ansible.builtin.set_fact:
-    indices: "{{ lookup('ansible.utils.index_of', data=data, test='eq', value=value, wantlist=True) }}"
+    indices: "{{ lookup('ansible.utils.index_of', data=data, test='eq', value=value, wantlist=true) }}"
   vars:
     value: 3
 
@@ -69,7 +70,8 @@
 
 #### Working with lists of dictionaries
 
-- ansible.builtin.set_fact:
+- name: Set fact
+  ansible.builtin.set_fact:
     data:
       - name: sw01.example.lan
         type: switch
@@ -142,7 +144,7 @@
 #   vars:
 #     found: []
 #     ip: '192.168.101.'
-#     address: "{{ lookup('ansible.utils.index_of', item.1.ipv4|d([]), 'search', ip, 'address', wantlist=True) }}"
+#     address: "{{ lookup('ansible.utils.index_of', item.1.ipv4|d([]), 'search', ip, 'address', wantlist=true) }}"
 #     entry:
 #     - interface_idx: "{{ item.0 }}"
 #       address_idxs: "{{ address }}"
@@ -169,7 +171,8 @@
 
 #### Working with deeply nested data
 
-- ansible.builtin.set_fact:
+- name: Set fact
+  ansible.builtin.set_fact:
     data:
       interfaces:
         interface:

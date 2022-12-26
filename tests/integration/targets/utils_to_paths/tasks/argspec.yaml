@@ -1,5 +1,6 @@
 ---
-- ansible.builtin.set_fact:
+- name: Set fact
+  ansible.builtin.set_fact:
     a:
       b:
         c:
@@ -12,9 +13,12 @@
   ignore_errors: true
   register: result
 
-- ansible.builtin.debug:
+- name: Debug
+  ansible.builtin.debug:
     var: result
-- ansible.builtin.assert:
+
+- name: Assert
+  ansible.builtin.assert:
     that: "{{ msg in result.msg }}"
   vars:
     msg: "'5' is not a valid boolean"
@@ -25,9 +29,12 @@
   ignore_errors: true
   register: result
 
-- ansible.builtin.debug:
+- name: Debug
+  ansible.builtin.debug:
     var: result
-- ansible.builtin.assert:
+
+- name: Assert
+  ansible.builtin.assert:
     that: "{{ msg in result.msg }}"
   vars:
     msg: "missing required arguments: var"

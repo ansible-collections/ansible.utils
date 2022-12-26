@@ -10,7 +10,8 @@
   ignore_errors: true
   register: result
 
-- ansible.builtin.assert:
+- name: Assert
+  ansible.builtin.assert:
     that: "{{ msg in result.msg }}"
   vars:
     msg: "The regex '+', is not valid"

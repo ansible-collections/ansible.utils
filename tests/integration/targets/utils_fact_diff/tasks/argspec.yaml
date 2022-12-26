@@ -4,7 +4,8 @@
   ignore_errors: true
   register: result
 
-- ansible.builtin.assert:
+- name: Assert
+  ansible.builtin.assert:
     that: "{{ string in result.msg }}"
   loop:
     - "missing required arguments:"
@@ -14,7 +15,8 @@
     loop_var: string
   when: "{{result.msg|type_debug != 'list'}}"
 
-- ansible.builtin.assert:
+- name: Assert
+  ansible.builtin.assert:
     that: "{{ msg in result.msg }}"
   vars:
     msg: "missing required arguments: after, before"
@@ -31,10 +33,12 @@
   ignore_errors: true
   register: result
 
-- ansible.builtin.assert:
+- name: Assert
+  ansible.builtin.assert:
     that: "{{ 'unable to convert to list' in result.msg }}"
   when: "{{result.msg|type_debug != 'list'}}"
 
-- ansible.builtin.assert:
+- name: Assert
+  ansible.builtin.assert:
     that: "{{ 'unable to convert to list' in result.msg[0] }}"
   when: "{{result.msg|type_debug == 'list'}}"

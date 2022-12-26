@@ -1,5 +1,6 @@
 ---
-- ansible.builtin.set_fact:
+- name: set fact
+  ansible.builtin.set_fact:
     nxos_textfsm_text_parsed: "{{ lookup('ansible.builtin.file', '{{ role_path }}/output/nxos_show_version_textfsm_parsed.json') | from_json }}"
 
 - name: "{{ parser }} Pass text and command"

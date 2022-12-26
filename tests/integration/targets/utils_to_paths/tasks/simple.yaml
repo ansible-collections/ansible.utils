@@ -1,5 +1,6 @@
 ---
-- ansible.builtin.set_fact:
+- name: Set fact
+  ansible.builtin.set_fact:
     a:
       b:
         c:
@@ -28,7 +29,8 @@
         a.b.c.d[0]: 0
         a.b.c.d[1]: 1
 
-- ansible.builtin.set_fact:
+- name: Set fact
+  ansible.builtin.set_fact:
     a:
       b:
         c:
@@ -39,15 +41,15 @@
   ansible.builtin.assert:
     that: "{{ item.result == item.expected }}"
   loop:
-    - result: "{{ a|ansible.utils.to_paths(wantlist=True) }}"
+    - result: "{{ a|ansible.utils.to_paths(wantlist=true) }}"
       expected:
         - b.c.d[0]: 0
-    - result: "{{ lookup('ansible.utils.to_paths', a, wantlist=True) }}"
+    - result: "{{ lookup('ansible.utils.to_paths', a, wantlist=true) }}"
       expected:
         - b.c.d[0]: 0
-    - result: "{{ a|ansible.utils.to_paths(wantlist=True, prepend='a') }}"
+    - result: "{{ a|ansible.utils.to_paths(wantlist=true, prepend='a') }}"
       expected:
         - a.b.c.d[0]: 0
-    - result: "{{ lookup('ansible.utils.to_paths', a, wantlist=True, prepend='a') }}"
+    - result: "{{ lookup('ansible.utils.to_paths', a, wantlist=true, prepend='a') }}"
       expected:
         - a.b.c.d[0]: 0

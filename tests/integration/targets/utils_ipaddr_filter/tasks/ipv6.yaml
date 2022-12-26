@@ -8,7 +8,7 @@
       - ::ffff:192.24.2.1/128
       - 192.168.32.0/24
       - fe80::100/10
-      - True
+      - true
 
 - name: ipv6 filter
   ansible.builtin.set_fact:

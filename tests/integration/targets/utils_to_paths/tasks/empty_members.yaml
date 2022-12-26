@@ -1,5 +1,6 @@
 ---
-- ansible.builtin.set_fact:
+- name: Set fact
+  ansible.builtin.set_fact:
     a:
       b: []
       c: {}
