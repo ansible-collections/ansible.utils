@@ -1,11 +1,10 @@
 ---
-- name: Setup xml and expected json
+- name: Setup xml
   ansible.builtin.set_fact:
     data:
       "interface-configurations":
         "@xmlns": "http://cisco.com/ns/yang/Cisco-IOS-XR-ifmgr-cfg"
         "interface-configuration":
-    output: "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<interface-configurations xmlns=\"http://cisco.com/ns/yang/Cisco-IOS-XR-ifmgr-cfg\">\n\t<interface-configuration></interface-configuration>\n</interface-configurations>"
 
 - name: Debug
   ansible.builtin.debug:

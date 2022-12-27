@@ -1,5 +1,5 @@
 ---
-- name: "{{ parser }} Run command and parse with ttp"
+- name: "Run command and parse with ttp {{ parser }}"
   ansible.utils.cli_parse:
     command: "df -h"
     parser:
@@ -7,7 +7,7 @@
     ansible.builtin.set_fact: myfact
   register: df_h_out
 
-- name: "{{ parser }} Check parser output"
+- name: "Check parser output {{ parser }}"
   ansible.builtin.assert:
     that: "{{ item }}"
   with_items:

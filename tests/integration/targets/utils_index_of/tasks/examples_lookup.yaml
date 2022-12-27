@@ -38,7 +38,7 @@
 #     indices:
 #     - 2
 
-#- name: Find numbers greater than 1, using loop
+# - name: Find numbers greater than 1, using loop
 #  ansible.builtin.debug:
 #    msg: "{{ data[item] }} is {{ test }} than {{ value }}"
 #  loop: "{{ lookup('ansible.utils.index_of', data, test, value) }}"
@@ -111,7 +111,8 @@
     msg: "The device named {{ data[item].name }} is a {{ data[item].type }}"
   loop: "{{ lookup('ansible.utils.index_of', data, 'regex', expression, 'name') }}"
   vars:
-    expression: '\.corp$' # ends with .corp
+    expression: '\.corp$'
+# ends with .corp
 
 # TASK [Find the index of all devices with a .corp name] *********************
 # ok: [nxos101] => (item=2) =>

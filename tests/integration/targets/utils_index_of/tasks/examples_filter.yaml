@@ -95,7 +95,8 @@
     msg: "The device named {{ data[item].name }} is a {{ data[item].type }}"
   loop: "{{ data|ansible.utils.index_of('regex', expression, 'name') }}"
   vars:
-    expression: '\.corp$' # ends with .corp
+    expression: '\.corp$'
+# ends with .corp
 
 # TASK [Find the index of all devices with a .corp name] *********************
 # ok: [nxos101] => (item=2) =>

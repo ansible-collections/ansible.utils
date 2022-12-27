@@ -3,7 +3,7 @@
   ansible.builtin.set_fact:
     nxos_textfsm_text_parsed: "{{ lookup('ansible.builtin.file', '{{ role_path }}/output/nxos_show_version_textfsm_parsed.json') | from_json }}"
 
-- name: "{{ parser }} Pass text and command"
+- name: "Pass text and command {{ parser }}"
   ansible.utils.cli_parse:
     text: "{{ lookup('ansible.builtin.file', '{{ role_path }}/files/nxos_show_version.txt') }}"
     parser:
@@ -11,7 +11,7 @@
       template_path: "{{ role_path }}/templates/nxos_show_version.textfsm"
   register: nxos_textfsm_text
 
-- name: "{{ parser }} Confirm response"
+- name: "Confirm response {{ parser }}"
   ansible.builtin.assert:
     that: "{{ item }}"
   with_items:
