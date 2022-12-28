@@ -1,5 +1,6 @@
 ---
-- ansible.builtin.set_fact:
+- name: Set fact
+  ansible.builtin.set_fact:
     a:
       b:
         c:
@@ -66,7 +67,7 @@
 # ok: [nxos101] => (item=a.b.c.d[1]) =>
 #   msg: The value of path a.b.c.d[1] in vars is 1
 # ok: [nxos101] => (item=a.b.c.e[0]) =>
-#   msg: The value of path a.b.c.e[0] in vars is True
+#   msg: The value of path a.b.c.e[0] in vars is true
 # ok: [nxos101] => (item=a.b.c.e[1]) =>
 #   msg: The value of path a.b.c.e[1] in vars is False
 

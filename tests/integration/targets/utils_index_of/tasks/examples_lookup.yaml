@@ -1,6 +1,7 @@
 ---
 #### Simple examples
-- ansible.builtin.set_fact:
+- name: Set fact
+  ansible.builtin.set_fact:
     data:
       - 1
       - 2
@@ -17,7 +18,7 @@
 
 - name: Find the index of 2, ensure list is returned
   ansible.builtin.set_fact:
-    indices: "{{ lookup('ansible.utils.index_of', data, 'eq', 2, wantlist=True) }}"
+    indices: "{{ lookup('ansible.utils.index_of', data, 'eq', 2, wantlist=true) }}"
 
 # TASK [Find the index of 2, ensure list is returned] ************************
 # ok: [nxos101] => changed=false
@@ -27,7 +28,7 @@
 
 - name: Find the index of 3 using the long format
   ansible.builtin.set_fact:
-    indices: "{{ lookup('ansible.utils.index_of', data=data, test='eq', value=value, wantlist=True) }}"
+    indices: "{{ lookup('ansible.utils.index_of', data=data, test='eq', value=value, wantlist=true) }}"
   vars:
     value: 3
 
@@ -37,7 +38,7 @@
 #     indices:
 #     - 2
 
-#- name: Find numbers greater than 1, using loop
+# - name: Find numbers greater than 1, using loop
 #  ansible.builtin.debug:
 #    msg: "{{ data[item] }} is {{ test }} than {{ value }}"
 #  loop: "{{ lookup('ansible.utils.index_of', data, test, value) }}"
@@ -69,7 +70,8 @@
 
 #### Working with lists of dictionaries
 
-- ansible.builtin.set_fact:
+- name: Set fact
+  ansible.builtin.set_fact:
     data:
       - name: sw01.example.lan
         type: switch
@@ -109,7 +111,8 @@
     msg: "The device named {{ data[item].name }} is a {{ data[item].type }}"
   loop: "{{ lookup('ansible.utils.index_of', data, 'regex', expression, 'name') }}"
   vars:
-    expression: '\.corp$' # ends with .corp
+    expression: '\.corp$'
+# ends with .corp
 
 # TASK [Find the index of all devices with a .corp name] *********************
 # ok: [nxos101] => (item=2) =>
@@ -142,7 +145,7 @@
 #   vars:
 #     found: []
 #     ip: '192.168.101.'
-#     address: "{{ lookup('ansible.utils.index_of', item.1.ipv4|d([]), 'search', ip, 'address', wantlist=True) }}"
+#     address: "{{ lookup('ansible.utils.index_of', item.1.ipv4|d([]), 'search', ip, 'address', wantlist=true) }}"
 #     entry:
 #     - interface_idx: "{{ item.0 }}"
 #       address_idxs: "{{ address }}"
@@ -169,7 +172,8 @@
 
 #### Working with deeply nested data
 
-- ansible.builtin.set_fact:
+- name: Set fact
+  ansible.builtin.set_fact:
     data:
       interfaces:
         interface:

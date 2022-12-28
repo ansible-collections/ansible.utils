@@ -1,13 +1,13 @@
 ---
-- name: "resolvable: Check if {{ good_name }} is resolvable or not"
+- name: "resolvable: Check if good_name is resolvable or not"
   ansible.builtin.assert:
     that: "{{ good_name is ansible.utils.resolvable }}"
 
-- name: "resolvable: Check if {{ ipv4_localhost }} is resolvable or not"
+- name: "resolvable: Check if ipv4_localhost is resolvable or not"
   ansible.builtin.assert:
     that: "{{ ipv4_localhost is ansible.utils.resolvable }}"
 
-- name: "resolvable: Check if {{ ipv6_localhost }} is resolvable or not"
+- name: "resolvable: Check if ipv6_localhost is resolvable or not"
   ansible.builtin.assert:
     that: "{{ ipv6_localhost is ansible.utils.resolvable }}"
 

@@ -1,5 +1,6 @@
 ---
-- ansible.builtin.set_fact:
+- name: Set fact
+  ansible.builtin.set_fact:
     a:
       b:
         c:
@@ -40,7 +41,8 @@
     - result: '{{ lookup(''ansible.utils.get_path'', a, ''b["c"]'') }}'
       expected: "{{ a.b.c }}"
 
-- ansible.builtin.set_fact:
+- name: Set fact
+  ansible.builtin.set_fact:
     a:
       b:
         c:
@@ -51,9 +53,9 @@
   ansible.builtin.assert:
     that: "{{ item.result == item.expected }}"
   loop:
-    - result: "{{ vars|ansible.utils.get_path('a.b.c.d[0]', wantlist=True) }}"
+    - result: "{{ vars|ansible.utils.get_path('a.b.c.d[0]', wantlist=true) }}"
       expected:
         - "{{ a.b.c.d[0] }}"
-    - result: "{{ lookup('ansible.utils.get_path', vars, 'a.b.c.d[0]', wantlist=True) }}"
+    - result: "{{ lookup('ansible.utils.get_path', vars, 'a.b.c.d[0]', wantlist=true) }}"
       expected:
         - "{{ a.b.c.d[0] }}"

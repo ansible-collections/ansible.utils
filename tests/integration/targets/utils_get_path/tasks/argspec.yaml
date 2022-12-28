@@ -1,5 +1,6 @@
 ---
-- ansible.builtin.set_fact:
+- name: Set fact
+  ansible.builtin.set_fact:
     a:
       b:
         c:
@@ -13,7 +14,8 @@
   ignore_errors: true
   register: result
 
-- ansible.builtin.assert:
+- name: Assert
+  ansible.builtin.assert:
     that: "{{ msg in result.msg }}"
   vars:
     msg: "missing required arguments: path"
@@ -24,7 +26,8 @@
   ignore_errors: true
   register: result
 
-- ansible.builtin.assert:
+- name: Assert
+  ansible.builtin.assert:
     that: "{{ item in result.msg }}"
   loop:
     - "missing required arguments:"

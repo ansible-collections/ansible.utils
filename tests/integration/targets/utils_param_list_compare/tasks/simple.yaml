@@ -1,5 +1,6 @@
 ---
-- ansible.builtin.debug:
+- name: Debug
+  ansible.builtin.debug:
     msg: "START param_list_compare integration tests on connection={{ ansible_connection }}"
 
 - name: Setup supported resource module list json
@@ -52,5 +53,7 @@
     that:
       - "{{ expected_network_resources | symmetric_difference(final_network_resources['actionable']) |length\
         \ == 0 }}"
-- ansible.builtin.debug:
+
+- name: Debug
+  ansible.builtin.debug:
     msg: "END param_list_compare integration tests on connection={{ ansible_connection }}"

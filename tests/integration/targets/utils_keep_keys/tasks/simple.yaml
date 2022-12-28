@@ -25,7 +25,8 @@
         mtu: 600
         is_enabled: false
 
-- ansible.builtin.debug:
+- name: Debug
+  ansible.builtin.debug:
     msg: "{{ data|ansible.utils.keep_keys(target=['desc', 'interface_'], matching_parameter= 'starts_with') }}"
   register: result
 
@@ -60,7 +61,8 @@
         mtu: 600
         is_enabled: false
 
-- ansible.builtin.debug:
+- name: Debug
+  ansible.builtin.debug:
     msg: "{{ data|ansible.utils.keep_keys(target=['interface_name', 'is_enabled', 'vlan_id']) }}"
   register: result
 

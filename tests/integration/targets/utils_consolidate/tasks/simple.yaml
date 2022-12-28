@@ -10,12 +10,12 @@
           [
             {
               "description": "This is a user template",
-              "enabled": True,
+              "enabled": true,
               "name": "GigabitEthernet0/1",
             },
             {
               "description": "This is a user template",
-              "enabled": True,
+              "enabled": true,
               "name": "GigabitEthernet0/2",
             },
           ]

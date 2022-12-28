@@ -1,5 +1,6 @@
 ---
-- ansible.builtin.set_fact:
+- name: Set fact
+  ansible.builtin.set_fact:
     before:
       a:
         b:
@@ -75,7 +76,7 @@
 
 #### Show the difference between complex object using restconf
 #  ansible_connection: ansible.netcommon.httpapi
-#  ansible_httpapi_use_ssl: True
+#  ansible_httpapi_use_ssl: true
 #  ansible_httpapi_validate_certs: False
 #  ansible_network_os: ansible.netcommon.restconf
 

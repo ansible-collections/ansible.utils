@@ -5,7 +5,7 @@
 
 - name: Assert result for network_in_network.
   ansible.builtin.assert:
-    that: "{{ result1 == True }}"
+    that: "{{ result1 == true }}"
 
 - name: network_in_network filter test2
   ansible.builtin.set_fact:
@@ -21,4 +21,4 @@
 
 - name: Assert result for network_in_network
   ansible.builtin.assert:
-    that: "{{ result1 == True }}"
+    that: "{{ result1 == true }}"

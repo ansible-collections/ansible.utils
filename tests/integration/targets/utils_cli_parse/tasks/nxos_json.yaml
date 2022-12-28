@@ -1,15 +1,16 @@
 ---
-- ansible.builtin.set_fact:
+- name: Set fact
+  ansible.builtin.set_fact:
     nxos_json_text_parsed: "{{ lookup('ansible.builtin.file', '{{ role_path }}/output/nxos_show_interface_json_text.txt') }}"
 
-- name: "{{ parser }} Run command and parse with json"
+- name: "Run command and parse with json {{ parser }}"
   ansible.utils.cli_parse:
     text: "{{ lookup('ansible.builtin.file', '{{ role_path }}/output/nxos_show_interface_json_text.txt') }}"
     parser:
       name: ansible.utils.json
   register: nxos_json_text
 
-- name: "{{ parser }} Confirm response"
+- name: "Confirm response {{ parser }}"
   ansible.builtin.assert:
     that: "{{ item }}"
   with_items:

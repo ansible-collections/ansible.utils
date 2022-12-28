@@ -29,7 +29,8 @@
         mtu: 600
         enabled: false
 
-- ansible.builtin.debug:
+- name: Debug
+  ansible.builtin.debug:
     msg: "{{ data|ansible.utils.remove_keys(target=['notes', 'comment']) }}"
   register: result
 

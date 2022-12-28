@@ -13,7 +13,8 @@
           },
       }
 
-- ansible.builtin.debug:
+- name: Debug
+  ansible.builtin.debug:
     msg: "{{ data|ansible.utils.from_xml() }}"
 
 - name: Integration tests with and without default engine as xmltodict and
@@ -33,7 +34,8 @@
   ignore_errors: true
   register: result
 
-- ansible.builtin.assert:
+- name: Assert
+  ansible.builtin.assert:
     that: "{{ msg in result.msg }}"
   vars:
     msg: "Error when using plugin 'from_xml': Input Xml is not valid"

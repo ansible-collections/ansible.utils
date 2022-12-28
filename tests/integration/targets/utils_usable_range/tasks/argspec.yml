@@ -5,7 +5,8 @@
   ignore_errors: true
   register: result1
 
-- ansible.builtin.assert:
+- name: Assert
+  ansible.builtin.assert:
     that: "{{ msg in result1.msg }}"
   vars:
     msg: "does not appear to be an IPv4 or IPv6 network"
@@ -16,7 +17,8 @@
   ignore_errors: true
   register: result2
 
-- ansible.builtin.assert:
+- name: Assert
+  ansible.builtin.assert:
     that: "{{ msg in result2.msg }}"
   vars:
     msg: "does not appear to be an IPv4 or IPv6 network"
@@ -27,7 +29,8 @@
   ignore_errors: true
   register: result3
 
-- ansible.builtin.assert:
+- name: Assert
+  ansible.builtin.assert:
     that: "{{ msg in result3.msg }}"
   vars:
     msg: "has host bits set"
@@ -38,7 +41,8 @@
   ignore_errors: true
   register: result4
 
-- ansible.builtin.assert:
+- name: Assert
+  ansible.builtin.assert:
     that: "{{ msg in result4.msg }}"
   vars:
     msg: "does not appear to be an IPv4 or IPv6 network"
@@ -49,7 +53,8 @@
   ignore_errors: true
   register: result5
 
-- ansible.builtin.assert:
+- name: Assert
+  ansible.builtin.assert:
     that: "{{ msg in result5.msg }}"
   vars:
     msg: "does not appear to be an IPv4 or IPv6 network"
@@ -60,7 +65,8 @@
   ignore_errors: true
   register: result6
 
-- ansible.builtin.assert:
+- name: Assert
+  ansible.builtin.assert:
     that: "{{ msg in result6.msg }}"
   vars:
     msg: "does not appear to be an IPv4 or IPv6 network"
@@ -71,7 +77,8 @@
   ignore_errors: true
   register: result7
 
-- ansible.builtin.assert:
+- name: Assert
+  ansible.builtin.assert:
     that: "{{ msg in result7.msg }}"
   vars:
     msg: "does not appear to be an IPv4 or IPv6 network"
