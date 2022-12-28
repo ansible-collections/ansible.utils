@@ -48,6 +48,11 @@ DOCUMENTATION = """
         - When indent="tabs", a single tab is always used for indentation.
         type: int
         default: 4
+      full_document:
+        description:
+        - The option to disable xml declaration(defaults to True).
+        type: bool
+        default: True
 """
 
 EXAMPLES = r"""
