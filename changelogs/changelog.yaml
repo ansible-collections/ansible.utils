@@ -318,6 +318,7 @@ releases:
     fragments:
       - 3.11_fixes.yaml
       - add_ipfilter_doc_ut.yaml
+      - fix_pre_commit.yaml
       - fix_ansible_lint.yaml
       - to_xml_disable_xml_declaration.yaml
     release_date: "2023-01-30"
