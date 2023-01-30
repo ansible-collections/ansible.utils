@@ -1,4 +1,0 @@
----
-minor_changes:
-  - >-
-    to_xml - Added support to disable xml declartion with full_document flag.

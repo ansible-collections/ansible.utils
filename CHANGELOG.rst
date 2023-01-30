@@ -4,6 +4,18 @@ Ansible Utils Collection Release Notes
 
 .. contents:: Topics
 
+v2.9.0
+======
+
+Minor Changes
+-------------
+
+- to_xml - Added support to disable xml declartion with full_document flag.
+
+Bugfixes
+--------
+
+- mac - reorganize regexes to work around 3.11 regex changes. (https://github.com/ansible-collections/ansible.utils/pull/231)
 
 v2.8.0
 ======
