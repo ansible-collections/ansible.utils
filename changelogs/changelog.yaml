@@ -309,3 +309,15 @@ releases:
       - pre-commit.yaml
       - to_xml_indent_with_spaces.yaml
     release_date: "2022-11-30"
+  2.9.0:
+    changes:
+      bugfixes:
+        - mac - reorganize regexes to work around 3.11 regex changes. (https://github.com/ansible-collections/ansible.utils/pull/231)
+      minor_changes:
+        - to_xml - Added support to disable xml declartion with full_document flag.
+    fragments:
+      - 3.11_fixes.yaml
+      - add_ipfilter_doc_ut.yaml
+      - fix_ansible_lint.yaml
+      - to_xml_disable_xml_declaration.yaml
+    release_date: "2023-01-30"
