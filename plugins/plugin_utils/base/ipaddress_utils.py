@@ -88,6 +88,6 @@ def _validate_args(plugin, doc, params):
 
 def _need_netaddr(f_name, *args, **kwargs):
     raise errors.AnsibleFilterError(
-        "The %s filter requires python's netaddr be "
+        "The %s filter requires that the python's netaddr package be "
         "installed on the ansible controller" % f_name,
     )

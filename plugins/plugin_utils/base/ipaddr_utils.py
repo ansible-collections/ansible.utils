@@ -600,7 +600,7 @@ def _need_netaddr(f_name, *args, **kwargs):
     verify python's netaddr for these filters to work
     """
     raise AnsibleFilterError(
-        "The %s filter requires python's netaddr be "
+        "The %s filter requires that the python's netaddr package be "
         "installed on the ansible controller" % f_name,
     )
 
