@@ -143,6 +143,5 @@ class FilterModule(object):
     """from_xml"""
 
     def filters(self):
-
         """a mapping of filter names to functions"""
         return {"from_xml": _from_xml}

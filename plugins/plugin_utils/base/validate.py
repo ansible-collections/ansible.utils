@@ -75,7 +75,6 @@ class ValidateBase(object):
             return None
 
         for option_name, option_value in iteritems(options):
-
             option_var_name_list = option_value.get("vars", [])
             option_env_name_list = option_value.get("env", [])
 

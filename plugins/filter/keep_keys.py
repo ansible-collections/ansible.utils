@@ -325,6 +325,5 @@ class FilterModule(object):
     """keep_keys"""
 
     def filters(self):
-
         """a mapping of filter names to functions"""
         return {"keep_keys": _keep_keys}

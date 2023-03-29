@@ -181,6 +181,5 @@ class FilterModule(object):
     """usable_range"""
 
     def filters(self):
-
         """a mapping of filter names to functions"""
         return {"usable_range": _usable_range}
