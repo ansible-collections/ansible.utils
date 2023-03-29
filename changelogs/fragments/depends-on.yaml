@@ -1,0 +1,3 @@
+---
+trivial:
+  - This commit is just to separate the two actions runs so that you can see one passing and one failing
