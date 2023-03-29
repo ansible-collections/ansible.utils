@@ -1480,6 +1480,5 @@ class FilterModule(object):
     """Consolidate"""
 
     def filters(self):
-
         """A mapping of filter names to functions"""
         return {"consolidate": _consolidate}

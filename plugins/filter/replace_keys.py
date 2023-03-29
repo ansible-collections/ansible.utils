@@ -319,6 +319,5 @@ class FilterModule(object):
     """replace_keys"""
 
     def filters(self):
-
         """a mapping of filter names to functions"""
         return {"replace_keys": _replace_keys}
