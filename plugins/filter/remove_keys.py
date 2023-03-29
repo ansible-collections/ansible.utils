@@ -342,6 +342,5 @@ class FilterModule(object):
     """remove_keys"""
 
     def filters(self):
-
         """a mapping of filter names to functions"""
         return {"remove_keys": _remove_keys}

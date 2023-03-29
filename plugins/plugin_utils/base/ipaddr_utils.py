@@ -468,7 +468,6 @@ def ipaddr(value, query="", version=False, alias="ipaddr"):
 
     # Check if value is a number and convert it to an IP address
     elif str(value).isdigit():
-
         # We don't know what IP version to assume, so let's check IPv4 first,
         # then IPv6
         try:
