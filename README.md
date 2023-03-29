@@ -1,4 +1,4 @@
-This is here to make a new commit so that the action runs can be separate
+
 
 # Ansible Utilities Collection
 [![Codecov](https://img.shields.io/codecov/c/github/ansible-collections/ansible.utils)](https://codecov.io/gh/ansible-collections/ansible.utils)
