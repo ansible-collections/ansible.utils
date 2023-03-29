@@ -1,0 +1,3 @@
+---
+trivial:
+  - Update pre-commit config to add autoversion hook
