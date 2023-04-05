@@ -16,6 +16,7 @@ __metaclass__ = type
 import types
 
 from ansible.errors import AnsibleFilterError
+from ansible.module_utils.basic import missing_required_lib
 from ansible.utils.display import Display
 
 
@@ -598,10 +599,7 @@ def _need_netaddr(f_name, *args, **kwargs):
     """
     verify python's netaddr for these filters to work
     """
-    raise AnsibleFilterError(
-        "The %s filter requires that the python's netaddr package be "
-        "installed on the ansible controller" % f_name,
-    )
+    raise AnsibleFilterError(missing_required_lib("netaddr"))
 
 
 def _address_normalizer(value):
