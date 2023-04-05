@@ -1,4 +1,4 @@
-jsonschema ; python_version >= '2.7'
+jsonschema
 netaddr
 ttp
 textfsm

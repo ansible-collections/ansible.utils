@@ -25,7 +25,7 @@
 
 - ansible.builtin.assert:
     that:
-      - "'value of draft must be one of: draft3, draft4, draft6, draft7, got: draft0' in result.msg"
+      - "'value of draft must be one of: draft3, draft4, draft6, draft7, 2019-09, 2020-12, got: draft0' in result.msg"
 
 - name: invalid engine value
   ansible.builtin.set_fact:

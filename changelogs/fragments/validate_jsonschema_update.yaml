@@ -1,0 +1,5 @@
+---
+minor_changes:
+  - validate - Add support for JSON Schema draft 2019-09 and 2020-12 as well as automatically choosing the draft
+    from the `$schema` field of the criteria.
+  - validate - Add option `check_format` for the jsonschema engine to disable JSON Schema format checking.
