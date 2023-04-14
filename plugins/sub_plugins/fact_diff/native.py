@@ -19,7 +19,7 @@ DOCUMENTATION = """
     version_added: 1.0.0
 """
 
-EXAMPLES = r"""
+EXAMPLES = r"""---
 - name: Show the difference in json format
   ansible.utils.fact_diff:
     before: "{{ before }}"

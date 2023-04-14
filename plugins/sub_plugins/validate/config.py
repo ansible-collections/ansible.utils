@@ -24,7 +24,7 @@ DOCUMENTATION = """
 """
 
 
-EXAMPLES = r"""
+EXAMPLES = r"""---
 - name: Interface description should not be more than 8 chars
   example: "Matches description this-is-a-long-description"
   rule: 'description\s(.{9,})'

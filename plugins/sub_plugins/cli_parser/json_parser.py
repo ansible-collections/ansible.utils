@@ -19,7 +19,7 @@ DOCUMENTATION = """
     version_added: 1.0.0
 """
 
-EXAMPLES = r"""
+EXAMPLES = r"""---
 - name: "Run command and parse with json"
   ansible.utils.cli_parse:
     command: "show version | json"

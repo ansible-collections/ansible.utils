@@ -20,7 +20,7 @@ DOCUMENTATION = """
     version_added: 1.0.0
 """
 
-EXAMPLES = r"""
+EXAMPLES = r"""---
 - name: "Run command and parse with xml"
   ansible.utils.cli_parse:
     command: "show interface | xml"
