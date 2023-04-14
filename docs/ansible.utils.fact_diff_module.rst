@@ -149,21 +149,22 @@ Examples
 
 .. code-block:: yaml
 
+    ---
     - ansible.builtin.set_fact:
         before:
           a:
             b:
               c:
                 d:
-                - 0
-                - 1
+                  - 0
+                  - 1
         after:
           a:
             b:
               c:
                 d:
-                - 2
-                - 3
+                  - 2
+                  - 3
 
     - name: Show the difference in json format
       ansible.utils.fact_diff:
@@ -240,8 +241,8 @@ Examples
     - name: Update the description of eth1/100
       ansible.utils.update_fact:
         updates:
-        - path: "pre['response']['phys-items']['PhysIf-list'][{{ index }}]['descr']"
-          value: "Configured by ansible {{ 100 | random }}"
+          - path: "pre['response']['phys-items']['PhysIf-list'][{{ index }}]['descr']"
+            value: "Configured by ansible {{ 100 | random }}"
       vars:
         index: "{{ pre['response']['phys-items']['PhysIf-list']|ansible.utils.index_of('eq', 'eth1/100', 'id') }}"
       register: updated

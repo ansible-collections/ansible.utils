@@ -101,22 +101,23 @@ Examples
 
 .. code-block:: yaml
 
+    ---
     # Update an existing fact, dot or bracket notation
     - name: Set a fact
       ansible.builtin.set_fact:
         a:
           b:
             c:
-            - 1
-            - 2
+              - 1
+              - 2
 
     - name: Update the fact
       ansible.utils.update_fact:
         updates:
-        - path: a.b.c.0
-          value: 10
-        - path: "a['b']['c'][1]"
-          value: 20
+          - path: a.b.c.0
+            value: 10
+          - path: "a['b']['c'][1]"
+            value: 20
       register: updated
 
     - debug:
@@ -130,7 +131,6 @@ Examples
     #       - 20
     #   changed: true
 
-
     # Lists can be appended, new keys added to dictionaries
 
     - name: Set a fact
@@ -138,19 +138,19 @@ Examples
         a:
           b:
             b1:
-            - 1
-            - 2
+              - 1
+              - 2
 
     - name: Update, add to list, add new key
       ansible.utils.update_fact:
         updates:
-        - path: a.b.b1.2
-          value: 3
-        - path: a.b.b2
-          value:
-          - 10
-          - 20
-          - 30
+          - path: a.b.b1.2
+            value: 3
+          - path: a.b.b2
+            value:
+              - 10
+              - 20
+              - 30
       register: updated
 
     - debug:
@@ -178,12 +178,12 @@ Examples
     - name: Set fact
       ansible.builtin.set_fact:
         addresses:
-        - raw: 10.1.1.0/255.255.255.0
-          name: servers
-        - raw: 192.168.1.0/255.255.255.0
-          name: printers
-        - raw: 8.8.8.8
-          name: dns
+          - raw: 10.1.1.0/255.255.255.0
+            name: servers
+          - raw: 192.168.1.0/255.255.255.0
+            name: printers
+          - raw: 8.8.8.8
+            name: dns
 
     - name: Build a list of updates
       ansible.builtin.set_fact:
@@ -194,10 +194,10 @@ Examples
       vars:
         update_list: []
         update:
-        - path: addresses[{{ idx }}].network
-          value: "{{ item['raw'] | ansible.netcommon.ipaddr('network') }}"
-        - path: addresses[{{ idx }}].prefix
-          value: "{{ item['raw'] | ansible.netcommon.ipaddr('prefix') }}"
+          - path: addresses[{{ idx }}].network
+            value: "{{ item['raw'] | ansible.netcommon.ipaddr('network') }}"
+          - path: addresses[{{ idx }}].prefix
+            value: "{{ item['raw'] | ansible.netcommon.ipaddr('prefix') }}"
 
     - debug:
         var: update_list
@@ -259,8 +259,8 @@ Examples
     - name: Update the description of Ethernet1/1
       ansible.utils.update_fact:
         updates:
-        - path: "interfaces.gathered[{{ index }}].description"
-          value: "Configured by ansible"
+          - path: "interfaces.gathered[{{ index }}].description"
+            value: "Configured by ansible"
       vars:
         index: "{{ interfaces.gathered|ansible.utils.index_of('eq', 'Ethernet1/1', 'name') }}"
       register: updated
@@ -299,9 +299,9 @@ Examples
     - name: Update the source of sequence 10 in the IPv4 ACL named test1
       ansible.utils.update_fact:
         updates:
-        - path: current.gathered[{{ afi }}].acls[{{ acl }}].aces[{{ ace }}].source
-          value:
-            subnet_address: "192.168.2.0/24"
+          - path: current.gathered[{{ afi }}].acls[{{ acl }}].aces[{{ ace }}].source
+            value:
+              subnet_address: "192.168.2.0/24"
       vars:
         afi: "{{ current.gathered|ansible.utils.index_of('eq', 'ipv4', 'afi') }}"
         acl: "{{ current.gathered[afi|int].acls|ansible.utils.index_of('eq', 'test1', 'name') }}"
@@ -339,8 +339,8 @@ Examples
       cisco.nxos.nxos_facts:
         gather_subset: min
         gather_network_resources:
-        - interfaces
-        - l3_interfaces
+          - interfaces
+          - l3_interfaces
 
     - name: Build the list of updates to make
       ansible.builtin.set_fact:
@@ -349,7 +349,7 @@ Examples
         updates: []
         entry:
           path: "ansible_network_resources.l3_interfaces[{{ item }}].redirects"
-          value: False
+          value: false
         w_mode: "{{ ansible_network_resources.interfaces|selectattr('mode', 'defined') }}"
         m_l3: "{{ w_mode|selectattr('mode', 'eq', 'layer3') }}"
         names: "{{ m_l3|map(attribute='name')|list }}"
