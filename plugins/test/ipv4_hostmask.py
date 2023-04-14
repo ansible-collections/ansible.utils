@@ -35,8 +35,7 @@ DOCUMENTATION = """
     notes:
 """
 
-EXAMPLES = r"""
-
+EXAMPLES = r"""---
 #### Simple examples
 
 - name: Check if 0.0.0.255 is a hostmask
@@ -62,7 +61,6 @@ EXAMPLES = r"""
 #     },
 #     "changed": false
 # }
-
 """
 
 RETURN = """

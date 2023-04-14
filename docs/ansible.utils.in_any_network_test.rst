@@ -83,6 +83,7 @@ Examples
 
 .. code-block:: yaml
 
+    ---
     #### Simple examples
 
     - name: Set network list

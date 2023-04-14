@@ -64,6 +64,7 @@ Examples
 
 .. code-block:: yaml
 
+    ---
     - name: Check if 224.0.0.1 is a valid multicast IP address
       ansible.builtin.set_fact:
         data: "{{ '224.0.0.1' is ansible.utils.multicast }}"

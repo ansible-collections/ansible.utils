@@ -35,8 +35,7 @@ DOCUMENTATION = """
     notes:
 """
 
-EXAMPLES = r"""
-
+EXAMPLES = r"""---
 - name: Check if 10.1.1.1 is a private IP address
   ansible.builtin.set_fact:
     data: "{{ '10.1.1.1' is ansible.utils.private }}"
@@ -60,7 +59,6 @@ EXAMPLES = r"""
 #     },
 #     "changed": false
 # }
-
 """
 
 RETURN = """

@@ -35,8 +35,7 @@ DOCUMENTATION = """
     notes:
 """
 
-EXAMPLES = r"""
-
+EXAMPLES = r"""---
 #### Simple examples
 
 - name: Check if 10.1.1.1 is a valid IP address
@@ -98,7 +97,6 @@ EXAMPLES = r"""
 #     },
 #     "changed": false
 # }
-
 """
 
 RETURN = """

@@ -64,6 +64,7 @@ Examples
 
 .. code-block:: yaml
 
+    ---
     #### Simple examples
 
     - name: Check if 0.0.0.255 is a hostmask

@@ -42,8 +42,7 @@ DOCUMENTATION = """
     notes:
 """
 
-EXAMPLES = r"""
-
+EXAMPLES = r"""---
 - name: Check if 10.1.1.0/24 is a subnet of 10.0.0.0/8
   ansible.builtin.set_fact:
     data: "{{ '10.1.1.0/24' is ansible.utils.subnet_of '10.0.0.0/8' }}"
@@ -67,7 +66,6 @@ EXAMPLES = r"""
 #     },
 #     "changed": false
 # }
-
 """
 
 RETURN = """

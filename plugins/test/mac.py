@@ -33,8 +33,7 @@ DOCUMENTATION = """
     notes:
 """
 
-EXAMPLES = r"""
-
+EXAMPLES = r"""---
 - name: Check if 02:16:3e:e4:16:f3 is a valid MAC address
   ansible.builtin.set_fact:
     data: "{{ '02:16:3e:e4:16:f3' is ansible.utils.mac }}"
@@ -94,7 +93,6 @@ EXAMPLES = r"""
 #     },
 #     "changed": false
 # }
-
 """
 
 RETURN = """

@@ -64,6 +64,7 @@ Examples
 
 .. code-block:: yaml
 
+    ---
     #### Simple examples
 
     - name: Check if 10.0.0.0/8 is a valid IPv4 address

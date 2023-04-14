@@ -64,6 +64,7 @@ Examples
 
 .. code-block:: yaml
 
+    ---
     #### Simple examples
 
     - name: Check if docs.ansible.com is resolvable or not

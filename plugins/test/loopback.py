@@ -35,8 +35,7 @@ DOCUMENTATION = """
     notes:
 """
 
-EXAMPLES = r"""
-
+EXAMPLES = r"""---
 - name: Check if 127.10.10.10 is a valid loopback address
   ansible.builtin.set_fact:
     data: "{{ '127.10.10.10' is ansible.utils.loopback }}"
@@ -72,7 +71,6 @@ EXAMPLES = r"""
 #     },
 #     "changed": false
 # }
-
 """
 
 RETURN = """

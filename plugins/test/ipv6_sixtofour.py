@@ -35,8 +35,7 @@ DOCUMENTATION = """
     notes:
 """
 
-EXAMPLES = r"""
-
+EXAMPLES = r"""---
 #### Simple examples
 
 - name: Check if 2002:c0a8:6301:1::1 is a valid 6to4 address
@@ -74,7 +73,6 @@ EXAMPLES = r"""
 #     },
 #     "changed": false
 # }
-
 """
 
 RETURN = """

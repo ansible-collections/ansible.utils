@@ -64,6 +64,7 @@ Examples
 
 .. code-block:: yaml
 
+    ---
     - name: Check if 8.8.8.8 is a public IP address
       ansible.builtin.set_fact:
         data: "{{ '8.8.8.8' is ansible.utils.public }}"

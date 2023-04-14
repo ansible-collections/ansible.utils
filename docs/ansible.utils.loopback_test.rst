@@ -64,6 +64,7 @@ Examples
 
 .. code-block:: yaml
 
+    ---
     - name: Check if 127.10.10.10 is a valid loopback address
       ansible.builtin.set_fact:
         data: "{{ '127.10.10.10' is ansible.utils.loopback }}"

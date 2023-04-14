@@ -64,6 +64,7 @@ Examples
 
 .. code-block:: yaml
 
+    ---
     #### Simple examples
 
     - name: Check if ::FFFF:10.1.1.1 is a valid IPv4-mapped IPv6 address

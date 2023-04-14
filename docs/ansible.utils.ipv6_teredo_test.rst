@@ -64,6 +64,7 @@ Examples
 
 .. code-block:: yaml
 
+    ---
     #### Simple examples
 
     - name: Check if 2001::c0a8:6301:1 is a valid IPv6 teredo address

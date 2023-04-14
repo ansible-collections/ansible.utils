@@ -35,8 +35,7 @@ DOCUMENTATION = """
     notes:
 """
 
-EXAMPLES = r"""
-
+EXAMPLES = r"""---
 - name: Check if 253.0.0.1 is a reserved IP address
   ansible.builtin.set_fact:
     data: "{{ '253.0.0.1' is ansible.utils.reserved }}"
@@ -60,7 +59,6 @@ EXAMPLES = r"""
 #     },
 #     "changed": false
 # }
-
 """
 
 RETURN = """
