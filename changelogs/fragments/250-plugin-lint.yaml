@@ -1,0 +1,3 @@
+---
+doc_changes:
+  - Normalized EXAMPLES sections of plugins to pass ansible-lint.
