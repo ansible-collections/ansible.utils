@@ -60,7 +60,7 @@ DOCUMENTATION = """
     notes:
 """
 
-EXAMPLES = r"""
+EXAMPLES = r"""---
 #### examples
 # ip4_hex convert IPv4 address to Hexadecimal notation with optional delimiter
 - debug:
@@ -83,8 +83,6 @@ EXAMPLES = r"""
 # ok: [localhost] => {
 #     "msg": "c0:a8:01:05"
 # }
-
-
 """
 
 RETURN = """

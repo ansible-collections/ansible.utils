@@ -51,7 +51,7 @@ DOCUMENTATION = """
       as C(key=value) pairs followed by the environment variables.
 """
 
-EXAMPLES = r"""
+EXAMPLES = r"""---
 - name: set facts for data and criteria
   ansible.builtin.set_fact:
     data: "{{ lookup('ansible.builtin.file', './validate/data/show_interfaces_iosxr.json')}}"

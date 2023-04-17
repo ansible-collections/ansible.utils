@@ -82,10 +82,11 @@ Examples
 
 .. code-block:: yaml
 
+    ---
     #### examples
-     - name: To check whether multiple addresses belong to a network, use the reduce_on_network filter.
-       debug:
-            msg: "{{ ['192.168.0.34', '10.3.0.3', '192.168.2.34'] | ansible.utils.reduce_on_network( '192.168.0.0/24' ) }}"
+    - name: To check whether multiple addresses belong to a network, use the reduce_on_network filter.
+      debug:
+        msg: "{{ ['192.168.0.34', '10.3.0.3', '192.168.2.34'] | ansible.utils.reduce_on_network( '192.168.0.0/24' ) }}"
 
     # TASK [To check whether multiple addresses belong to a network, use the reduce_on_network filter.] ***********
     # task path: /Users/amhatre/ansible-collections/playbooks/test_reduce_on_network.yaml:7

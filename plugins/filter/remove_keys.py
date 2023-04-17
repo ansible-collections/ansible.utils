@@ -40,184 +40,145 @@ DOCUMENTATION = """
         choices: ["starts_with","ends_with","regex"]
 """
 
-EXAMPLES = r"""
-
-##example.yaml
-interfaces:
-  - name: eth0
-    enabled: true
-    duplex: auto
-    speed: auto
-    note:
-      - Connected green wire
-  - name: eth1
-    description: Configured by Ansible - Interface 1
-    mtu: 1500
-    speed: auto
-    duplex: auto
-    enabled: true
-    note:
-      - Connected blue wire
-      - Configured by Paul
-    vifs:
-    - vlan_id: 100
-      description: Eth1 - VIF 100
-      mtu: 400
+EXAMPLES = r"""---
+vars:
+  interfaces:
+    - name: eth0
       enabled: true
-      comment: Needs reconfiguration
-    - vlan_id: 101
-      description: Eth1 - VIF 101
+      duplex: auto
+      speed: auto
+      note:
+        - Connected green wire
+    - name: eth1
+      description: Configured by Ansible - Interface 1
+      mtu: 1500
+      speed: auto
+      duplex: auto
       enabled: true
-  - name: eth2
-    description: Configured by Ansible - Interface 2 (ADMIN DOWN)
-    mtu: 600
-    enabled: false
+      note:
+        - Connected blue wire
+        - Configured by Paul
+      vifs:
+        - vlan_id: 100
+          description: Eth1 - VIF 100
+          mtu: 400
+          enabled: true
+          comment: Needs reconfiguration
+        - vlan_id: 101
+          description: Eth1 - VIF 101
+          enabled: true
+    - name: eth2
+      description: Configured by Ansible - Interface 2 (ADMIN DOWN)
+      mtu: 600
+      enabled: false
 
-##Playbook
-vars_files:
-  - "example.yaml"
 tasks:
   - name: remove multiple keys from a provided data
     ansible.builtin.set_fact:
       data: "{{ interfaces }}"
 
   - debug:
-      msg:  "{{ data|ansible.utils.remove_keys(target=['note', 'comment']) }}"
+      msg: "{{ data|ansible.utils.remove_keys(target=['note', 'comment']) }}"
 
-##Output
-# TASK [remove multiple keys from a provided data] ***************************************
-# ok: [localhost] => {
-#     "ansible_facts": {
-#         "data": [
-#             {
-#                 "duplex": "auto",
-#                 "enabled": true,
-#                 "name": "eth0",
-#                 "note": [
-#                     "Connected green wire"
-#                 ],
-#                 "speed": "auto"
-#             },
-#             {
-#                 "description": "Configured by Ansible - Interface 1",
-#                 "duplex": "auto",
-#                 "enabled": true,
-#                 "mtu": 1500,
-#                 "name": "eth1",
-#                 "note": [
-#                     "Connected blue wire",
-#                     "Configured by Paul"
-#                 ],
-#                 "speed": "auto",
-#                 "vifs": [
-#                     {
-#                         "comment": "Needs reconfiguration",
-#                         "description": "Eth1 - VIF 100",
-#                         "enabled": true,
-#                         "mtu": 400,
-#                         "vlan_id": 100
-#                     },
-#                     {
-#                         "description": "Eth1 - VIF 101",
-#                         "enabled": true,
-#                         "vlan_id": 101
-#                     }
-#                 ]
-#             },
-#             {
-#                 "description": "Configured by Ansible - Interface 2 (ADMIN DOWN)",
-#                 "enabled": false,
-#                 "mtu": 600,
-#                 "name": "eth2"
-#             }
-#         ]
-#     },
-#     "changed": false
-# }
-# Read vars_file 'example.yaml'
+  # Output
+  # TASK [remove multiple keys from a provided data] ***************************************
+  # ok: [localhost] => {
+  #     "ansible_facts": {
+  #         "data": [
+  #             {
+  #                 "duplex": "auto",
+  #                 "enabled": true,
+  #                 "name": "eth0",
+  #                 "note": [
+  #                     "Connected green wire"
+  #                 ],
+  #                 "speed": "auto"
+  #             },
+  #             {
+  #                 "description": "Configured by Ansible - Interface 1",
+  #                 "duplex": "auto",
+  #                 "enabled": true,
+  #                 "mtu": 1500,
+  #                 "name": "eth1",
+  #                 "note": [
+  #                     "Connected blue wire",
+  #                     "Configured by Paul"
+  #                 ],
+  #                 "speed": "auto",
+  #                 "vifs": [
+  #                     {
+  #                         "comment": "Needs reconfiguration",
+  #                         "description": "Eth1 - VIF 100",
+  #                         "enabled": true,
+  #                         "mtu": 400,
+  #                         "vlan_id": 100
+  #                     },
+  #                     {
+  #                         "description": "Eth1 - VIF 101",
+  #                         "enabled": true,
+  #                         "vlan_id": 101
+  #                     }
+  #                 ]
+  #             },
+  #             {
+  #                 "description": "Configured by Ansible - Interface 2 (ADMIN DOWN)",
+  #                 "enabled": false,
+  #                 "mtu": 600,
+  #                 "name": "eth2"
+  #             }
+  #         ]
+  #     },
+  #     "changed": false
+  # }
+  # Read vars_file 'example.yaml'
 
-# TASK [debug] ********************************************
-# ok: [localhost] => {
-#     "msg": [
-#         {
-#             "duplex": "auto",
-#             "enabled": true,
-#             "name": "eth0",
-#             "speed": "auto"
-#         },
-#         {
-#             "description": "Configured by Ansible - Interface 1",
-#             "duplex": "auto",
-#             "enabled": true,
-#             "mtu": 1500,
-#             "name": "eth1",
-#             "speed": "auto",
-#             "vifs": [
-#                 {
-#                     "description": "Eth1 - VIF 100",
-#                     "enabled": true,
-#                     "mtu": 400,
-#                     "vlan_id": 100
-#                 },
-#                 {
-#                     "description": "Eth1 - VIF 101",
-#                     "enabled": true,
-#                     "vlan_id": 101
-#                 }
-#             ]
-#         },
-#         {
-#             "description": "Configured by Ansible - Interface 2 (ADMIN DOWN)",
-#             "enabled": false,
-#             "mtu": 600,
-#             "name": "eth2"
-#         }
-#     ]
-# }
+  # TASK [debug] ********************************************
+  # ok: [localhost] => {
+  #     "msg": [
+  #         {
+  #             "duplex": "auto",
+  #             "enabled": true,
+  #             "name": "eth0",
+  #             "speed": "auto"
+  #         },
+  #         {
+  #             "description": "Configured by Ansible - Interface 1",
+  #             "duplex": "auto",
+  #             "enabled": true,
+  #             "mtu": 1500,
+  #             "name": "eth1",
+  #             "speed": "auto",
+  #             "vifs": [
+  #                 {
+  #                     "description": "Eth1 - VIF 100",
+  #                     "enabled": true,
+  #                     "mtu": 400,
+  #                     "vlan_id": 100
+  #                 },
+  #                 {
+  #                     "description": "Eth1 - VIF 101",
+  #                     "enabled": true,
+  #                     "vlan_id": 101
+  #                 }
+  #             ]
+  #         },
+  #         {
+  #             "description": "Configured by Ansible - Interface 2 (ADMIN DOWN)",
+  #             "enabled": false,
+  #             "mtu": 600,
+  #             "name": "eth2"
+  #         }
+  #     ]
+  # }
 
-##example.yaml
-interfaces:
-  - name: eth0
-    enabled: true
-    duplex: auto
-    speed: auto
-    note:
-      - Connected green wire
-  - name: eth1
-    description: Configured by Ansible - Interface 1
-    mtu: 1500
-    speed: auto
-    duplex: auto
-    enabled: true
-    note:
-      - Connected blue wire
-      - Configured by Paul
-    vifs:
-    - vlan_id: 100
-      description: Eth1 - VIF 100
-      mtu: 400
-      enabled: true
-      comment: Needs reconfiguration
-    - vlan_id: 101
-      description: Eth1 - VIF 101
-      enabled: true
-  - name: eth2
-    description: Configured by Ansible - Interface 2 (ADMIN DOWN)
-    mtu: 600
-    enabled: false
-
-##Playbook
-vars_files:
-  - "example.yaml"
-tasks:
   - name: remove multiple keys from a provided data
     ansible.builtin.set_fact:
       data: "{{ interfaces }}"
 
   - debug:
-      msg:  "{{ data|ansible.utils.remove_keys(target=['^note$', '^comment'], matching_parameter= 'regex') }}"
+      msg: "{{ data|ansible.utils.remove_keys(target=['^note$', '^comment'], matching_parameter= 'regex') }}"
 
-##Output
+# Output
 # TASK [remove multiple keys from a provided data] ***********************
 # ok: [localhost] => {
 #     "ansible_facts": {
@@ -307,7 +268,6 @@ tasks:
 #         }
 #     ]
 # }
-
 """
 
 from ansible.errors import AnsibleFilterError

@@ -66,7 +66,7 @@ DOCUMENTATION = """
     notes:
 """
 
-EXAMPLES = r"""
+EXAMPLES = r"""---
 #### examples
 # Ipv4 filter plugin with different queries.
 - name: next_nth_usable returns the second usable IP address for the given IP range
@@ -90,7 +90,6 @@ EXAMPLES = r"""
 # ok: [localhost] => {
 #     "msg": ""
 # }
-
 """
 
 RETURN = """

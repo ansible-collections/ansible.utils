@@ -58,7 +58,7 @@ DOCUMENTATION = """
             description: integer for arithmetic. Example -1,2,3
 """
 
-EXAMPLES = r"""
+EXAMPLES = r"""---
 #### examples
 # Ipmath filter plugin with different arthmetic.
 # Get the next fifth address based on an IP address
@@ -124,7 +124,6 @@ EXAMPLES = r"""
 # ok: [localhost] => {
 #     "msg": "2000:ffff:ffff:ffff:ffff:ffff:ffff:fffb"
 # }
-
 """
 
 RETURN = """

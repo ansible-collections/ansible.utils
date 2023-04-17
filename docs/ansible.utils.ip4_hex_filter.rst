@@ -81,6 +81,7 @@ Examples
 
 .. code-block:: yaml
 
+    ---
     #### examples
     # ip4_hex convert IPv4 address to Hexadecimal notation with optional delimiter
     - debug:

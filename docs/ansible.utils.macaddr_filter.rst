@@ -82,6 +82,7 @@ Examples
 
 .. code-block:: yaml
 
+    ---
     #### examples
     - name: Check if given string is a MAC address
       debug:

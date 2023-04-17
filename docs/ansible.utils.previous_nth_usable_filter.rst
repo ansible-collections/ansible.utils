@@ -82,6 +82,7 @@ Examples
 
 .. code-block:: yaml
 
+    ---
     #### examples
     - name: previous_nth_usable returns the second usable IP address for the given IP range
       debug:

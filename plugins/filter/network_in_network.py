@@ -63,7 +63,7 @@ DOCUMENTATION = """
     notes:
 """
 
-EXAMPLES = r"""
+EXAMPLES = r"""---
 #### examples
 - name: Check ip address 1 is part of another network
   debug:
@@ -97,8 +97,6 @@ EXAMPLES = r"""
 # ok: [localhost] => {
 #     "msg": true
 # }
-
-
 """
 
 RETURN = """

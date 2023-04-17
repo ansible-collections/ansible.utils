@@ -81,6 +81,7 @@ Examples
 
 .. code-block:: yaml
 
+    ---
     #### examples
     - name: To return the nth ip from a network, use the filter nthhost.
       debug:

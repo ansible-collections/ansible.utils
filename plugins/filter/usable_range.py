@@ -37,8 +37,7 @@ DOCUMENTATION = """
     notes:
 """
 
-EXAMPLES = r"""
-
+EXAMPLES = r"""---
 #### Simple examples
 
 - name: Expand and produce list of usable IP addresses in 10.0.0.0/28
@@ -139,7 +138,6 @@ EXAMPLES = r"""
 # changed: [localhost] => (item=127.0.0.13)
 # changed: [localhost] => (item=127.0.0.14)
 # changed: [localhost] => (item=127.0.0.15)
-
 """
 
 RETURN = """

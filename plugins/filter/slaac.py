@@ -63,7 +63,7 @@ DOCUMENTATION = """
     notes:
 """
 
-EXAMPLES = r"""
+EXAMPLES = r"""---
 #### examples
 - name: The filter slaac() generates an IPv6 address for a given network and a MAC Address in Stateless Configuration.
   debug:
@@ -75,8 +75,6 @@ EXAMPLES = r"""
 # ok: [localhost] => {
 #     "msg": "fdcf:1894:23b5:d38c:c031:b3ff:fe83:bf2b"
 # }
-
-
 """
 
 RETURN = """

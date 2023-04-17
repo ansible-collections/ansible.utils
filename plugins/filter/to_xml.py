@@ -55,18 +55,17 @@ DOCUMENTATION = """
         default: True
 """
 
-EXAMPLES = r"""
-
+EXAMPLES = r"""---
 #### Simple examples with out any engine. plugin will use default value as xmltodict
 
 - name: Define JSON data
   ansible.builtin.set_fact:
-      data:
-        "interface-configurations":
-          "@xmlns": "http://cisco.com/ns/yang/Cisco-IOS-XR-ifmgr-cfg"
-          "interface-configuration":
+    data:
+      "interface-configurations":
+        "@xmlns": "http://cisco.com/ns/yang/Cisco-IOS-XR-ifmgr-cfg"
+        "interface-configuration":
 - debug:
-    msg:  "{{ data|ansible.utils.to_xml }}"
+    msg: "{{ data|ansible.utils.to_xml }}"
 
 # TASK [Define JSON data ] *************************************************************************
 # task path: /Users/amhatre/ansible-collections/playbooks/test_utils_json_to_xml.yaml:5
@@ -96,10 +95,10 @@ EXAMPLES = r"""
   ansible.builtin.set_fact:
     data:
       "interface-configurations":
-          "@xmlns": "http://cisco.com/ns/yang/Cisco-IOS-XR-ifmgr-cfg"
-          "interface-configuration":
+        "@xmlns": "http://cisco.com/ns/yang/Cisco-IOS-XR-ifmgr-cfg"
+        "interface-configuration":
 - debug:
-    msg:  "{{ data|ansible.utils.to_xml('xmltodict') }}"
+    msg: "{{ data|ansible.utils.to_xml('xmltodict') }}"
 
 # TASK [Define JSON data ] *************************************************************************
 # task path: /Users/amhatre/ansible-collections/playbooks/test_utils_json_to_xml.yaml:5
@@ -128,10 +127,10 @@ EXAMPLES = r"""
   ansible.builtin.set_fact:
     data:
       "interface-configurations":
-          "@xmlns": "http://cisco.com/ns/yang/Cisco-IOS-XR-ifmgr-cfg"
-          "interface-configuration":
+        "@xmlns": "http://cisco.com/ns/yang/Cisco-IOS-XR-ifmgr-cfg"
+        "interface-configuration":
 - debug:
-    msg:  "{{ data|ansible.utils.to_xml(indent='spaces', indent_width=2) }}"
+    msg: "{{ data|ansible.utils.to_xml(indent='spaces', indent_width=2) }}"
 
 # TASK [Define JSON data ] *************************************************************************
 # task path: /Users/amhatre/ansible-collections/playbooks/test_utils_json_to_xml.yaml:5

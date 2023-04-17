@@ -64,6 +64,7 @@ Examples
 
 .. code-block:: yaml
 
+    ---
     #### Simple examples
 
     - name: Expand and produce list of usable IP addresses in 10.0.0.0/28

@@ -80,6 +80,7 @@ Examples
 
 .. code-block:: yaml
 
+    ---
     #### examples
     - name: Check ip address 1 is part of another network
       debug:

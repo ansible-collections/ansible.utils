@@ -107,6 +107,7 @@ Examples
 
 .. code-block:: yaml
 
+    ---
     #### Simple examples
 
     - ansible.builtin.set_fact:
@@ -114,11 +115,11 @@ Examples
           b:
             c:
               d:
-              - 0
-              - 1
+                - 0
+                - 1
               e:
-              - True
-              - False
+                - true
+                - false
 
     - ansible.builtin.set_fact:
         paths: "{{ a|ansible.utils.to_paths }}"
@@ -155,7 +156,7 @@ Examples
           accept: "application/yang.data+json"
         url_password: password
         url_username: admin
-        validate_certs: False
+        validate_certs: false
       register: result
       delegate_to: localhost
 

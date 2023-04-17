@@ -81,6 +81,7 @@ Examples
 
 .. code-block:: yaml
 
+    ---
     #### examples
     - name: Check ip address is usable in a network
       debug:

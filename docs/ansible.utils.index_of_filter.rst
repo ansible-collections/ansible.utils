@@ -169,14 +169,15 @@ Examples
 
 .. code-block:: yaml
 
+    ---
     #### Simple examples
 
     - name: Define a list
       ansible.builtin.set_fact:
         data:
-        - 1
-        - 2
-        - 3
+          - 1
+          - 2
+          - 3
 
     - name: Find the index of 2
       ansible.builtin.set_fact:
@@ -232,14 +233,14 @@ Examples
     - name: Define a list with hostname and type
       ansible.builtin.set_fact:
         data:
-        - name: sw01.example.lan
-          type: switch
-        - name: rtr01.example.lan
-          type: router
-        - name: fw01.example.corp
-          type: firewall
-        - name: fw02.example.corp
-          type: firewall
+          - name: sw01.example.lan
+            type: switch
+          - name: rtr01.example.lan
+            type: router
+          - name: fw01.example.corp
+            type: firewall
+          - name: fw02.example.corp
+            type: firewall
 
     - name: Find the index of all firewalls using the type key
       ansible.builtin.set_fact:
@@ -270,7 +271,7 @@ Examples
         msg: "The device named {{ data[item].name }} is a {{ data[item].type }}"
       loop: "{{ data|ansible.utils.index_of('regex', expression, 'name') }}"
       vars:
-        expression: '\.corp$' # ends with .corp
+        expression: '\.corp$'  # ends with .corp
 
     # TASK [Find the index of all devices with a .corp name] *********************
     # ok: [nxos101] => (item=2) =>
@@ -306,8 +307,8 @@ Examples
         ip: '192.168.101.'
         address: "{{ item.1.ipv4|d([])|ansible.utils.index_of('search', ip, 'address', wantlist=True) }}"
         entry:
-        - interface_idx: "{{ item.0 }}"
-          address_idxs: "{{ address }}"
+          - interface_idx: "{{ item.0 }}"
+            address_idxs: "{{ address }}"
       when: address
 
     # TASK [debug] ***************************************************************
@@ -339,8 +340,8 @@ Examples
             interface:
               - config:
                   description: configured by Ansible - 1
-                  enabled: True
-                  loopback-mode: False
+                  enabled: true
+                  loopback-mode: false
                   mtu: 1024
                   name: loopback0000
                   type: eth
@@ -349,18 +350,18 @@ Examples
                   subinterface:
                     - config:
                         description: subinterface configured by Ansible - 1
-                        enabled: True
+                        enabled: true
                         index: 5
                       index: 5
                     - config:
                         description: subinterface configured by Ansible - 2
-                        enabled: False
+                        enabled: false
                         index: 2
                       index: 2
               - config:
                   description: configured by Ansible - 2
-                  enabled: False
-                  loopback-mode: False
+                  enabled: false
+                  loopback-mode: false
                   mtu: 2048
                   name: loopback1111
                   type: virt
@@ -369,12 +370,12 @@ Examples
                   subinterface:
                     - config:
                         description: subinterface configured by Ansible - 3
-                        enabled: True
+                        enabled: true
                         index: 10
                       index: 10
                     - config:
                         description: subinterface configured by Ansible - 4
-                        enabled: False
+                        enabled: false
                         index: 3
                       index: 3
 

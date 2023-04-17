@@ -80,6 +80,7 @@ Examples
 
 .. code-block:: yaml
 
+    ---
     #### examples
     # Ipmath filter plugin with different arthmetic.
     # Get the next fifth address based on an IP address

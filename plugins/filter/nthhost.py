@@ -62,7 +62,7 @@ DOCUMENTATION = """
     notes:
 """
 
-EXAMPLES = r"""
+EXAMPLES = r"""---
 #### examples
 - name: To return the nth ip from a network, use the filter nthhost.
   debug:
@@ -85,8 +85,6 @@ EXAMPLES = r"""
 # ok: [localhost] => {
 #     "msg": "10.255.255.255"
 # }
-
-
 """
 
 RETURN = """

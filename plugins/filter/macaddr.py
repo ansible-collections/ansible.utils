@@ -64,7 +64,7 @@ DOCUMENTATION = """
     notes:
 """
 
-EXAMPLES = r"""
+EXAMPLES = r"""---
 #### examples
 - name: Check if given string is a MAC address
   debug:
@@ -83,9 +83,6 @@ EXAMPLES = r"""
 # ok: [localhost] => {
 #     "msg": "1a2b.3c4d.5e6f"
 # }
-
-
-
 """
 
 RETURN = """

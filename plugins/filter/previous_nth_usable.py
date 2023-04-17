@@ -66,7 +66,7 @@ DOCUMENTATION = """
     notes:
 """
 
-EXAMPLES = r"""
+EXAMPLES = r"""---
 #### examples
 - name: previous_nth_usable returns the second usable IP address for the given IP range
   debug:
@@ -89,7 +89,6 @@ EXAMPLES = r"""
 # ok: [localhost] => {
 #     "msg": ""
 # }
-
 """
 
 RETURN = """

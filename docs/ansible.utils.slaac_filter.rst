@@ -81,6 +81,7 @@ Examples
 
 .. code-block:: yaml
 
+    ---
     #### examples
     - name: The filter slaac() generates an IPv6 address for a given network and a MAC Address in Stateless Configuration.
       debug:

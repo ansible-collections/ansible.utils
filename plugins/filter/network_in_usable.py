@@ -65,7 +65,7 @@ DOCUMENTATION = """
     notes:
 """
 
-EXAMPLES = r"""
+EXAMPLES = r"""---
 #### examples
 - name: Check ip address is usable in a network
   debug:
@@ -99,8 +99,6 @@ EXAMPLES = r"""
 # ok: [localhost] => {
 #     "msg": true
 # }
-
-
 """
 
 RETURN = """
