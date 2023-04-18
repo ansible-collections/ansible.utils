@@ -11,7 +11,7 @@ on:
 
 jobs:
   ansitest:
-    uses: cidrblock/github_actions/.github/workflows/ansitest.yml@main
+    uses: cidrblock/ansitest/.github/workflows/run.yml@main
   changelog:
     uses: ansible-network/github_actions/.github/workflows/changelog.yml@main
 
