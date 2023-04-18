@@ -13,4 +13,6 @@ addopts = [
   "yes"
 ]
 testpaths = ["tests"]
-filterwarnings = ['ignore:AnsibleCollectionFinder has already been configured']
+filterwarnings = [
+  'ignore:AnsibleCollectionFinder has already been configured',
+  ]
