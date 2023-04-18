@@ -23,12 +23,7 @@ jobs:
           python-version: "3.11"
 
       - name: Install deps
-        run: >-
-          python -m pip install
-          tox
-          git+https://github.com/cidrblock/ansitest.git
-          --disable-pip-version-check
-
+        run: python -m pip install -r test-requirements.txt
 
       - name: Generate matrix
         id: generate-matrix
@@ -58,11 +53,7 @@ jobs:
           python-version: ${{ matrix.entry.python }}
 
       - name: Install deps
-        run: >-
-          python -m pip install
-          tox
-          git+https://github.com/cidrblock/ansitest.git
-          --disable-pip-version-check
+        run: python -m pip install -r test-requirements.txt
 
       - name: Run tox test
         run: python -m tox --ansible -e ${{ matrix.entry.name }}
