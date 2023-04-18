@@ -1,5 +1,13 @@
-coverage==4.5.4
-git+https://github.com/ansible-network/pytest-ansible-network-integration.git
 # ansitest deps include tox, pytest, pytest-xdit, and pytest-ansible-units
+black==22.3.0 ; python_version > '3.5'
+coverage==4.5.4
+flake8
+git+https://github.com/ansible-network/pytest-ansible-network-integration.git
+git+https://github.com/ansible-community/pytest-ansible-units.git
+# ansitest pulls in pytest, pytest-xdist and tox as deps
 git+https://github.com/cidrblock/ansitest.git
+ipaddress ; python_version < '3.0'
+mock ; python_version < '3.5'
+netaddr
 pre-commit
+yamllint
