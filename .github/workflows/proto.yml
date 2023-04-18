@@ -22,8 +22,8 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install deps
-        run: python -m pip install -r test-requirements.txt
+      - name: Install ansitest, includes tox
+        run: python -m pip install git+https://github.com/cidrblock/ansitest.git
 
       - name: Generate matrix
         id: generate-matrix
