@@ -1,7 +1,7 @@
 name: Test collection
 
 concurrency:
-  group: ${{ github.head_ref }}
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 on:
@@ -10,16 +10,20 @@ on:
   workflow_dispatch:
 
 jobs:
+  ansitest:
+    uses: cidrblock/github_actions/.github/workflows/ansitest.yml@main
   changelog:
     uses: ansible-network/github_actions/.github/workflows/changelog.yml@main
 
   all_green:
     if: ${{ always() }}
     needs:
+      - ansitest
       - changelog
     runs-on: ubuntu-latest
     steps:
       - run: >-
           python -c "assert set([
+          '${{ needs.ansitest.result }}',
           '${{ needs.changelog.result }}',
           ]) == {'success'}"
