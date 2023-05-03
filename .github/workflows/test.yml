@@ -10,20 +10,20 @@ on:
   workflow_dispatch:
 
 jobs:
-  ansitest:
-    uses: cidrblock/ansitest/.github/workflows/run.yml@main
+  tox-ansible:
+    uses: tox-dev/tox-ansible/.github/workflows/run.yml@uplift_v2
   changelog:
     uses: ansible-network/github_actions/.github/workflows/changelog.yml@main
 
   all_green:
     if: ${{ always() }}
     needs:
-      - ansitest
+      - tox-ansible
       - changelog
     runs-on: ubuntu-latest
     steps:
       - run: >-
           python -c "assert set([
-          '${{ needs.ansitest.result }}',
+          '${{ needs.tox-ansible.result }}',
           '${{ needs.changelog.result }}',
           ]) == {'success'}"
