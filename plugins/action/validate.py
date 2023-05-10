@@ -58,7 +58,7 @@ class ActionModule(ActionBase):
             DOCUMENTATION,
             "validate module",
             schema_conditionals=ARGSPEC_CONDITIONALS,
-            **self._task.args
+            **self._task.args,
         )
         if not valid:
             return argspec_result

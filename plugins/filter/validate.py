@@ -94,7 +94,10 @@ def validate(*args, **kwargs):
         params.update({"engine": kwargs["engine"]})
 
     valid, argspec_result, updated_params = check_argspec(
-        DOCUMENTATION, "validate filter", schema_conditionals=ARGSPEC_CONDITIONALS, **params
+        DOCUMENTATION,
+        "validate filter",
+        schema_conditionals=ARGSPEC_CONDITIONALS,
+        **params,
     )
     if not valid:
         raise AnsibleFilterError(

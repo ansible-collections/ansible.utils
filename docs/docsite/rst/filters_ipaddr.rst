@@ -13,7 +13,7 @@ available to manipulate IP subnets and MAC addresses.
 
 .. note::
 
-	The ``ipaddr()`` filter migrated to the `ansible.utils <https://galaxy.ansible.com/ansible/utils>`_ collection. Follow the installation instructions to install that collection.
+    The ``ipaddr()`` filter migrated to the `ansible.utils <https://galaxy.ansible.com/ansible/utils>`_ collection. Follow the installation instructions to install that collection.
 
 To use this filter in Ansible, you need to install the ``netaddr`` Python library on
 a computer on which you use Ansible (it is not required on remote hosts).

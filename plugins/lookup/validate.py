@@ -112,7 +112,7 @@ class LookupModule(LookupBase):
             schema=schema[0],
             name="validate lookup",
             schema_conditionals=ARGSPEC_CONDITIONALS,
-            **params
+            **params,
         )
         if not valid:
             raise AnsibleLookupError(

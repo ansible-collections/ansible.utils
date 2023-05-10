@@ -100,7 +100,10 @@ def validate(*args, **kwargs):
             params.update({item: kwargs[item]})
 
     valid, argspec_result, updated_params = check_argspec(
-        DOCUMENTATION, "validate test", schema_conditionals=ARGSPEC_CONDITIONALS, **params
+        DOCUMENTATION,
+        "validate test",
+        schema_conditionals=ARGSPEC_CONDITIONALS,
+        **params,
     )
     if not valid:
         raise AnsibleError(
