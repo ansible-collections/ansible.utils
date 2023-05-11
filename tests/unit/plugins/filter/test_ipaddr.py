@@ -83,7 +83,10 @@ class TestIpFilter(unittest.TestCase):
 
         assert ipaddr("2002:c000:02e6::1", "6to4") == "2002:c000:02e6::1"
         assert ipaddr(v6_address, "6to4") == v6_address
-        assert ipaddr(["192.0.2.230", "192.0.2.0/24", "fd::e", "2002:c000:02e6::1"], "6to4") == [v6_address, "2002:c000:02e6::1"]
+        assert ipaddr(["192.0.2.230", "192.0.2.0/24", "fd::e", "2002:c000:02e6::1"], "6to4") == [
+            v6_address,
+            "2002:c000:02e6::1",
+        ]
 
     def test_ipaddr_address_query(self):
         assert ipaddr("192.0.2.230", "address") == "192.0.2.230"
@@ -219,7 +222,9 @@ class TestIpFilter(unittest.TestCase):
         assert ipaddr("255.255.240.0", "public") is None
         assert ipaddr("76.120.99.190", "public") == "76.120.99.190"
         assert ipaddr(["192.168.1.12", "127.0.1.25", "255.255.240.0"], "public") == []
-        assert ipaddr(["192.168.1.12", "127.0.1.25", "255.255.240.0", "76.120.99.190"], "public") == ["76.120.99.190"]
+        assert ipaddr(
+            ["192.168.1.12", "127.0.1.25", "255.255.240.0", "76.120.99.190"], "public",
+        ) == ["76.120.99.190"]
 
     def test_range_usable(self):
         address = "1.12.1.0/24"

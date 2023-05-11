@@ -101,7 +101,10 @@ class TestValidate(unittest.TestCase):
         kwargs = {}
         with self.assertRaises(AnsibleFilterError) as error:
             validate(*args, **kwargs)
-        assert "Missing either 'data' or 'criteria' value in filter input, refer 'ansible.utils.validate' filter" in str(error.exception)
+        assert (
+            "Missing either 'data' or 'criteria' value in filter input, refer 'ansible.utils.validate' filter"
+            in str(error.exception)
+        )
 
         # missing required arguments
         with self.assertRaises(AnsibleFilterError) as error:
@@ -139,7 +142,10 @@ class TestValidate(unittest.TestCase):
         kwargs = {"engine": "ansible.utils.jsonschema", "draft": "draft0"}
         with self.assertRaises(AnsibleFilterError) as error:
             validate(*args, **kwargs)
-        assert "value of draft must be one of: draft3, draft4, draft6, draft7, 2019-09, 2020-12, got: draft0" in str(error.exception)
+        assert (
+            "value of draft must be one of: draft3, draft4, draft6, draft7, 2019-09, 2020-12, got: draft0"
+            in str(error.exception)
+        )
 
     def test_valid_data(self):
         """Check passing valid data as per criteria."""

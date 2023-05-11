@@ -141,7 +141,10 @@ class TestValidate(unittest.TestCase):
 
         with self.assertRaises(AnsibleError) as error:
             validate(*args, **kwargs)
-        assert "value of draft must be one of: draft3, draft4, draft6, draft7, 2019-09, 2020-12, got: draft0" in str(error.exception)
+        assert (
+            "value of draft must be one of: draft3, draft4, draft6, draft7, 2019-09, 2020-12, got: draft0"
+            in str(error.exception)
+        )
 
     def test_invalid_data(self):
         """Check passing invalid data as per criteria."""

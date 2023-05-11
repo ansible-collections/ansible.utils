@@ -24,7 +24,6 @@ with contextlib.suppress(ImportError):
     from ansible.errors import AnsibleError
 
 
-
 def _raise_error(msg):
     """Raise an error message, prepend with filter name.
 

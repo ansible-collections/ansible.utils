@@ -74,7 +74,14 @@ OPTION_CONDITIONALS = (
     "required_if",
 )
 
-VALID_ANSIBLEMODULE_ARGS = ("argument_spec", "bypass_checks", "no_log", "add_file_common_args", "supports_check_mode", *OPTION_CONDITIONALS)
+VALID_ANSIBLEMODULE_ARGS = (
+    "argument_spec",
+    "bypass_checks",
+    "no_log",
+    "add_file_common_args",
+    "supports_check_mode",
+    *OPTION_CONDITIONALS,
+)
 
 BASE_ARG_AVAIL = 2.11
 

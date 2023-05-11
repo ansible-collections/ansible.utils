@@ -35,4 +35,7 @@ class TestXmlParser(unittest.TestCase):
 
         result = parser.parse()
         assert len(result["errors"]) == 1
-        assert result["errors"][0] == "XML parser returned an error while parsing. Error: syntax error: line 1, column 0"
+        assert (
+            result["errors"][0]
+            == "XML parser returned an error while parsing. Error: syntax error: line 1, column 0"
+        )

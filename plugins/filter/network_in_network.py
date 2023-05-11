@@ -136,7 +136,9 @@ def network_in_network(value, test):
     w_first = ipaddr(ipaddr(w, "network") or ipaddr(w, "address"), "int")
     w_last = ipaddr(ipaddr(w, "broadcast") or ipaddr(w, "address"), "int")
 
-    return bool(_range_checker(w_first, v_first, v_last) and _range_checker(w_last, v_first, v_last))
+    return bool(
+        _range_checker(w_first, v_first, v_last) and _range_checker(w_last, v_first, v_last),
+    )
 
 
 class FilterModule:

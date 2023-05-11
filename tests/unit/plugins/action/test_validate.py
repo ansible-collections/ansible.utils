@@ -145,7 +145,10 @@ class TestValidate(unittest.TestCase):
             "criteria": CRITERIA_OPER_STATUS_UP_CHECK,
         }
         result = self._plugin.run(task_vars=None)
-        assert "For engine 'ansible.utils.sample' error loading the corresponding validate plugin" in result["msg"]
+        assert (
+            "For engine 'ansible.utils.sample' error loading the corresponding validate plugin"
+            in result["msg"]
+        )
 
         # invalid data option value
         self._plugin._task.args = {
@@ -178,7 +181,10 @@ class TestValidate(unittest.TestCase):
         }
 
         result = self._plugin.run(task_vars={"ansible_validate_jsonschema_draft": "draft0"})
-        assert "value of draft must be one of: draft3, draft4, draft6, draft7, 2019-09, 2020-12, got: draft0" in result["msg"]
+        assert (
+            "value of draft must be one of: draft3, draft4, draft6, draft7, 2019-09, 2020-12, got: draft0"
+            in result["msg"]
+        )
 
     def test_validate_plugin_config_options_with_draft3(self):
         """Check passing invalid validate plugin options."""
@@ -226,7 +232,10 @@ class TestValidate(unittest.TestCase):
         }
 
         result = self._plugin.run(task_vars=None)
-        assert "patternProperties.^.*.properties.counters.properties.in_crc_errors.maximum" in result["msg"]
+        assert (
+            "patternProperties.^.*.properties.counters.properties.in_crc_errors.maximum"
+            in result["msg"]
+        )
         assert "patternProperties.^.*.properties.enabled.enum" in result["msg"]
         assert "'patternProperties.^.*.properties.oper_status.pattern" in result["msg"]
 
