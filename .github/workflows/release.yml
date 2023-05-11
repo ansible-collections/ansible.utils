@@ -5,33 +5,10 @@ on:
     types: [published]
 
 jobs:
-  release_ah:
-    runs-on: ubuntu-latest
-    environment: ah
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: "Publish collection on ah"
-        run: |
-          ansible-galaxy collection build -v --force
-          TARBALL=$(ls -1 ./*.tar.gz)
-          cat << EOF > ansible.cfg
-          [galaxy]
-          server_list = rh_automation_hub
-          [galaxy_server.rh_automation_hub]
-          url=https://cloud.redhat.com/api/automation-hub/
-          auth_url=https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
-          token=${{ secrets.AH_TOKEN }}
-          EOF
-          ansible-galaxy collection publish "${TARBALL}"
-
-  release_galaxy:
-    runs-on: ubuntu-latest
-    needs: release_ah
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: "Publish collection on galaxy"
-        uses: ansible/ansible-publish-action@v1.0.0
-        with:
-          api_key: ${{ secrets.ANSIBLE_GALAXY_API_KEY }}
+  release:
+    uses: ansible/devtools/.github/workflows/release_collection.yml@main
+    with:
+      environment: release
+    secrets:
+      ah_token: ${{ secrets.AH_TOKEN }}
+      ansible_galaxy_api_key: ${{ secrets.ANSIBLE_GALAXY_API_KEY }}
