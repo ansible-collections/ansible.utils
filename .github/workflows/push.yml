@@ -20,6 +20,7 @@ on:
     paths-ignore:
       - CHANGELOG.rst
       - changelogs/changelog.yaml
+  workflow_dispatch:
 
 env:
   NAMESPACE: ansible
