@@ -1,17 +1,13 @@
-# -*- coding: utf-8 -*-
 # Copyright 2021 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
-"""
-filter plugin file for ipaddr filters: ipv4
-"""
+"""filter plugin file for ipaddr filters: ipv4."""
 from __future__ import absolute_import, division, print_function
 
 from functools import partial
 
 from ansible.errors import AnsibleFilterError
-
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     AnsibleArgSpecValidator,
 )
@@ -129,7 +125,7 @@ RETURN = """
 
 @pass_environment
 def _ipv4(*args, **kwargs):
-    """This filter is designed to return the input value if a query is True, and False if a query is False"""
+    """This filter is designed to return the input value if a query is True, and False if a query is False."""
     keys = ["value", "query"]
     data = dict(zip(keys, args[1:]))
     data.update(kwargs)
@@ -142,7 +138,7 @@ def _ipv4(*args, **kwargs):
             pass
         else:
             raise AnsibleFilterError(
-                "Unrecognized type <{0}> for ipv4 filter <{1}>".format(
+                "Unrecognized type <{}> for ipv4 filter <{}>".format(
                     type(data["value"]),
                     "value",
                 ),
@@ -150,7 +146,7 @@ def _ipv4(*args, **kwargs):
 
     except (TypeError, ValueError):
         raise AnsibleFilterError(
-            "Unrecognized type <{0}> for ipv4 filter <{1}>".format(type(data["value"]), "value"),
+            "Unrecognized type <{}> for ipv4 filter <{}>".format(type(data["value"]), "value"),
         )
     aav = AnsibleArgSpecValidator(data=data, schema=DOCUMENTATION, name="ipv4")
     valid, errors, updated_data = aav.validate()
@@ -163,8 +159,8 @@ def ipv4(value, query=""):
     return ipaddr(value, query, version=4, alias="ipv4")
 
 
-class FilterModule(object):
-    """IP address and network manipulation filters"""
+class FilterModule:
+    """IP address and network manipulation filters."""
 
     filter_map = {
         # IP addresses and networks
@@ -172,8 +168,8 @@ class FilterModule(object):
     }
 
     def filters(self):
-        """ipaddr filter"""
+        """Ipaddr filter."""
         if netaddr:
             return self.filter_map
         else:
-            return dict((f, partial(_need_netaddr, f)) for f in self.filter_map)
+            return {f: partial(_need_netaddr, f) for f in self.filter_map}

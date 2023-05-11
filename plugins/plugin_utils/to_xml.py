@@ -1,13 +1,10 @@
 #
-# -*- coding: utf-8 -*-
 # Copyright 2021 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 #
 
-"""
-The to_xml plugin
-"""
+"""The to_xml plugin."""
 from __future__ import absolute_import, division, print_function
 
 
@@ -25,18 +22,18 @@ except ImportError:
 
 
 def _raise_error(msg):
-    """Raise an error message, prepend with filter name
+    """Raise an error message, prepend with filter name.
 
     :param msg: The message
     :type msg: str
     :raises: AnsibleError
     """
-    error = "Error when using plugin 'to_xml': {msg}".format(msg=msg)
+    error = f"Error when using plugin 'to_xml': {msg}"
     raise AnsibleFilterError(error)
 
 
 def to_xml(data, engine, indent, indent_width, full_document):
-    """Convert data which is in json to xml"
+    """Convert data which is in json to xml".
 
     :param data: The data passed in (data|to_xml(...))
     :type data: xml
@@ -45,7 +42,6 @@ def to_xml(data, engine, indent, indent_width, full_document):
     :param indent_width: Indent char multiplier default=4
     :param full_document: Flag to disable xml declaration
     """
-
     indent_char = "\t"
 
     if indent == "spaces":
@@ -65,5 +61,6 @@ def to_xml(data, engine, indent, indent_width, full_document):
             _raise_error("Input json is not valid")
         return res
     else:
-        error = "engine: {engine} is not supported ".format(engine=engine)
+        error = f"engine: {engine} is not supported "
         _raise_error(error)
+        return None

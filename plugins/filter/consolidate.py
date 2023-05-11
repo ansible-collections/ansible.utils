@@ -1,13 +1,10 @@
 #
-# -*- coding: utf-8 -*-
 # Copyright 2022 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 #
 
-"""
-The consolidate filter plugin
-"""
+"""The consolidate filter plugin."""
 from __future__ import absolute_import, division, print_function
 
 
@@ -1444,7 +1441,6 @@ tasks:
 """
 
 from ansible.errors import AnsibleFilterError
-
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     AnsibleArgSpecValidator,
 )
@@ -1459,8 +1455,7 @@ except ImportError:
 
 @pass_environment
 def _consolidate(*args, **kwargs):
-    """Consolidate facts together on common attributes"""
-
+    """Consolidate facts together on common attributes."""
     keys = [
         "data_sources",
         "fail_missing_match_key",
@@ -1476,9 +1471,9 @@ def _consolidate(*args, **kwargs):
     return consolidate(**updated_data)
 
 
-class FilterModule(object):
-    """Consolidate"""
+class FilterModule:
+    """Consolidate."""
 
     def filters(self):
-        """A mapping of filter names to functions"""
+        """A mapping of filter names to functions."""
         return {"consolidate": _consolidate}

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2020 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
@@ -84,7 +83,6 @@ RETURN = """
 from ansible.errors import AnsibleError, AnsibleLookupError
 from ansible.module_utils._text import to_text
 from ansible.plugins.lookup import LookupBase
-
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     check_argspec,
 )

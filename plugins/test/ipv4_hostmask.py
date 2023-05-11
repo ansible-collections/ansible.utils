@@ -1,11 +1,8 @@
-# -*- coding: utf-8 -*-
 # Copyright 2021 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
-"""
-Test plugin file for netaddr tests: ipv4_hostmask
-"""
+"""Test plugin file for netaddr tests: ipv4_hostmask."""
 
 from __future__ import absolute_import, division, print_function
 
@@ -75,20 +72,19 @@ RETURN = """
 
 @_need_ipaddress
 def _ipv4_hostmask(ip):
-    """Test if an address is a hostmask"""
-
+    """Test if an address is a hostmask."""
     params = {"ip": ip}
     _validate_args("ipv4_hostmask", DOCUMENTATION, params)
 
     try:
-        ipaddr = ip_network("10.0.0.0/{ip}".format(ip=ip))
+        ipaddr = ip_network(f"10.0.0.0/{ip}")
         return str(ipaddr.hostmask) == ip
     except Exception:
         return False
 
 
-class TestModule(object):
-    """network jinja test"""
+class TestModule:
+    """network jinja test."""
 
     test_map = {"ipv4_hostmask": _ipv4_hostmask}
 

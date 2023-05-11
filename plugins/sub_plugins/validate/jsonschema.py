@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2020 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
@@ -58,7 +57,6 @@ from ansible.module_utils._text import to_text
 from ansible.module_utils.basic import missing_required_lib
 from ansible.module_utils.six import string_types
 from ansible.utils.display import Display
-
 from ansible_collections.ansible.utils.plugins.module_utils.common.utils import to_list
 from ansible_collections.ansible.utils.plugins.plugin_utils.base.validate import ValidateBase
 
@@ -125,7 +123,7 @@ class Validate(ValidateBase):
 
     @staticmethod
     def _check_reqs():
-        """Check the prerequisites are installed for jsonschema
+        """Check the prerequisites are installed for jsonschema.
 
         :return None: In case all prerequisites are satisfied
         """
@@ -133,7 +131,7 @@ class Validate(ValidateBase):
             raise AnsibleError(missing_required_lib("jsonschema"))
 
     def _check_args(self):
-        """Ensure specific args are set
+        """Ensure specific args are set.
 
         :return: None: In case all arguments passed are valid
         """
@@ -180,7 +178,7 @@ class Validate(ValidateBase):
                 validator_class = getattr(jsonschema, draft_config["validator_name"])
             except AttributeError:
                 display.vvv(
-                    'jsonschema draft "{draft}" not supported in this version'.format(draft=draft),
+                    f'jsonschema draft "{draft}" not supported in this version',
                 )
                 del self._JSONSCHEMA_DRAFTS[draft]
                 continue
@@ -193,7 +191,7 @@ class Validate(ValidateBase):
             draft_config["format_checker"] = format_checker_class
 
     def validate(self):
-        """Std entry point for a validate execution
+        """Std entry point for a validate execution.
 
         :return: Errors or parsed text as structured data
         :rtype: dict
@@ -251,7 +249,7 @@ class Validate(ValidateBase):
                     for draft, draft_config in self._JSONSCHEMA_DRAFTS.items():
                         if validator_class == draft_config["validator"]:
                             display.vvv(
-                                "Using format_checker for {draft} validator".format(draft=draft),
+                                f"Using format_checker for {draft} validator",
                             )
                             format_checker = draft_config["format_checker"]
                             break

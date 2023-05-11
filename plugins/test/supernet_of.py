@@ -1,11 +1,8 @@
-# -*- coding: utf-8 -*-
 # Copyright 2021 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
-"""
-Test plugin file for netaddr tests: supernet_of
-"""
+"""Test plugin file for netaddr tests: supernet_of."""
 
 from __future__ import absolute_import, division, print_function
 
@@ -80,8 +77,7 @@ RETURN = """
 
 @_need_ipaddress
 def _supernet_of(network_a, network_b):
-    """Test if an network is a supernet of another network"""
-
+    """Test if an network is a supernet of another network."""
     params = {"network_a": network_a, "network_b": network_b}
     _validate_args("supernet_of", DOCUMENTATION, params)
 
@@ -91,8 +87,8 @@ def _supernet_of(network_a, network_b):
         return False
 
 
-class TestModule(object):
-    """network jinja test"""
+class TestModule:
+    """network jinja test."""
 
     test_map = {"supernet_of": _supernet_of}
 

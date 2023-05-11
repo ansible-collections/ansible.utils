@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2020 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
@@ -31,7 +30,6 @@ EXAMPLES = r"""
 import re
 
 from ansible.plugins.callback import CallbackBase
-
 from ansible_collections.ansible.utils.plugins.plugin_utils.base.fact_diff import FactDiffBase
 
 

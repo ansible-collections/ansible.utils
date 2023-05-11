@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2020 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
@@ -11,7 +10,6 @@ __metaclass__ = type
 import unittest
 
 from ansible.errors import AnsibleError
-
 from ansible_collections.ansible.utils.plugins.test.validate import validate
 
 
@@ -97,15 +95,14 @@ class TestValidate(unittest.TestCase):
         pass
 
     def test_invalid_argspec(self):
-        """Check passing invalid argspec"""
-
+        """Check passing invalid argspec."""
         # missing required arguments
         args = [DATA]
         kwargs = {}
         with self.assertRaises(AnsibleError) as error:
             validate(*args, **kwargs)
         msg = "missing required arguments: criteria"
-        self.assertIn(msg, str(error.exception))
+        assert msg in str(error.exception)
 
         kwargs = {
             "criteria": CRITERIA_IN_RATE_CHECK,
@@ -113,10 +110,7 @@ class TestValidate(unittest.TestCase):
         }
         with self.assertRaises(AnsibleError) as error:
             validate(*args, **kwargs)
-        self.assertIn(
-            "For engine 'ansible.utils.sample' error loading",
-            str(error.exception),
-        )
+        assert "For engine 'ansible.utils.sample' error loading" in str(error.exception)
 
         args = ["invalid data"]
         kwargs = {
@@ -125,7 +119,7 @@ class TestValidate(unittest.TestCase):
         }
         with self.assertRaises(AnsibleError) as error:
             validate(*args, **kwargs)
-        self.assertIn("'data' option value is invalid", str(error.exception))
+        assert "'data' option value is invalid" in str(error.exception)
 
         args = [DATA]
         kwargs = {
@@ -134,10 +128,10 @@ class TestValidate(unittest.TestCase):
         }
         with self.assertRaises(AnsibleError) as error:
             validate(*args, **kwargs)
-        self.assertIn("'criteria' option value is invalid", str(error.exception))
+        assert "'criteria' option value is invalid" in str(error.exception)
 
     def test_invalid_validate_plugin_config_options(self):
-        """Check passing invalid validate plugin options"""
+        """Check passing invalid validate plugin options."""
         args = [DATA]
         kwargs = {
             "criteria": "invalid criteria",
@@ -147,13 +141,10 @@ class TestValidate(unittest.TestCase):
 
         with self.assertRaises(AnsibleError) as error:
             validate(*args, **kwargs)
-        self.assertIn(
-            "value of draft must be one of: draft3, draft4, draft6, draft7, 2019-09, 2020-12, got: draft0",
-            str(error.exception),
-        )
+        assert "value of draft must be one of: draft3, draft4, draft6, draft7, 2019-09, 2020-12, got: draft0" in str(error.exception)
 
     def test_invalid_data(self):
-        """Check passing invalid data as per criteria"""
+        """Check passing invalid data as per criteria."""
         args = [DATA]
         kwargs = {
             "criteria": [
@@ -164,14 +155,14 @@ class TestValidate(unittest.TestCase):
             "engine": "ansible.utils.jsonschema",
         }
         result = validate(*args, **kwargs)
-        self.assertEqual(result, False)
+        assert result is False
 
     def test_valid_data(self):
-        """Check passing valid data as per criteria"""
+        """Check passing valid data as per criteria."""
         args = [DATA]
         kwargs = {
             "criteria": CRITERIA_IN_RATE_CHECK,
             "engine": "ansible.utils.jsonschema",
         }
         result = validate(*args, **kwargs)
-        self.assertEqual(result, True)
+        assert result is True

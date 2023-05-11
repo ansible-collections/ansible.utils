@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2021 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
@@ -11,7 +10,6 @@ __metaclass__ = type
 import unittest
 
 from ansible.errors import AnsibleFilterError
-
 from ansible_collections.ansible.utils.plugins.filter.replace_keys import _replace_keys
 
 
@@ -97,7 +95,7 @@ class TestReplaceKeys(unittest.TestCase):
         args = ["", data, target]
 
         result = _replace_keys(*args)
-        self.assertEqual(result, output)
+        assert result == output
 
     def test_replace_filter_match_starts_with_plugin(self):
         data = [
@@ -177,7 +175,7 @@ class TestReplaceKeys(unittest.TestCase):
         args = ["", data, target, "starts_with"]
 
         result = _replace_keys(*args)
-        self.assertEqual(result, output)
+        assert result == output
 
     def test_replace_filter_match_ends_with_plugin(self):
         data = [
@@ -257,7 +255,7 @@ class TestReplaceKeys(unittest.TestCase):
         args = ["", data, target, "ends_with"]
 
         result = _replace_keys(*args)
-        self.assertEqual(result, output)
+        assert result == output
 
     def test_replace_filter_match_regex_plugin(self):
         data = [
@@ -337,7 +335,7 @@ class TestReplaceKeys(unittest.TestCase):
         args = ["", data, target, "regex"]
 
         result = _replace_keys(*args)
-        self.assertEqual(result, output)
+        assert result == output
 
     def test_invalid_data(self):
         self.maxDiff = None
@@ -345,4 +343,4 @@ class TestReplaceKeys(unittest.TestCase):
         args = ["", "string data", target]
         with self.assertRaises(AnsibleFilterError) as error:
             _replace_keys(*args)
-        self.assertIn("Error when using plugin 'replace_keys'", str(error.exception))
+        assert "Error when using plugin 'replace_keys'" in str(error.exception)

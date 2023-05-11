@@ -1,17 +1,13 @@
-# -*- coding: utf-8 -*-
 # Copyright 2021 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
-"""
-filter plugin file for ipaddr filters: cidr_merge
-"""
+"""filter plugin file for ipaddr filters: cidr_merge."""
 from __future__ import absolute_import, division, print_function
 
 from functools import partial
 
 from ansible.errors import AnsibleFilterError
-
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     AnsibleArgSpecValidator,
 )
@@ -150,16 +146,13 @@ def _ipmath(*args, **kwargs):
 
 def ipmath(value, amount):
     try:
-        if "/" in value:
-            ip = netaddr.IPNetwork(value).ip
-        else:
-            ip = netaddr.IPAddress(value)
+        ip = netaddr.IPNetwork(value).ip if "/" in value else netaddr.IPAddress(value)
     except (netaddr.AddrFormatError, ValueError):
-        msg = "You must pass a valid IP address; {0} is invalid".format(value)
+        msg = f"You must pass a valid IP address; {value} is invalid"
         raise AnsibleFilterError(msg)
 
     if not isinstance(amount, int):
-        msg = ("You must pass an integer for arithmetic; " "{0} is not a valid integer").format(
+        msg = ("You must pass an integer for arithmetic; " "{} is not a valid integer").format(
             amount,
         )
         raise AnsibleFilterError(msg)
@@ -167,8 +160,8 @@ def ipmath(value, amount):
     return str(ip + amount)
 
 
-class FilterModule(object):
-    """IP address and network manipulation filters"""
+class FilterModule:
+    """IP address and network manipulation filters."""
 
     filter_map = {
         # This filter is designed to do simple IP math/arithmetic
@@ -176,8 +169,8 @@ class FilterModule(object):
     }
 
     def filters(self):
-        """ipmath filter"""
+        """Ipmath filter."""
         if HAS_NETADDR:
             return self.filter_map
         else:
-            return dict((f, partial(_need_netaddr, f)) for f in self.filter_map)
+            return {f: partial(_need_netaddr, f) for f in self.filter_map}

@@ -1,6 +1,4 @@
-"""
-The base class for validator
-"""
+"""The base class for validator."""
 from __future__ import absolute_import, division, print_function
 
 
@@ -13,7 +11,6 @@ from importlib import import_module
 from ansible.errors import AnsibleError
 from ansible.module_utils._text import to_native, to_text
 from ansible.module_utils.six import iteritems
-
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     check_argspec,
 )
@@ -32,12 +29,12 @@ except ImportError:
     HAS_YAML = False
 
 
-class ValidateBase(object):
+class ValidateBase:
     """The base class for data validators
-    Provides a  _debug function to normalize debug output
+    Provides a  _debug function to normalize debug output.
     """
 
-    def __init__(self, data, criteria, engine, plugin_vars=None, kwargs=None):
+    def __init__(self, data, criteria, engine, plugin_vars=None, kwargs=None) -> None:
         self._data = data
         self._criteria = criteria
         self._engine = engine
@@ -53,7 +50,7 @@ class ValidateBase(object):
             )
         )
 
-        validatordoc = getattr(import_module(validatorlib), "DOCUMENTATION")
+        validatordoc = import_module(validatorlib).DOCUMENTATION
         if validatordoc:
             self._set_sub_plugin_options(validatordoc)
 
@@ -72,7 +69,7 @@ class ValidateBase(object):
         options = argspec_obj.get("options", {})
 
         if not options:
-            return None
+            return
 
         for option_name, option_value in iteritems(options):
             option_var_name_list = option_value.get("vars", [])
@@ -87,8 +84,6 @@ class ValidateBase(object):
 
             # check if plugin configuration option passed in task vars eg.
             #  vars:
-            #  - name: ansible_validate_jsonschema_draft
-            #  - name: ansible_validate_jsonschema_draft_type
             if option_var_name_list and (option_name not in params):
                 for var_name_entry in to_list(option_var_name_list):
                     if not isinstance(var_name_entry, dict):
@@ -106,7 +101,6 @@ class ValidateBase(object):
 
             # check if plugin configuration option as passed as enviornment  eg.
             # env:
-            # - name: ANSIBLE_VALIDATE_JSONSCHEMA_DRAFT
             if option_env_name_list and (option_name not in params):
                 for env_name_entry in to_list(option_env_name_list):
                     if not isinstance(env_name_entry, dict):

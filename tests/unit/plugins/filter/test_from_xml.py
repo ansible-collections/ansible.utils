@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2020 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
@@ -11,7 +10,6 @@ __metaclass__ = type
 import unittest
 
 from ansible.errors import AnsibleError, AnsibleFilterError
-
 from ansible_collections.ansible.utils.plugins.filter.from_xml import _from_xml
 
 
@@ -31,41 +29,35 @@ class TestFromXml(unittest.TestCase):
         pass
 
     def test_invalid_data(self):
-        """Check passing invalid argspec"""
-
+        """Check passing invalid argspec."""
         # missing required arguments
         args = ["", INVALID_DATA, "xmltodict"]
         kwargs = {}
         with self.assertRaises(AnsibleError) as error:
             _from_xml(*args, **kwargs)
-        self.assertIn(
-            "Error when using plugin 'from_xml': Input Xml is not valid",
-            str(error.exception),
-        )
+        assert "Error when using plugin 'from_xml': Input Xml is not valid" in str(error.exception)
 
     def test_valid_data(self):
-        """Check passing valid data as per criteria"""
+        """Check passing valid data as per criteria."""
         self.maxDiff = None
         args = ["", VALID_DATA, "xmltodict"]
         result = _from_xml(*args)
-        self.assertEqual(result, OUTPUT)
+        assert result == OUTPUT
 
     def test_args(self):
-        """Check passing invalid argspec"""
-
+        """Check passing invalid argspec."""
         # missing required arguments
         args = []
         kwargs = {}
         with self.assertRaises(AnsibleFilterError) as error:
             _from_xml(*args, **kwargs)
-        self.assertIn("missing required arguments: data", str(error.exception))
+        assert "missing required arguments: data" in str(error.exception)
 
     def test_invalid_engine(self):
-        """Check passing invalid argspec"""
-
+        """Check passing invalid argspec."""
         # missing required arguments
         args = ["", INVALID_DATA, "test"]
         kwargs = {}
         with self.assertRaises(AnsibleError) as error:
             _from_xml(*args, **kwargs)
-        self.assertIn("engine: test is not supported", str(error.exception))
+        assert "engine: test is not supported" in str(error.exception)

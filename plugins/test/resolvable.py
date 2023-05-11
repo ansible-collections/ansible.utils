@@ -1,11 +1,8 @@
-# -*- coding: utf-8 -*-
 # Copyright 2021 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
-"""
-Test plugin file for netaddr tests: resolvable
-"""
+"""Test plugin file for netaddr tests: resolvable."""
 from __future__ import absolute_import, division, print_function
 
 import socket
@@ -120,8 +117,7 @@ RETURN = """
 
 @_need_ipaddress
 def _resolvable(host):
-    """Test if an IP or name can be resolved via /etc/hosts or DNS"""
-
+    """Test if an IP or name can be resolved via /etc/hosts or DNS."""
     params = {"host": host}
     _validate_args("resolvable", DOCUMENTATION, params)
 
@@ -144,8 +140,8 @@ def _resolvable(host):
             return False
 
 
-class TestModule(object):
-    """network jinja tests"""
+class TestModule:
+    """network jinja tests."""
 
     test_map = {"resolvable": _resolvable}
 

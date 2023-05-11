@@ -1,17 +1,15 @@
-# -*- coding: utf-8 -*-
 # Copyright 2020 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 
-"""
-The index_of plugin common code
-"""
+"""The index_of plugin common code."""
 from __future__ import absolute_import, division, print_function
 
 
 __metaclass__ = type
 
+import contextlib
 import json
 
 from ansible.module_utils._text import to_native
@@ -22,26 +20,25 @@ from jinja2.exceptions import TemplateSyntaxError
 # Note, this file can only be used on the control node
 # where ansible is installed
 # limit imports to filter and lookup plugins
-try:
+with contextlib.suppress(ImportError):
     from ansible.errors import AnsibleError
-except ImportError:
-    pass
+
 
 
 def _raise_error(msg):
-    """Raise an error message, prepend with filter name
+    """Raise an error message, prepend with filter name.
 
     :param msg: The message
     :type msg: str
     :raises: AnsibleError
     """
-    error = "Error when using plugin 'index_of': {msg}".format(msg=msg)
+    error = f"Error when using plugin 'index_of': {msg}"
     raise AnsibleError(error)
 
 
 def _list_to_and_str(lyst):
     """Convert a list to a command delimited string
-    with the last entry being an and
+    with the last entry being an and.
 
     :param lyst: The list to turn into a str
     :type lyst: list
@@ -54,7 +51,7 @@ def _list_to_and_str(lyst):
 
 def _to_well_known_type(obj):
     """Convert an ansible internal type to a well-known type
-    ie AnsibleUnicode => str
+    ie AnsibleUnicode => str.
 
     :param obj: the obj to convert
     :type obj: unknown
@@ -63,7 +60,7 @@ def _to_well_known_type(obj):
 
 
 def _run_test(entry, test, right, tests):
-    """Run a test
+    """Run a test.
 
     :param test: The test to run
     :type test: a lambda from the qual_map
@@ -108,16 +105,13 @@ def _run_test(entry, test, right, tests):
         j2_test = None
 
     if not j2_test:
-        msg = "{msg} Error was: the test '{test}' was not found.".format(msg=msg, test=test)
+        msg = f"{msg} Error was: the test '{test}' was not found."
         _raise_error(msg)
 
     try:
-        if right is None:
-            result = j2_test(entry)
-        else:
-            result = j2_test(entry, right)
+        result = j2_test(entry) if right is None else j2_test(entry, right)
     except Exception as exc:
-        msg = "{msg} Error was: {error}".format(msg=msg, error=to_native(exc))
+        msg = f"{msg} Error was: {to_native(exc)}"
         _raise_error(msg)
 
     if invert:
@@ -134,7 +128,7 @@ def index_of(
     fail_on_missing=False,
     tests=None,
 ):
-    """Find the index or indices of entries in list of objects"
+    """Find the index or indices of entries in list of objects".
 
     :param data: The data passed in (data|index_of(...))
     :type data: unknown
@@ -151,7 +145,7 @@ def index_of(
     :param tests: The jinja tests from the current environment
     :type tests: ansible.template.JinjaPluginIntercept
     """
-    res = list()
+    res = []
     if key is None:
         for idx, entry in enumerate(data):
             result = _run_test(entry, test, value, tests)

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2020 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
@@ -15,20 +14,19 @@ from ansible.errors import AnsibleActionFail
 from ansible.module_utils._text import to_native
 from ansible.module_utils.common._collections_compat import MutableMapping, MutableSequence
 from ansible.plugins.action import ActionBase
-from jinja2 import Template, TemplateSyntaxError
-
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     AnsibleArgSpecValidator,
 )
 from ansible_collections.ansible.utils.plugins.modules.update_fact import DOCUMENTATION
+from jinja2 import Template, TemplateSyntaxError
 
 
 class ActionModule(ActionBase):
-    """action module"""
+    """action module."""
 
-    def __init__(self, *args, **kwargs):
-        """Start here"""
-        super(ActionModule, self).__init__(*args, **kwargs)
+    def __init__(self, *args, **kwargs) -> None:
+        """Start here."""
+        super().__init__(*args, **kwargs)
         self._supports_async = True
         self._updates = None
         self._result = None
@@ -44,7 +42,7 @@ class ActionModule(ActionBase):
             raise AnsibleActionFail(errors)
 
     def _ensure_valid_jinja(self):
-        """Ensure each path is jinja valid"""
+        """Ensure each path is jinja valid."""
         errors = []
         for entry in self._task.args["updates"]:
             try:
@@ -61,7 +59,7 @@ class ActionModule(ActionBase):
 
     @staticmethod
     def _field_split(path):
-        """Split the path into it's parts
+        """Split the path into it's parts.
 
         :param path: The user provided path
         :type path: str
@@ -104,7 +102,7 @@ class ActionModule(ActionBase):
         return fields
 
     def set_value(self, obj, path, val):
-        """Set a value
+        """Set a value.
 
         :param obj: The object to modify
         :type obj: mutable object
@@ -154,9 +152,9 @@ class ActionModule(ActionBase):
                 raise AnsibleActionFail(msg)
 
     def run(self, tmp=None, task_vars=None):
-        """action entry point"""
+        """Action entry point."""
         self._task.diff = False
-        self._result = super(ActionModule, self).run(tmp, task_vars)
+        self._result = super().run(tmp, task_vars)
         self._result["changed"] = False
         self._check_argspec()
         results = set()
@@ -166,7 +164,7 @@ class ActionModule(ActionBase):
             obj, path = parts[0], parts[1:]
             results.add(obj)
             if obj not in task_vars["vars"]:
-                msg = "'{obj}' was not found in the current facts.".format(obj=obj)
+                msg = f"'{obj}' was not found in the current facts."
                 raise AnsibleActionFail(msg)
             retrieved = task_vars["vars"].get(obj)
             if path:

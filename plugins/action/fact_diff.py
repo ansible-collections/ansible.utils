@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2020 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
@@ -14,7 +13,6 @@ from importlib import import_module
 
 from ansible.module_utils._text import to_native
 from ansible.plugins.action import ActionBase
-
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     AnsibleArgSpecValidator,
 )
@@ -22,10 +20,10 @@ from ansible_collections.ansible.utils.plugins.modules.fact_diff import DOCUMENT
 
 
 class ActionModule(ActionBase):
-    """action module"""
+    """action module."""
 
-    def __init__(self, *args, **kwargs):
-        super(ActionModule, self).__init__(*args, **kwargs)
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
         self._supports_async = True
         self._task_vars = None
 
@@ -42,7 +40,7 @@ class ActionModule(ActionBase):
             self._result["msg"] = errors
 
     def _debug(self, msg):
-        """Output text using ansible's display
+        """Output text using ansible's display.
 
         :param msg: The message
         :type msg: str
@@ -55,7 +53,7 @@ class ActionModule(ActionBase):
         self._display.vvvv(msg)
 
     def _load_plugin(self, plugin, directory, class_name):
-        """Load a plugin from the fs
+        """Load a plugin from the fs.
 
         :param plugin: The name of the plugin in collection format
         :type plugin: string
@@ -113,7 +111,7 @@ class ActionModule(ActionBase):
 
     def run(self, tmp=None, task_vars=None):
         self._task.diff = True
-        self._result = super(ActionModule, self).run(tmp, task_vars)
+        self._result = super().run(tmp, task_vars)
         self._task_vars = task_vars
         self._playhost = task_vars.get("inventory_hostname")
 

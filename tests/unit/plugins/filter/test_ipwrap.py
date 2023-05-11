@@ -1,11 +1,8 @@
-# -*- coding: utf-8 -*-
 # Copyright 2021 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
-"""
-Unit test file for ipwrap filter plugin
-"""
+"""Unit test file for ipwrap filter plugin."""
 
 from __future__ import absolute_import, division, print_function
 
@@ -18,7 +15,6 @@ import pytest
 
 from ansible.errors import AnsibleFilterError
 from ansible.template import AnsibleUndefined
-
 from ansible_collections.ansible.utils.plugins.filter.ipwrap import _ipwrap
 
 
@@ -51,7 +47,7 @@ class TestIpWrap(unittest.TestCase):
         pass
 
     def test_ipwrap_undefined_value(self):
-        """Check ipwrap filter undefined value"""
+        """Check ipwrap filter undefined value."""
         args = ["", AnsibleUndefined(name="my_ip"), ""]
         with pytest.raises(
             AnsibleFilterError,
@@ -60,15 +56,14 @@ class TestIpWrap(unittest.TestCase):
             _ipwrap(*args)
 
     def test_valid_data_list(self):
-        """Check passing valid argspec(list)"""
+        """Check passing valid argspec(list)."""
         args = ["", VALID_DATA, ""]
         result = _ipwrap(*args)
         print(result)
-        self.assertEqual(result, VALID_OUTPUT)
+        assert result == VALID_OUTPUT
 
     def test_valid_data_string(self):
-        """Check passing valid argspec(string)"""
-
+        """Check passing valid argspec(string)."""
         args = ["", "::1", ""]
         result = _ipwrap(*args)
-        self.assertEqual(result, "[::1]")
+        assert result == "[::1]"

@@ -27,15 +27,12 @@ class TestXmlParser(unittest.TestCase):
         parser = CliParser(task_args=task_args, task_vars=[], debug=False)
 
         result = parser.parse()
-        self.assertEqual(result["parsed"], xml_dict)
+        assert result["parsed"] == xml_dict
 
     def test_invalid_xml(self):
         task_args = {"text": "Definitely not XML", "parser": {"os": "none"}}
         parser = CliParser(task_args=task_args, task_vars=[], debug=False)
 
         result = parser.parse()
-        self.assertEqual(len(result["errors"]), 1)
-        self.assertEqual(
-            result["errors"][0],
-            "XML parser returned an error while parsing. Error: syntax error: line 1, column 0",
-        )
+        assert len(result["errors"]) == 1
+        assert result["errors"][0] == "XML parser returned an error while parsing. Error: syntax error: line 1, column 0"

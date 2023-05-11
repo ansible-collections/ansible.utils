@@ -1,11 +1,8 @@
-# -*- coding: utf-8 -*-
 # Copyright 2021 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
-"""
-Test plugin file for netaddr tests: ipv4_address
-"""
+"""Test plugin file for netaddr tests: ipv4_address."""
 
 from __future__ import absolute_import, division, print_function
 
@@ -87,8 +84,7 @@ RETURN = """
 
 @_need_ipaddress
 def _ipv4_address(ip):
-    """Test if something in an IPv4 address"""
-
+    """Test if something in an IPv4 address."""
     params = {"ip": ip}
     _validate_args("ipv4_address", DOCUMENTATION, params)
 
@@ -98,8 +94,8 @@ def _ipv4_address(ip):
         return False
 
 
-class TestModule(object):
-    """network jinja test"""
+class TestModule:
+    """network jinja test."""
 
     test_map = {"ipv4_address": _ipv4_address}
 

@@ -1,13 +1,10 @@
 #
-# -*- coding: utf-8 -*-
 # Copyright 2021 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 #
 
-"""
-The remove_keys filter plugin
-"""
+"""The remove_keys filter plugin."""
 from __future__ import absolute_import, division, print_function
 
 
@@ -311,7 +308,6 @@ tasks:
 """
 
 from ansible.errors import AnsibleFilterError
-
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     AnsibleArgSpecValidator,
 )
@@ -326,8 +322,7 @@ except ImportError:
 
 @pass_environment
 def _remove_keys(*args, **kwargs):
-    """remove specific keys from a data recursively"""
-
+    """Remove specific keys from a data recursively."""
     keys = ["data", "target", "matching_parameter"]
     data = dict(zip(keys, args[1:]))
     data.update(kwargs)
@@ -338,9 +333,9 @@ def _remove_keys(*args, **kwargs):
     return remove_keys(**updated_data)
 
 
-class FilterModule(object):
-    """remove_keys"""
+class FilterModule:
+    """remove_keys."""
 
     def filters(self):
-        """a mapping of filter names to functions"""
+        """A mapping of filter names to functions."""
         return {"remove_keys": _remove_keys}

@@ -1,12 +1,9 @@
-# -*- coding: utf-8 -*-
 # Copyright 2020 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 
-"""
-flatten a complex object to dot bracket notation
-"""
+"""flatten a complex object to dot bracket notation."""
 from __future__ import absolute_import, division, print_function
 
 
@@ -29,9 +26,9 @@ def to_paths(var, prepend, wantlist):
                 for key, val in data.items():
                     if name:
                         if re.match("^[a-zA-Z_][a-zA-Z0-9_]*$", key):
-                            nname = name + ".{key}".format(key=key)
+                            nname = name + f".{key}"
                         else:
-                            nname = name + "['{key}']".format(key=key)
+                            nname = name + f"['{key}']"
                     else:
                         nname = key
                     flatten(val, nname, out)
@@ -42,7 +39,7 @@ def to_paths(var, prepend, wantlist):
         elif isinstance(data, list):
             if data:
                 for idx, val in enumerate(data):
-                    flatten(val, "{name}[{idx}]".format(name=name, idx=idx), out)
+                    flatten(val, f"{name}[{idx}]", out)
             elif name:
                 out[name] = []
             else:

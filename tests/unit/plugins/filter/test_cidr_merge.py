@@ -1,11 +1,8 @@
-# -*- coding: utf-8 -*-
 # Copyright 2021 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
-"""
-Unit test file for cidr_merge filter plugin
-"""
+"""Unit test file for cidr_merge filter plugin."""
 
 from __future__ import absolute_import, division, print_function
 
@@ -15,7 +12,6 @@ __metaclass__ = type
 import unittest
 
 from ansible.errors import AnsibleFilterError
-
 from ansible_collections.ansible.utils.plugins.filter.cidr_merge import _cidr_merge
 
 
@@ -35,33 +31,29 @@ class TestCidrMerge(unittest.TestCase):
         pass
 
     def test_invalid_data_merge(self):
-        """Check passing invalid argspec"""
-
+        """Check passing invalid argspec."""
         args = ["", INVALID_DATA_MERGE, "merge"]
         kwargs = {}
         with self.assertRaises(AnsibleFilterError) as error:
             _cidr_merge(*args, **kwargs)
-        self.assertIn("invalid IPNetwork 0.1234.34.44", str(error.exception))
+        assert "invalid IPNetwork 0.1234.34.44" in str(error.exception)
 
     def test_valid_data_merge(self):
-        """test for cidr_merge plugin with merge"""
-
+        """Test for cidr_merge plugin with merge."""
         args = ["", VALID_DATA_MEREGE, "merge"]
         result = _cidr_merge(*args)
-        self.assertEqual(result, VALID_OUTPUT_MERGE)
+        assert result == VALID_OUTPUT_MERGE
 
     def test_valid_data_span(self):
-        """test for cidr_merge plugin with span"""
-
+        """Test for cidr_merge plugin with span."""
         args = ["", VALID_DATA_SPAN, "span"]
         result = _cidr_merge(*args)
-        self.assertEqual(result, VALID_OUTPUT_SPAN)
+        assert result == VALID_OUTPUT_SPAN
 
     def test_valid_data_with_invalid_action(self):
-        """Check passing valid data as per criteria"""
-
+        """Check passing valid data as per criteria."""
         args = ["", VALID_DATA_SPAN, "span1"]
         kwargs = {}
         with self.assertRaises(AnsibleFilterError) as error:
             _cidr_merge(*args, **kwargs)
-        self.assertIn("cidr_merge: invalid action 'span1'", str(error.exception))
+        assert "cidr_merge: invalid action 'span1'" in str(error.exception)

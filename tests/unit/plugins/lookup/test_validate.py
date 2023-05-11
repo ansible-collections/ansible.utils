@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2020 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
@@ -11,7 +10,6 @@ __metaclass__ = type
 import unittest
 
 from ansible.errors import AnsibleLookupError
-
 from ansible_collections.ansible.utils.plugins.lookup.validate import LookupModule
 
 
@@ -97,40 +95,35 @@ class TestValidate(unittest.TestCase):
         self._lp = LookupModule()
 
     def test_invalid_argspec(self):
-        """Check passing invalid argspec"""
-
+        """Check passing invalid argspec."""
         # missing required arguments
         with self.assertRaises(AnsibleLookupError) as error:
             self._lp.run([DATA], {})
-        self.assertIn("missing either 'data' or 'criteria' value", str(error.exception))
+        assert "missing either 'data' or 'criteria' value" in str(error.exception)
 
         terms = [DATA, [CRITERIA_IN_RATE_CHECK]]
         kwargs = {"engine": "ansible.utils.sample"}
         variables = {}
         with self.assertRaises(AnsibleLookupError) as error:
             self._lp.run(terms, variables, **kwargs)
-        self.assertIn(
-            "For engine 'ansible.utils.sample' error loading",
-            str(error.exception),
-        )
+        assert "For engine 'ansible.utils.sample' error loading" in str(error.exception)
 
         terms = ["invalid data", [CRITERIA_IN_RATE_CHECK]]
         kwargs = {"engine": "ansible.utils.jsonschema"}
         variables = {}
         with self.assertRaises(AnsibleLookupError) as error:
             self._lp.run(terms, variables, **kwargs)
-        self.assertIn("'data' option value is invalid", str(error.exception))
+        assert "'data' option value is invalid" in str(error.exception)
 
         terms = [DATA, "invalid criteria"]
         kwargs = {"engine": "ansible.utils.jsonschema"}
         variables = {}
         with self.assertRaises(AnsibleLookupError) as error:
             self._lp.run(terms, variables, **kwargs)
-        self.assertIn("'criteria' option value is invalid", str(error.exception))
+        assert "'criteria' option value is invalid" in str(error.exception)
 
     def test_invalid_validate_plugin_config_options(self):
-        """Check passing invalid validate plugin options"""
-
+        """Check passing invalid validate plugin options."""
         terms = [
             DATA,
             [
@@ -142,18 +135,14 @@ class TestValidate(unittest.TestCase):
         kwargs = {"engine": "ansible.utils.jsonschema"}
         variables = {}
         result = self._lp.run(terms, variables, **kwargs)
-        self.assertIn(
-            "GigabitEthernet0/0/0/1.counters.in_crc_errors",
-            result[0]["data_path"],
-        )
-        self.assertIn("GigabitEthernet0/0/0/1.enabled", result[1]["data_path"])
-        self.assertIn("GigabitEthernet0/0/0/0.oper_status", result[2]["data_path"])
+        assert "GigabitEthernet0/0/0/1.counters.in_crc_errors" in result[0]["data_path"]
+        assert "GigabitEthernet0/0/0/1.enabled" in result[1]["data_path"]
+        assert "GigabitEthernet0/0/0/0.oper_status" in result[2]["data_path"]
 
     def test_valid_data(self):
-        """Check passing valid data as per criteria"""
-
+        """Check passing valid data as per criteria."""
         terms = [DATA, CRITERIA_IN_RATE_CHECK]
         kwargs = {"engine": "ansible.utils.jsonschema"}
         variables = {}
         result = self._lp.run(terms, variables, **kwargs)
-        self.assertEqual(result, [])
+        assert result == []

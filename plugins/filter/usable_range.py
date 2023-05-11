@@ -1,11 +1,8 @@
-# -*- coding: utf-8 -*-
 # Copyright 2021 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
-"""
-Filter plugin file for usable_range
-"""
+"""Filter plugin file for usable_range."""
 
 from __future__ import absolute_import, division, print_function
 
@@ -156,8 +153,7 @@ from ansible.module_utils.six import ensure_text
 
 @_need_ipaddress
 def _usable_range(ip):
-    """Expand the usable IP addresses"""
-
+    """Expand the usable IP addresses."""
     params = {"ip": ip}
     _validate_args("usable_range", DOCUMENTATION, params)
 
@@ -171,15 +167,15 @@ def _usable_range(ip):
 
     except Exception as e:
         raise AnsibleFilterError(
-            "Error while using plugin 'usable_range': {msg}".format(msg=to_text(e)),
+            f"Error while using plugin 'usable_range': {to_text(e)}",
         )
 
     return {"usable_ips": ips, "number_of_ips": no_of_ips}
 
 
-class FilterModule(object):
-    """usable_range"""
+class FilterModule:
+    """usable_range."""
 
     def filters(self):
-        """a mapping of filter names to functions"""
+        """A mapping of filter names to functions."""
         return {"usable_range": _usable_range}

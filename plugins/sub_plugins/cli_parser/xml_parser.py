@@ -1,5 +1,5 @@
 """
-xml parser
+xml parser.
 
 This is the xml parser for use with the cli_parse module and action plugin
 https://github.com/martinblech/xmltodict
@@ -39,7 +39,6 @@ EXAMPLES = r"""
 
 from ansible.module_utils._text import to_native
 from ansible.module_utils.basic import missing_required_lib
-
 from ansible_collections.ansible.utils.plugins.plugin_utils.base.cli_parser import CliParserBase
 
 
@@ -53,7 +52,7 @@ except ImportError:
 
 class CliParser(CliParserBase):
     """The xml parser class
-    Convert an xml string to structured data using xmltodict
+    Convert an xml string to structured data using xmltodict.
     """
 
     DEFAULT_TEMPLATE_EXTENSION = None
@@ -61,7 +60,7 @@ class CliParser(CliParserBase):
 
     @staticmethod
     def _check_reqs():
-        """Check the prerequisites for the xml parser"""
+        """Check the prerequisites for the xml parser."""
         errors = []
         if not HAS_XMLTODICT:
             errors.append(missing_required_lib("xmltodict"))
@@ -69,7 +68,7 @@ class CliParser(CliParserBase):
         return errors
 
     def parse(self, *_args, **_kwargs):
-        """Std entry point for a cli_parse parse execution
+        """Std entry point for a cli_parse parse execution.
 
         :return: Errors or parsed text as structured data
         :rtype: dict

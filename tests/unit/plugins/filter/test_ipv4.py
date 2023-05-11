@@ -1,11 +1,8 @@
-# -*- coding: utf-8 -*-
 # Copyright 2021 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
-"""
-Unit test file for ipwrap filter plugin
-"""
+"""Unit test file for ipwrap filter plugin."""
 
 from __future__ import absolute_import, division, print_function
 
@@ -18,7 +15,6 @@ import pytest
 
 from ansible.errors import AnsibleFilterError
 from ansible.template import AnsibleUndefined
-
 from ansible_collections.ansible.utils.plugins.filter.ipv4 import _ipv4
 
 
@@ -46,7 +42,7 @@ class TestIp4(unittest.TestCase):
         pass
 
     def test_ipv4_undefined_value(self):
-        """Check ipv4 filter undefined value"""
+        """Check ipv4 filter undefined value."""
         args = ["", AnsibleUndefined(name="my_ip"), ""]
         with pytest.raises(
             AnsibleFilterError,
@@ -55,19 +51,19 @@ class TestIp4(unittest.TestCase):
             _ipv4(*args)
 
     def test_ipv4_filter_empty_query(self):
-        """Check ipv4 filter empty query"""
+        """Check ipv4 filter empty query."""
         args = ["", VALID_DATA, ""]
         result = _ipv4(*args)
-        self.assertEqual(result, VALID_OUTPUT)
+        assert result == VALID_OUTPUT
 
     def test_ipv4_ipv6_conversion(self):
-        """Check ipv4 to ipv6 conversion"""
+        """Check ipv4 to ipv6 conversion."""
         args = ["", VALID_DATA, "ipv6"]
         result = _ipv4(*args)
-        self.assertEqual(result, VALID_OUTPUT1)
+        assert result == VALID_OUTPUT1
 
     def test_ipv4_filter_address_query(self):
-        """Check ipv4 filter address query"""
+        """Check ipv4 filter address query."""
         args = ["", VALID_DATA, "address"]
         result = _ipv4(*args)
-        self.assertEqual(result, VALID_OUTPUT2)
+        assert result == VALID_OUTPUT2

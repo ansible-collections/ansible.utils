@@ -1,12 +1,9 @@
-# -*- coding: utf-8 -*-
 # Copyright 2020 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 
-"""
-The index_of filter plugin
-"""
+"""The index_of filter plugin."""
 from __future__ import absolute_import, division, print_function
 
 
@@ -299,7 +296,6 @@ EXAMPLES = r"""
 """
 
 from ansible.errors import AnsibleFilterError
-
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     AnsibleArgSpecValidator,
 )
@@ -315,7 +311,6 @@ except ImportError:
 @pass_environment
 def _index_of(*args, **kwargs):
     """Find the indicies of items in a list matching some criteria."""
-
     keys = [
         "environment",
         "data",
@@ -336,9 +331,9 @@ def _index_of(*args, **kwargs):
     return index_of(**updated_data)
 
 
-class FilterModule(object):
-    """index_of"""
+class FilterModule:
+    """index_of."""
 
     def filters(self):
-        """a mapping of filter names to functions"""
+        """A mapping of filter names to functions."""
         return {"index_of": _index_of}

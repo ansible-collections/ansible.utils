@@ -1,13 +1,10 @@
 #
-# -*- coding: utf-8 -*-
 # Copyright 2021 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 #
 
-"""
-The replace_keys plugin code
-"""
+"""The replace_keys plugin code."""
 from __future__ import absolute_import, division, print_function
 
 
@@ -22,9 +19,9 @@ def _raise_error(msg):
     """Raise an error message, prepend with filter name
     :param msg: The message
     :type msg: str
-    :raises: AnsibleError
+    :raises: AnsibleError.
     """
-    error = "Error when using plugin 'replace_keys': {msg}".format(msg=msg)
+    error = f"Error when using plugin 'replace_keys': {msg}"
     raise AnsibleFilterError(error)
 
 
@@ -53,7 +50,7 @@ def replace_keys_from_dict_n_list(data, target, matching_parameter):
 
 
 def replace_keys(data, target, matching_parameter="equality"):
-    """replaces specific keys with mentioned after data"
+    """Replaces specific keys with mentioned after data"
     :param data: The data passed in (data|replace_keys(...))
     :type data: raw
     :param target: List of keys on with operation is to be performed
@@ -61,7 +58,7 @@ def replace_keys(data, target, matching_parameter="equality"):
     :type elements: string
     :param matching_parameter: matching type of the target keys with data keys
     :type data: list
-    :type elements: dict
+    :type elements: dict.
     """
     if not isinstance(data, (list, dict)):
         _raise_error("Input is not valid for replace operation")

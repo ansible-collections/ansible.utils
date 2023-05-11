@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2020 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
@@ -29,10 +28,10 @@ class TestSortList(unittest.TestCase):
             name="test_action",
         )
         valid, errors, _updated_data = aav.validate()
-        self.assertTrue(valid)
+        assert valid
         if not errors:
             errors = None
-        self.assertEqual(errors, None)
+        assert errors is None
 
     def test_simple_defaults(self):
         data = {"param_str": "string"}
@@ -50,11 +49,11 @@ class TestSortList(unittest.TestCase):
             "params_dict": None,
         }
         valid, errors, updated_data = aav.validate()
-        self.assertTrue(valid)
+        assert valid
         if not errors:
             errors = None
-        self.assertEqual(errors, None)
-        self.assertEqual(expected, updated_data)
+        assert errors is None
+        assert expected == updated_data
 
     def test_simple_fail(self):
         data = {}
@@ -66,8 +65,8 @@ class TestSortList(unittest.TestCase):
             name="test_action",
         )
         valid, errors, _updated_data = aav.validate()
-        self.assertFalse(valid)
-        self.assertIn("missing required arguments: param_str", errors)
+        assert not valid
+        assert "missing required arguments: param_str" in errors
 
     def test_simple_fail_no_name(self):
         data = {}
@@ -78,8 +77,8 @@ class TestSortList(unittest.TestCase):
             schema_conditionals={},
         )
         valid, errors, _updated_data = aav.validate()
-        self.assertFalse(valid)
-        self.assertIn("missing required arguments: param_str", errors)
+        assert not valid
+        assert "missing required arguments: param_str" in errors
 
     def test_not_doc(self):
         data = {"param_str": "string"}
@@ -90,10 +89,10 @@ class TestSortList(unittest.TestCase):
             name="test_action",
         )
         valid, errors, _updated_data = aav.validate()
-        self.assertTrue(valid)
+        assert valid
         if not errors:
             errors = None
-        self.assertEqual(errors, None)
+        assert errors is None
 
     def test_schema_conditional(self):
         data = {"param_str": "string"}
@@ -105,8 +104,8 @@ class TestSortList(unittest.TestCase):
             name="test_action",
         )
         valid, errors, _updated_data = aav.validate()
-        self.assertFalse(valid)
-        self.assertIn("parameters are required together: param_str, param_bool", errors)
+        assert not valid
+        assert "parameters are required together: param_str, param_bool" in errors
 
     def test_unsupported_param(self):
         data = {"param_str": "string", "not_valid": "string"}
@@ -115,18 +114,14 @@ class TestSortList(unittest.TestCase):
             schema=DOCUMENTATION,
             schema_format="doc",
             name="test_action",
-            # other_args={'bypass_checks': True},
         )
         valid, errors, _updated_data = aav.validate()
-        self.assertFalse(valid)
+        assert not valid
         if isinstance(errors, list):
             # for ansibleargspecvalidator 2.11 its returning errors as list
-            self.assertIn("not_valid. Supported parameters include:", errors[0])
+            assert "not_valid. Supported parameters include:" in errors[0]
         else:
-            self.assertIn(
-                "Unsupported parameters for 'test_action' module: not_valid",
-                errors,
-            )
+            assert "Unsupported parameters for 'test_action' module: not_valid" in errors
 
     def test_other_args(self):
         data = {"param_str": "string"}
@@ -138,10 +133,10 @@ class TestSortList(unittest.TestCase):
             other_args={"bypass_checks": True},
         )
         valid, errors, _updated_data = aav.validate()
-        self.assertTrue(valid)
+        assert valid
         if not errors:
             errors = None
-        self.assertIsNone(errors)
+        assert errors is None
 
     def test_invalid_spec(self):
         data = {}
@@ -153,5 +148,5 @@ class TestSortList(unittest.TestCase):
             other_args={"bypass_checks": True},
         )
         valid, errors, _updated_data = aav.validate()
-        self.assertFalse(valid)
-        self.assertIn("Invalid schema. Invalid keys found: not_valid", errors)
+        assert not valid
+        assert "Invalid schema. Invalid keys found: not_valid" in errors

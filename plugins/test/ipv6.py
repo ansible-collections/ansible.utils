@@ -1,11 +1,8 @@
-# -*- coding: utf-8 -*-
 # Copyright 2021 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
-"""
-Test plugin file for netaddr tests: ipv6
-"""
+"""Test plugin file for netaddr tests: ipv6."""
 
 from __future__ import absolute_import, division, print_function
 
@@ -87,8 +84,7 @@ RETURN = """
 
 @_need_ipaddress
 def _ipv6(ip):
-    """Test if something in an IPv6 address or network"""
-
+    """Test if something in an IPv6 address or network."""
     params = {"ip": ip}
     _validate_args("ipv6", DOCUMENTATION, params)
 
@@ -98,8 +94,8 @@ def _ipv6(ip):
         return False
 
 
-class TestModule(object):
-    """network jinja test"""
+class TestModule:
+    """network jinja test."""
 
     test_map = {"ipv6": _ipv6}
 

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2021 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
@@ -11,7 +10,6 @@ __metaclass__ = type
 import unittest
 
 from ansible.errors import AnsibleFilterError
-
 from ansible_collections.ansible.utils.plugins.filter.consolidate import _consolidate
 
 
@@ -257,7 +255,7 @@ class TestConsolidate(unittest.TestCase):
         ]
 
         result = _consolidate(*args)
-        self.assertEqual(result, output)
+        assert result == output
 
     def test_fail_missing_match_key(self):
         data_sources = [
@@ -379,10 +377,7 @@ class TestConsolidate(unittest.TestCase):
         args = ["", data_sources, fail_missing_match_key, False, False]
         with self.assertRaises(AnsibleFilterError) as error:
             _consolidate(*args)
-        self.assertIn(
-            "Error when using plugin 'consolidate': 'fail_missing_match_key' reported missing match key 'name' in data source 3 in list entry 1",
-            str(error.exception),
-        )
+        assert "Error when using plugin 'consolidate': 'fail_missing_match_key' reported missing match key 'name' in data source 3 in list entry 1" in str(error.exception)
 
     def test_fail_duplicate(self):
         data_sources = [
@@ -516,7 +511,4 @@ class TestConsolidate(unittest.TestCase):
         ]
         with self.assertRaises(AnsibleFilterError) as error:
             _consolidate(*args)
-        self.assertIn(
-            "Error when using plugin 'consolidate': 'fail_duplicate' reported duplicate values in data source 3",
-            str(error.exception),
-        )
+        assert "Error when using plugin 'consolidate': 'fail_duplicate' reported duplicate values in data source 3" in str(error.exception)

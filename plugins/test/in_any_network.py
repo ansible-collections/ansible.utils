@@ -1,11 +1,8 @@
-# -*- coding: utf-8 -*-
 # Copyright 2021 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
-"""
-Test plugin file for netaddr tests: in_any_network
-"""
+"""Test plugin file for netaddr tests: in_any_network."""
 
 from __future__ import absolute_import, division, print_function
 
@@ -90,8 +87,7 @@ RETURN = """
 
 
 def _in_any_network(ip, networks):
-    """Test if an IP or network is in any network"""
-
+    """Test if an IP or network is in any network."""
     params = {"ip": ip, "networks": networks}
     _validate_args("in_any_network", DOCUMENTATION, params)
 
@@ -101,8 +97,8 @@ def _in_any_network(ip, networks):
     return False
 
 
-class TestModule(object):
-    """network jinja test"""
+class TestModule:
+    """network jinja test."""
 
     test_map = {"in_any_network": _in_any_network}
 

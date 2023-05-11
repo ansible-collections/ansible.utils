@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2020 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
@@ -11,7 +10,6 @@ __metaclass__ = type
 import unittest
 
 from ansible.errors import AnsibleError, AnsibleFilterError
-
 from ansible_collections.ansible.utils.plugins.filter.to_xml import _to_xml
 
 
@@ -40,58 +38,51 @@ class TestToXml(unittest.TestCase):
         pass
 
     def test_invalid_data(self):
-        """Check passing invalid argspec"""
-
+        """Check passing invalid argspec."""
         # missing required arguments
         args = ["", INVALID_DATA, "xmltodict"]
         kwargs = {}
         with self.assertRaises(AnsibleError) as error:
             _to_xml(*args, **kwargs)
-        self.assertIn("we were unable to convert to dict", str(error.exception))
+        assert "we were unable to convert to dict" in str(error.exception)
 
     def test_valid_data(self):
-        """Check passing valid data as per criteria"""
+        """Check passing valid data as per criteria."""
         self.maxDiff = None
         args = ["", VALID_DATA, "xmltodict"]
         result = _to_xml(*args)
-        self.assertEqual(result, OUTPUT_TABS)
+        assert result == OUTPUT_TABS
 
     def test_args(self):
-        """Check passing invalid argspec"""
-
+        """Check passing invalid argspec."""
         # missing required arguments
         args = []
         kwargs = {}
         with self.assertRaises(AnsibleFilterError) as error:
             _to_xml(*args, **kwargs)
-        self.assertIn("missing required arguments: data", str(error.exception))
+        assert "missing required arguments: data" in str(error.exception)
 
     def test_invalid_engine(self):
-        """Check passing invalid argspec"""
-
+        """Check passing invalid argspec."""
         # missing required arguments
         args = ["", VALID_DATA, "test"]
         kwargs = {}
         with self.assertRaises(AnsibleError) as error:
             _to_xml(*args, **kwargs)
-        self.assertIn("engine: test is not supported", str(error.exception))
+        assert "engine: test is not supported" in str(error.exception)
 
     def test_indent_with_spaces(self):
-        """Check passing indent with spaces and default indent_width"""
+        """Check passing indent with spaces and default indent_width."""
         self.maxDiff = None
         args = ["", VALID_DATA, "xmltodict", "spaces", 4]
         result = _to_xml(*args)
-        self.assertEqual(result, OUTPUT_SPACES)
+        assert result == OUTPUT_SPACES
 
     def test_invalid_indent(self):
-        """Check passing invalid indent value"""
-
+        """Check passing invalid indent value."""
         # missing required arguments
         args = ["", VALID_DATA, "xmltodict", "test"]
         kwargs = {}
         with self.assertRaises(AnsibleError) as error:
             _to_xml(*args, **kwargs)
-        self.assertIn(
-            "value of indent must be one of: tabs, spaces, got: test",
-            str(error.exception),
-        )
+        assert "value of indent must be one of: tabs, spaces, got: test" in str(error.exception)

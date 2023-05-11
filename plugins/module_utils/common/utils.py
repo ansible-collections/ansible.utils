@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2020 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
@@ -28,7 +27,7 @@ def sort_list(val):
 
 
 def dict_merge(base, other):
-    """Return a new dict object that combines base and other
+    """Return a new dict object that combines base and other.
 
     This will create a new dict object that is a combination of the key/value
     pairs from base and other.  When both keys exist, the value will be
@@ -55,7 +54,7 @@ def dict_merge(base, other):
     if not isinstance(other, dict):
         raise AssertionError("`other` must be of type <dict>")
 
-    combined = dict()
+    combined = {}
 
     for key, value in iteritems(deepcopy(base)):
         if isinstance(value, dict):
@@ -108,4 +107,4 @@ def to_list(val):
     elif val is not None:
         return [val]
     else:
-        return list()
+        return []

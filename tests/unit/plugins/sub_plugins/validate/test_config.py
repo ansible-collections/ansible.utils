@@ -10,7 +10,6 @@ import pytest
 
 from ansible.errors import AnsibleError
 from ansible.module_utils._text import to_text
-
 from ansible_collections.ansible.utils.plugins.plugin_utils.base.validate import _load_validator
 
 
@@ -37,7 +36,7 @@ def test_check_args_missing_key(validator, test_rule, key):
     except AnsibleError as exc:
         error = to_text(exc)
 
-    assert error == 'Criteria {rule} missing "{key}" key'.format(rule=original, key=key)
+    assert error == f'Criteria {original} missing "{key}" key'
 
 
 def test_invalid_yaml(validator):

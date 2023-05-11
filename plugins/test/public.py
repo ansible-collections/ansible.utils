@@ -1,11 +1,8 @@
-# -*- coding: utf-8 -*-
 # Copyright 2021 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
-"""
-Test plugin file for netaddr tests: public
-"""
+"""Test plugin file for netaddr tests: public."""
 
 from __future__ import absolute_import, division, print_function
 
@@ -73,8 +70,7 @@ RETURN = """
 
 @_need_ipaddress
 def _public(ip):
-    """Test if an IP address is public"""
-
+    """Test if an IP address is public."""
     params = {"ip": ip}
     _validate_args("public", DOCUMENTATION, params)
 
@@ -84,8 +80,8 @@ def _public(ip):
         return False
 
 
-class TestModule(object):
-    """network jinja test"""
+class TestModule:
+    """network jinja test."""
 
     test_map = {"public": _public}
 

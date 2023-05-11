@@ -1,11 +1,8 @@
-# -*- coding: utf-8 -*-
 # Copyright 2021 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
-"""
-Unit test file for usable_range filter plugin
-"""
+"""Unit test file for usable_range filter plugin."""
 
 from __future__ import absolute_import, division, print_function
 
@@ -15,7 +12,6 @@ __metaclass__ = type
 import unittest
 
 from ansible.errors import AnsibleError
-
 from ansible_collections.ansible.utils.plugins.filter.usable_range import _usable_range
 
 
@@ -78,50 +74,41 @@ class TestUsableRange(unittest.TestCase):
         pass
 
     def test_missing_data(self):
-        """Check passing missing argspec"""
-
+        """Check passing missing argspec."""
         # missing required arguments
         ip = ""
         with self.assertRaises(AnsibleError) as error:
             _usable_range(ip)
-        self.assertIn(
-            "does not appear to be an IPv4 or IPv6 network",
-            str(error.exception),
-        )
+        assert "does not appear to be an IPv4 or IPv6 network" in str(error.exception)
 
     def test_invalid_data(self):
-        """Check passing invalid argspec"""
-
+        """Check passing invalid argspec."""
         # invalid required arguments
 
         for invalid_data in INVALID_DATA_1:
             with self.assertRaises(AnsibleError) as error:
                 _usable_range(invalid_data)
-            self.assertIn(
-                "does not appear to be an IPv4 or IPv6 network",
-                str(error.exception),
-            )
+            assert "does not appear to be an IPv4 or IPv6 network" in str(error.exception)
 
         for invalid_data in INVALID_DATA_2:
             with self.assertRaises(AnsibleError) as error:
                 _usable_range(invalid_data)
-            self.assertIn("has host bits set", str(error.exception))
+            assert "has host bits set" in str(error.exception)
 
     def test_valid_data(self):
-        """Check passing valid data as per criteria"""
-
+        """Check passing valid data as per criteria."""
         ip = VALID_DATA[0]
         result = _usable_range(ip)
-        self.assertEqual(result, VALID_OUTPUT_1)
+        assert result == VALID_OUTPUT_1
 
         ip = VALID_DATA[1]
         result = _usable_range(ip)
-        self.assertEqual(result, VALID_OUTPUT_2)
+        assert result == VALID_OUTPUT_2
 
         ip = VALID_DATA[2]
         result = _usable_range(ip)
-        self.assertEqual(result, VALID_OUTPUT_3)
+        assert result == VALID_OUTPUT_3
 
         ip = VALID_DATA[3]
         result = _usable_range(ip)
-        self.assertEqual(result, VALID_OUTPUT_4)
+        assert result == VALID_OUTPUT_4

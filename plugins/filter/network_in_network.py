@@ -1,17 +1,13 @@
-# -*- coding: utf-8 -*-
 # Copyright 2021 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
-"""
-filter plugin file for ipaddr filters: network_in_network
-"""
+"""filter plugin file for ipaddr filters: network_in_network."""
 from __future__ import absolute_import, division, print_function
 
 from functools import partial
 
 from ansible.errors import AnsibleFilterError
-
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     AnsibleArgSpecValidator,
 )
@@ -128,7 +124,7 @@ def network_in_network(value, test):
     Checks whether the 'test' address or addresses are in 'value', including broadcast and network
     :param: value: The network address or range to test against.
     :param test: The address or network to validate if it is within the range of 'value'.
-    :return: bool
+    :return: bool.
     """
     # normalize value and test variables into an ipaddr
     v = _address_normalizer(value)
@@ -140,14 +136,11 @@ def network_in_network(value, test):
     w_first = ipaddr(ipaddr(w, "network") or ipaddr(w, "address"), "int")
     w_last = ipaddr(ipaddr(w, "broadcast") or ipaddr(w, "address"), "int")
 
-    if _range_checker(w_first, v_first, v_last) and _range_checker(w_last, v_first, v_last):
-        return True
-    else:
-        return False
+    return bool(_range_checker(w_first, v_first, v_last) and _range_checker(w_last, v_first, v_last))
 
 
-class FilterModule(object):
-    """IP address and network manipulation filters"""
+class FilterModule:
+    """IP address and network manipulation filters."""
 
     filter_map = {
         # IP addresses and networks
@@ -155,8 +148,8 @@ class FilterModule(object):
     }
 
     def filters(self):
-        """ipaddr filter"""
+        """Ipaddr filter."""
         if HAS_NETADDR:
             return self.filter_map
         else:
-            return dict((f, partial(_need_netaddr, f)) for f in self.filter_map)
+            return {f: partial(_need_netaddr, f) for f in self.filter_map}

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2020 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
@@ -11,7 +10,6 @@ __metaclass__ = type
 import unittest
 
 from ansible.errors import AnsibleFilterError
-
 from ansible_collections.ansible.utils.plugins.filter.validate import validate
 
 
@@ -97,47 +95,39 @@ class TestValidate(unittest.TestCase):
         pass
 
     def test_invalid_argspec(self):
-        """Check passing invalid argspec"""
-
+        """Check passing invalid argspec."""
         # missing required arguments
         args = [DATA]
         kwargs = {}
         with self.assertRaises(AnsibleFilterError) as error:
             validate(*args, **kwargs)
-        self.assertIn(
-            "Missing either 'data' or 'criteria' value in filter input, refer 'ansible.utils.validate' filter",
-            str(error.exception),
-        )
+        assert "Missing either 'data' or 'criteria' value in filter input, refer 'ansible.utils.validate' filter" in str(error.exception)
 
         # missing required arguments
         with self.assertRaises(AnsibleFilterError) as error:
             validate([DATA])
-        self.assertIn("Missing either 'data' or 'criteria' value", str(error.exception))
+        assert "Missing either 'data' or 'criteria' value" in str(error.exception)
 
         args = [DATA, [CRITERIA_IN_RATE_CHECK]]
         kwargs = {"engine": "ansible.utils.sample"}
         with self.assertRaises(AnsibleFilterError) as error:
             validate(*args, **kwargs)
-        self.assertIn(
-            "For engine 'ansible.utils.sample' error loading",
-            str(error.exception),
-        )
+        assert "For engine 'ansible.utils.sample' error loading" in str(error.exception)
 
         args = ["invalid data", [CRITERIA_IN_RATE_CHECK]]
         kwargs = {"engine": "ansible.utils.jsonschema"}
         with self.assertRaises(AnsibleFilterError) as error:
             validate(*args, **kwargs)
-        self.assertIn("'data' option value is invalid", str(error.exception))
+        assert "'data' option value is invalid" in str(error.exception)
 
         args = [DATA, "invalid criteria"]
         kwargs = {"engine": "ansible.utils.jsonschema"}
         with self.assertRaises(AnsibleFilterError) as error:
             validate(*args, **kwargs)
-        self.assertIn("'criteria' option value is invalid", str(error.exception))
+        assert "'criteria' option value is invalid" in str(error.exception)
 
     def test_invalid_validate_plugin_config_options(self):
-        """Check passing invalid validate plugin options"""
-
+        """Check passing invalid validate plugin options."""
         args = [
             DATA,
             [
@@ -149,15 +139,11 @@ class TestValidate(unittest.TestCase):
         kwargs = {"engine": "ansible.utils.jsonschema", "draft": "draft0"}
         with self.assertRaises(AnsibleFilterError) as error:
             validate(*args, **kwargs)
-        self.assertIn(
-            "value of draft must be one of: draft3, draft4, draft6, draft7, 2019-09, 2020-12, got: draft0",
-            str(error.exception),
-        )
+        assert "value of draft must be one of: draft3, draft4, draft6, draft7, 2019-09, 2020-12, got: draft0" in str(error.exception)
 
     def test_valid_data(self):
-        """Check passing valid data as per criteria"""
-
+        """Check passing valid data as per criteria."""
         args = [DATA, CRITERIA_IN_RATE_CHECK]
         kwargs = {"engine": "ansible.utils.jsonschema"}
         result = validate(*args, **kwargs)
-        self.assertEqual(result, [])
+        assert result == []

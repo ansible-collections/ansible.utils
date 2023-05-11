@@ -99,8 +99,7 @@ if sys.version_info >= (3,) and sys.version_info < (3, 4, 4):
             if handle.readline.return_value is not None:
                 while True:
                     yield handle.readline.return_value
-            for line in _data:
-                yield line
+            yield from _data
 
         global file_spec
         if file_spec is None:

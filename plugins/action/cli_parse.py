@@ -1,11 +1,8 @@
-# -*- coding: utf-8 -*-
 # Copyright 2020 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
-"""
-The action plugin file for cli_parse
-"""
+"""The action plugin file for cli_parse."""
 from __future__ import absolute_import, division, print_function
 
 
@@ -20,7 +17,6 @@ from ansible.module_utils._text import to_native, to_text
 from ansible.module_utils.connection import Connection
 from ansible.module_utils.connection import ConnectionError as AnsibleConnectionError
 from ansible.plugins.action import ActionBase
-
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     check_argspec,
 )
@@ -35,28 +31,28 @@ ARGSPEC_CONDITIONALS = {
 
 
 class ActionModule(ActionBase):
-    """action module"""
+    """action module."""
 
     PARSER_CLS_NAME = "CliParser"
 
-    def __init__(self, *args, **kwargs):
-        super(ActionModule, self).__init__(*args, **kwargs)
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
         self._playhost = None
         self._parser_name = None
         self._result = {}
         self._task_vars = None
 
     def _debug(self, msg):
-        """Output text using ansible's display
+        """Output text using ansible's display.
 
         :param msg: The message
         :type msg: str
         """
-        msg = "<{phost}> [cli_parse] {msg}".format(phost=self._playhost, msg=msg)
+        msg = f"<{self._playhost}> [cli_parse] {msg}"
         self._display.vvvv(msg)
 
     def _fail_json(self, msg):
-        """Replace the AnsibleModule fai_json here
+        """Replace the AnsibleModule fai_json here.
 
         :param msg: The message for the failure
         :type msg: str
@@ -66,7 +62,7 @@ class ActionModule(ActionBase):
 
     def _extended_check_argspec(self):
         """Check additional requirements for the argspec
-        that cannot be covered using stnd techniques
+        that cannot be covered using stnd techniques.
         """
         errors = []
         requested_parser = self._task.args.get("parser").get("name")
@@ -89,7 +85,7 @@ class ActionModule(ActionBase):
             self._result["msg"] = " ".join(errors)
 
     def _load_parser(self, task_vars):
-        """Load a parser from the fs
+        """Load a parser from the fs.
 
         :param task_vars: The vars provided when the task was run
         :type task_vars: dict
@@ -148,26 +144,25 @@ class ActionModule(ActionBase):
                     return parser
                 except Exception as exc:
                     self._result["failed"] = True
-                    self._result["msg"] = "Error loading parser: {err}".format(err=to_native(exc))
+                    self._result["msg"] = f"Error loading parser: {to_native(exc)}"
                     return None
 
             self._result["failed"] = True
-            self._result["msg"] = "Error loading parser: {err}".format(err=to_native(exc))
+            self._result["msg"] = f"Error loading parser: {to_native(exc)}"
             return None
 
     def _set_parser_command(self):
-        """Set the /parser/command in the task args based on /command if needed"""
-        if self._task.args.get("command"):
-            if not self._task.args.get("parser").get("command"):
-                self._task.args.get("parser")["command"] = self._task.args.get("command")
+        """Set the /parser/command in the task args based on /command if needed."""
+        if self._task.args.get("command") and not self._task.args.get("parser").get("command"):
+            self._task.args.get("parser")["command"] = self._task.args.get("command")
 
     def _set_text(self):
-        """Set the /text in the task_args based on the command run"""
+        """Set the /text in the task_args based on the command run."""
         if self._result.get("stdout"):
             self._task.args["text"] = self._result["stdout"]
 
     def _os_from_task_vars(self):
-        """Extract an os str from the task's vars
+        """Extract an os str from the task's vars.
 
         :return: A short OS name
         :rtype: str
@@ -185,12 +180,12 @@ class ActionModule(ActionBase):
                     )
                 else:
                     oper_sys = self._task_vars.get(hvar)
-                    self._debug("OS set to {os}, using {key}".format(os=oper_sys.lower(), key=hvar))
+                    self._debug(f"OS set to {oper_sys.lower()}, using {hvar}")
         return oper_sys.lower()
 
     def _update_template_path(self, template_extension):
         """Update the template_path in the task args
-        If not provided, generate template name using os and command
+        If not provided, generate template name using os and command.
 
         :param template_extension: The parser specific template extension
         :type template extension: str
@@ -201,13 +196,13 @@ class ActionModule(ActionBase):
             else:
                 oper_sys = self._os_from_task_vars()
             cmd_as_fname = self._task.args.get("parser").get("command").replace(" ", "_")
-            fname = "{os}_{cmd}.{ext}".format(os=oper_sys, cmd=cmd_as_fname, ext=template_extension)
+            fname = f"{oper_sys}_{cmd_as_fname}.{template_extension}"
             source = self._find_needle("templates", fname)
-            self._debug("template_path in task args updated to {source}".format(source=source))
+            self._debug(f"template_path in task args updated to {source}")
             self._task.args["parser"]["template_path"] = source
 
     def _get_template_contents(self):
-        """Retrieve the contents of the parser template
+        """Retrieve the contents of the parser template.
 
         :return: The parser's contents
         :rtype: str
@@ -237,7 +232,7 @@ class ActionModule(ActionBase):
         """In the case of an error, remove stdout and stdout_lines
         this allows for easier visibility of the error message.
         In the case of an actual command error, it will be thrown
-        in the module
+        in the module.
         """
         self._result.pop("stdout", None)
         self._result.pop("stdout_lines", None)
@@ -245,7 +240,7 @@ class ActionModule(ActionBase):
     def _run_command(self):
         """Run a command on the host
         If socket_path exists, assume it's a network device
-        else, run a low level command
+        else, run a low level command.
         """
         command = self._task.args.get("command")
         if command:
@@ -268,7 +263,7 @@ class ActionModule(ActionBase):
                 self._result["stdout_lines"] = result["stdout_lines"]
 
     def run(self, tmp=None, task_vars=None):
-        """The std execution entry pt for an action plugin
+        """The std execution entry pt for an action plugin.
 
         :param tmp: no longer used
         :type tmp: none

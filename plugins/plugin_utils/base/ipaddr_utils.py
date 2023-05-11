@@ -1,11 +1,8 @@
-# -*- coding: utf-8 -*-
 # Copyright 2021 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
-"""
-The utils file for all ipaddr filters
-"""
+"""The utils file for all ipaddr filters."""
 
 from __future__ import absolute_import, division, print_function
 
@@ -44,6 +41,8 @@ def _empty_ipaddr_query(v, vtype):
             return str(v.ip)
         elif vtype == "network":
             return str(v)
+        return None
+    return None
 
 
 def _first_last(v):
@@ -55,6 +54,7 @@ def _first_last(v):
         first_usable = int(netaddr.IPAddress(v.first + 1))
         last_usable = int(netaddr.IPAddress(v.last - 1))
         return first_usable, last_usable
+    return None
 
 
 def _6to4_query(v, vtype, value):
@@ -79,10 +79,8 @@ def _6to4_query(v, vtype, value):
         if vtype == "address":
             if ipaddr(str(v), "2002::/16"):
                 return value
-        elif vtype == "network":
-            if v.ip != v.network:
-                if ipaddr(str(v.ip), "2002::/16"):
-                    return value
+        elif vtype == "network" and v.ip != v.network and ipaddr(str(v.ip), "2002::/16"):
+            return value
 
     return False
 
@@ -97,6 +95,8 @@ def _ip_query(v):
         # For the first IPv6 address in a network, netaddr will return it as a network address, despite it being a valid host address.
         elif v.version == 6 and v.ip == v.network:
             return str(v.ip)
+        return None
+    return None
 
 
 def _address_prefix_query(v):
@@ -108,11 +108,13 @@ def _address_prefix_query(v):
 def _bool_ipaddr_query(v):
     if v:
         return True
+    return None
 
 
 def _broadcast_query(v):
     if v.size > 2:
         return str(v.broadcast)
+    return None
 
 
 def _cidr_query(v):
@@ -136,14 +138,16 @@ def _first_usable_query(v, vtype):
             return str(netaddr.IPAddress(int(v.network)))
         elif v.size > 1:
             return str(netaddr.IPAddress(int(v.network) + 1))
+        return None
+    return None
 
 
 def _host_query(v):
     if v.size == 1:
         return str(v)
-    elif v.size > 1:
-        if v.ip != v.network or not v.broadcast:
-            return str(v.ip) + "/" + str(v.prefixlen)
+    elif v.size > 1 and (v.ip != v.network or not v.broadcast):
+        return str(v.ip) + "/" + str(v.prefixlen)
+    return None
 
 
 def _hostmask_query(v):
@@ -155,22 +159,23 @@ def _int_query(v, vtype):
         return int(v.ip)
     elif vtype == "network":
         return str(int(v.ip)) + "/" + str(int(v.prefixlen))
+    return None
 
 
 def _ip_prefix_query(v):
     if v.size == 2:
         return str(v.ip) + "/" + str(v.prefixlen)
-    elif v.size > 1:
-        if v.ip != v.network:
-            return str(v.ip) + "/" + str(v.prefixlen)
+    elif v.size > 1 and v.ip != v.network:
+        return str(v.ip) + "/" + str(v.prefixlen)
+    return None
 
 
 def _ip_netmask_query(v):
     if v.size == 2:
         return str(v.ip) + " " + str(v.netmask)
-    elif v.size > 1:
-        if v.ip != v.network:
-            return str(v.ip) + " " + str(v.netmask)
+    elif v.size > 1 and v.ip != v.network:
+        return str(v.ip) + " " + str(v.netmask)
+    return None
 
 
 def _ipv4_query(v, value):
@@ -194,10 +199,10 @@ def _last_usable_query(v, vtype):
     if vtype == "address":
         # Does it make sense to raise an error
         raise AnsibleFilterError("Not a network address")
-    elif vtype == "network":
-        if v.size > 1:
-            first_usable, last_usable = _first_last(v)
-            return str(netaddr.IPAddress(last_usable))
+    elif vtype == "network" and v.size > 1:
+        first_usable, last_usable = _first_last(v)
+        return str(netaddr.IPAddress(last_usable))
+    return None
 
 
 def _link_local_query(v, value):
@@ -205,27 +210,30 @@ def _link_local_query(v, value):
     if v.version == 4:
         if ipaddr(str(v_ip), "169.254.0.0/16"):
             return value
+        return None
 
-    elif v.version == 6:
-        if ipaddr(str(v_ip), "fe80::/10"):
-            return value
+    elif v.version == 6 and ipaddr(str(v_ip), "fe80::/10"):
+        return value
+    return None
 
 
 def _loopback_query(v, value):
     v_ip = netaddr.IPAddress(str(v.ip))
     if v_ip.is_loopback():
         return value
+    return None
 
 
 def _multicast_query(v, value):
     if v.is_multicast():
         return value
+    return None
 
 
 def _net_query(v):
-    if v.size > 1:
-        if v.ip == v.network:
-            return str(v.network) + "/" + str(v.prefixlen)
+    if v.size > 1 and v.ip == v.network:
+        return str(v.network) + "/" + str(v.prefixlen)
+    return None
 
 
 def _netmask_query(v):
@@ -233,7 +241,7 @@ def _netmask_query(v):
 
 
 def _network_query(v):
-    """Return the network of a given IP or subnet"""
+    """Return the network of a given IP or subnet."""
     return str(v.network)
 
 
@@ -249,12 +257,13 @@ def _next_usable_query(v, vtype):
     if vtype == "address":
         # Does it make sense to raise an error
         raise AnsibleFilterError("Not a network address")
-    elif vtype == "network":
-        if v.size > 1:
-            first_usable, last_usable = _first_last(v)
-            next_ip = int(netaddr.IPAddress(int(v.ip) + 1))
-            if next_ip >= first_usable and next_ip <= last_usable:
-                return str(netaddr.IPAddress(int(v.ip) + 1))
+    elif vtype == "network" and v.size > 1:
+        first_usable, last_usable = _first_last(v)
+        next_ip = int(netaddr.IPAddress(int(v.ip) + 1))
+        if next_ip >= first_usable and next_ip <= last_usable:
+            return str(netaddr.IPAddress(int(v.ip) + 1))
+        return None
+    return None
 
 
 def _peer_query(v, vtype):
@@ -270,6 +279,7 @@ def _peer_query(v, vtype):
                 raise AnsibleFilterError("Broadcast address of /30 has no peer")
             return str(netaddr.IPAddress(int(v.ip) ^ 3))
         raise AnsibleFilterError("Not a point-to-point network")
+    return None
 
 
 def _prefix_query(v):
@@ -280,17 +290,19 @@ def _previous_usable_query(v, vtype):
     if vtype == "address":
         # Does it make sense to raise an error
         raise AnsibleFilterError("Not a network address")
-    elif vtype == "network":
-        if v.size > 1:
-            first_usable, last_usable = _first_last(v)
-            previous_ip = int(netaddr.IPAddress(int(v.ip) - 1))
-            if previous_ip >= first_usable and previous_ip <= last_usable:
-                return str(netaddr.IPAddress(int(v.ip) - 1))
+    elif vtype == "network" and v.size > 1:
+        first_usable, last_usable = _first_last(v)
+        previous_ip = int(netaddr.IPAddress(int(v.ip) - 1))
+        if previous_ip >= first_usable and previous_ip <= last_usable:
+            return str(netaddr.IPAddress(int(v.ip) - 1))
+        return None
+    return None
 
 
 def _private_query(v, value):
     if v.is_private():
         return value
+    return None
 
 
 def _public_query(v, value):
@@ -305,18 +317,19 @@ def _public_query(v, value):
         ],
     ):
         return value
+    return None
 
 
 def _range_usable_query(v, vtype):
     if vtype == "address":
         # Does it make sense to raise an error
         raise AnsibleFilterError("Not a network address")
-    elif vtype == "network":
-        if v.size > 1:
-            first_usable, last_usable = _first_last(v)
-            first_usable = str(netaddr.IPAddress(first_usable))
-            last_usable = str(netaddr.IPAddress(last_usable))
-            return "{0}-{1}".format(first_usable, last_usable)
+    elif vtype == "network" and v.size > 1:
+        first_usable, last_usable = _first_last(v)
+        first_usable = str(netaddr.IPAddress(first_usable))
+        last_usable = str(netaddr.IPAddress(last_usable))
+        return f"{first_usable}-{last_usable}"
+    return None
 
 
 def _revdns_query(v):
@@ -348,11 +361,13 @@ def _type_query(v):
             return "address"
         else:
             return "network"
+    return None
 
 
 def _unicast_query(v, value):
     if v.is_unicast():
         return value
+    return None
 
 
 def _version_query(v):
@@ -365,13 +380,13 @@ def _wrap_query(v, vtype, value):
             return "[" + str(v.ip) + "]"
         elif vtype == "network":
             return "[" + str(v.ip) + "]/" + str(v.prefixlen)
+        return None
     else:
         return value
 
 
 def ipaddr(value, query="", version=False, alias="ipaddr"):
-    """Check if string is an IP address or network and filter it"""
-
+    """Check if string is an IP address or network and filter it."""
     query_func_extra_args = {
         "": ("vtype",),
         "6to4": ("vtype", "value"),
@@ -567,7 +582,7 @@ def ipaddr(value, query="", version=False, alias="ipaddr"):
         return False
 
     extras = []
-    for arg in query_func_extra_args.get(query, tuple()):
+    for arg in query_func_extra_args.get(query, ()):
         extras.append(locals()[arg])
     try:
         return query_func_map[query](v, *extras)
@@ -596,9 +611,7 @@ def ipaddr(value, query="", version=False, alias="ipaddr"):
 
 
 def _need_netaddr(f_name, *args, **kwargs):
-    """
-    verify python's netaddr for these filters to work
-    """
+    """Verify python's netaddr for these filters to work."""
     raise AnsibleFilterError(missing_required_lib("netaddr"))
 
 
@@ -627,12 +640,9 @@ def _range_checker(ip_check, first, last):
     :param ip_check: The ip to test if it is within first and last.
     :param first: The first IP in the range to test against.
     :param last: The last IP in the range to test against.
-    :return: bool
+    :return: bool.
     """
-    if first <= ip_check <= last:
-        return True
-    else:
-        return False
+    return first <= ip_check <= last
 
 
 # ---- HWaddr query helpers ----
@@ -644,6 +654,7 @@ def _bare_query(v):
 def _bool_hwaddr_query(v):
     if v:
         return True
+    return None
 
 
 def _int_hwaddr_query(v):
@@ -658,6 +669,7 @@ def _cisco_query(v):
 def _empty_hwaddr_query(v, value):
     if v:
         return value
+    return None
 
 
 def _linux_query(v):
@@ -682,8 +694,7 @@ def _win_query(v):
 
 # ---- HWaddr / MAC address filters ----
 def hwaddr(value, query="", alias="hwaddr"):
-    """Check if string is a HW/MAC address and filter it"""
-
+    """Check if string is a HW/MAC address and filter it."""
     query_func_extra_args = {"": ("value",)}
 
     query_func_map = {
@@ -709,7 +720,7 @@ def hwaddr(value, query="", alias="hwaddr"):
             raise AnsibleFilterError(alias + ": not a hardware address: %s" % value)
 
     extras = []
-    for arg in query_func_extra_args.get(query, tuple()):
+    for arg in query_func_extra_args.get(query, ()):
         extras.append(locals()[arg])
     try:
         return query_func_map[query](v, *extras)

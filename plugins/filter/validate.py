@@ -71,7 +71,6 @@ RETURN = """
 
 from ansible.errors import AnsibleError, AnsibleFilterError
 from ansible.module_utils._text import to_text
-
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     check_argspec,
 )
@@ -135,9 +134,9 @@ def validate(*args, **kwargs):
     return to_list(result.get("errors", []))
 
 
-class FilterModule(object):
-    """index_of"""
+class FilterModule:
+    """index_of."""
 
     def filters(self):
-        """a mapping of filter names to functions"""
+        """A mapping of filter names to functions."""
         return {"validate": validate}

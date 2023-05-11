@@ -31,8 +31,7 @@ def run(localhost_project, environment):
     process = subprocess.run(
         args=args,
         env=environment,
-        stderr=subprocess.PIPE,
-        stdout=subprocess.PIPE,
+        capture_output=True,
         check=False,
         shell=False,
     )

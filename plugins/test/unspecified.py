@@ -1,11 +1,8 @@
-# -*- coding: utf-8 -*-
 # Copyright 2021 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
-"""
-Test plugin file for netaddr tests: unspecified
-"""
+"""Test plugin file for netaddr tests: unspecified."""
 
 from __future__ import absolute_import, division, print_function
 
@@ -99,8 +96,7 @@ RETURN = """
 
 @_need_ipaddress
 def _unspecified(ip):
-    """Test for an unspecified IP address"""
-
+    """Test for an unspecified IP address."""
     params = {"ip": ip}
     _validate_args("unspecified", DOCUMENTATION, params)
 
@@ -110,8 +106,8 @@ def _unspecified(ip):
         return False
 
 
-class TestModule(object):
-    """network jinja test"""
+class TestModule:
+    """network jinja test."""
 
     test_map = {"unspecified": _unspecified}
 

@@ -1,11 +1,8 @@
-# -*- coding: utf-8 -*-
 # Copyright 2021 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
-"""
-The utils file for all netaddr tests
-"""
+"""The utils file for all netaddr tests."""
 
 from __future__ import absolute_import, division, print_function
 
@@ -18,7 +15,6 @@ from ansible import errors
 from ansible.errors import AnsibleError
 from ansible.module_utils.basic import missing_required_lib
 from ansible.module_utils.six import ensure_text
-
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     check_argspec,
 )
@@ -33,8 +29,7 @@ except ImportError:
 
 
 def ip_network(ip):
-    """PY2 compat shim, PY2 requires unicode"""
-
+    """PY2 compat shim, PY2 requires unicode."""
     if not HAS_IPADDRESS:
         raise AnsibleError(missing_required_lib("ipaddress"))
 
@@ -42,8 +37,7 @@ def ip_network(ip):
 
 
 def ip_address(ip):
-    """PY2 compat shim, PY2 requires unicode"""
-
+    """PY2 compat shim, PY2 requires unicode."""
     if not HAS_IPADDRESS:
         raise AnsibleError(missing_required_lib("ipaddress"))
 
@@ -73,8 +67,7 @@ def _is_subnet_of(network_a, network_b):
 
 
 def _validate_args(plugin, doc, params):
-    """argspec validator utility function"""
-
+    """Argspec validator utility function."""
     valid, argspec_result, updated_params = check_argspec(doc, plugin + " test", **params)
 
     if not valid:

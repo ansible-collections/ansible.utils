@@ -1,11 +1,8 @@
-# -*- coding: utf-8 -*-
 # Copyright 2021 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
-"""
-Test plugin file for netaddr tests: loopback
-"""
+"""Test plugin file for netaddr tests: loopback."""
 
 from __future__ import absolute_import, division, print_function
 
@@ -85,8 +82,7 @@ RETURN = """
 
 @_need_ipaddress
 def _loopback(ip):
-    """Test if an IP address is a loopback"""
-
+    """Test if an IP address is a loopback."""
     params = {"ip": ip}
     _validate_args("loopback", DOCUMENTATION, params)
 
@@ -96,8 +92,8 @@ def _loopback(ip):
         return False
 
 
-class TestModule(object):
-    """network jinja test"""
+class TestModule:
+    """network jinja test."""
 
     test_map = {"loopback": _loopback}
 

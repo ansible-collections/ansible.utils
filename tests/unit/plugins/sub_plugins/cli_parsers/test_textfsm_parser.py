@@ -51,7 +51,7 @@ class TestTextfsmParser(unittest.TestCase):
                 "UPTIME": "12 day(s), 23 hour(s), 48 minute(s), 10 second(s)",
             },
         ]
-        self.assertEqual(result, {"parsed": parsed_output})
+        assert result == {"parsed": parsed_output}
 
     def test_textfsm_parser_invalid_parser(self):
         fake_path = "/ /I hope this doesn't exist"
@@ -65,5 +65,5 @@ class TestTextfsmParser(unittest.TestCase):
         }
         parser = CliParser(task_args=task_args, task_vars=[], debug=False)
         result = parser.parse()
-        errors = {"errors": "error while reading template_path file {0}".format(fake_path)}
-        self.assertEqual(result, errors)
+        errors = {"errors": f"error while reading template_path file {fake_path}"}
+        assert result == errors

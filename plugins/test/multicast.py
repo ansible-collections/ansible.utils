@@ -1,11 +1,8 @@
-# -*- coding: utf-8 -*-
 # Copyright 2021 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
-"""
-Test plugin file for netaddr tests: multicast
-"""
+"""Test plugin file for netaddr tests: multicast."""
 
 from __future__ import absolute_import, division, print_function
 
@@ -97,8 +94,7 @@ RETURN = """
 
 @_need_ipaddress
 def _multicast(ip):
-    """Test for a multicast IP address"""
-
+    """Test for a multicast IP address."""
     params = {"ip": ip}
     _validate_args("multicast", DOCUMENTATION, params)
 
@@ -108,8 +104,8 @@ def _multicast(ip):
         return False
 
 
-class TestModule(object):
-    """network jinja test"""
+class TestModule:
+    """network jinja test."""
 
     test_map = {"multicast": _multicast}
 

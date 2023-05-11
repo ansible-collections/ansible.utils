@@ -30,7 +30,7 @@ class TestJsonParser(unittest.TestCase):
         parser = CliParser(task_args=task_args, task_vars=[], debug=False)
 
         result = parser.parse()
-        self.assertEqual(result, {"parsed": test_value})
+        assert result == {"parsed": test_value}
 
     def test_invalid_json(self):
         task_args = {"text": "Definitely not JSON"}
@@ -38,6 +38,6 @@ class TestJsonParser(unittest.TestCase):
 
         result = parser.parse()
         # Errors are different between Python 2 and 3, so we have to be a bit roundabout.
-        self.assertEqual(len(result), 1)
+        assert len(result) == 1
         assert "errors" in result
-        self.assertEqual(len(result["errors"]), 1)
+        assert len(result["errors"]) == 1

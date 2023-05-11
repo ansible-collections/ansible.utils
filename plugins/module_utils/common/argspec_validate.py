@@ -1,9 +1,8 @@
-# -*- coding: utf-8 -*-
 # Copyright 2020 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
-"""Use AnsibleModule's argspec validation
+"""Use AnsibleModule's argspec validation.
 
 def _check_argspec(self):
     aav = AnsibleArgSpecValidator(
@@ -28,7 +27,6 @@ import re
 
 from ansible.module_utils.basic import AnsibleModule
 from ansible.module_utils.six import iteritems
-
 from ansible_collections.ansible.utils.plugins.module_utils.common.utils import dict_merge
 
 
@@ -76,13 +74,7 @@ OPTION_CONDITIONALS = (
     "required_if",
 )
 
-VALID_ANSIBLEMODULE_ARGS = (
-    "argument_spec",
-    "bypass_checks",
-    "no_log",
-    "add_file_common_args",
-    "supports_check_mode",
-) + OPTION_CONDITIONALS
+VALID_ANSIBLEMODULE_ARGS = ("argument_spec", "bypass_checks", "no_log", "add_file_common_args", "supports_check_mode", *OPTION_CONDITIONALS)
 
 BASE_ARG_AVAIL = 2.11
 
@@ -90,10 +82,10 @@ BASE_ARG_AVAIL = 2.11
 class MonkeyModule(AnsibleModule):
     """A derivative of the AnsibleModule used
     to just validate the data (task.args) against
-    the schema(argspec)
+    the schema(argspec).
     """
 
-    def __init__(self, data, schema, name):
+    def __init__(self, data, schema, name) -> None:
         self._errors = None
         self._valid = True
         self._schema = schema
@@ -103,18 +95,17 @@ class MonkeyModule(AnsibleModule):
     def fail_json(self, msg):
         """Replace the AnsibleModule fail_json here
         :param msg: The message for the failure
-        :type msg: str
+        :type msg: str.
         """
         if self.name:
-            msg = re.sub(r"\(basic\.pyc?\)", "'{name}'".format(name=self.name), msg)
+            msg = re.sub(r"\(basic\.pyc?\)", f"'{self.name}'", msg)
         self._valid = False
         self._errors = msg
 
     def _load_params(self):
         """This replaces the AnsibleModule _load_params
-        fn because we already set self.params in init
+        fn because we already set self.params in init.
         """
-        pass
 
     def validate(self):
         """Instantiate the super, validating the schema
@@ -124,9 +115,9 @@ class MonkeyModule(AnsibleModule):
         :return errors: errors reported during validation
         :rtype errors: str
         :return params: The original data updated with defaults
-        :rtype params: dict
+        :rtype params: dict.
         """
-        super(MonkeyModule, self).__init__(**self._schema)
+        super().__init__(**self._schema)
         return self._valid, self._errors, self.params
 
 
@@ -139,7 +130,7 @@ class AnsibleArgSpecValidator:
         schema_conditionals=None,
         name=None,
         other_args=None,
-    ):
+    ) -> None:
         """Validate some data against a schema
         :param data: The data to validate
         :type data: dict
@@ -152,7 +143,7 @@ class AnsibleArgSpecValidator:
         :param name: the name of the plugin calling this class, used in error messages
         :type name: str
         :param other_args: Other valid kv pairs for the argspec, eg no_log, bypass_checks
-        :type other_args: dict
+        :type other_args: dict.
 
         note:
         - the schema conditionals can be root conditionals or deeply nested conditionals
@@ -172,7 +163,7 @@ class AnsibleArgSpecValidator:
         :param doc_obj: The doc as a python obj
         :type doc_obj: dictionary
         :params temp_schema: The dict in which we stuff the schema parts
-        :type temp_schema: dict
+        :type temp_schema: dict.
         """
         options_obj = doc_obj.get("options")
         for okey, ovalue in iteritems(options_obj):
@@ -188,7 +179,7 @@ class AnsibleArgSpecValidator:
     # TODO: Support extends_documentation_fragment
     def _convert_doc_to_schema(self):
         """Convert the doc string to an obj, was yaml
-        add back other valid conditionals and params
+        add back other valid conditionals and params.
         """
         doc_obj = yaml.load(self._schema, SafeLoader)
         temp_schema = {}
@@ -197,7 +188,7 @@ class AnsibleArgSpecValidator:
 
     def _validate(self):
         """Validate the data gainst the schema
-        convert doc string in argspec if necessary
+        convert doc string in argspec if necessary.
 
         :return valid: if the data passed
         :rtype valid: bool
@@ -212,7 +203,7 @@ class AnsibleArgSpecValidator:
             self._schema = dict_merge(self._schema, self._schema_conditionals)
         if self._other_args is not None:
             self._schema = dict_merge(self._schema, self._other_args)
-        invalid_keys = [k for k in self._schema.keys() if k not in VALID_ANSIBLEMODULE_ARGS]
+        invalid_keys = [k for k in self._schema if k not in VALID_ANSIBLEMODULE_ARGS]
         if invalid_keys:
             valid = False
             errors = "Invalid schema. Invalid keys found: {ikeys}".format(
@@ -227,14 +218,14 @@ class AnsibleArgSpecValidator:
     def validate(self):
         """The public validate method
         check for future argspec validation
-        that is coming in 2.11, change the check according above
+        that is coming in 2.11, change the check according above.
         """
         if HAS_ANSIBLE_ARG_SPEC_VALIDATOR:
             if self._schema_format == "doc":
                 self._convert_doc_to_schema()
             if self._schema_conditionals is not None:
                 self._schema = dict_merge(self._schema, self._schema_conditionals)
-            invalid_keys = [k for k in self._schema.keys() if k not in VALID_ANSIBLEMODULE_ARGS]
+            invalid_keys = [k for k in self._schema if k not in VALID_ANSIBLEMODULE_ARGS]
             if invalid_keys:
                 valid = False
                 errors = [
@@ -273,6 +264,6 @@ def check_argspec(schema, name, schema_format="doc", schema_conditionals=None, *
     if not valid:
         result["errors"] = errors
         result["failed"] = True
-        result["msg"] = "argspec validation failed for {name} plugin".format(name=name)
+        result["msg"] = f"argspec validation failed for {name} plugin"
 
     return valid, result, updated_params

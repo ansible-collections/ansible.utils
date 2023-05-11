@@ -1,17 +1,13 @@
-# -*- coding: utf-8 -*-
 # Copyright 2021 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
-"""
-filter plugin file for ipaddr filters: reduce_on_network
-"""
+"""filter plugin file for ipaddr filters: reduce_on_network."""
 from __future__ import absolute_import, division, print_function
 
 from functools import partial
 
 from ansible.errors import AnsibleFilterError
-
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     AnsibleArgSpecValidator,
 )
@@ -136,8 +132,8 @@ def reduce_on_network(value, network):
     return r
 
 
-class FilterModule(object):
-    """IP address and network manipulation filters"""
+class FilterModule:
+    """IP address and network manipulation filters."""
 
     filter_map = {
         # IP addresses and networks
@@ -145,8 +141,8 @@ class FilterModule(object):
     }
 
     def filters(self):
-        """ipaddr filter"""
+        """Ipaddr filter."""
         if HAS_NETADDR:
             return self.filter_map
         else:
-            return dict((f, partial(_need_netaddr, f)) for f in self.filter_map)
+            return {f: partial(_need_netaddr, f) for f in self.filter_map}

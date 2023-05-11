@@ -40,7 +40,6 @@ class TestTextfsmParser(unittest.TestCase):
         parser = CliParser(task_args=task_args, task_vars=[], debug=False)
 
         result = parser.parse()
-        # import pdb; pdb.set_trace()
         parsed_output = [
             {
                 "boot_image": "bootflash:///nxos.7.0.3.I7.1.bin",
@@ -49,7 +48,7 @@ class TestTextfsmParser(unittest.TestCase):
                 "uptime": "12 day(s), 23 hour(s), 48 minute(s), 10 second(s)",
             },
         ]
-        self.assertEqual(result["parsed"][0][0], parsed_output)
+        assert result["parsed"][0][0] == parsed_output
 
     def test_textfsm_parser_invalid_parser(self):
         fake_path = "/ /I hope this doesn't exist"
@@ -63,5 +62,5 @@ class TestTextfsmParser(unittest.TestCase):
         }
         parser = CliParser(task_args=task_args, task_vars=[], debug=False)
         result = parser.parse()
-        errors = {"errors": "error while reading template_path file {0}".format(fake_path)}
-        self.assertEqual(result, errors)
+        errors = {"errors": f"error while reading template_path file {fake_path}"}
+        assert result == errors

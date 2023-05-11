@@ -1,13 +1,10 @@
 #
-# -*- coding: utf-8 -*-
 # Copyright 2022 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 #
 
-"""
-The consolidate plugin code
-"""
+"""The consolidate plugin code."""
 from __future__ import absolute_import, division, print_function
 
 
@@ -19,7 +16,7 @@ from ansible.errors import AnsibleFilterError
 
 
 def _raise_error(err):
-    """Raise an error message, prepend with filter name
+    """Raise an error message, prepend with filter name.
 
     Args:
         filter (str): Filter name
@@ -39,7 +36,7 @@ def _raise_error(err):
 
 
 def fail_on_filter(validator_func):
-    """Decorator to fail on supplied filters
+    """Decorator to fail on supplied filters.
 
     Args:
         validator_func (func): Function that generates failure messages
@@ -49,7 +46,7 @@ def fail_on_filter(validator_func):
     """
 
     def update_err(*args, **kwargs):
-        """Filters return value or raises error as per supplied parameters
+        """Filters return value or raises error as per supplied parameters.
 
         Returns:
             any: Return value to the function call
@@ -71,7 +68,7 @@ def fail_on_filter(validator_func):
 @fail_on_filter
 def check_missing_match_key_duplicate(data_sources, fail_missing_match_key, fail_duplicate):
     """Check if the match_key specified is present in all the supplied data,
-    also check for duplicate data accross all the data sources
+    also check for duplicate data accross all the data sources.
 
     Args:
         data_sources (list): list of dicts as data sources
@@ -101,7 +98,7 @@ def check_missing_match_key_duplicate(data_sources, fail_missing_match_key, fail
 
         if sorted(set(ds_values)) != sorted(ds_values) and fail_duplicate:
             errors_duplicate.append(
-                "duplicate values in data source {ds_idx}".format(ds_idx=ds_idx),
+                f"duplicate values in data source {ds_idx}",
             )
         results.append(set(ds_values))
     return results, {
@@ -112,7 +109,7 @@ def check_missing_match_key_duplicate(data_sources, fail_missing_match_key, fail
 
 @fail_on_filter
 def check_missing_match_values(matched_keys, fail_missing_match_value):
-    """Checks values to match be consistent over all the whole data source
+    """Checks values to match be consistent over all the whole data source.
 
     Args:
         matched_keys (list): list of unique keys based on specified match_keys
@@ -138,7 +135,7 @@ def check_missing_match_values(matched_keys, fail_missing_match_value):
 
 
 def consolidate_facts(data_sources, all_values):
-    """Iterate over all the data sources and consolidate the data
+    """Iterate over all the data sources and consolidate the data.
 
     Args:
         data_sources (list): supplied data sources
@@ -147,7 +144,6 @@ def consolidate_facts(data_sources, all_values):
     Returns:
         list: list of consolidated data
     """
-
     consolidated_facts = {}
     for data_source in data_sources:
         match_key = data_source["match_key"]
@@ -166,7 +162,7 @@ def consolidate(
     fail_missing_match_value,
     fail_duplicate,
 ):
-    """Calls data validation and consolidation functions
+    """Calls data validation and consolidation functions.
 
     Args:
         data_source (list): list of dicts as data sources
@@ -177,7 +173,6 @@ def consolidate(
     Returns:
         list: list of dicts of validated and consolidated data
     """
-
     key_sets = check_missing_match_key_duplicate(
         data_sources,
         fail_missing_match_key,

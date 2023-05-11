@@ -26,16 +26,14 @@ __all__ = ["PersistentConnectionBase"]
 
 
 class PersistentConnectionBase(ConnectionBase):
-    """
-    A base for simple persistent connections.
-    """
+    """A base for simple persistent connections."""
 
     force_persistence = True
     # Do not use _remote_is_local in other connections
     _remote_is_local = True
 
-    def __init__(self, play_context, new_stdin, *args, **kwargs):
-        super(PersistentConnectionBase, self).__init__(play_context, new_stdin, *args, **kwargs)
+    def __init__(self, play_context, new_stdin, *args, **kwargs) -> None:
+        super().__init__(play_context, new_stdin, *args, **kwargs)
         self._messages = []
         self._conn_closed = False
 
@@ -64,17 +62,15 @@ class PersistentConnectionBase(ConnectionBase):
         return messages
 
     def put_file(self, in_path, out_path):
-        """Transfer a file from local to remote"""
+        """Transfer a file from local to remote."""
         return self._local.put_file(in_path, out_path)
 
     def fetch_file(self, in_path, out_path):
-        """Fetch a file from remote to local"""
+        """Fetch a file from remote to local."""
         return self._local.fetch_file(in_path, out_path)
 
     def reset(self):
-        """
-        Reset the connection
-        """
+        """Reset the connection."""
         if self._socket_path:
             self.queue_message(
                 "vvvv",
@@ -90,7 +86,7 @@ class PersistentConnectionBase(ConnectionBase):
 
     def _update_connection_state(self):
         """
-        Reconstruct the connection socket_path and check if it exists
+        Reconstruct the connection socket_path and check if it exists.
 
         If the socket path exists then the connection is active and set
         both the _socket_path value to the path and the _connected value
@@ -107,7 +103,7 @@ class PersistentConnectionBase(ConnectionBase):
         )
 
         tmp_path = unfrackpath(C.PERSISTENT_CONTROL_PATH_DIR)
-        socket_path = unfrackpath(control_path % dict(directory=tmp_path))
+        socket_path = unfrackpath(control_path % {"directory": tmp_path})
 
         if os.path.exists(socket_path):
             self._connected = True

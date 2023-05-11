@@ -155,7 +155,6 @@ RETURN = """
 """
 
 from ansible.errors import AnsibleFilterError
-
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     check_argspec,
 )
@@ -210,9 +209,9 @@ def param_list_compare(*args, **kwargs):
     return output
 
 
-class FilterModule(object):
-    """param_list_compare"""
+class FilterModule:
+    """param_list_compare."""
 
     def filters(self):
-        """a mapping of filter names to functions"""
+        """A mapping of filter names to functions."""
         return {"param_list_compare": param_list_compare}

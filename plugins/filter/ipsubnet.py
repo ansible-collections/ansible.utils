@@ -1,17 +1,13 @@
-# -*- coding: utf-8 -*-
 # Copyright 2021 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
-"""
-filter plugin file for ipaddr filters: ipsubnet
-"""
+"""filter plugin file for ipaddr filters: ipsubnet."""
 from __future__ import absolute_import, division, print_function
 
 from functools import partial
 
 from ansible.errors import AnsibleFilterError
-
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     AnsibleArgSpecValidator,
 )
@@ -258,7 +254,7 @@ RETURN = """
 
 @pass_environment
 def _ipsubnet(*args, **kwargs):
-    """Manipulate IPv4/IPv6 subnets"""
+    """Manipulate IPv4/IPv6 subnets."""
     keys = ["value", "query", "index"]
     data = dict(zip(keys, args[1:]))
     data.update(kwargs)
@@ -270,8 +266,7 @@ def _ipsubnet(*args, **kwargs):
 
 
 def ipsubnet(value, query="", index=None):
-    """Manipulate IPv4/IPv6 subnets"""
-
+    """Manipulate IPv4/IPv6 subnets."""
     vtype = ipaddr(value, "type")
     if not vtype:
         return False
@@ -296,7 +291,7 @@ def ipsubnet(value, query="", index=None):
                 return to_text(value.supernet(query)[0])
             elif vtype == "network":
                 if query - value.prefixlen < 0:
-                    msg = "Requested subnet size of {0} is invalid".format(
+                    msg = "Requested subnet size of {} is invalid".format(
                         to_text(query),
                     )
                     raise AnsibleFilterError(msg)
@@ -332,7 +327,7 @@ def ipsubnet(value, query="", index=None):
         elif vtype == "network":
             v = ipaddr(query, "subnet")
         else:
-            msg = "You must pass a valid subnet or IP address; {0} is invalid".format(
+            msg = "You must pass a valid subnet or IP address; {} is invalid".format(
                 to_text(query),
             )
             raise AnsibleFilterError(msg)
@@ -352,14 +347,14 @@ def ipsubnet(value, query="", index=None):
                 )
                 + 1,
             )
-        msg = "{0} is not in the subnet {1}".format(value.cidr, query.cidr)
+        msg = f"{value.cidr} is not in the subnet {query.cidr}"
         raise AnsibleFilterError(msg)
 
     return False
 
 
-class FilterModule(object):
-    """IP address and network manipulation filters"""
+class FilterModule:
+    """IP address and network manipulation filters."""
 
     filter_map = {
         # IP addresses and networks
@@ -367,8 +362,8 @@ class FilterModule(object):
     }
 
     def filters(self):
-        """ipsubnet filter"""
+        """Ipsubnet filter."""
         if HAS_NETADDR:
             return self.filter_map
         else:
-            return dict((f, partial(_need_netaddr, f)) for f in self.filter_map)
+            return {f: partial(_need_netaddr, f) for f in self.filter_map}

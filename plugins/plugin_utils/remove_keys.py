@@ -1,13 +1,10 @@
 #
-# -*- coding: utf-8 -*-
 # Copyright 2021 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 #
 
-"""
-The remove_keys plugin code
-"""
+"""The remove_keys plugin code."""
 from __future__ import absolute_import, division, print_function
 
 
@@ -22,9 +19,9 @@ def _raise_error(msg):
     """Raise an error message, prepend with filter name
     :param msg: The message
     :type msg: str
-    :raises: AnsibleError
+    :raises: AnsibleError.
     """
-    error = "Error when using plugin 'remove_keys': {msg}".format(msg=msg)
+    error = f"Error when using plugin 'remove_keys': {msg}"
     raise AnsibleFilterError(error)
 
 
@@ -56,7 +53,6 @@ def clear_empty_data(data):
     if isinstance(data, dict):
         # for k in list(data.keys()):
         #     if not data.get(k, {}):
-        #         del data[k]
         for k, v in data.items():
             data[k] = clear_empty_data(v)
     if isinstance(data, list):
@@ -76,7 +72,7 @@ def remove_keys(data, target, matching_parameter="equality"):
     :type data: list
     :type elements: string
     :param matching_parameter: matching type of the target keys with data keys
-    :type data: str
+    :type data: str.
     """
     if not isinstance(data, (list, dict)):
         _raise_error("Input is not valid for attribute removal")

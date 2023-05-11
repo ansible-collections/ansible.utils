@@ -1,14 +1,11 @@
 #
-# -*- coding: utf-8 -*-
 # Copyright 2021 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 #
 
 
-"""
-The to_xml filter plugin
-"""
+"""The to_xml filter plugin."""
 from __future__ import absolute_import, division, print_function
 
 
@@ -156,7 +153,6 @@ EXAMPLES = r"""
 """
 
 from ansible.errors import AnsibleFilterError
-
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     AnsibleArgSpecValidator,
 )
@@ -182,9 +178,9 @@ def _to_xml(*args, **kwargs):
     return to_xml(**updated_data)
 
 
-class FilterModule(object):
-    """to_xml"""
+class FilterModule:
+    """to_xml."""
 
     def filters(self):
-        """a mapping of filter names to functions"""
+        """A mapping of filter names to functions."""
         return {"to_xml": _to_xml}

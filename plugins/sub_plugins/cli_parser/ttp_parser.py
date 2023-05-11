@@ -1,5 +1,5 @@
 """
-ttp parser
+ttp parser.
 
 This is the ttp parser for use with the cli_parse module and action plugin
 https://github.com/dmulyalin/ttp
@@ -41,7 +41,6 @@ import os
 
 from ansible.module_utils._text import to_native
 from ansible.module_utils.basic import missing_required_lib
-
 from ansible_collections.ansible.utils.plugins.plugin_utils.base.cli_parser import CliParserBase
 
 
@@ -55,7 +54,7 @@ except ImportError:
 
 class CliParser(CliParserBase):
     """The ttp parser class
-    Convert raw text to structured data using ttp
+    Convert raw text to structured data using ttp.
     """
 
     DEFAULT_TEMPLATE_EXTENSION = "ttp"
@@ -63,7 +62,7 @@ class CliParser(CliParserBase):
 
     @staticmethod
     def _check_reqs():
-        """Check the prerequisites for the ttp parser
+        """Check the prerequisites for the ttp parser.
 
         :return dict: A dict with errors or a template_path
         """
@@ -75,7 +74,7 @@ class CliParser(CliParserBase):
         return {"errors": errors}
 
     def parse(self, *_args, **_kwargs):
-        """Std entry point for a cli_parse parse execution
+        """Std entry point for a cli_parse parse execution.
 
         :return: Errors or parsed text as structured data
         :rtype: dict

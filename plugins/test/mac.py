@@ -1,11 +1,8 @@
-# -*- coding: utf-8 -*-
 # Copyright 2021 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
-"""
-Test plugin file for netaddr tests: mac
-"""
+"""Test plugin file for netaddr tests: mac."""
 
 from __future__ import absolute_import, division, print_function
 
@@ -106,8 +103,7 @@ RETURN = """
 
 
 def _mac(mac):
-    """Test if something appears to be a valid mac address"""
-
+    """Test if something appears to be a valid mac address."""
     params = {"mac": mac}
     _validate_args("mac", DOCUMENTATION, params)
 
@@ -117,12 +113,12 @@ def _mac(mac):
     re2 = r"^([0-9a-f]{4}\.[0-9a-f]{4}\.[0-9a-f]{4})$"
     # Bare
     re3 = r"^[0-9a-f]{12}$"
-    regex = "(?i){re1}|{re2}|{re3}".format(re1=re1, re2=re2, re3=re3)
+    regex = f"(?i){re1}|{re2}|{re3}"
     return bool(re.match(regex, mac))
 
 
-class TestModule(object):
-    """network jinja test"""
+class TestModule:
+    """network jinja test."""
 
     test_map = {"mac": _mac}
 

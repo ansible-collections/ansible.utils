@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2020 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
@@ -13,7 +12,6 @@ __metaclass__ = type
 import unittest
 
 from ansible.template import Templar
-
 from ansible_collections.ansible.utils.plugins.plugin_utils.index_of import index_of
 
 
@@ -25,48 +23,43 @@ class TestIndexOfFilter(unittest.TestCase):
         obj, test, value = [1, 2], "@@", 1
         with self.assertRaises(Exception) as exc:
             index_of(obj, test, value, tests=self._tests)
-        self.assertIn("the test '@@' was not found", str(exc.exception))
+        assert "the test '@@' was not found" in str(exc.exception)
         obj, test, value, key = [{"a": 1}], "@@", 1, "a"
         with self.assertRaises(Exception) as exc:
             index_of(obj, test, value, key, tests=self._tests)
-        self.assertIn("the test '@@' was not found", str(exc.exception))
+        assert "the test '@@' was not found" in str(exc.exception)
 
     def test_fail_mixed_list(self):
         obj, test, value, key = [{"a": "b"}, True, 1, "a"], "==", "b", "a"
         with self.assertRaises(Exception) as exc:
             index_of(obj, test, value, key, tests=self._tests)
-        self.assertIn("required to be dictionaries", str(exc.exception))
+        assert "required to be dictionaries" in str(exc.exception)
 
     def test_fail_key_not_valid(self):
         obj, test, value, key = [{"a": "b"}], "==", "b", [1, 2]
         with self.assertRaises(Exception) as exc:
             index_of(obj, test, value, key, tests=self._tests)
-        self.assertIn("Unknown key type", str(exc.exception))
+        assert "Unknown key type" in str(exc.exception)
 
     def test_fail_on_missing(self):
         obj, test, value, key = [{"a": True}, {"c": False}], "==", True, "a"
         with self.assertRaises(Exception) as exc:
             index_of(obj, test, value, key, fail_on_missing=True, tests=self._tests)
-        self.assertIn("'a' was not found", str(exc.exception))
+        assert "'a' was not found" in str(exc.exception)
 
     def test_just_test(self):
-        """Limit to jinja < 2.11 tests"""
+        """Limit to jinja < 2.11 tests."""
         objs = [
-            # ([True], "true", 0),
-            # ([False], "not false", []),
-            # ([False, 5], "boolean", 0),
-            # ([0, False], "false", 1),
             ([3, 4], "not even", 0),
             ([3, 4], "even", 1),
             ([3, 3], "even", []),
             ([3, 3, 3, 4], "odd", [0, 1, 2]),
-            # ([3.3, 3.4], "float", [0, 1]),
         ]
         for entry in objs:
             obj, test, answer = entry
             result = index_of(obj, test, tests=self._tests)
             expected = answer
-            self.assertEqual(result, expected)
+            assert result == expected
 
     def test_simple_lists(self):
         objs = [
@@ -84,7 +77,7 @@ class TestIndexOfFilter(unittest.TestCase):
             obj, test, value, answer = entry
             result = index_of(obj, test, value, tests=self._tests)
             expected = answer
-            self.assertEqual(result, expected)
+            assert result == expected
 
     def test_simple_dict(self):
         objs = [
@@ -116,4 +109,4 @@ class TestIndexOfFilter(unittest.TestCase):
         for entry in objs:
             obj, test, value, key, answer = entry
             result = index_of(obj, test, value, key, tests=self._tests)
-            self.assertEqual(result, answer)
+            assert result == answer
