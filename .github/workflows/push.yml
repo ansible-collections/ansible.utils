@@ -84,9 +84,9 @@ jobs:
         run: pre-commit run prettier --all-files
         continue-on-error: true
 
-      - name: Update the glaxay.yml version if needed
-        run: pre-commit run autoversion --all-files
-        continue-on-error: true
+      - name: Update the glaxay.yml version
+        run: |
+          sed -ie 's/version:.*/version: ${{ env.VERSION }}/' galaxy.yml
 
       - name: Determine if a PR is necessary
         run: git diff --no-ext-diff --quiet --exit-code
