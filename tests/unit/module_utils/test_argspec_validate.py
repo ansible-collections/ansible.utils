@@ -56,7 +56,7 @@ class TestSortList(unittest.TestCase):
         self.assertEqual(errors, None)
         self.assertEqual(expected, updated_data)
 
-    def test_simple_fail(self):
+    def test_simple_fails(self):
         data = {}
         aav = AnsibleArgSpecValidator(
             data=data,
