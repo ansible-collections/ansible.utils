@@ -1,3 +1,5 @@
+name: Token refresh cron
+
 on:
   schedule:
     - cron: '0 0 * * *'

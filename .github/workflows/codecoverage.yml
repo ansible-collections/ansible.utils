@@ -1,5 +1,5 @@
 ---
-name: Code Coverage
+name: Code coverage
 
 on:
   push:
