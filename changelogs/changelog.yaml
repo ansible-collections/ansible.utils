@@ -97,6 +97,18 @@ releases:
       - add_missing_test_requirements.yml
       - fix_tests.yaml
     release_date: "2021-04-27"
+  2.10.2:
+    changes:
+      minor_changes:
+        - validate - Add option `check_format` for the jsonschema engine to disable
+          JSON Schema format checking.
+        - validate - Add support for JSON Schema draft 2019-09 and 2020-12 as well as
+          automatically choosing the draft from the `$schema` field of the criteria.
+    fragments:
+      - netaddr_error.yml
+      - pre-commit.yaml
+      - validate_jsonschema_update.yaml
+    release_date: "2023-05-13"
   2.2.0:
     changes:
       minor_changes:
@@ -318,7 +330,7 @@ releases:
     fragments:
       - 3.11_fixes.yaml
       - add_ipfilter_doc_ut.yaml
-      - fix_pre_commit.yaml
       - fix_ansible_lint.yaml
+      - fix_pre_commit.yaml
       - to_xml_disable_xml_declaration.yaml
     release_date: "2023-01-30"
