@@ -1,22 +1,35 @@
-name: Test collection
+name: test
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
-on:  # yamllint disable-line rule:truthy
-  pull_request:
+on:
+  pull_request_target:
     branches: [main]
+    types:
+    - labeled
+    - opened
+    - reopened
+    - synchronize
   workflow_dispatch:
-  schedule:
-    - cron: '0 0 * * *'
 
 jobs:
+  safe-to-test:
+    if: >-
+      github.event.label.name == 'safe to test' ||
+      github.event.action != 'labeled'
+    uses: ansible-network/github_actions/.github/workflows/safe-to-test.yml@main
+    secrets:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   tox-ansible:
     uses: tox-dev/tox-ansible/.github/workflows/run.yml@main
+    needs:
+      - safe-to-test
 
-  all_green:
-    if: ${{ always() && (github.event_name != 'schedule') }}
+  tox-ansible-passed:
+    if: ${{ always() }}
     needs:
       - tox-ansible
     runs-on: ubuntu-latest
