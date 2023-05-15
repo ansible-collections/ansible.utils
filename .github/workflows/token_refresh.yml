@@ -1,5 +1,4 @@
-name: Token refresh cron
-
+name: Refresh the Automation Hub token
 on:
   schedule:
     - cron: '0 0 * * *'
@@ -7,13 +6,8 @@ on:
 
 jobs:
   refresh:
-    runs-on: ubuntu-latest
-    environment: ah
-    steps:
-      - name: Refresh to AH token
-        run: >-
-          curl https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
-          -d grant_type=refresh_token
-          -d client_id=cloud-services
-          -d refresh_token="${{ secrets.AH_TOKEN }}"
-          --fail --silent --show-error --output /dev/null
+    uses: ansible/devtools/.github/workflows/ah_token_refresh.yml@main
+    with:
+      environment: release
+    secrets:
+      ah_token: ${{ secrets.AH_TOKEN }}
