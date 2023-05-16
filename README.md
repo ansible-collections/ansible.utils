@@ -1,7 +1,7 @@
 
 
 # Ansible Utilities Collection
-[![Codecov](https://codecov.io/gh/ansible-collections/ansible.utils/branch/main/graph/badge.svg)](https://codecov.io/gh/ansible-collections/ansible.utils)
+[![Codecov](https://codecov.io/gh/ansible-collections/ansible.utils/branch/main/graph/badge.svg)](https://codecov.io/gh/ansible-collections/ansible.utils)[![Tests](https://github.com/ansible-collections/ansible.utils/actions/workflows/test.yml/badge.svg)](https://github.com/ansible-collections/ansible.utils/actions/workflows/test.yml)[![Cron](https://github.com/ansible-collections/ansible.utils/actions/workflows/token_refresh.yml/badge.svg)](https://github.com/ansible-collections/ansible.utils/actions/workflows/token_refresh.yml)[![Release](https://github.com/ansible-collections/ansible.utils/actions/workflows/release.yml/badge.svg)](https://github.com/ansible-collections/ansible.utils/actions/workflows/release.yml)
 
 The Ansible ``ansible.utils`` collection includes a variety of plugins that aid in the management, manipulation and visibility of data for the Ansible playbook developer.
 
