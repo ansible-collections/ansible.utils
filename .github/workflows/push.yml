@@ -3,7 +3,7 @@
 # draft release-notes.
 # based on great work from
 # https://github.com/T-Systems-MMS/ansible-collection-icinga-director
-name: Push workflow
+name: push
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
