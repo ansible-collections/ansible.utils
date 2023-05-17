@@ -3,6 +3,8 @@ ancestor:
 releases:
   2.10.3:
     changes: {}
+    fragments:
+      - fix_workflow_names.yml
     release_date: "2023-05-16"
   2.10.2:
     changes:
@@ -17,10 +19,8 @@ releases:
       - validate_jsonschema_update.yaml
     release_date: "2023-05-13"
   2.10.1:
-    changes: {}
     release_date: "2023-05-12"
   2.10.0:
-    changes: {}
     release_date: "2023-05-11"
   2.9.0:
     changes:
