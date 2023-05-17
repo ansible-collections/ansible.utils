@@ -16,6 +16,12 @@ releases:
       - pre-commit.yaml
       - validate_jsonschema_update.yaml
     release_date: "2023-05-13"
+  2.10.1:
+    changes: {}
+    release_date: "2023-05-12"
+  2.10.0:
+    changes: {}
+    release_date: "2023-05-11"
   2.9.0:
     changes:
       bugfixes:

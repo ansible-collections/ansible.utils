@@ -1,4 +1,4 @@
-name: Refresh the Automation Hub token
+name: refresh_automation_hub_token
 on:
   schedule:
     - cron: '0 0 * * *'

@@ -1,5 +1,5 @@
 ---
-name: Release the ansible collection
+name: release
 on:
   release:
     types: [published]
