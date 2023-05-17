@@ -1,4 +1,4 @@
-name: Test collection
+name: test_and_cron
 
 concurrency:
   group: ${{ github.head_ref || github.run_id }}
