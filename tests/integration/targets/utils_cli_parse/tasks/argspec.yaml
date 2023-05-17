@@ -1,5 +1,5 @@
 ---
-- name: "validate argspec {{ parser }}"
+- name: "Validate argspec {{ parser }}"
   ansible.utils.cli_parse:
     text: ""
     parser:
@@ -15,7 +15,7 @@
   vars:
     msg: "parameters are mutually exclusive: command|template_path found in parser"
 
-- name: "validate argspec {{ parser }}"
+- name: "Validate argspec {{ parser }}"
   ansible.utils.cli_parse:
     text: ""
     command: ls
@@ -31,7 +31,7 @@
   vars:
     msg: "parameters are mutually exclusive: command|text"
 
-- name: "validate argspec {{ parser }}"
+- name: "Validate argspec {{ parser }}"
   ansible.utils.cli_parse:
     parser:
       name: ansible.netcommon.json

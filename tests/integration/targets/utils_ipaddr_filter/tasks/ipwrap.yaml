@@ -1,5 +1,5 @@
 ---
-- name: set ipaddress list
+- name: Set ipaddress list
   ansible.builtin.set_fact:
     value:
       - 192.24.2.1
@@ -10,7 +10,7 @@
       - "42540766412265424405338506004571095040/64"
       - true
 
-- name: ipwrap filter
+- name: Ipwrap filter
   ansible.builtin.set_fact:
     result1: "{{ value|ansible.utils.ipwrap }}"
 
@@ -18,7 +18,7 @@
   ansible.builtin.assert:
     that: "{{ result1 == ipwrap_result1 }}"
 
-- name: ipwrap filter with single value
+- name: Ipwrap filter with single value
   ansible.builtin.set_fact:
     result4: "{{ 'fe80::100/10' | ansible.utils.ipwrap }}"
 

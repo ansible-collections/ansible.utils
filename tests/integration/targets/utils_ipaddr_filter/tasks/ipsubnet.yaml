@@ -1,5 +1,5 @@
 ---
-- name: convert address to subnet using ipsubnet
+- name: Convert address to subnet using ipsubnet
   ansible.builtin.set_fact:
     result1: "{{ address | ansible.utils.ipsubnet }}"
 

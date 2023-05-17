@@ -1,5 +1,5 @@
 ---
-- name: network_in_network filter test1
+- name: Network_in_network filter test1
   ansible.builtin.set_fact:
     result1: "{{ '192.168.0.0/24'|ansible.utils.network_in_network('192.168.0.1') }}"
 
@@ -7,7 +7,7 @@
   ansible.builtin.assert:
     that: "{{ result1 == true }}"
 
-- name: network_in_network filter test2
+- name: Network_in_network filter test2
   ansible.builtin.set_fact:
     result1: "{{ '192.168.0.0/24'|ansible.utils.network_in_network('10.0.0.1') }}"
 
@@ -15,7 +15,7 @@
   ansible.builtin.assert:
     that: "{{ result1 == False }}"
 
-- name: network_in_network filter test3
+- name: Network_in_network filter test3
   ansible.builtin.set_fact:
     result1: "{{ '192.168.0.0/16'|ansible.utils.network_in_network('192.168.0.0/24') }}"
 

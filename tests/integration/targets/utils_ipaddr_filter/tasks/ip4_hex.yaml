@@ -1,5 +1,5 @@
 ---
-- name: ip4_hex without  delimiter
+- name: Ip4_hex without  delimiter
   ansible.builtin.set_fact:
     result1: "{{ '192.168.1.5'|ansible.utils.ip4_hex }}"
 
@@ -7,7 +7,7 @@
   ansible.builtin.assert:
     that: "{{ result1 == 'c0a80105' }}"
 
-- name: ip4_hex with delimiter
+- name: Ip4_hex with delimiter
   ansible.builtin.set_fact:
     result1: "{{ '192.168.1.5'|ansible.utils.ip4_hex(':') }}"
 
