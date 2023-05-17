@@ -13,4 +13,4 @@ issues: https://github.com/ansible-collections/ansible.utils/issues
 tags: [linux, networking, security, cloud, utilities, data, validation, utils]
 # NOTE(pabelanger): We create an empty version key to keep ansible-galaxy
 # happy. We dynamically inject version info based on git information.
-version: 2.10.2
+version: 2.10.3
