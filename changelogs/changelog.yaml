@@ -2,8 +2,7 @@
 ancestor:
 releases:
   2.10.3:
-    changes:
-      release_summary: CI enhancements.
+    changes: {}
     fragments:
       - fix_workflow_names.yml
     release_date: "2023-05-17"
