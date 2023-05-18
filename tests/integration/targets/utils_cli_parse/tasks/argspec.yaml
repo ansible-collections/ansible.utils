@@ -45,7 +45,7 @@
   vars:
     msg: "one of the following is required: command, text"
 
-- name: "validate argspec {{ parser }}"
+- name: "Validate argspec {{ parser }}"
   ansible.utils.cli_parse:
     text: ""
     parser:

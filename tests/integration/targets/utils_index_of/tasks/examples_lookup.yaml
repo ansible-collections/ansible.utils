@@ -230,13 +230,13 @@
     sub_index: 10
     # retrieve the index in each nested list
     int_idx: |
-      {{ lookup('ansible.utils.index_of',
+      "{{ lookup('ansible.utils.index_of',
              data.interfaces.interface,
-                 'eq', int_name, 'name') }}
+                 'eq', int_name, 'name') }}"
     subint_idx: |
-      {{ lookup('ansible.utils.index_of',
+      "{{ lookup('ansible.utils.index_of',
              data.interfaces.interface[int_idx|int].subinterfaces.subinterface,
-                 'eq', sub_index, 'index') }}
+                 'eq', sub_index, 'index') }}"
 
 # TASK [Find the description of loopback111, subinterface index 10] ************
 # ok: [sw01] =>
