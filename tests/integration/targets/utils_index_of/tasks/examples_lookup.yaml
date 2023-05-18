@@ -223,14 +223,14 @@
     int_idx: |
       "{{ lookup('ansible.utils.index_of',
              data.interfaces.interface,
-                 'eq', int_name, 'name') }}"
+                 'eq', 'loopback1111', 'name') }}"
 
 - name: Set fact
   ansible.builtin.set_fact:
     subint_idx: |
       "{{ lookup('ansible.utils.index_of',
              data.interfaces.interface[int_idx|int].subinterfaces.subinterface,
-                 'eq', sub_index, 'index') }}"
+                 'eq', 10, 'index') }}"
 
 - name: Find the description of loopback111, subinterface index 10
   ansible.builtin.debug:
@@ -238,10 +238,6 @@
       {{ data.interfaces.interface[int_idx|int]
           .subinterfaces.subinterface[subint_idx|int]
             .config.description }}
-  vars:
-    # the values to search for
-    int_name: loopback1111
-    sub_index: 10
     # retrieve the index in each nested list
 
 # TASK [Find the description of loopback111, subinterface index 10] ************
