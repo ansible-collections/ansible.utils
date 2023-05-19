@@ -5,6 +5,9 @@ Ansible Utils Collection Release Notes
 .. contents:: Topics
 
 
+v2.10.4
+=======
+
 v2.10.3
 =======
 
