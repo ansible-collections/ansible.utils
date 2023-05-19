@@ -1,8 +1,10 @@
 ---
 ancestor:
 releases:
-  2.10.3:
+  2.10.4:
     changes: {}
+    release_date: "2023-05-19"
+  2.10.3:
     fragments:
       - fix_workflow_names.yml
     release_date: "2023-05-17"
