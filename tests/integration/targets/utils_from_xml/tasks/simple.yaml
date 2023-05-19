@@ -28,7 +28,7 @@
   ansible.builtin.set_fact:
     data: '<netconf-state xmlns="urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring">'
 
-- name: validate input xml
+- name: Validate input xml
   ansible.builtin.set_fact:
     _result: "{{ data|ansible.utils.from_xml() }}"
   ignore_errors: true

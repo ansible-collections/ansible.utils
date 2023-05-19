@@ -17,13 +17,13 @@
     - test: "{{ data|ansible.utils.to_xml() }}"
     - test: "{{ data|ansible.utils.to_xml('xmltodict') }}"
 
-- name: test for supported engine for to_xml filter
+- name: Test for supported engine for to_xml filter
   ansible.builtin.set_fact:
     data:
       "interface-configurations":
         "@xmlns": "http://cisco.com/ns/yang/Cisco-IOS-XR-ifmgr-cfg"
 
-- name: validate input xml
+- name: Validate input xml
   ansible.builtin.set_fact:
     _result: "{{ data|ansible.utils.to_xml('dicttoxml') }}"
   ignore_errors: true

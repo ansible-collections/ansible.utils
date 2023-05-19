@@ -45,13 +45,10 @@
 
 - name: Retrieve the value of each path from vars
   ansible.builtin.debug:
-    msg: "The value of path {{ path }} in vars is {{ value }}"
+    msg: "The value of path {{ path }} in vars is {{ lookup('ansible.utils.get_path', hostvars[inventory_hostname], path) }}"
   loop: "{{ paths.keys()|list }}"
   loop_control:
-    label: "{{ item }}"
-  vars:
-    path: "{{ item }}"
-    value: "{{ lookup('ansible.utils.get_path', hostvars[inventory_hostname], item) }}"
+    loop_var: path
 # TASK [Get the paths for the object] *******************************
 # ok: [nxos101] => changed=false
 #   ansible_facts:

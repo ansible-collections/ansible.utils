@@ -1,5 +1,5 @@
 ---
-- name: convert address to subnet using ipsubnet
+- name: Convert address to subnet using ipsubnet
   ansible.builtin.set_fact:
     result1: "{{ address | ansible.utils.ipsubnet }}"
 
@@ -7,7 +7,7 @@
   ansible.builtin.assert:
     that: "{{ result1 == '192.168.144.5/32' }}"
 
-- name: check if given value is subnet
+- name: Check if given value is subnet
   ansible.builtin.set_fact:
     result2: "{{ subnet | ansible.utils.ipsubnet }}"
 

@@ -36,7 +36,7 @@
   tags:
     - xml
 
-- name: debug os
+- name: Debug os
   ansible.builtin.debug:
     msg: "{{ os }}"
 

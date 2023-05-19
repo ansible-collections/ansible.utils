@@ -1,5 +1,5 @@
 ---
-- name: macaddr filter test1
+- name: Macaddr filter test1
   ansible.builtin.set_fact:
     result1: "{{ '1a:2b:3c:4d:5e:6f'|ansible.utils.macaddr }}"
 
@@ -7,7 +7,7 @@
   ansible.builtin.assert:
     that: "{{ result1 == '1a:2b:3c:4d:5e:6f' }}"
 
-- name: macaddr filter test2
+- name: Macaddr filter test2
   ansible.builtin.set_fact:
     result1: "{{ '1a:2b:3c:4d:5e:6f'|ansible.utils.macaddr('cisco') }}"
 
