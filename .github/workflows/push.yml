@@ -28,8 +28,9 @@ env:
   ANSIBLE_COLLECTIONS_PATHS: ./
 
 jobs:
-  uses: ansible/devtools/.github/workflows/push_network.yml@main
-  with:
-    repo: ansible-collections/ansible.utils
-  secrets:
-    BOT_PAT: ${{ secrets.BOT_PAT }}
+  update_release_draft:
+    uses: ansible/devtools/.github/workflows/push_network.yml@main
+    with:
+      repo: ansible-collections/ansible.utils
+    secrets:
+      BOT_PAT: ${{ secrets.BOT_PAT }}
