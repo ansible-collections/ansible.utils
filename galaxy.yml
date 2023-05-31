@@ -1,11 +1,9 @@
----
 authors:
   - Ansible Community
 license_file: LICENSE
 name: utils
 namespace: ansible
-description:
-  Ansible Collection with utilities to ease the management, manipulation,
+description: Ansible Collection with utilities to ease the management, manipulation,
   and validation of data within a playbook
 readme: README.md
 repository: https://github.com/ansible-collections/ansible.utils
