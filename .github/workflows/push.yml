@@ -29,80 +29,8 @@ env:
 
 jobs:
   update_release_draft:
-    runs-on: ubuntu-22.04
-    environment: push
-    steps:
-      - uses: actions/checkout@v3.5.0
-        with:
-          repository: ansible-collections/ansible.utils
-          fetch-depth: 0
-          token: ${{ secrets.BOT_PAT }}
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.10"
-
-      - name: Install antsibull-changelog, antsichaut
-        run: >
-          python -m pip install
-          antsibull-changelog
-          git+https://github.com/ansible-community/antsichaut.git
-          pre-commit
-          --disable-pip-version-check
-
-      - name: Run release drafter
-        id: release_drafter
-        uses: release-drafter/release-drafter@v5
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Remove the v prefix from the release drafter version
-        run: |
-          VERSION=${{ steps.release_drafter.outputs.tag_name }}
-          echo "VERSION=${VERSION#v}" >> $GITHUB_ENV
-
-      - name: Generate new version in changelog.yaml
-        run: antsibull-changelog release -v --version "${{ env.VERSION }}"
-
-      - name: 'Get Previous tag'
-        id: previoustag
-        uses: "WyriHaximus/github-action-get-previous-tag@master"
-        env:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-
-      - name: Generate changelog.yaml
-        run: antsichaut
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SINCE_VERSION: "${{ steps.previoustag.outputs.tag }}"
-
-      - name: Update Changelog.rst
-        run: antsibull-changelog generate -v
-
-      - name: Cleanup as needed using prettier
-        run: pre-commit run prettier --all-files
-        continue-on-error: true
-
-      - name: Update the glaxay.yml version
-        run: |
-          sed -i -e 's/version:.*/version: ${{ env.VERSION }}/' galaxy.yml
-
-      - name: Determine if a PR is necessary
-        run: git diff --no-ext-diff --quiet --exit-code
-        continue-on-error: true
-        id: pr_check
-
-      - name: Create PR for changelog
-        run: |
-          git config user.name "Ansible Bot"
-          git config user.email devtools@ansible.com
-          git checkout -t -b ${{ env.BRANCH_NAME }}
-          git add .
-          git commit -m "Changelog updated"
-          git push origin ${{ env.BRANCH_NAME }}
-          gh pr create --title "Changelog updated" --body "Changelog updated" --base main
-        if: steps.pr_check.outcome == 'failure'
-        env:
-          GH_TOKEN: ${{ secrets.BOT_PAT }}
-          BRANCH_NAME: chore-${{ github.workflow }}-${{ github.run_number }}
+    uses: ansible/devtools/.github/workflows/push_network.yml@main
+    with:
+      repo: ansible-collections/ansible.utils
+    secrets:
+      BOT_PAT: ${{ secrets.BOT_PAT }}
