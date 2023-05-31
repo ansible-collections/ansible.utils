@@ -1,16 +1,20 @@
----
 authors:
   - Ansible Community
 license_file: LICENSE
 name: utils
 namespace: ansible
-description:
-  Ansible Collection with utilities to ease the management, manipulation,
+description: Ansible Collection with utilities to ease the management, manipulation,
   and validation of data within a playbook
 readme: README.md
 repository: https://github.com/ansible-collections/ansible.utils
 issues: https://github.com/ansible-collections/ansible.utils/issues
-tags: [linux, networking, security, cloud, utilities, data, validation, utils]
-# NOTE(pabelanger): We create an empty version key to keep ansible-galaxy
-# happy. We dynamically inject version info based on git information.
+tags:
+  - linux
+  - networking
+  - security
+  - cloud
+  - utilities
+  - data
+  - validation
+  - utils
 version: 2.10.4
