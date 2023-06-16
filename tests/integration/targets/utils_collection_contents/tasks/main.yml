@@ -1,0 +1,60 @@
+- name: Retrieve the contents of a plugin within a collection
+  ansible.builtin.set_fact:
+    contents: "{{ lookup('ansible.utils.collection_contents', path=path) }}"
+  vars:
+    path: ansible.utils.plugins.lookup.collection_contents.py
+
+- name: Ensure the file contents were retreived
+  ansible.builtin.assert:
+    that:
+      - "'name: collection_contents' in contents"
+
+- name: Retrieve the contents of a yaml file within a collection
+  ansible.builtin.set_fact:
+    contents: "{{ lookup('ansible.utils.collection_contents', path=path) | from_yaml }}"
+  vars:
+    path: ansible.utils.meta.runtime.yml
+
+- name: Ensure the file contents were retreived
+  ansible.builtin.assert:
+    that:
+      - "'requires_ansible' in contents"
+
+- name: Retrieve the contents of a test file within a collection
+  ansible.builtin.set_fact:
+    contents: "{{ lookup('ansible.utils.collection_contents', path=path) | from_yaml }}"
+  vars:
+    path: ansible.utils.tests.integration.targets.utils_collection_contents.vars.main.yaml
+
+- name: Ensure the file contents were retreived
+  ansible.builtin.assert:
+    that:
+      - contents.test_variable == 42
+
+- name: Generate a file not found
+  ansible.builtin.set_fact:
+    contents: "{{ lookup('ansible.utils.collection_contents', path=path) }}"
+  vars:
+    path: ansible.utils.plugins.not_a_plugin.py
+  ignore_errors: true
+  register: result
+
+- name: Ensure the file contents were not retreived
+  ansible.builtin.assert:
+    that:
+      - result is failed
+      - "'File not found' in result.msg"
+
+- name: Generate a collection not found
+  ansible.builtin.set_fact:
+    contents: "{{ lookup('ansible.utils.collection_contents', path=path) }}"
+  vars:
+    path: not_ansible.utils.plugins.lookup.collection_contents.py
+  ignore_errors: true
+  register: result
+
+- name: Ensure the file contents were not retreived
+  ansible.builtin.assert:
+    that:
+      - result is failed
+      - "'Collection not found' in result.msg"
