@@ -123,7 +123,7 @@ class LookupModule(LookupBase):
         filename = ".".join(parts[1:])
         try:
             if sys.version_info >= (3, 11):
-                with files(full_package).joinpath(filename) as fhand:
+                with files(full_package).joinpath(filename).open("r", encoding="utf-8") as fhand:
                     content = fhand.read()
             else:
                 content = read_text(full_package, filename)  # pylint:disable=used-before-assignment
