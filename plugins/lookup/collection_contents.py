@@ -72,14 +72,13 @@ RETURN = """
 """
 import sys
 
+from ansible import __version__ as ansible_version_str
 from ansible.errors import AnsibleLookupError
 from ansible.plugins.lookup import LookupBase
 
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     AnsibleArgSpecValidator,
 )
-
-from ansible import __version__ as ansible_version_str
 
 
 # Up to python 3.11 and ansible 2.14 importlib.resources fails
@@ -88,6 +87,7 @@ from ansible import __version__ as ansible_version_str
 # which is 3.9 like functionality
 if sys.version_info >= (3, 9):
     from importlib.resources import files
+
 from importlib_resources import read_text
 
 
