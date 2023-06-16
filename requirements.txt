@@ -3,4 +3,4 @@ textfsm
 ttp
 xmltodict
 netaddr
-importlib_resources; python_version < "3.7"
+importlib_resources<5.0.0

@@ -79,13 +79,16 @@ from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_valid
     AnsibleArgSpecValidator,
 )
 
+from ansible import __version__ as ansible_version_str
 
-if sys.version_info >= (3, 11):
+
+# Up to python 3.11 and ansible 2.14 importlib.resources fails
+# this includes later version of importlib_resources
+# so, the version of importlib_resources is pinned to < 5.0
+# which is 3.9 like functionality
+if sys.version_info >= (3, 9):
     from importlib.resources import files
-elif sys.version_info >= (3, 7):
-    from importlib.resources import read_text
-elif sys.version_info >= (3, 6):
-    from importlib_resources import read_text
+from importlib_resources import read_text
 
 
 class LookupModule(LookupBase):
@@ -121,14 +124,16 @@ class LookupModule(LookupBase):
 
         full_package = f"ansible_collections.{parts[0]}"
         filename = ".".join(parts[1:])
+        major, minor, _ = ansible_version_str.split(".", 2)
+        ansible_version = (int(major), int(minor))
         try:
-            if sys.version_info >= (3, 11):
+            if sys.version_info >= (3, 11) and ansible_version >= (2, 15):
                 with files(full_package).joinpath(filename).open("r", encoding="utf-8") as fhand:
                     content = fhand.read()
             else:
                 content = read_text(full_package, filename)  # pylint:disable=used-before-assignment
         except FileNotFoundError as exc:
-            raise AnsibleLookupError(f"File not found: {path}") from exc
+            raise AnsibleLookupError(f"File not found: {path} {exc}") from exc
         except ModuleNotFoundError as exc:
             raise AnsibleLookupError(f"Collection not found: {parts[0]}") from exc
 
