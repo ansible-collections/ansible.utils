@@ -70,7 +70,7 @@ RETURN = """
     description:
       - The contents of the file.
 """
-
+import sys
 from ansible.errors import AnsibleLookupError
 from ansible.plugins.lookup import LookupBase
 
@@ -78,17 +78,12 @@ from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_valid
     AnsibleArgSpecValidator,
 )
 
-
-try:
+if sys.version_info >= (3, 11):
     from importlib.resources import files
-
-    HAS_ILR_FILES = True
-except ImportError:
-    HAS_ILR_FILES = False
-    try:
-        from importlib.resources import read_text
-    except ImportError:
-        from importlib_resources import read_text
+elif sys.version_info >= (3, 7):
+    from importlib.resources import read_text
+elif sys.version_info >= (3, 6):
+    from importlib_resources import read_text
 
 
 class LookupModule(LookupBase):
@@ -124,10 +119,9 @@ class LookupModule(LookupBase):
 
         full_package = f"ansible_collections.{parts[0]}"
         filename = ".".join(parts[1:])
-
         try:
-            if HAS_ILR_FILES:
-                with files(full_package).joinpath(filename).open("r", encoding="utf-8") as fhand:
+            if sys.version_info >= (3, 11):
+                with files(full_package).joinpath(filename) as fhand:
                     content = fhand.read()
             else:
                 content = read_text(full_package, filename)  # pylint:disable=used-before-assignment
