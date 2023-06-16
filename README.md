@@ -56,6 +56,7 @@ Name | Description
 ### Lookup plugins
 Name | Description
 --- | ---
+[ansible.utils.collection_contents](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.collection_contents_lookup.rst)|Retrieve the contents of a file within an ansible collection
 [ansible.utils.get_path](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.get_path_lookup.rst)|Retrieve the value in a variable using a path
 [ansible.utils.index_of](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.index_of_lookup.rst)|Find the indices of items in a list matching some criteria
 [ansible.utils.to_paths](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.to_paths_lookup.rst)|Flatten a complex object into a dictionary of paths and values

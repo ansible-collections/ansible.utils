@@ -4,4 +4,3 @@ ttp
 xmltodict
 netaddr
 importlib_resources; python_version < "3.7"
-
