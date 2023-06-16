@@ -71,12 +71,14 @@ RETURN = """
       - The contents of the file.
 """
 import sys
+
 from ansible.errors import AnsibleLookupError
 from ansible.plugins.lookup import LookupBase
 
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     AnsibleArgSpecValidator,
 )
+
 
 if sys.version_info >= (3, 11):
     from importlib.resources import files
