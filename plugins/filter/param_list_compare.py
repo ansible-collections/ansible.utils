@@ -176,7 +176,10 @@ def param_list_compare(*args, **kwargs):
         )
 
     valid, argspec_result, updated_params = check_argspec(
-        DOCUMENTATION, "param_list_compare filter", schema_conditionals=ARGSPEC_CONDITIONALS, **data
+        DOCUMENTATION,
+        "param_list_compare filter",
+        schema_conditionals=ARGSPEC_CONDITIONALS,
+        **data,
     )
     if not valid:
         raise AnsibleFilterError(
