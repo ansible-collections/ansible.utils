@@ -60,14 +60,27 @@ DOCUMENTATION = """
 
 EXAMPLES = r"""
 #### examples
-- name: Get first X bits of Ipv6 address
+- name: Get first 64 bits of Ipv6 address
   debug:
     msg: "{{ '1234:4321:abcd:dcba::17' | ansible.utils.ipcut(64) }}"
 
-- name: Get last X bits of Ipv6 address
+- name: Get last 80 bits of Ipv6 address
   debug:
     msg: "{{ '1234:4321:abcd:dcba::17' | ansible.utils.ipcut(-80) }}"
+# PLAY [IPCUT filter plugin examples] ************************************************************************************************
 
+# TASK [Get first X bits of Ipv6 address] ********************************************************************************************
+# ok: [localhost] => {
+#     "msg": "1234:4321:abcd:dcba"
+# }
+
+# TASK [Get last X bits of Ipv6 address] *********************************************************************************************
+# ok: [localhost] => {
+#     "msg": "dcba:0:0:0:17"
+# }
+
+# PLAY RECAP *************************************************************************************************************************
+# localhost                  : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 """
 
 RETURN = """

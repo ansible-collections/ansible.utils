@@ -14,8 +14,6 @@ __metaclass__ = type
 
 import unittest
 
-from ansible.errors import AnsibleFilterError
-
 from ansible_collections.ansible.utils.plugins.filter.ipcut import _ipcut
 
 
@@ -36,5 +34,3 @@ class TestIpCut(unittest.TestCase):
         args = ["", "1234:4321:abcd:dcba::17", 64]
         result = _ipcut(*args)
         self.assertEqual(result, "1234:4321:abcd:dcba")
-
-   
