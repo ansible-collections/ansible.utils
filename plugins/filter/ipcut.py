@@ -28,6 +28,7 @@ except ImportError:
 
 try:
     import netaddr
+
     HAS_NETADDR = True
 except ImportError:
     # in this case, we'll make the filters return error messages (see bottom)
@@ -59,7 +60,13 @@ DOCUMENTATION = """
 
 EXAMPLES = r"""
 #### examples
+- name: Get first X bits of Ipv6 address
+  debug:
+    msg: "{{ '1234:4321:abcd:dcba::17' | ansible.utils.ipcut(64) }}"
 
+- name: Get last X bits of Ipv6 address
+  debug:
+    msg: "{{ '1234:4321:abcd:dcba::17' | ansible.utils.ipcut(-80) }}"
 
 """
 
@@ -99,15 +106,15 @@ def ipcut(value, amount):
         )
         raise AnsibleFilterError(msg)
     else:
-       if amount<0:
+        if amount < 0:
             ipsub = ipv6address[amount:]
-       else:
+        else:
             ipsub = ipv6address[0:amount]
-    
-    ipsubfinal = [(ipsub[i:i+16]) for i in range(0, len(ipsub), 16)]
+
+    ipsubfinal = [(ipsub[i : i + 16]) for i in range(0, len(ipsub), 16)]
     for i in ipsubfinal:
         x = hex(int(i, 2))
-        ipv6_oct.append(x.replace('0x', ''))
+        ipv6_oct.append(x.replace("0x", ""))
     return str(":".join(ipv6_oct))
 
 
