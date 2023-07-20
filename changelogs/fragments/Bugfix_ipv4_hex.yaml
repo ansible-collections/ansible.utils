@@ -1,0 +1,3 @@
+---
+bugfixes:
+  - Validate input for ipv4_hex(https://github.com/ansible-collections/ansible.utils/issues/281)
