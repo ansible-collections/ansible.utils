@@ -15,6 +15,7 @@ from ansible.errors import AnsibleFilterError
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     AnsibleArgSpecValidator,
 )
+from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddr_utils import _need_netaddr
 from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddress_utils import (
     _need_ipaddress,
     ip_address,
