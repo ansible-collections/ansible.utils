@@ -15,7 +15,6 @@ from ansible.errors import AnsibleFilterError
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     AnsibleArgSpecValidator,
 )
-from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddr_utils import _need_netaddr
 from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddress_utils import (
     _need_ipaddress,
     ip_address,
@@ -35,7 +34,7 @@ DOCUMENTATION = """
     name: ipv6form
     author: Ashwini Mhatre (@amhatre)
     version_added: "2.11.0"
-    short_description: This filter is designed to convert ipv6 address in different formats. For example expanded, compressed etc.
+    short_description: This filter is designed to convert ipv6 address in different formats. For example expand, compressetc.
     description:
         - This filter is designed to convert ipv6 addresses in different formats.
     options:
@@ -46,7 +45,9 @@ DOCUMENTATION = """
             required: True
         amount:
             type: str
-            description: Different formats example. compressed, expanded, x509
+            choice:
+                ['compress', 'expand', 'x509']
+            description: Different formats example. compress, expand, x509
 """
 
 EXAMPLES = r"""
@@ -78,11 +79,13 @@ def _ipv6form(*args, **kwargs):
 @_need_ipaddress
 def ipv6form(value, format):
     try:
-        if "/" in value:
-            ip = netaddr.IPNetwork(value).ip
-        else:
-            ip = netaddr.IPAddress(value)
-    except (netaddr.AddrFormatError, ValueError):
+        if format == "expand":
+            return ip_address(value).exploded 
+        elif format == "compress":
+            return ip_address(value).compressed
+        elif format == "x509":
+            return ip_address(value).exploded
+    except (ValueError):
         msg = "You must pass a valid IP address; {0} is invalid".format(value)
         raise AnsibleFilterError(msg)
 
