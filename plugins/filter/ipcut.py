@@ -124,7 +124,12 @@ def ipcut(value, amount):
         else:
             ipsub = ipv6address[0:amount]
 
-    ipsubfinal = [(ipsub[i : i + 16]) for i in range(0, len(ipsub), 16)]
+    ipsubfinal = []
+
+    for i in range(0, len(ipsub), 16):
+        oct_sub = i + 16
+        ipsubfinal.append(ipsub[i:oct_sub])
+
     for i in ipsubfinal:
         x = hex(int(i, 2))
         ipv6_oct.append(x.replace("0x", ""))
