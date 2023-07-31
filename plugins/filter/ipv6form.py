@@ -30,6 +30,13 @@ except ImportError:
     from jinja2.filters import environmentfilter as pass_environment
 
 
+try:
+    import ipaddress
+
+    HAS_IPADDRESS = True
+except ImportError:
+    HAS_IPADDRESS = False
+
 DOCUMENTATION = """
     name: ipv6form
     author: Ashwini Mhatre (@amhatre)
@@ -90,13 +97,11 @@ def ipv6form(value, format):
         msg = "You must pass a valid IP address; {0} is invalid".format(value)
         raise AnsibleFilterError(msg)
 
-    if not isinstance(amount, int):
-        msg = ("You must pass an integer for arithmetic; " "{0} is not a valid integer").format(
-            amount,
+    if not isinstance(format, str):
+        msg = ("You must pass valid format; " "{0} is not a valid format").format(
+            format,
         )
         raise AnsibleFilterError(msg)
-
-    return str(ip + amount)
 
 
 class FilterModule(object):
@@ -109,7 +114,7 @@ class FilterModule(object):
 
     def filters(self):
         """ipmath filter"""
-        if HAS_NETADDR:
+        if HAS_IPADDRESS:
             return self.filter_map
         else:
-            return dict((f, partial(_need_netaddr, f)) for f in self.filter_map)
+            return dict((f, partial(_need_ipaddress, f)) for f in self.filter_map)
