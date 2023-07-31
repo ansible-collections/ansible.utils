@@ -129,7 +129,7 @@ def next_nth_usable(value, offset):
     except Exception:
         return False
 
-    if type(offset) != int:
+    if type(offset) is not int:
         raise AnsibleFilterError("Must pass in an integer")
     if v.size > 1:
         first_usable, last_usable = _first_last(v)
