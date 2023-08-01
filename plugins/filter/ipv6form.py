@@ -15,6 +15,10 @@ from ansible.errors import AnsibleFilterError
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     AnsibleArgSpecValidator,
 )
+from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddr_utils import (
+    _need_netaddr,
+    ipaddr,
+)
 from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddress_utils import (
     _need_ipaddress,
     ip_address,
@@ -37,6 +41,21 @@ try:
 except ImportError:
     HAS_IPADDRESS = False
 
+try:
+    import netaddr
+
+    HAS_NETADDR = True
+except ImportError:
+    # in this case, we'll make the filters return error messages (see bottom)
+    HAS_NETADDR = False
+else:
+
+    class mac_linux(netaddr.mac_unix):
+        pass
+
+    mac_linux.word_fmt = "%.2x"
+
+
 DOCUMENTATION = """
     name: ipv6form
     author: Ashwini Mhatre (@amhatre)
@@ -50,7 +69,7 @@ DOCUMENTATION = """
             - individual ipv6 address input for ipv6_format plugin.
             type: str
             required: True
-        amount:
+        format:
             type: str
             choice:
                 ['compress', 'expand', 'x509']
@@ -59,6 +78,42 @@ DOCUMENTATION = """
 
 EXAMPLES = r"""
 #### examples
+# Ipv6form filter plugin with different format.
+- name: Expand given Ipv6 address
+  debug:
+      msg: "{{ '1234:4321:abcd:dcba::17' | ansible.utils.ipv6form('expand') }}"
+
+- name: Compress  given Ipv6 address
+  debug:
+      msg: "{{ '1234:4321:abcd:dcba:0000:0000:0000:0017' | ansible.utils.ipv6form('compress') }}"
+
+- name: Covert given Ipv6 address in x509
+  debug:
+      msg: "{{ '1234:4321:abcd:dcba::17' | ansible.utils.ipv6form('x509') }}"
+
+# TASK [Expand given Ipv6 address] *************************************************************************************************************************************************************************************************************
+# task path: /home/amhatre/dev/playbook/test_ipform.yaml:7
+# Loading collection ansible.utils from /home/amhatre/dev/collections/ansible_collections/ansible/utils
+# ok: [localhost] => {
+#     "msg": "1234:4321:abcd:dcba:0000:0000:0000:0017"
+# }
+
+# TASK [Compress  given Ipv6 address] **********************************************************************************************************************************************************************************************************
+# task path: /home/amhatre/dev/playbook/test_ipform.yaml:11
+# Loading collection ansible.utils from /home/amhatre/dev/collections/ansible_collections/ansible/utils
+# ok: [localhost] => {
+#     "msg": "1234:4321:abcd:dcba::17"
+# }
+
+# TASK [Covert given Ipv6 address in x509] *****************************************************************************************************************************************************************************************************
+# task path: /home/amhatre/dev/playbook/test_ipform.yaml:15
+# Loading collection ansible.utils from /home/amhatre/dev/collections/ansible_collections/ansible/utils
+# ok: [localhost] => {
+#     "msg": "1234:4321:abcd:dcba:0:0:0:17"
+# }
+
+# PLAY RECAP ***********************************************************************************************************************************************************************************************************************************
+# localhost                  : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 
 
 """
@@ -92,7 +147,7 @@ def ipv6form(value, format):
         elif format == "compress":
             return ip_address(value).compressed
         elif format == "x509":
-            return ip_address(value).exploded
+            return _handle_x509(value)
     except ValueError:
         msg = "You must pass a valid IP address; {0} is invalid".format(value)
         raise AnsibleFilterError(msg)
@@ -102,6 +157,19 @@ def ipv6form(value, format):
             format,
         )
         raise AnsibleFilterError(msg)
+
+
+def _handle_x509(value):
+    import netaddr
+
+    """Convert ipv6 address into x509 format"""
+    ip = netaddr.IPAddress(value)
+    ipv6_oct = []
+    ipv6address = ip.bits().split(":")
+    for i in ipv6address:
+        x = hex(int(i, 2))
+        ipv6_oct.append(x.replace("0x", ""))
+    return str(":".join(ipv6_oct))
 
 
 class FilterModule(object):
@@ -114,7 +182,7 @@ class FilterModule(object):
 
     def filters(self):
         """ipmath filter"""
-        if HAS_IPADDRESS:
+        if HAS_IPADDRESS and HAS_NETADDR:
             return self.filter_map
         else:
             return dict((f, partial(_need_ipaddress, f)) for f in self.filter_map)
