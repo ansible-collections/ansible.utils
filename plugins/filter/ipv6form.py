@@ -91,28 +91,28 @@ EXAMPLES = r"""
   debug:
       msg: "{{ '1234:4321:abcd:dcba::17' | ansible.utils.ipv6form('x509') }}"
 
-# TASK [Expand given Ipv6 address] *************************************************************************************************************************************************************************************************************
+# TASK [Expand given Ipv6 address] ************************************************************************************
 # task path: /home/amhatre/dev/playbook/test_ipform.yaml:7
 # Loading collection ansible.utils from /home/amhatre/dev/collections/ansible_collections/ansible/utils
 # ok: [localhost] => {
 #     "msg": "1234:4321:abcd:dcba:0000:0000:0000:0017"
 # }
 
-# TASK [Compress  given Ipv6 address] **********************************************************************************************************************************************************************************************************
+# TASK [Compress  given Ipv6 address] *********************************************************************************
 # task path: /home/amhatre/dev/playbook/test_ipform.yaml:11
 # Loading collection ansible.utils from /home/amhatre/dev/collections/ansible_collections/ansible/utils
 # ok: [localhost] => {
 #     "msg": "1234:4321:abcd:dcba::17"
 # }
 
-# TASK [Covert given Ipv6 address in x509] *****************************************************************************************************************************************************************************************************
+# TASK [Covert given Ipv6 address in x509] ****************************************************************************
 # task path: /home/amhatre/dev/playbook/test_ipform.yaml:15
 # Loading collection ansible.utils from /home/amhatre/dev/collections/ansible_collections/ansible/utils
 # ok: [localhost] => {
 #     "msg": "1234:4321:abcd:dcba:0:0:0:17"
 # }
 
-# PLAY RECAP ***********************************************************************************************************************************************************************************************************************************
+# PLAY RECAP **********************************************************************************************************
 # localhost                  : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 
 
