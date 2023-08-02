@@ -15,10 +15,7 @@ from ansible.errors import AnsibleFilterError
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     AnsibleArgSpecValidator,
 )
-from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddr_utils import (
-    _need_netaddr,
-    ipaddr,
-)
+from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddr_utils import _need_netaddr
 from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddress_utils import (
     _need_ipaddress,
     ip_address,
@@ -33,13 +30,6 @@ try:
 except ImportError:
     from jinja2.filters import environmentfilter as pass_environment
 
-
-try:
-    import ipaddress
-
-    HAS_IPADDRESS = True
-except ImportError:
-    HAS_IPADDRESS = False
 
 try:
     import netaddr
@@ -160,8 +150,6 @@ def ipv6form(value, format):
 
 
 def _handle_x509(value):
-    import netaddr
-
     """Convert ipv6 address into x509 format"""
     ip = netaddr.IPAddress(value)
     ipv6_oct = []
@@ -181,8 +169,8 @@ class FilterModule(object):
     }
 
     def filters(self):
-        """ipmath filter"""
-        if HAS_IPADDRESS and HAS_NETADDR:
+        """ipv6form filter"""
+        if HAS_NETADDR:
             return self.filter_map
         else:
-            return dict((f, partial(_need_ipaddress, f)) for f in self.filter_map)
+            return dict((f, partial(_need_netaddr, f)) for f in self.filter_map)
