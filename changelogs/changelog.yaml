@@ -1,8 +1,13 @@
 ---
 ancestor:
 releases:
-  2.10.4:
+  2.11.0:
     changes: {}
+    fragments:
+      - Bugfix_ipv4_hex.yaml
+      - ipcut.yaml
+    release_date: "2023-08-07"
+  2.10.4:
     release_date: "2023-05-19"
   2.10.3:
     fragments:
