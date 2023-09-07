@@ -1,3 +1,0 @@
----
-minor_changes:
-  - Add ipv6form filter plugin.(https://github.com/ansible-collections/ansible.utils/issues/230)
