@@ -8,17 +8,6 @@ Ansible Utils Collection Release Notes
 v2.11.0
 =======
 
-Minor Changes
--------------
-
-- Add ipcut filter plugin.(https://github.com/ansible-collections/ansible.utils/issues/251)
-- Add ipv6form filter plugin.(https://github.com/ansible-collections/ansible.utils/issues/230)
-
-Bugfixes
---------
-
-- Validate input for ipv4_hex(https://github.com/ansible-collections/ansible.utils/issues/281)
-
 New Plugins
 -----------
 
