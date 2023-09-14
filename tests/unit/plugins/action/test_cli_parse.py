@@ -81,7 +81,10 @@ class TestCli_Parse(unittest.TestCase):
             },
         }
         valid, result, updated_params = check_argspec(
-            DOCUMENTATION, "cli_parse module", schema_conditionals={}, **kwargs
+            DOCUMENTATION,
+            "cli_parse module",
+            schema_conditionals={},
+            **kwargs,
         )
         self.assertEqual(valid, True)
 
@@ -94,7 +97,10 @@ class TestCli_Parse(unittest.TestCase):
             },
         }
         valid, result, updated_params = check_argspec(
-            DOCUMENTATION, "cli_parse module", schema_conditionals=ARGSPEC_CONDITIONALS, **kwargs
+            DOCUMENTATION,
+            "cli_parse module",
+            schema_conditionals=ARGSPEC_CONDITIONALS,
+            **kwargs,
         )
 
         self.assertIn("one of the following is required: command, text", result["errors"])
@@ -103,7 +109,10 @@ class TestCli_Parse(unittest.TestCase):
         """Confirm failed argspec no parser name"""
         kwargs = {"text": "anything", "parser": {"command": "show version"}}
         valid, result, updated_params = check_argspec(
-            DOCUMENTATION, "cli_parse module", schema_conditionals=ARGSPEC_CONDITIONALS, **kwargs
+            DOCUMENTATION,
+            "cli_parse module",
+            schema_conditionals=ARGSPEC_CONDITIONALS,
+            **kwargs,
         )
         self.assertIn(
             "missing required arguments: name found in parser",

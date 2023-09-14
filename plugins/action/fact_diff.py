@@ -75,7 +75,7 @@ class ActionModule(ActionBase):
         cref.update(directory=directory)
         parserlib = (
             "ansible_collections.{corg}.{cname}.plugins.sub_plugins.{directory}.{plugin}".format(
-                **cref
+                **cref,
             )
         )
         try:

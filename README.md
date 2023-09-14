@@ -31,10 +31,12 @@ Name | Description
 [ansible.utils.index_of](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.index_of_filter.rst)|Find the indices of items in a list matching some criteria
 [ansible.utils.ip4_hex](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ip4_hex_filter.rst)|This filter is designed to convert IPv4 address to Hexadecimal notation with optional delimiter.
 [ansible.utils.ipaddr](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipaddr_filter.rst)|This filter is designed to return the input value if a query is True, else False.
+[ansible.utils.ipcut](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipcut_filter.rst)|This filter is designed to get 1st or last few bits of IP address.
 [ansible.utils.ipmath](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipmath_filter.rst)|This filter is designed to do simple IP math/arithmetic.
 [ansible.utils.ipsubnet](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipsubnet_filter.rst)|This filter can be used to manipulate network subnets in several ways.
 [ansible.utils.ipv4](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipv4_filter.rst)|To filter only Ipv4 addresses Ipv4 filter is used.
 [ansible.utils.ipv6](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipv6_filter.rst)|To filter only Ipv6 addresses Ipv6 filter is used.
+[ansible.utils.ipv6form](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipv6form_filter.rst)|This filter is designed to convert ipv6 address in different formats. For example expand, compressetc.
 [ansible.utils.ipwrap](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipwrap_filter.rst)|This filter is designed to Wrap IPv6 addresses in [ ] brackets.
 [ansible.utils.keep_keys](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.keep_keys_filter.rst)|Keep specific keys from a data recursively.
 [ansible.utils.macaddr](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.macaddr_filter.rst)|macaddr / MAC address filters
