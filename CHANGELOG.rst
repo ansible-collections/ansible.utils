@@ -5,6 +5,29 @@ Ansible Utils Collection Release Notes
 .. contents:: Topics
 
 
+v2.11.0
+=======
+
+Minor Changes
+-------------
+
+- Add ipcut filter plugin.(https://github.com/ansible-collections/ansible.utils/issues/251)
+- Add ipv6form filter plugin.(https://github.com/ansible-collections/ansible.utils/issues/230)
+
+Bugfixes
+--------
+
+- Validate input for ipv4_hex(https://github.com/ansible-collections/ansible.utils/issues/281)
+
+New Plugins
+-----------
+
+Filter
+~~~~~~
+
+- ipcut - This filter is designed to get 1st or last few bits of IP address.
+- ipv6form - This filter is designed to convert ipv6 address in different formats. For example expand, compressetc.
+
 v2.10.4
 =======
 
