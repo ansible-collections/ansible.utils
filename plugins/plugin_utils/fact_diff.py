@@ -12,9 +12,6 @@ from __future__ import absolute_import, division, print_function
 
 import re
 
-from importlib import import_module
-
-from ansible.module_utils._text import to_native
 from ansible.plugins.callback import CallbackBase
 
 
@@ -30,15 +27,18 @@ def _raise_error(msg):
     :type msg: str
     :raises: AnsibleError
     """
-    error = "Error when using plugin 'from_xml': {msg}".format(msg=msg)
+    error = "Error when using filter plugin 'fact_diff': {msg}".format(msg=msg)
     raise AnsibleFilterError(error)
 
 
 def fact_diff(before, after, plugin):
-    """Convert data which is in xml to json"
-    :param data: The data passed in (data|from_xml(...))
-    :type data: xml
-    :param engine: Conversion library default=xml_to_dict
+    """Compare two facts or variables and get a diff.
+    :param before: The first fact to be used in the comparison.
+    :type before: raw
+    :param after: The second fact to be used in the comparison.
+    :type after: raw
+    :param plugin: The name of the plugin in collection format
+    :type plugin: string
     """
     result = run_diff(before, after, plugin)
     return result
@@ -71,12 +71,13 @@ def _xform(before, after, skip_lines):
         before = "\n".join(map(str, before)) + "\n"
     if isinstance(after, list):
         after = "\n".join(map(str, after)) + "\n"
+    return before, after, skip_lines
 
 
 def run_diff(before, after, plugin):
     skip_lines = plugin["vars"].get("skip_lines")
     _check_valid_regexes(skip_lines=skip_lines)
-    _xform(before, after, skip_lines=skip_lines)
+    before, after, skip_lines = _xform(before, after, skip_lines=skip_lines)
     diff = CallbackBase()._get_diff({"before": before, "after": after})
     ansi_escape = re.compile(r"\x1B[@-_][0-?]*[ -/]*[@-~]")
     diff_text = ansi_escape.sub("", diff)
