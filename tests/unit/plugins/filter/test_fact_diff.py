@@ -89,11 +89,20 @@ class TestUpdate_Fact(unittest.TestCase):
 
     def test_invalid_regex(self):
         """Check with invalid regex"""
-        self.maxDiff = None
         before = after = True
         with self.assertRaises(AnsibleFilterError) as error:
             result = _fact_diff("", before, after, {"vars": {"skip_lines": "+"}})
         self.assertIn(
             "The regex '+', is not valid.",
+            str(error.exception),
+        )
+
+    def test_argspec(self):
+        """Validate argspec"""
+        before = True
+        with self.assertRaises(AnsibleFilterError) as error:
+            result = _fact_diff("", before)
+        self.assertIn(
+            "missing required arguments: after",
             str(error.exception),
         )
