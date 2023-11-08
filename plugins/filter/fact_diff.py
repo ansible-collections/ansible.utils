@@ -55,18 +55,114 @@ DOCUMENTATION = """
                             - Each entry in each list will be cast to a string for the comparison
                             type: list
                             elements: str
-
-
     notes:
 """
 
 EXAMPLES = """
+- name: Set fact
+  ansible.builtin.set_fact:
+    before:
+      a:
+        b:
+          c:
+            d:
+              - 0
+              - 1
+    after:
+      a:
+        b:
+          c:
+            d:
+              - 2
+              - 3
+
+- name: Show the difference in json format
+  ansible.builtin.set_fact:
+    result: "{{before | ansible.utils.fact_diff(after)}}"
+
+# TASK [Show the difference in json format] **********************************************************************************************
+# ok: [localhost] => {
+#     "ansible_facts": {
+#         "result": [
+#             "--- before",
+#             "+++ after",
+#             "@@ -3,8 +3,8 @@",
+#             "         \"b\": {",
+#             "             \"c\": {",
+#             "                 \"d\": [",
+#             "-                    0,",
+#             "-                    1",
+#             "+                    2,",
+#             "+                    3",
+#             "                 ]",
+#             "             }",
+#             "         }",
+#             ""
+#         ]
+#     },
+#     "changed": false
+# }
+
+- name: Set fact
+  ansible.builtin.set_fact:
+    before: "{{ before|ansible.utils.to_paths }}"
+    after: "{{ after|ansible.utils.to_paths }}"
+
+- name: Show the difference in path format
+  ansible.builtin.set_fact:
+    result: "{{before | ansible.utils.fact_diff(after)}}"
+
+# TASK [Show the difference in path format] **********************************************************************************************
+# ok: [localhost] => {
+#     "ansible_facts": {
+#         "result": [
+#             "--- before",
+#             "+++ after",
+#             "@@ -1,4 +1,4 @@",
+#             " {",
+#             "-    \"a.b.c.d[0]\": 0,",
+#             "-    \"a.b.c.d[1]\": 1",
+#             "+    \"a.b.c.d[0]\": 2,",
+#             "+    \"a.b.c.d[1]\": 3",
+#             " }",
+#             ""
+#         ]
+#     },
+#     "changed": false
+# }
+
+- name: Set fact
+  ansible.builtin.set_fact:
+    before: "{{ before|to_nice_yaml }}"
+    after: "{{ after|to_nice_yaml }}"
+
+- name: Show the difference in yaml format
+  ansible.builtin.set_fact:
+    result: "{{before | ansible.utils.fact_diff(after)}}"
+
+# TASK [Show the difference in yaml format] **********************************************************************************************
+# ok: [localhost] => {
+#     "ansible_facts": {
+#         "result": [
+#             "--- before",
+#             "+++ after",
+#             "@@ -1,2 +1,2 @@",
+#             "-a.b.c.d[0]: 0",
+#             "-a.b.c.d[1]: 1",
+#             "+a.b.c.d[0]: 2",
+#             "+a.b.c.d[1]: 3",
+#             ""
+#         ]
+#     },
+#     "changed": false
+# }
+
 """
 RETURN = """
-  data:
-    type: str
+  result:
+    type: list
     description:
-      - Returns values valid for a particular query.
+      - Returns diff between before and after facts.
 """
 from ansible.errors import AnsibleFilterError
 
