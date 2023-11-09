@@ -17,7 +17,7 @@
 
 - name: Ip4_hex validate input
   ansible.builtin.set_fact:
-    result1: "{{ ansible.utils.ip4_hex('555.444.333.999') }}"
+    result1: "{{ '555.444.333.999' | ansible.utils.ip4_hex }}"
   register: output
   ignore_errors: true
 
