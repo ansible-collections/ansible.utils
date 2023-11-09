@@ -156,7 +156,6 @@ EXAMPLES = """
 #     },
 #     "changed": false
 # }
-
 """
 RETURN = """
   result:

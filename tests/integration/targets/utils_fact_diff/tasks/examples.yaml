@@ -40,8 +40,8 @@
 
 - name: Show the difference in path format
   ansible.utils.fact_diff:
-    before: "{{ before|ansible.utils.to_paths }}"
-    after: "{{ after|ansible.utils.to_paths }}"
+    before: "{{ before | ansible.utils.to_paths }}"
+    after: "{{ after | ansible.utils.to_paths }}"
 
 # TASK [ansible.utils.fact_diff] **************************************
 # --- before
@@ -58,8 +58,8 @@
 
 - name: Show the difference in yaml format
   ansible.utils.fact_diff:
-    before: "{{ before|to_nice_yaml }}"
-    after: "{{ after|to_nice_yaml }}"
+    before: "{{ before | to_nice_yaml }}"
+    after: "{{ after | to_nice_yaml }}"
 # TASK [ansible.utils.fact_diff] **************************************
 # --- before
 # +++ after

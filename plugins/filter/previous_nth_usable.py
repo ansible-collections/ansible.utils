@@ -89,7 +89,6 @@ EXAMPLES = r"""
 # ok: [localhost] => {
 #     "msg": ""
 # }
-
 """
 
 RETURN = """

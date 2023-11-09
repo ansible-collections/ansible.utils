@@ -130,7 +130,7 @@ Examples
           - 192.168.32.0/24
           - fe80::100/10
           - 42540766412265424405338506004571095040/64
-          - True
+          - true
     - debug:
         msg: "{{ value|ansible.utils.ipaddr }}"
 
@@ -150,7 +150,7 @@ Examples
 
     - name: check if IP addresses or network ranges are accessible on a private Internet and return it.
       debug:
-         msg: "{{ value|ansible.utils.ipaddr('private') }}"
+        msg: "{{ value|ansible.utils.ipaddr('private') }}"
 
     - name: check which values are values are specifically network ranges and return it.
       debug:

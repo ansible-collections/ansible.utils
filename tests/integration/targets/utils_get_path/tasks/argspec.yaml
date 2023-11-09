@@ -10,7 +10,7 @@
 
 - name: Check argspec validation with filter
   ansible.builtin.set_fact:
-    _result: "{{ a|ansible.utils.get_path() }}"
+    _result: "{{ a | ansible.utils.get_path() }}"
   ignore_errors: true
   register: result
 

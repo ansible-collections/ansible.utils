@@ -1,7 +1,7 @@
 ---
 - name: Ip4_hex without  delimiter
   ansible.builtin.set_fact:
-    result1: "{{ '192.168.1.5'|ansible.utils.ip4_hex }}"
+    result1: "{{ '192.168.1.5' | ansible.utils.ip4_hex }}"
 
 - name: Assert result for ip4_hex.
   ansible.builtin.assert:
@@ -9,7 +9,7 @@
 
 - name: Ip4_hex with delimiter
   ansible.builtin.set_fact:
-    result1: "{{ '192.168.1.5'|ansible.utils.ip4_hex(':') }}"
+    result1: "{{ '192.168.1.5' | ansible.utils.ip4_hex(':') }}"
 
 - name: Assert result for ip4_hex.
   ansible.builtin.assert:
@@ -17,7 +17,7 @@
 
 - name: Ip4_hex validate input
   ansible.builtin.set_fact:
-    result1: "{{ '555.444.333.999' | ansible.utils.ip4_hex }}"
+    result1: "{{ ansible.utils.ip4_hex('555.444.333.999') }}"
   register: output
   ignore_errors: true
 

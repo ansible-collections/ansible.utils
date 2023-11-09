@@ -8,7 +8,7 @@
 
 - name: Cidr_merge with merge action
   ansible.builtin.set_fact:
-    result1: "{{ value|ansible.utils.cidr_merge }}"
+    result1: "{{ value | ansible.utils.cidr_merge }}"
 
 - name: Assert result for cidr_merge
   ansible.builtin.assert:
@@ -24,7 +24,7 @@
 
 - name: Cidr_merge with span action
   ansible.builtin.set_fact:
-    result2: "{{ value|ansible.utils.cidr_merge('span') }}"
+    result2: "{{ value | ansible.utils.cidr_merge('span') }}"
 
 - name: Assert result for cidr_merge(span)
   ansible.builtin.assert:

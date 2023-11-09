@@ -85,8 +85,6 @@ EXAMPLES = r"""
 # ok: [localhost] => {
 #     "msg": "10.255.255.255"
 # }
-
-
 """
 
 RETURN = """

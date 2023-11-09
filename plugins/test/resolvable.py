@@ -107,7 +107,6 @@ EXAMPLES = r"""
 #     "changed": false,
 #     "msg": "All assertions passed"
 # }
-
 """
 
 RETURN = """

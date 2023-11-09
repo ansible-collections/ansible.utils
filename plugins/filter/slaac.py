@@ -75,8 +75,6 @@ EXAMPLES = r"""
 # ok: [localhost] => {
 #     "msg": "fdcf:1894:23b5:d38c:c031:b3ff:fe83:bf2b"
 # }
-
-
 """
 
 RETURN = """

@@ -95,7 +95,7 @@ Examples
           - 192.168.32.0/24
           - fe80::100/10
           - 42540766412265424405338506004571095040/64
-          - True
+          - true
     - debug:
         msg: "{{ value|ansible.utils.ipwrap }}"
 

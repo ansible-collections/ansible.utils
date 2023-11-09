@@ -1,7 +1,7 @@
 ---
 - name: Check argspec validation with filter (missing arg)
   ansible.builtin.set_fact:
-    _result1: "{{ '' | ansible.utils.usable_range }}"
+    _result1: "{{ ansible.utils.usable_range('') }}"
   ignore_errors: true
   register: result1
 
@@ -13,7 +13,7 @@
 
 - name: Check argspec validation with filter (random string arg)
   ansible.builtin.set_fact:
-    _result2: "{{ 'helloworld' | ansible.utils.usable_range }}"
+    _result2: "{{ ansible.utils.usable_range('helloworld') }}"
   ignore_errors: true
   register: result2
 
@@ -25,7 +25,7 @@
 
 - name: Check argspec validation with filter (invalid arg for expansion)
   ansible.builtin.set_fact:
-    _result3: "{{ '192.168.1.25/24' | ansible.utils.usable_range }}"
+    _result3: "{{ ansible.utils.usable_range('192.168.1.25/24') }}"
   ignore_errors: true
   register: result3
 
@@ -37,7 +37,7 @@
 
 - name: Check argspec validation with filter (invalid format for arg)
   ansible.builtin.set_fact:
-    _result4: "{{ '192.0.2.0/23/24' | ansible.utils.usable_range }}"
+    _result4: "{{ ansible.utils.usable_range('192.0.2.0/23/24') }}"
   ignore_errors: true
   register: result4
 
@@ -49,7 +49,7 @@
 
 - name: Check argspec validation with filter (invalid format for arg)
   ansible.builtin.set_fact:
-    _result5: "{{ '::/20/30' | ansible.utils.usable_range }}"
+    _result5: "{{ ansible.utils.usable_range('::/20/30') }}"
   ignore_errors: true
   register: result5
 
@@ -61,7 +61,7 @@
 
 - name: Check argspec validation with filter (invalid netmask)
   ansible.builtin.set_fact:
-    _result6: "{{ '10.0.0.0/322' | ansible.utils.usable_range }}"
+    _result6: "{{ ansible.utils.usable_range('10.0.0.0/322') }}"
   ignore_errors: true
   register: result6
 
@@ -73,7 +73,7 @@
 
 - name: Check argspec validation with filter (invalid netmask)
   ansible.builtin.set_fact:
-    _result7: "{{ '2001:db8:abcd:0012::0/129' | ansible.utils.usable_range }}"
+    _result7: "{{ ansible.utils.usable_range('2001:db8:abcd:0012::0/129') }}"
   ignore_errors: true
   register: result7
 

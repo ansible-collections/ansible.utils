@@ -31,7 +31,7 @@
 
 - name: Debug
   ansible.builtin.debug:
-    msg: "{{ data|ansible.utils.remove_keys(target=['notes', 'comment']) }}"
+    msg: "{{ data | ansible.utils.remove_keys(target=['notes', 'comment']) }}"
   register: result
 
 - name: Assert result dicts

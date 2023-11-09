@@ -14,7 +14,7 @@
 
 - name: Check argspec validation with filter (not a list)
   ansible.builtin.set_fact:
-    _result: "{{ complex|ansible.utils.index_of('eq', 2) }}"
+    _result: "{{ complex | ansible.utils.index_of('eq', 2) }}"
   ignore_errors: true
   register: result
 
@@ -26,7 +26,7 @@
 
 - name: Check argspec validation with filter (missing params)
   ansible.builtin.set_fact:
-    _result: "{{ complex.a.b.c.d|ansible.utils.index_of() }}"
+    _result: "{{ complex.a.b.c.d | ansible.utils.index_of() }}"
   ignore_errors: true
   register: result
 

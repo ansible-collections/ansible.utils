@@ -82,15 +82,15 @@ Examples
 .. code-block:: yaml
 
     - set_fact:
-        base: ['1','2','3','4','5']
+        base: ['1', '2', '3', '4', ' 5']
 
     - set_fact:
-        target: ['!all','2','4']
+        target: ['!all', '2', '4']
 
     - name: Get final list of parameters
       register: result
       set_fact:
-        final_params: "{{ base|param_list_compare(target) }}"
+        final_params: "{{ base | param_list_compare(target) }}"
 
     # TASK [Target list] **********************************************************
     # ok: [localhost] => {
@@ -104,7 +104,7 @@ Examples
     # }
 
     - set_fact:
-        base: ['1','2','3','4','5']
+        base: ['1', '2', '3', '4', '5']
 
     - name: Get final list of parameters
       register: result
@@ -130,27 +130,27 @@ Examples
     # Network Specific Example
     # -----------
     - set_fact:
-            ios_resources:
-              - "acl_interfaces"
-              - "acls"
-              - "bgp_address_family"
-              - "bgp_global"
-              - "interfaces"
-              - "l2_interfaces"
-              - "l3_interfaces"
-              - "lacp"
-              - "lacp_interfaces"
-              - "lag_interfaces"
-              - "lldp_global"
-              - "lldp_interfaces"
-              - "logging_global"
-              - "ospf_interfaces"
-              - "ospfv2"
-              - "ospfv3"
-              - "prefix_lists"
-              - "route_maps"
-              - "static_routes"
-              - "vlans"
+        ios_resources:
+          - "acl_interfaces"
+          - "acls"
+          - "bgp_address_family"
+          - "bgp_global"
+          - "interfaces"
+          - "l2_interfaces"
+          - "l3_interfaces"
+          - "lacp"
+          - "lacp_interfaces"
+          - "lag_interfaces"
+          - "lldp_global"
+          - "lldp_interfaces"
+          - "logging_global"
+          - "ospf_interfaces"
+          - "ospfv2"
+          - "ospfv3"
+          - "prefix_lists"
+          - "route_maps"
+          - "static_routes"
+          - "vlans"
 
     - set_fact:
         target_resources:

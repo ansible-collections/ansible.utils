@@ -67,15 +67,15 @@ EXAMPLES = r"""
         b:
           c:
             d:
-            - 0
-            - 1
+              - 0
+              - 1
     after:
       a:
         b:
           c:
             d:
-            - 2
-            - 3
+              - 2
+              - 3
 
 - name: Show the difference in json format
   ansible.utils.fact_diff:
@@ -101,8 +101,8 @@ EXAMPLES = r"""
 
 - name: Show the difference in path format
   ansible.utils.fact_diff:
-    before: "{{ before|ansible.utils.to_paths }}"
-    after: "{{ after|ansible.utils.to_paths }}"
+    before: "{{ before | ansible.utils.to_paths }}"
+    after: "{{ after | ansible.utils.to_paths }}"
 
 # TASK [ansible.utils.fact_diff] **************************************
 # --- before
@@ -119,8 +119,8 @@ EXAMPLES = r"""
 
 - name: Show the difference in yaml format
   ansible.utils.fact_diff:
-    before: "{{ before|to_nice_yaml }}"
-    after: "{{ after|to_nice_yaml }}"
+    before: "{{ before | to_nice_yaml }}"
+    after: "{{ after | to_nice_yaml }}"
 
 # TASK [ansible.utils.fact_diff] **************************************
 # --- before
@@ -152,10 +152,10 @@ EXAMPLES = r"""
 - name: Update the description of eth1/100
   ansible.utils.update_fact:
     updates:
-    - path: "pre['response']['phys-items']['PhysIf-list'][{{ index }}]['descr']"
-      value: "Configured by ansible {{ 100 | random }}"
+      - path: "pre['response']['phys-items']['PhysIf-list'][{{ index }}]['descr']"
+        value: "Configured by ansible {{ 100 | random }}"
   vars:
-    index: "{{ pre['response']['phys-items']['PhysIf-list']|ansible.utils.index_of('eq', 'eth1/100', 'id') }}"
+    index: "{{ pre['response']['phys-items']['PhysIf-list'] | ansible.utils.index_of('eq', 'eth1/100', 'id') }}"
   register: updated
 
 - name: Apply the configuration
@@ -172,8 +172,8 @@ EXAMPLES = r"""
 
 - name: Show the difference
   ansible.utils.fact_diff:
-    before: "{{ pre.response|ansible.utils.to_paths }}"
-    after: "{{ post.response|ansible.utils.to_paths }}"
+    before: "{{ pre.response | ansible.utils.to_paths }}"
+    after: "{{ post.response | ansible.utils.to_paths }}"
 
 # TASK [ansible.utils.fact_diff] *********************************************
 # --- before
@@ -189,7 +189,6 @@ EXAMPLES = r"""
 #      "phys-items['PhysIf-list'][37].id": "eth1/100",
 
 # changed: [nxos101]
-
 """
 
 

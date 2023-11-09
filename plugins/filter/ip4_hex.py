@@ -83,8 +83,6 @@ EXAMPLES = r"""
 # ok: [localhost] => {
 #     "msg": "c0:a8:01:05"
 # }
-
-
 """
 
 RETURN = """
