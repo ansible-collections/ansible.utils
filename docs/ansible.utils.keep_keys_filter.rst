@@ -108,46 +108,44 @@ Examples
 .. code-block:: yaml
 
     # example.yaml
-    interfaces:
-      - name: eth0
-        enabled: true
-        duplex: auto
-        speed: auto
-        note:
-          - Connected green wire
-      - name: eth1
-        description: Configured by Ansible - Interface 1
-        mtu: 1500
-        speed: auto
-        duplex: auto
-        enabled: true
-        note:
-          - Connected blue wire
-          - Configured by Paul
-        vifs:
-          - vlan_id: 100
-            description: Eth1 - VIF 100
-            mtu: 400
-            enabled: true
-            comment: Needs reconfiguration
-          - vlan_id: 101
-            description: Eth1 - VIF 101
-            enabled: true
-      - name: eth2
-        description: Configured by Ansible - Interface 2 (ADMIN DOWN)
-        mtu: 600
-        enabled: false
+    # interfaces:
+    #   - name: eth0
+    #     enabled: true
+    #     duplex: auto
+    #     speed: auto
+    #     note:
+    #       - Connected green wire
+    #   - name: eth1
+    #     description: Configured by Ansible - Interface 1
+    #     mtu: 1500
+    #     speed: auto
+    #     duplex: auto
+    #     enabled: true
+    #     note:
+    #       - Connected blue wire
+    #       - Configured by Paul
+    #     vifs:
+    #       - vlan_id: 100
+    #         description: Eth1 - VIF 100
+    #         mtu: 400
+    #         enabled: true
+    #         comment: Needs reconfiguration
+    #       - vlan_id: 101
+    #         description: Eth1 - VIF 101
+    #         enabled: true
+    #   - name: eth2
+    #     description: Configured by Ansible - Interface 2 (ADMIN DOWN)
+    #     mtu: 600
+    #     enabled: false
 
     # Playbook
-    vars_files:
-      - "example.yaml"
-    tasks:
-      - name: keep selective keys from dict/list of dict data
-        ansible.builtin.set_fact:
-          data: "{{ interfaces }}"
-
-      - debug:
-          msg: "{{ data|ansible.utils.keep_keys(target=['description', 'name', 'mtu', 'duplex', 'enabled', 'vifs', 'vlan_id']) }}"
+    - name: keep selective keys from dict/list of dict data
+      ansible.builtin.set_fact:
+        data: '{{ interfaces }}'
+    - debug:
+        msg: >-
+          {{ data|ansible.utils.keep_keys(target=['description', 'name', 'mtu',
+          'duplex', 'enabled', 'vifs', 'vlan_id']) }}
 
     # Output
     # TASK [keep selective keys from python dict/list of dict] ****************************************************************************************

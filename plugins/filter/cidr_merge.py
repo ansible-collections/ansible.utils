@@ -67,12 +67,12 @@ EXAMPLES = r"""
 #### examples
 - name: cidr_merge with merge action
   ansible.builtin.set_fact:
-      value:
-        - 192.168.0.0/17
-        - 192.168.128.0/17
-        - 192.168.128.1
+    value:
+      - 192.168.0.0/17
+      - 192.168.128.0/17
+      - 192.168.128.1
 - debug:
-    msg:  "{{ value|ansible.utils.cidr_merge }}"
+    msg: '{{ value|ansible.utils.cidr_merge }}'
 
 # TASK [cidr_merge with merge action] **********************************************************************************
 # ok: [localhost] => {
@@ -94,13 +94,13 @@ EXAMPLES = r"""
 
 - name: Cidr_merge with span.
   ansible.builtin.set_fact:
-        value:
-          - 192.168.1.1
-          - 192.168.1.2
-          - 192.168.1.3
-          - 192.168.1.4
+    value:
+      - 192.168.1.1
+      - 192.168.1.2
+      - 192.168.1.3
+      - 192.168.1.4
 - debug:
-    msg: "{{ value|ansible.utils.cidr_merge('span') }}"
+    msg: '{{ value|ansible.utils.cidr_merge(''span'') }}'
 
 # TASK [Cidr_merge with span.] ********************************************************************
 # ok: [localhost] => {

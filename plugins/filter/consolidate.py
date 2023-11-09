@@ -62,38 +62,35 @@ EXAMPLES = r"""
 # Consolidated filter plugin example
 # ----------------------------------
 
-##play.yml
-tasks:
-  - name: Define some test data
-    ansible.builtin.set_fact:
-      values:
-        - name: a
-          value: 1
-        - name: b
-          value: 2
-        - name: c
-          value: 3
-      colors:
-        - name: a
-          color: red
-        - name: b
-          color: green
-        - name: c
-          color: blue
-
-  - name: Define some test data
-    ansible.builtin.set_fact:
-      base_data:
-        - data: "{{ values }}"
-          match_key: name
-          name: values
-        - data: "{{ colors }}"
-          match_key: name
-          name: colors
-
-  - name: Consolidate the data source using the name key
-    ansible.builtin.set_fact:
-      consolidated: "{{ data_sources|ansible.utils.consolidate }}"
+# play.yml
+- name: Define some test data
+  ansible.builtin.set_fact:
+    values:
+      - name: a
+        value: 1
+      - name: b
+        value: 2
+      - name: c
+        value: 3
+    colors:
+      - name: a
+        color: red
+      - name: b
+        color: green
+      - name: c
+        color: blue
+- name: Define some test data
+  ansible.builtin.set_fact:
+    base_data:
+      - data: '{{ values }}'
+        match_key: name
+        name: values
+      - data: '{{ colors }}'
+        match_key: name
+        name: colors
+- name: Consolidate the data source using the name key
+  ansible.builtin.set_fact:
+    consolidated: '{{ data_sources|ansible.utils.consolidate }}'
     vars:
       sizes:
         - name: a
@@ -103,12 +100,13 @@ tasks:
         - name: c
           size: large
       additional_data_source:
-        - data: "{{ sizes }}"
+        - data: '{{ sizes }}'
           match_key: name
           name: sizes
-      data_sources: "{{ base_data + additional_data_source }}"
+      data_sources: '{{ base_data + additional_data_source }}'
 
-##Output
+
+# Output
 
 # ok: [localhost] => {
 #     "ansible_facts": {
@@ -160,24 +158,25 @@ tasks:
 #     "changed": false
 # }
 
-name: Consolidate the data source using different keys
-ansible.builtin.set_fact:
-  consolidated: "{{ data_sources|ansible.utils.consolidate }}"
-vars:
-  sizes:
-    - title: a
-      size: small
-    - title: b
-      size: medium
-    - title: c
-      size: large
-  additional_data_source:
-    - data: "{{ sizes }}"
-      match_key: title
-      name: sizes
-  data_sources: "{{ base_data + additional_data_source }}"
+- name: Consolidate the data source using different keys
+  ansible.builtin.set_fact: null
+  consolidated: '{{ data_sources|ansible.utils.consolidate }}'
+  vars:
+    sizes:
+      - title: a
+        size: small
+      - title: b
+        size: medium
+      - title: c
+        size: large
+    additional_data_source:
+      - data: '{{ sizes }}'
+        match_key: title
+        name: sizes
+    data_sources: '{{ base_data + additional_data_source }}'
 
-##Output
+
+# Output
 
 # ok: [localhost] => {
 #     "ansible_facts": {
@@ -229,23 +228,22 @@ vars:
 #     "changed": false
 # }
 
-name: Consolidate the data source using the name key (fail_missing_match_key)
-ansible.builtin.set_fact:
-  consolidated: "{{ data_sources|ansible.utils.consolidate(fail_missing_match_key=True) }}"
-ignore_errors: true
-vars:
+- name: Consolidate the data source using the name key (fail_missing_match_key)
+  ansible.builtin.set_fact: null
+  consolidated: '{{ data_sources|ansible.utils.consolidate(fail_missing_match_key=True) }}'
+  ignore_errors: true
   vars:
-  sizes:
-    - size: small
-    - size: medium
-    - size: large
-  additional_data_source:
-    - data: "{{ sizes }}"
-      match_key: name
-      name: sizes
-  data_sources: "{{ base_data + additional_data_source }}"
+    sizes:
+      - size: small
+      - size: medium
+      - size: large
+    additional_data_source:
+      - data: '{{ sizes }}'
+        match_key: name
+        name: sizes
+    data_sources: '{{ base_data + additional_data_source }}'
 
-##Output
+# Output
 
 # fatal: [localhost]: FAILED! => {
 #     "msg": "Error when using plugin 'consolidate': 'fail_missing_match_key'
@@ -254,153 +252,151 @@ vars:
 #                            missing match key 'name' in data source 3 in list entry 3"
 # }
 
-name: Consolidate the data source using the name key (fail_missing_match_value)
-ansible.builtin.set_fact:
-  consolidated: "{{ data_sources|ansible.utils.consolidate(fail_missing_match_value=True) }}"
-ignore_errors: true
-vars:
-  sizes:
-    - name: a
-      size: small
-    - name: b
-      size: medium
-  additional_data_source:
-    - data: "{{ sizes }}"
-      match_key: name
-      name: sizes
-  data_sources: "{{ base_data + additional_data_source }}"
+- name: Consolidate the data source using the name key (fail_missing_match_value)
+  ansible.builtin.set_fact:
+    consolidated: "{{ data_sources|ansible.utils.consolidate(fail_missing_match_value=True) }}"
+  ignore_errors: true
+  vars:
+    sizes:
+      - name: a
+        size: small
+      - name: b
+        size: medium
+    additional_data_source:
+      - data: "{{ sizes }}"
+        match_key: name
+        name: sizes
+    data_sources: "{{ base_data + additional_data_source }}"
 
 # fatal: [localhost]: FAILED! => {
 #     "msg": "Error when using plugin 'consolidate': 'fail_missing_match_value'
 #                   reported missing match value c in data source 3"
 # }
 
-name: Consolidate the data source using the name key (fail_duplicate)
-ansible.builtin.set_fact:
-  consolidated: "{{ data_sources|ansible.utils.consolidate(fail_duplicate=True) }}"
-ignore_errors: true
-vars:
-  sizes:
-    - name: a
-      size: small
-    - name: a
-      size: small
-  additional_data_source:
-    - data: "{{ sizes }}"
-      match_key: name
-      name: sizes
-  data_sources: "{{ base_data + additional_data_source }}"
+- name: Consolidate the data source using the name key (fail_duplicate)
+  ansible.builtin.set_fact:
+    consolidated: "{{ data_sources|ansible.utils.consolidate(fail_duplicate=True) }}"
+  ignore_errors: true
+  vars:
+    sizes:
+      - name: a
+        size: small
+      - name: a
+        size: small
+    additional_data_source:
+      - data: "{{ sizes }}"
+        match_key: name
+        name: sizes
+    data_sources: "{{ base_data + additional_data_source }}"
 
 # fatal: [localhost]: FAILED! => {
 #     "msg": "Error when using plugin 'consolidate': 'fail_duplicate'
 #                   reported duplicate values in data source 3"
 # }
 
-##facts.yml
+# facts.yml
 
-interfaces:
-  - name: GigabitEthernet0/0
-    enabled: true
-    duplex: auto
-    speed: auto
-    note:
-      - Connected green wire
-  - name: GigabitEthernet0/1
-    description: Configured by Ansible - Interface 1
-    mtu: 1500
-    speed: auto
-    duplex: auto
-    enabled: true
-    note:
-      - Connected blue wire
-      - Configured by Paul
-    vifs:
-      - vlan_id: 100
-        description: Eth1 - VIF 100
-        mtu: 400
-        enabled: true
-        comment: Needs reconfiguration
-      - vlan_id: 101
-        description: Eth1 - VIF 101
-        enabled: true
-  - name: GigabitEthernet0/2
-    description: Configured by Ansible - Interface 2 (ADMIN DOWN)
-    mtu: 600
-    enabled: false
-l2_interfaces:
-  - name: GigabitEthernet0/0
-  - mode: access
-    name: GigabitEthernet0/1
-    trunk:
-      allowed_vlans:
-        - "11"
-        - "12"
-        - "59"
-        - "67"
-        - "75"
-        - "77"
-        - "81"
-        - "100"
-        - 400-408
-        - 411-413
-        - "415"
-        - "418"
-        - "982"
-        - "986"
-        - "988"
-        - "993"
-  - mode: trunk
-    name: GigabitEthernet0/2
-    trunk:
-      allowed_vlans:
-        - "11"
-        - "12"
-        - "59"
-        - "67"
-        - "75"
-        - "77"
-        - "81"
-        - "100"
-        - 400-408
-        - 411-413
-        - "415"
-        - "418"
-        - "982"
-        - "986"
-        - "988"
-        - "993"
-      encapsulation: dot1q
-l3_interfaces:
-  - ipv4:
-      - address: 192.168.0.2/24
-    name: GigabitEthernet0/0
-  - name: GigabitEthernet0/1
-  - name: GigabitEthernet0/2
-  - name: Loopback888
-  - name: Loopback999
+# interfaces:
+#   - name: GigabitEthernet0/0
+#     enabled: true
+#     duplex: auto
+#     speed: auto
+#     note:
+#       - Connected green wire
+#   - name: GigabitEthernet0/1
+#     description: Configured by Ansible - Interface 1
+#     mtu: 1500
+#     speed: auto
+#     duplex: auto
+#     enabled: true
+#     note:
+#       - Connected blue wire
+#       - Configured by Paul
+#     vifs:
+#       - vlan_id: 100
+#         description: Eth1 - VIF 100
+#         mtu: 400
+#         enabled: true
+#         comment: Needs reconfiguration
+#       - vlan_id: 101
+#         description: Eth1 - VIF 101
+#         enabled: true
+#   - name: GigabitEthernet0/2
+#     description: Configured by Ansible - Interface 2 (ADMIN DOWN)
+#     mtu: 600
+#     enabled: false
+# l2_interfaces:
+#   - name: GigabitEthernet0/0
+#   - mode: access
+#     name: GigabitEthernet0/1
+#     trunk:
+#       allowed_vlans:
+#         - "11"
+#         - "12"
+#         - "59"
+#         - "67"
+#         - "75"
+#         - "77"
+#         - "81"
+#         - "100"
+#         - 400-408
+#         - 411-413
+#         - "415"
+#         - "418"
+#         - "982"
+#         - "986"
+#         - "988"
+#         - "993"
+#   - mode: trunk
+#     name: GigabitEthernet0/2
+#     trunk:
+#       allowed_vlans:
+#         - "11"
+#         - "12"
+#         - "59"
+#         - "67"
+#         - "75"
+#         - "77"
+#         - "81"
+#         - "100"
+#         - 400-408
+#         - 411-413
+#         - "415"
+#         - "418"
+#         - "982"
+#         - "986"
+#         - "988"
+#         - "993"
+#       encapsulation: dot1q
+# l3_interfaces:
+#   - ipv4:
+#       - address: 192.168.0.2/24
+#     name: GigabitEthernet0/0
+#   - name: GigabitEthernet0/1
+#   - name: GigabitEthernet0/2
+#   - name: Loopback888
+#   - name: Loopback999
 
-##Playbook
-vars_files:
-  - "facts.yml"
-tasks:
-  - name: Build the facts collection
-    set_fact:
-      data_sources:
-        - data: "{{ interfaces }}"
-          match_key: name
-          name: interfaces
-        - data: "{{ l2_interfaces }}"
-          match_key: name
-          name: l2_interfaces
-        - data: "{{ l3_interfaces }}"
-          match_key: name
-          name: l3_interfaces
+# Playbook
+- name: Build the facts collection
+  set_fact:
+    data_sources:
+      - data: '{{ interfaces }}'
+        match_key: name
+        name: interfaces
+      - data: '{{ l2_interfaces }}'
+        match_key: name
+        name: l2_interfaces
+      - data: '{{ l3_interfaces }}'
+        match_key: name
+        name: l3_interfaces
+- name: Combine all the facts based on match_keys
+  set_fact:
+    combined: >-
+      {{ data_sources|ansible.utils.consolidate(fail_missing_match_value=False)
+      }}
 
-  - name: Combine all the facts based on match_keys
-    set_fact:
-      combined: "{{ data_sources|ansible.utils.consolidate(fail_missing_match_value=False) }}"
-
-##Output
+# Output
 # ok: [localhost] => {
 #     "ansible_facts": {
 #         "data_sources": [
@@ -680,110 +676,108 @@ tasks:
 # Failing on missing match values
 # -------------------------------
 
-##facts.yaml
-interfaces:
-  - name: GigabitEthernet0/0
-    enabled: true
-    duplex: auto
-    speed: auto
-    note:
-      - Connected green wire
-  - name: GigabitEthernet0/1
-    description: Configured by Ansible - Interface 1
-    mtu: 1500
-    speed: auto
-    duplex: auto
-    enabled: true
-    note:
-      - Connected blue wire
-      - Configured by Paul
-    vifs:
-      - vlan_id: 100
-        description: Eth1 - VIF 100
-        mtu: 400
-        enabled: true
-        comment: Needs reconfiguration
-      - vlan_id: 101
-        description: Eth1 - VIF 101
-        enabled: true
-  - name: GigabitEthernet0/2
-    description: Configured by Ansible - Interface 2 (ADMIN DOWN)
-    mtu: 600
-    enabled: false
-l2_interfaces:
-  - name: GigabitEthernet0/0
-  - mode: access
-    name: GigabitEthernet0/1
-    trunk:
-      allowed_vlans:
-        - "11"
-        - "12"
-        - "59"
-        - "67"
-        - "75"
-        - "77"
-        - "81"
-        - "100"
-        - 400-408
-        - 411-413
-        - "415"
-        - "418"
-        - "982"
-        - "986"
-        - "988"
-        - "993"
-  - mode: trunk
-    name: GigabitEthernet0/2
-    trunk:
-      allowed_vlans:
-        - "11"
-        - "12"
-        - "59"
-        - "67"
-        - "75"
-        - "77"
-        - "81"
-        - "100"
-        - 400-408
-        - 411-413
-        - "415"
-        - "418"
-        - "982"
-        - "986"
-        - "988"
-        - "993"
-      encapsulation: dot1q
-l3_interfaces:
-  - ipv4:
-      - address: 192.168.0.2/24
-    name: GigabitEthernet0/0
-  - name: GigabitEthernet0/1
-  - name: GigabitEthernet0/2
-  - name: Loopback888
-  - name: Loopback999
+# facts.yaml
+# interfaces:
+#   - name: GigabitEthernet0/0
+#     enabled: true
+#     duplex: auto
+#     speed: auto
+#     note:
+#       - Connected green wire
+#   - name: GigabitEthernet0/1
+#     description: Configured by Ansible - Interface 1
+#     mtu: 1500
+#     speed: auto
+#     duplex: auto
+#     enabled: true
+#     note:
+#       - Connected blue wire
+#       - Configured by Paul
+#     vifs:
+#       - vlan_id: 100
+#         description: Eth1 - VIF 100
+#         mtu: 400
+#         enabled: true
+#         comment: Needs reconfiguration
+#       - vlan_id: 101
+#         description: Eth1 - VIF 101
+#         enabled: true
+#   - name: GigabitEthernet0/2
+#     description: Configured by Ansible - Interface 2 (ADMIN DOWN)
+#     mtu: 600
+#     enabled: false
+# l2_interfaces:
+#   - name: GigabitEthernet0/0
+#   - mode: access
+#     name: GigabitEthernet0/1
+#     trunk:
+#       allowed_vlans:
+#         - "11"
+#         - "12"
+#         - "59"
+#         - "67"
+#         - "75"
+#         - "77"
+#         - "81"
+#         - "100"
+#         - 400-408
+#         - 411-413
+#         - "415"
+#         - "418"
+#         - "982"
+#         - "986"
+#         - "988"
+#         - "993"
+#   - mode: trunk
+#     name: GigabitEthernet0/2
+#     trunk:
+#       allowed_vlans:
+#         - "11"
+#         - "12"
+#         - "59"
+#         - "67"
+#         - "75"
+#         - "77"
+#         - "81"
+#         - "100"
+#         - 400-408
+#         - 411-413
+#         - "415"
+#         - "418"
+#         - "982"
+#         - "986"
+#         - "988"
+#         - "993"
+#       encapsulation: dot1q
+# l3_interfaces:
+#   - ipv4:
+#       - address: 192.168.0.2/24
+#     name: GigabitEthernet0/0
+#   - name: GigabitEthernet0/1
+#   - name: GigabitEthernet0/2
+#   - name: Loopback888
+#   - name: Loopback999
 
-##Playbook
-vars_files:
-  - "facts.yml"
-tasks:
-  - name: Build the facts collection
-    set_fact:
-      data_sources:
-        - data: "{{ interfaces }}"
-          match_key: name
-          name: interfaces
-        - data: "{{ l2_interfaces }}"
-          match_key: name
-          name: l2_interfaces
-        - data: "{{ l3_interfaces }}"
-          match_key: name
-          name: l3_interfaces
+# Playbook
+- name: Build the facts collection
+  set_fact:
+    data_sources:
+      - data: '{{ interfaces }}'
+        match_key: name
+        name: interfaces
+      - data: '{{ l2_interfaces }}'
+        match_key: name
+        name: l2_interfaces
+      - data: '{{ l3_interfaces }}'
+        match_key: name
+        name: l3_interfaces
+- name: Combine all the facts based on match_keys
+  set_fact:
+    combined: >-
+      {{ data_sources|ansible.utils.consolidate(fail_missing_match_value=True)
+      }}
 
-  - name: Combine all the facts based on match_keys
-    set_fact:
-      combined: "{{ data_sources|ansible.utils.consolidate(fail_missing_match_value=True) }}"
-
-##Output
+# Output
 # ok: [localhost] => {
 #     "ansible_facts": {
 #         "data_sources": [
@@ -933,110 +927,106 @@ tasks:
 # Failing on missing match keys
 # -----------------------------
 
-##facts.yaml
-interfaces:
-  - name: GigabitEthernet0/0
-    enabled: true
-    duplex: auto
-    speed: auto
-    note:
-      - Connected green wire
-  - name: GigabitEthernet0/1
-    description: Configured by Ansible - Interface 1
-    mtu: 1500
-    speed: auto
-    duplex: auto
-    enabled: true
-    note:
-      - Connected blue wire
-      - Configured by Paul
-    vifs:
-      - vlan_id: 100
-        description: Eth1 - VIF 100
-        mtu: 400
-        enabled: true
-        comment: Needs reconfiguration
-      - vlan_id: 101
-        description: Eth1 - VIF 101
-        enabled: true
-  - name: GigabitEthernet0/2
-    description: Configured by Ansible - Interface 2 (ADMIN DOWN)
-    mtu: 600
-    enabled: false
-l2_interfaces:
-  - name: GigabitEthernet0/0
-  - mode: access
-    name: GigabitEthernet0/1
-    trunk:
-      allowed_vlans:
-        - "11"
-        - "12"
-        - "59"
-        - "67"
-        - "75"
-        - "77"
-        - "81"
-        - "100"
-        - 400-408
-        - 411-413
-        - "415"
-        - "418"
-        - "982"
-        - "986"
-        - "988"
-        - "993"
-  - mode: trunk
-    name: GigabitEthernet0/2
-    trunk:
-      allowed_vlans:
-        - "11"
-        - "12"
-        - "59"
-        - "67"
-        - "75"
-        - "77"
-        - "81"
-        - "100"
-        - 400-408
-        - 411-413
-        - "415"
-        - "418"
-        - "982"
-        - "986"
-        - "988"
-        - "993"
-      encapsulation: dot1q
-l3_interfaces:
-  - ipv4:
-      - address: 192.168.0.2/24
-    inft_name: GigabitEthernet0/0
-  - inft_name: GigabitEthernet0/1
-  - inft_name: GigabitEthernet0/2
-  - inft_name: Loopback888
-  - inft_name: Loopback999
+# facts.yaml
+# interfaces:
+#   - name: GigabitEthernet0/0
+#     enabled: true
+#     duplex: auto
+#     speed: auto
+#     note:
+#       - Connected green wire
+#   - name: GigabitEthernet0/1
+#     description: Configured by Ansible - Interface 1
+#     mtu: 1500
+#     speed: auto
+#     duplex: auto
+#     enabled: true
+#     note:
+#       - Connected blue wire
+#       - Configured by Paul
+#     vifs:
+#       - vlan_id: 100
+#         description: Eth1 - VIF 100
+#         mtu: 400
+#         enabled: true
+#         comment: Needs reconfiguration
+#       - vlan_id: 101
+#         description: Eth1 - VIF 101
+#         enabled: true
+#   - name: GigabitEthernet0/2
+#     description: Configured by Ansible - Interface 2 (ADMIN DOWN)
+#     mtu: 600
+#     enabled: false
+# l2_interfaces:
+#   - name: GigabitEthernet0/0
+#   - mode: access
+#     name: GigabitEthernet0/1
+#     trunk:
+#       allowed_vlans:
+#         - "11"
+#         - "12"
+#         - "59"
+#         - "67"
+#         - "75"
+#         - "77"
+#         - "81"
+#         - "100"
+#         - 400-408
+#         - 411-413
+#         - "415"
+#         - "418"
+#         - "982"
+#         - "986"
+#         - "988"
+#         - "993"
+#   - mode: trunk
+#     name: GigabitEthernet0/2
+#     trunk:
+#       allowed_vlans:
+#         - "11"
+#         - "12"
+#         - "59"
+#         - "67"
+#         - "75"
+#         - "77"
+#         - "81"
+#         - "100"
+#         - 400-408
+#         - 411-413
+#         - "415"
+#         - "418"
+#         - "982"
+#         - "986"
+#         - "988"
+#         - "993"
+#       encapsulation: dot1q
+# l3_interfaces:
+#   - ipv4:
+#       - address: 192.168.0.2/24
+#     inft_name: GigabitEthernet0/0
+#   - inft_name: GigabitEthernet0/1
+#   - inft_name: GigabitEthernet0/2
+#   - inft_name: Loopback888
+#   - inft_name: Loopback999
 
-##Playbook
-vars_files:
-  - "facts.yml"
-tasks:
-  - name: Build the facts collection
-    set_fact:
-      data_sources:
-        - data: "{{ interfaces }}"
-          match_key: name
-          name: interfaces
-        - data: "{{ l2_interfaces }}"
-          match_key: name
-          name: l2_interfaces
-        - data: "{{ l3_interfaces }}"
-          match_key: name
-          name: l3_interfaces
+# Playbook
+- name: Build the facts collection
+  set_fact:
+    data_sources:
+      - data: '{{ interfaces }}'
+        match_key: name
+        name: interfaces
+      - data: '{{ l2_interfaces }}'
+        match_key: name
+        name: l2_interfaces
+      - data: '{{ l3_interfaces }}'
+        match_key: name
+        name: l3_interfaces
+- name: Combine all the facts based on match_keys
+  set_fact:
+    combined: '{{ data_sources|ansible.utils.consolidate(fail_missing_match_key=True) }}'
 
-  - name: Combine all the facts based on match_keys
-    set_fact:
-      combined: "{{ data_sources|ansible.utils.consolidate(fail_missing_match_key=True) }}"
-
-##Output
+# Output
 # ok: [localhost] => {
 #     "ansible_facts": {
 #         "data_sources": [
@@ -1189,111 +1179,107 @@ tasks:
 # Failing on duplicate values in facts
 # ------------------------------------
 
-##facts.yaml
-interfaces:
-  - name: GigabitEthernet0/0
-    enabled: true
-    duplex: auto
-    speed: auto
-    note:
-      - Connected green wire
-  - name: GigabitEthernet0/1
-    description: Configured by Ansible - Interface 1
-    mtu: 1500
-    speed: auto
-    duplex: auto
-    enabled: true
-    note:
-      - Connected blue wire
-      - Configured by Paul
-    vifs:
-      - vlan_id: 100
-        description: Eth1 - VIF 100
-        mtu: 400
-        enabled: true
-        comment: Needs reconfiguration
-      - vlan_id: 101
-        description: Eth1 - VIF 101
-        enabled: true
-  - name: GigabitEthernet0/2
-    description: Configured by Ansible - Interface 2 (ADMIN DOWN)
-    mtu: 600
-    enabled: false
-l2_interfaces:
-  - name: GigabitEthernet0/0
-  - name: GigabitEthernet0/0
-  - mode: access
-    name: GigabitEthernet0/1
-    trunk:
-      allowed_vlans:
-        - "11"
-        - "12"
-        - "59"
-        - "67"
-        - "75"
-        - "77"
-        - "81"
-        - "100"
-        - 400-408
-        - 411-413
-        - "415"
-        - "418"
-        - "982"
-        - "986"
-        - "988"
-        - "993"
-  - mode: trunk
-    name: GigabitEthernet0/2
-    trunk:
-      allowed_vlans:
-        - "11"
-        - "12"
-        - "59"
-        - "67"
-        - "75"
-        - "77"
-        - "81"
-        - "100"
-        - 400-408
-        - 411-413
-        - "415"
-        - "418"
-        - "982"
-        - "986"
-        - "988"
-        - "993"
-      encapsulation: dot1q
-l3_interfaces:
-  - ipv4:
-      - address: 192.168.0.2/24
-    name: GigabitEthernet0/0
-  - name: GigabitEthernet0/1
-  - name: GigabitEthernet0/2
-  - name: Loopback888
-  - name: Loopback999
+# facts.yaml
+# interfaces:
+#   - name: GigabitEthernet0/0
+#     enabled: true
+#     duplex: auto
+#     speed: auto
+#     note:
+#       - Connected green wire
+#   - name: GigabitEthernet0/1
+#     description: Configured by Ansible - Interface 1
+#     mtu: 1500
+#     speed: auto
+#     duplex: auto
+#     enabled: true
+#     note:
+#       - Connected blue wire
+#       - Configured by Paul
+#     vifs:
+#       - vlan_id: 100
+#         description: Eth1 - VIF 100
+#         mtu: 400
+#         enabled: true
+#         comment: Needs reconfiguration
+#       - vlan_id: 101
+#         description: Eth1 - VIF 101
+#         enabled: true
+#   - name: GigabitEthernet0/2
+#     description: Configured by Ansible - Interface 2 (ADMIN DOWN)
+#     mtu: 600
+#     enabled: false
+# l2_interfaces:
+#   - name: GigabitEthernet0/0
+#   - name: GigabitEthernet0/0
+#   - mode: access
+#     name: GigabitEthernet0/1
+#     trunk:
+#       allowed_vlans:
+#         - "11"
+#         - "12"
+#         - "59"
+#         - "67"
+#         - "75"
+#         - "77"
+#         - "81"
+#         - "100"
+#         - 400-408
+#         - 411-413
+#         - "415"
+#         - "418"
+#         - "982"
+#         - "986"
+#         - "988"
+#         - "993"
+#   - mode: trunk
+#     name: GigabitEthernet0/2
+#     trunk:
+#       allowed_vlans:
+#         - "11"
+#         - "12"
+#         - "59"
+#         - "67"
+#         - "75"
+#         - "77"
+#         - "81"
+#         - "100"
+#         - 400-408
+#         - 411-413
+#         - "415"
+#         - "418"
+#         - "982"
+#         - "986"
+#         - "988"
+#         - "993"
+#       encapsulation: dot1q
+# l3_interfaces:
+#   - ipv4:
+#       - address: 192.168.0.2/24
+#     name: GigabitEthernet0/0
+#   - name: GigabitEthernet0/1
+#   - name: GigabitEthernet0/2
+#   - name: Loopback888
+#   - name: Loopback999
 
-##Playbook
-vars_files:
-  - "facts.yml"
-tasks:
-  - name: Build the facts collection
-    set_fact:
-      data_sources:
-        - data: "{{ interfaces }}"
-          match_key: name
-          name: interfaces
-        - data: "{{ l2_interfaces }}"
-          match_key: name
-          name: l2_interfaces
-        - data: "{{ l3_interfaces }}"
-          match_key: name
-          name: l3_interfaces
+# Playbook
+- name: Build the facts collection
+  set_fact:
+    data_sources:
+      - data: '{{ interfaces }}'
+        match_key: name
+        name: interfaces
+      - data: '{{ l2_interfaces }}'
+        match_key: name
+        name: l2_interfaces
+      - data: '{{ l3_interfaces }}'
+        match_key: name
+        name: l3_interfaces
+- name: Combine all the facts based on match_keys
+  set_fact:
+    combined: '{{ data_sources|ansible.utils.consolidate(fail_duplicate=True) }}'
 
-  - name: Combine all the facts based on match_keys
-    set_fact:
-      combined: "{{ data_sources|ansible.utils.consolidate(fail_duplicate=True) }}"
-
-##Output
+# Output
 # ok: [localhost] => {
 #     "ansible_facts": {
 #         "data_sources": [
