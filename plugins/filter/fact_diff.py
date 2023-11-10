@@ -15,47 +15,50 @@ __metaclass__ = type
 DOCUMENTATION = """
     name: fact_diff
     author: Ashwini Mhatre ((@amhatre))
-    version_added: "2.12.0"
+    version_added: 2.12.0
     short_description: Find the difference between currently set facts
     description:
-        - Compare two facts or variables and get a diff.
+      - Compare two facts or variables and get a diff.
     options:
-        before:
+      before:
+        description:
+          - The first fact to be used in the comparison.
+        type: raw
+        required: true
+      after:
+        description:
+          - The second fact to be used in the comparison.
+        type: raw
+        required: true
+      plugin:
+        description:
+          - Configure and specify the diff plugin to use
+        type: dict
+        default: {}
+        suboptions:
+          name:
             description:
-            - The first fact to be used in the comparison.
-            type: raw
-            required: True
-        after:
+              - 'The diff plugin to use, in fully qualified collection name format.'
+            default: ansible.utils.native
+            type: str
+          vars:
             description:
-            - The second fact to be used in the comparison.
-            type: raw
-            required: True
-        plugin:
-            description:
-            - Configure and specify the diff plugin to use
+              - Parameters passed to the diff plugin.
             type: dict
             default: {}
             suboptions:
-                name:
-                    description:
-                    - The diff plugin to use, in fully qualified collection name format.
-                    default: ansible.utils.native
-                    type: str
-                vars:
-                    description:
-                    - Parameters passed to the diff plugin.
-                    type: dict
-                    default: {}
-                    suboptions:
-                        skip_lines:
-                            description:
-                            - Skip lines matching these regular expressions.
-                            - Matches will be removed prior to the diff.
-                            - If the provided I(before) and I(after) are a string, they will be split.
-                            - Each entry in each list will be cast to a string for the comparison
-                            type: list
-                            elements: str
-    notes:
+              skip_lines:
+                description:
+                  - Skip lines matching these regular expressions.
+                  - Matches will be removed prior to the diff.
+                  - >-
+                    If the provided I(before) and I(after) are a string, they will
+                    be split.
+                  - >-
+                    Each entry in each list will be cast to a string for the
+                    comparison
+                type: list
+                elements: str
 """
 
 EXAMPLES = """
@@ -164,6 +167,7 @@ RETURN = """
       - Returns diff between before and after facts.
 """
 from ansible.errors import AnsibleFilterError
+from ansible.module_utils._text import to_text
 
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     AnsibleArgSpecValidator,
@@ -189,10 +193,7 @@ def _fact_diff(*args, **kwargs):
     if not valid:
         raise AnsibleFilterError(errors)
     res = fact_diff(**updated_data)
-    import json
-
-    res = str(res)
-    return res
+    return to_text(res)
 
 
 class FilterModule(object):

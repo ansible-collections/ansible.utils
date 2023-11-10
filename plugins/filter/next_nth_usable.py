@@ -127,8 +127,7 @@ def next_nth_usable(value, offset):
         v = netaddr.IPNetwork(v)
     except Exception:
         return False
-
-    if isinstance(offset) is not int:
+    if not isinstance(offset, int):
         raise AnsibleFilterError("Must pass in an integer")
     if v.size > 1:
         first_usable, last_usable = _first_last(v)
