@@ -76,7 +76,7 @@ EXAMPLES = r"""
       - 192.168.32.0/24
       - fe80::100/10
       - 42540766412265424405338506004571095040/64
-      - True
+      - true
 - name: IPv4 filter to filter Ipv4 Address
   debug:
     msg: "{{ value|ansible.utils.ipv4 }}"
@@ -116,7 +116,6 @@ EXAMPLES = r"""
 #         "192.24.2.1"
 #     ]
 # }
-
 """
 
 RETURN = """

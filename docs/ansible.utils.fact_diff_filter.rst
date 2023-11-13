@@ -1,4 +1,4 @@
-.. _ansible.utils.fact_diff_module:
+.. _ansible.utils.fact_diff_filter:
 
 
 ***********************
@@ -8,7 +8,7 @@ ansible.utils.fact_diff
 **Find the difference between currently set facts**
 
 
-Version added: 1.0.0
+Version added: 2.12.0
 
 .. contents::
    :local:
@@ -31,6 +31,7 @@ Parameters
         <tr>
             <th colspan="3">Parameter</th>
             <th>Choices/<font color="blue">Defaults</font></th>
+                <th>Configuration</th>
             <th width="100%">Comments</th>
         </tr>
             <tr>
@@ -45,6 +46,8 @@ Parameters
                 </td>
                 <td>
                 </td>
+                    <td>
+                    </td>
                 <td>
                         <div>The second fact to be used in the comparison.</div>
                 </td>
@@ -61,6 +64,8 @@ Parameters
                 </td>
                 <td>
                 </td>
+                    <td>
+                    </td>
                 <td>
                         <div>The first fact to be used in the comparison.</div>
                 </td>
@@ -77,6 +82,8 @@ Parameters
                 <td>
                         <b>Default:</b><br/><div style="color: blue">{}</div>
                 </td>
+                    <td>
+                    </td>
                 <td>
                         <div>Configure and specify the diff plugin to use</div>
                 </td>
@@ -94,6 +101,8 @@ Parameters
                 <td>
                         <b>Default:</b><br/><div style="color: blue">"ansible.utils.native"</div>
                 </td>
+                    <td>
+                    </td>
                 <td>
                         <div>The diff plugin to use, in fully qualified collection name format.</div>
                 </td>
@@ -111,6 +120,8 @@ Parameters
                 <td>
                         <b>Default:</b><br/><div style="color: blue">{}</div>
                 </td>
+                    <td>
+                    </td>
                 <td>
                         <div>Parameters passed to the diff plugin.</div>
                 </td>
@@ -129,6 +140,8 @@ Parameters
                 </td>
                 <td>
                 </td>
+                    <td>
+                    </td>
                 <td>
                         <div>Skip lines matching these regular expressions.</div>
                         <div>Matches will be removed prior to the diff.</div>
@@ -149,7 +162,8 @@ Examples
 
 .. code-block:: yaml
 
-    - ansible.builtin.set_fact:
+    - name: Set fact
+      ansible.builtin.set_fact:
         before:
           a:
             b:
@@ -166,123 +180,91 @@ Examples
                   - 3
 
     - name: Show the difference in json format
-      ansible.utils.fact_diff:
-        before: "{{ before }}"
-        after: "{{ after }}"
+      ansible.builtin.set_fact:
+        result: "{{before | ansible.utils.fact_diff(after)}}"
 
-    # TASK [ansible.utils.fact_diff] **************************************
-    # --- before
-    # +++ after
-    # @@ -3,8 +3,8 @@
-    #          "b": {
-    #              "c": {
-    #                  "d": [
-    # -                    0,
-    # -                    1
-    # +                    2,
-    # +                    3
-    #                  ]
-    #              }
-    #          }
-    #
-    # changed: [localhost]
+    # TASK [Show the difference in json format] **********************************************************************************************
+    # ok: [localhost] => {
+    #     "ansible_facts": {
+    #         "result": [
+    #             "--- before",
+    #             "+++ after",
+    #             "@@ -3,8 +3,8 @@",
+    #             "         "b": {",
+    #             "             "c": {",
+    #             "                 "d": [",
+    #             "-                    0,",
+    #             "-                    1",
+    #             "+                    2,",
+    #             "+                    3",
+    #             "                 ]",
+    #             "             }",
+    #             "         }",
+    #             ""
+    #         ]
+    #     },
+    #     "changed": false
+    # }
+
+    - name: Set fact
+      ansible.builtin.set_fact:
+        before: "{{ before|ansible.utils.to_paths }}"
+        after: "{{ after|ansible.utils.to_paths }}"
 
     - name: Show the difference in path format
-      ansible.utils.fact_diff:
-        before: "{{ before | ansible.utils.to_paths }}"
-        after: "{{ after | ansible.utils.to_paths }}"
+      ansible.builtin.set_fact:
+        result: "{{before | ansible.utils.fact_diff(after)}}"
 
-    # TASK [ansible.utils.fact_diff] **************************************
-    # --- before
-    # +++ after
-    # @@ -1,4 +1,4 @@
-    #  {
-    # -    "a.b.c.d[0]": 0,
-    # -    "a.b.c.d[1]": 1
-    # +    "a.b.c.d[0]": 2,
-    # +    "a.b.c.d[1]": 3
-    #  }
-    #
-    # changed: [localhost]
+    # TASK [Show the difference in path format] **********************************************************************************************
+    # ok: [localhost] => {
+    #     "ansible_facts": {
+    #         "result": [
+    #             "--- before",
+    #             "+++ after",
+    #             "@@ -1,4 +1,4 @@",
+    #             " {",
+    #             "-    "a.b.c.d[0]": 0,",
+    #             "-    "a.b.c.d[1]": 1",
+    #             "+    "a.b.c.d[0]": 2,",
+    #             "+    "a.b.c.d[1]": 3",
+    #             " }",
+    #             ""
+    #         ]
+    #     },
+    #     "changed": false
+    # }
+
+    - name: Set fact
+      ansible.builtin.set_fact:
+        before: "{{ before|to_nice_yaml }}"
+        after: "{{ after|to_nice_yaml }}"
 
     - name: Show the difference in yaml format
-      ansible.utils.fact_diff:
-        before: "{{ before | to_nice_yaml }}"
-        after: "{{ after | to_nice_yaml }}"
+      ansible.builtin.set_fact:
+        result: "{{before | ansible.utils.fact_diff(after)}}"
 
-    # TASK [ansible.utils.fact_diff] **************************************
-    # --- before
-    # +++ after
-    # @@ -2,5 +2,5 @@
-    #      b:
-    #          c:
-    #              d:
-    # -            - 0
-    # -            - 1
-    # +            - 2
-    # +            - 3
-
-    # changed: [localhost]
-
-
-    #### Show the difference between complex object using restconf
-    #  ansible_connection: ansible.netcommon.httpapi
-    #  ansible_httpapi_use_ssl: True
-    #  ansible_httpapi_validate_certs: False
-    #  ansible_network_os: ansible.netcommon.restconf
-
-    - name: Get the current interface config prior to changes
-      ansible.netcommon.restconf_get:
-        content: config
-        path: /data/Cisco-NX-OS-device:System/intf-items/phys-items
-      register: pre
-
-    - name: Update the description of eth1/100
-      ansible.utils.update_fact:
-        updates:
-          - path: "pre['response']['phys-items']['PhysIf-list'][{{ index }}]['descr']"
-            value: "Configured by ansible {{ 100 | random }}"
-      vars:
-        index: "{{ pre['response']['phys-items']['PhysIf-list'] | ansible.utils.index_of('eq', 'eth1/100', 'id') }}"
-      register: updated
-
-    - name: Apply the configuration
-      ansible.netcommon.restconf_config:
-        path: 'data/Cisco-NX-OS-device:System/intf-items/'
-        content: "{{ updated.pre.response}}"
-        method: patch
-
-    - name: Get the current interface config after changes
-      ansible.netcommon.restconf_get:
-        content: config
-        path: /data/Cisco-NX-OS-device:System/intf-items/phys-items
-      register: post
-
-    - name: Show the difference
-      ansible.utils.fact_diff:
-        before: "{{ pre.response | ansible.utils.to_paths }}"
-        after: "{{ post.response | ansible.utils.to_paths }}"
-
-    # TASK [ansible.utils.fact_diff] *********************************************
-    # --- before
-    # +++ after
-    # @@ -3604,7 +3604,7 @@
-    #      "phys-items['PhysIf-list'][37].bw": "0",
-    #      "phys-items['PhysIf-list'][37].controllerId": "",
-    #      "phys-items['PhysIf-list'][37].delay": "1",
-    # -    "phys-items['PhysIf-list'][37].descr": "Configured by ansible 95",
-    # +    "phys-items['PhysIf-list'][37].descr": "Configured by ansible 20",
-    #      "phys-items['PhysIf-list'][37].dot1qEtherType": "0x8100",
-    #      "phys-items['PhysIf-list'][37].duplex": "auto",
-    #      "phys-items['PhysIf-list'][37].id": "eth1/100",
-
-    # changed: [nxos101]
+    # TASK [Show the difference in yaml format] **********************************************************************************************
+    # ok: [localhost] => {
+    #     "ansible_facts": {
+    #         "result": [
+    #             "--- before",
+    #             "+++ after",
+    #             "@@ -1,2 +1,2 @@",
+    #             "-a.b.c.d[0]: 0",
+    #             "-a.b.c.d[1]: 1",
+    #             "+a.b.c.d[0]: 2",
+    #             "+a.b.c.d[1]: 3",
+    #             ""
+    #         ]
+    #     },
+    #     "changed": false
+    # }
 
 
 
 Return Values
 -------------
-Common return values are documented `here <https://docs.ansible.com/ansible/latest/reference_appendices/common_return_values.html#common-return-values>`_, the following are the fields unique to this module:
+Common return values are documented `here <https://docs.ansible.com/ansible/latest/reference_appendices/common_return_values.html#common-return-values>`_, the following are the fields unique to this filter:
 
 .. raw:: html
 
@@ -295,31 +277,15 @@ Common return values are documented `here <https://docs.ansible.com/ansible/late
             <tr>
                 <td colspan="1">
                     <div class="ansibleOptionAnchor" id="return-"></div>
-                    <b>diff_lines</b>
+                    <b>result</b>
                     <a class="ansibleOptionLink" href="#return-" title="Permalink to this return value"></a>
                     <div style="font-size: small">
                       <span style="color: purple">list</span>
-                       / <span style="color: purple">elements=string</span>
                     </div>
                 </td>
-                <td>always</td>
+                <td></td>
                 <td>
-                            <div>The <em>diff_text</em> split into lines.</div>
-                    <br/>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="1">
-                    <div class="ansibleOptionAnchor" id="return-"></div>
-                    <b>diff_text</b>
-                    <a class="ansibleOptionLink" href="#return-" title="Permalink to this return value"></a>
-                    <div style="font-size: small">
-                      <span style="color: purple">string</span>
-                    </div>
-                </td>
-                <td>always</td>
-                <td>
-                            <div>The diff in text format.</div>
+                            <div>Returns diff between before and after facts.</div>
                     <br/>
                 </td>
             </tr>
@@ -334,4 +300,8 @@ Status
 Authors
 ~~~~~~~
 
-- Bradley Thornton (@cidrblock)
+- Ashwini Mhatre ((@amhatre))
+
+
+.. hint::
+    Configuration entries for each entry type have a low to high priority order. For example, a variable that is lower in the list will override a variable that is higher up.

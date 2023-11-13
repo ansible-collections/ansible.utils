@@ -289,24 +289,24 @@ Examples
       ansible.utils.cli_parse:
         command: "show interface"
         parser:
-            name: ansible.netcommon.pyats
+          name: ansible.netcommon.pyats
       register: parser_output
 
     - name: Pass text and command
       ansible.utils.cli_parse:
         text: "{{ previous_command['stdout'] }}"
         parser:
-            name: ansible.netcommon.pyats
-            command: show interface
+          name: ansible.netcommon.pyats
+          command: show interface
       register: parser_output
 
     - name: Provide an OS to pyats to use an ios parser
       ansible.utils.cli_parse:
         text: "{{ previous_command['stdout'] }}"
         parser:
-            name: ansible.netcommon.pyats
-            command: show interface
-            os: ios
+          name: ansible.netcommon.pyats
+          command: show interface
+          os: ios
       register: parser_output
 
 

@@ -15,7 +15,7 @@
   ansible.builtin.assert:
     that: "{{ item.result == item.expected }}"
   loop:
-    - result: "{{ a|ansible.utils.to_paths }}"
+    - result: "{{ a | ansible.utils.to_paths }}"
       expected:
         b: []
         c: {}
@@ -31,11 +31,11 @@
         d.e[1]: {}
         f.g[0]: []
         f.g[1]: []
-    - result: "{{ empty_list|ansible.utils.to_paths }}"
+    - result: "{{ empty_list | ansible.utils.to_paths }}"
       expected: []
     - result: "{{ lookup('ansible.utils.to_paths', empty_list) }}"
       expected: []
-    - result: "{{ empty_mapping|ansible.utils.to_paths }}"
+    - result: "{{ empty_mapping | ansible.utils.to_paths }}"
       expected: {}
     - result: "{{ lookup('ansible.utils.to_paths', empty_mapping) }}"
       expected: {}

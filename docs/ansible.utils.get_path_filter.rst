@@ -112,11 +112,11 @@ Examples
           b:
             c:
               d:
-              - 0
-              - 1
+                - 0
+                - 1
               e:
-              - True
-              - False
+                - true
+                - false
 
     - name: Retrieve a value deep inside a using a path
       ansible.builtin.set_fact:
@@ -196,9 +196,9 @@ Examples
         rekeyed:
           by_name: "{{ interfaces.gathered|ansible.builtin.rekey_on_member('name') }}"
       loop:
-      - by_name['Ethernet1/1'].description
-      - by_name['Ethernet1/2'].description|upper
-      - by_name['Ethernet1/3'].description|default('')
+        - by_name['Ethernet1/1'].description
+        - by_name['Ethernet1/2'].description|upper
+        - by_name['Ethernet1/3'].description|default('')
 
 
     # TASK [Get the description of several interfaces] ******************

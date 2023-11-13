@@ -57,7 +57,7 @@
       - path: "a.b.c[{{ index }}]"
         value: 20
   vars:
-    index: "{{ a.b.c|ansible.utils.index_of('eq', 2) }}"
+    index: "{{ a.b.c | ansible.utils.index_of('eq', 2) }}"
   register: updated
 
 - name: Assert

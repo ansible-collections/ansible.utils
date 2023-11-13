@@ -9,7 +9,7 @@
 
 - name: Check argspec validation with lookup
   ansible.builtin.set_fact:
-    _result: "{{ a|ansible.utils.to_paths(wantlist=5) }}"
+    _result: "{{ a | ansible.utils.to_paths(wantlist=5) }}"
   ignore_errors: true
   register: result
 

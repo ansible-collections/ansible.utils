@@ -27,7 +27,7 @@
 
 - name: Debug
   ansible.builtin.debug:
-    msg: "{{ data|ansible.utils.keep_keys(target=['desc', 'interface_'], matching_parameter= 'starts_with') }}"
+    msg: "{{ data | ansible.utils.keep_keys(target=['desc', 'interface_'], matching_parameter='starts_with') }}"
   register: result
 
 - name: Assert result dicts
@@ -63,7 +63,7 @@
 
 - name: Debug
   ansible.builtin.debug:
-    msg: "{{ data|ansible.utils.keep_keys(target=['interface_name', 'is_enabled', 'vlan_id']) }}"
+    msg: "{{ data | ansible.utils.keep_keys(target=['interface_name', 'is_enabled', 'vlan_id']) }}"
   register: result
 
 - name: Assert result dicts

@@ -104,8 +104,6 @@ EXAMPLES = r"""
 
 # PLAY RECAP **********************************************************************************************************
 # localhost                  : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
-
-
 """
 
 RETURN = """
