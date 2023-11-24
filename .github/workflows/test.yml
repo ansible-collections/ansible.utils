@@ -17,6 +17,7 @@ jobs:
     uses: ansible-network/github_actions/.github/workflows/ansible-lint.yml@main
   changelog:
     uses: ansible-network/github_actions/.github/workflows/changelog.yml@main
+    if: github.event_name == 'pull_request'
   integration:
     uses: ansible-network/github_actions/.github/workflows/integration_simple.yml@main
   sanity:
@@ -25,7 +26,7 @@ jobs:
     uses: ansible-network/github_actions/.github/workflows/unit_galaxy.yml@main
 
   all_green:
-    if: ${{ always() && (github.event_name != 'schedule') }}
+    if: ${{ always() }}
     needs:
       - changelog
       - integration
