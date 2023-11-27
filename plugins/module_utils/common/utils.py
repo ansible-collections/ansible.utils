@@ -109,3 +109,32 @@ def to_list(val):
         return [val]
     else:
         return list()
+
+
+def remove_empties(cfg_dict):
+    """
+    Generate final config dictionary
+
+    :param cfg_dict: A dictionary parsed in the facts system
+    :rtype: A dictionary
+    :returns: A dictionary by eliminating keys that have null values
+    """
+    final_cfg = {}
+    if not cfg_dict:
+        return final_cfg
+
+    for key, val in iteritems(cfg_dict):
+        dct = None
+        if isinstance(val, dict):
+            child_val = remove_empties(val)
+            if child_val:
+                dct = {key: child_val}
+        elif isinstance(val, list) and val and all(isinstance(x, dict) for x in val):
+            child_val = [remove_empties(x) for x in val]
+            if child_val:
+                dct = {key: child_val}
+        elif val not in [None, [], {}, (), ""]:
+            dct = {key: val}
+        if dct:
+            final_cfg.update(dct)
+    return final_cfg
