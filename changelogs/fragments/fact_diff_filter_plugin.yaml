@@ -1,3 +1,0 @@
----
-minor_changes:
-  - "Fact_diff filter plugin - Add fact_diff filter plugin. (https://github.com/ansible-collections/ansible.utils/issues/78)."
