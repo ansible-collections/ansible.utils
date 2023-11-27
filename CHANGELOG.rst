@@ -5,6 +5,22 @@ Ansible Utils Collection Release Notes
 .. contents:: Topics
 
 
+v2.12.0
+=======
+
+Minor Changes
+-------------
+
+- Fact_diff filter plugin - Add fact_diff filter plugin. (https://github.com/ansible-collections/ansible.utils/issues/78).
+
+New Plugins
+-----------
+
+Filter
+~~~~~~
+
+- fact_diff - Find the difference between currently set facts
+
 v2.11.0
 =======
 
