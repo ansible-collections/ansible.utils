@@ -18,15 +18,15 @@
 
 - name: validate configuration using config (with errors)
   ansible.utils.validate:
-    data: "{{ fail_config }}"
-    criteria: "{{ rules }}"
+    data: "{{ lookup('ansible.builtin.file', 'data/fail.cfg') }}"
+    criteria: "{{ lookup('ansible.builtin.file', 'criteria/rules.yaml') }}"
     engine: ansible.utils.config
   ignore_errors: true
   register: result
 
 - ansible.builtin.assert:
     that:
-      - '"errors" in result'
+      - "'errors' in result"
       - "result['errors'][0].found == 'interface Eth1/1'"
       - "result['errors'][1].found == 'interface Loopback 10'"
       - "result['errors'][2].found == 'interface po2.1'"
