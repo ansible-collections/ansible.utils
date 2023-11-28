@@ -1,0 +1,2 @@
+[testgroup]
+testhost ansible_connection="local" ansible_pipelining="yes" ansible_python_interpreter="/home/amhatre/dev/virtualenvs/py3.11/bin/python"
