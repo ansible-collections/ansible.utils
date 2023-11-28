@@ -16,7 +16,7 @@
   ansible.builtin.assert:
     that:
       - "{{ POpqMQoJWTiDpEW is defined }}"
-      - "nxos_ttp_text['parsed'][0][0] | selectattr('interface', 'search', 'mgmt0') | list | length"
+      - "{{nxos_ttp_text['parsed'][0][0] | selectattr('interface', 'search', 'mgmt0') | list | length}}"
       - "{{ nxos_ttp_text['parsed'] == nxos_ttp_text_parsed }}"
 
 - name: "Pass text and custom variable {{ parser }}"
@@ -49,6 +49,6 @@
 
 - name: "Confirm modified results {{ parser }}"
   ansible.builtin.assert:
-    that: "{{ item }}"
+    that: item
   with_items:
-    - "(nxos_ttp_results['parsed'][0] | from_yaml)[0] | selectattr('interface', 'search', 'mgmt0') | list | length"
+    - "{{(nxos_ttp_results['parsed'][0] | from_yaml)[0] | selectattr('interface', 'search', 'mgmt0') | list | length}}"
