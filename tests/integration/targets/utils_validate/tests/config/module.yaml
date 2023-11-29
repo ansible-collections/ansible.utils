@@ -19,7 +19,7 @@
 - name: validate configuration using config (with errors)
   ansible.utils.validate:
     data: "{{ fail_config }}"
-    criteria: "{{ rules) }}"
+    criteria: "{{ rules }}"
     engine: ansible.utils.config
   ignore_errors: true
   register: result
