@@ -18,8 +18,8 @@
 
 - name: validate configuration using config (with errors)
   ansible.utils.validate:
-    data: "{{ lookup('ansible.builtin.file', 'data/fail.cfg') }}"
-    criteria: "{{ lookup('ansible.builtin.file', 'criteria/rules.yaml') }}"
+    data: "{{ fail_config }}"
+    criteria: "{{ rules) }}"
     engine: ansible.utils.config
   ignore_errors: true
   register: result
