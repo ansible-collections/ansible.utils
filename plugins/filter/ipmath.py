@@ -124,7 +124,6 @@ EXAMPLES = r"""
 # ok: [localhost] => {
 #     "msg": "2000:ffff:ffff:ffff:ffff:ffff:ffff:fffb"
 # }
-
 """
 
 RETURN = """

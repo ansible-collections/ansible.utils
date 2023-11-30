@@ -1,5 +1,5 @@
 ---
-name: tests
+name: CI
 
 concurrency:
   group: ${{ github.head_ref || github.run_id }}
@@ -17,6 +17,7 @@ jobs:
     uses: ansible-network/github_actions/.github/workflows/ansible-lint.yml@main
   changelog:
     uses: ansible-network/github_actions/.github/workflows/changelog.yml@main
+    if: github.event_name == 'pull_request'
   integration:
     uses: ansible-network/github_actions/.github/workflows/integration_simple.yml@main
   sanity:
@@ -25,8 +26,9 @@ jobs:
     uses: ansible-network/github_actions/.github/workflows/unit_galaxy.yml@main
 
   all_green:
-    if: ${{ always() && (github.event_name != 'schedule') }}
+    if: ${{ always() }}
     needs:
+      - ansible-lint
       - changelog
       - integration
       - sanity
@@ -34,9 +36,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: >-
-          python -c "assert set([
+          python -c "assert 'failure' not in
+          set([
+          '${{ needs.ansible-lint.result }}',
           '${{ needs.changelog.result }}',
           '${{ needs.integration.result }}',
           '${{ needs.sanity.result }}',
           '${{ needs.unit-galaxy.result }}'
-          ]) == {'success'}"
+          ])"

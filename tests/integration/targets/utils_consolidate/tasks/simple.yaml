@@ -24,7 +24,7 @@
 
 - name: Combine all the dictionaries based on match_keys
   ansible.builtin.set_fact:
-    combined: "{{ data_sources|ansible.utils.consolidate(fail_missing_match_value=False) }}"
+    combined: "{{ data_sources | ansible.utils.consolidate(fail_missing_match_value=False) }}"
 
 - name: Assert result dicts
   ansible.builtin.assert:

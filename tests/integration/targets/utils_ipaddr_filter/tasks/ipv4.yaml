@@ -12,7 +12,7 @@
 
 - name: Ipv4 filter
   ansible.builtin.set_fact:
-    result1: "{{ value|ansible.utils.ipv4 }}"
+    result1: "{{ value | ansible.utils.ipv4 }}"
 
 - name: Assert result for ipv4.
   ansible.builtin.assert:
@@ -20,7 +20,7 @@
 
 - name: Convert ipv4 to ipv6 filter
   ansible.builtin.set_fact:
-    result2: "{{ value|ansible.utils.ipv4('ipv6') }}"
+    result2: "{{ value | ansible.utils.ipv4('ipv6') }}"
 
 - name: Assert result for ipv6.
   ansible.builtin.assert:
@@ -28,7 +28,7 @@
 
 - name: Ipv4 filter with address query
   ansible.builtin.set_fact:
-    result3: "{{ value|ansible.utils.ipv4('address') }}"
+    result3: "{{ value | ansible.utils.ipv4('address') }}"
 
 - name: Assert result for ipv4 filter with address query.
   ansible.builtin.assert:

@@ -1,7 +1,6 @@
-
-
 # Ansible Utilities Collection
 [![Codecov](https://codecov.io/gh/ansible-collections/ansible.utils/branch/main/graph/badge.svg)](https://codecov.io/gh/ansible-collections/ansible.utils)
+[![CI](https://github.com/ansible-collections/ansible.utils/actions/workflows/tests.yml/badge.svg?branch=main&event=schedule)](https://github.com/ansible-collections/ansible.utils/actions/workflows/tests.yml)
 
 The Ansible ``ansible.utils`` collection includes a variety of plugins that aid in the management, manipulation and visibility of data for the Ansible playbook developer.
 
@@ -25,6 +24,7 @@ Name | Description
 --- | ---
 [ansible.utils.cidr_merge](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.cidr_merge_filter.rst)|This filter can be used to merge subnets or individual addresses.
 [ansible.utils.consolidate](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.consolidate_filter.rst)|Consolidate facts together on common attributes.
+[ansible.utils.fact_diff](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.fact_diff_filter.rst)|Find the difference between currently set facts
 [ansible.utils.from_xml](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.from_xml_filter.rst)|Convert given XML string to native python dictionary.
 [ansible.utils.get_path](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.get_path_filter.rst)|Retrieve the value in a variable using a path
 [ansible.utils.hwaddr](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.hwaddr_filter.rst)|HWaddr / MAC address filters

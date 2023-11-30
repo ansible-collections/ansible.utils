@@ -8,14 +8,14 @@
 
 - name: Debug
   ansible.builtin.debug:
-    msg: "{{ data|ansible.utils.to_xml() }}"
+    msg: "{{ data | ansible.utils.to_xml() }}"
 
 - name: Integration tests with and without default engine as xmltodict and
   ansible.builtin.assert:
     that: "{{ output == item.test }}"
   loop:
-    - test: "{{ data|ansible.utils.to_xml() }}"
-    - test: "{{ data|ansible.utils.to_xml('xmltodict') }}"
+    - test: "{{ data | ansible.utils.to_xml() }}"
+    - test: "{{ data | ansible.utils.to_xml('xmltodict') }}"
 
 - name: Test for supported engine for to_xml filter
   ansible.builtin.set_fact:
@@ -25,7 +25,7 @@
 
 - name: Validate input xml
   ansible.builtin.set_fact:
-    _result: "{{ data|ansible.utils.to_xml('dicttoxml') }}"
+    _result: "{{ data | ansible.utils.to_xml('dicttoxml') }}"
   ignore_errors: true
   register: result
 
@@ -39,4 +39,4 @@
   ansible.builtin.assert:
     that: "{{ output1 == item.test }}"
   loop:
-    - test: "{{ data|ansible.utils.to_xml('xmltodict', full_document=False) }}"
+    - test: "{{ data | ansible.utils.to_xml('xmltodict', full_document=False) }}"

@@ -83,9 +83,6 @@ EXAMPLES = r"""
 # ok: [localhost] => {
 #     "msg": "1a2b.3c4d.5e6f"
 # }
-
-
-
 """
 
 RETURN = """

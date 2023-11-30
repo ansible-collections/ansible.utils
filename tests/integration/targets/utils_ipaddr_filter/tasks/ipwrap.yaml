@@ -12,7 +12,7 @@
 
 - name: Ipwrap filter
   ansible.builtin.set_fact:
-    result1: "{{ value|ansible.utils.ipwrap }}"
+    result1: "{{ value | ansible.utils.ipwrap }}"
 
 - name: Assert result for ipwrap.
   ansible.builtin.assert:
