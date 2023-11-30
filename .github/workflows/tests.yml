@@ -41,5 +41,4 @@ jobs:
           '${{ needs.changelog.result }}',
           '${{ needs.sanity.result }}',
           '${{ needs.unit-galaxy.result }}',
-          '${{ needs.unit-source.result }}'
           ])"
