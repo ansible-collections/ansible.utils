@@ -28,6 +28,7 @@ jobs:
   all_green:
     if: ${{ always() }}
     needs:
+      - ansible-lint
       - changelog
       - integration
       - sanity
@@ -39,7 +40,7 @@ jobs:
           set([
           '${{ needs.ansible-lint.result }}',
           '${{ needs.changelog.result }}',
+          '${{ needs.integration.result }}',
           '${{ needs.sanity.result }}',
-          '${{ needs.unit-galaxy.result }}',
-          '${{ needs.unit-source.result }}'
+          '${{ needs.unit-galaxy.result }}'
           ])"
