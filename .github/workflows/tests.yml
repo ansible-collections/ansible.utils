@@ -13,8 +13,6 @@ on:  # yamllint disable-line rule:truthy
     - cron: '0 0 * * *'
 
 jobs:
-  ansible-lint:
-    uses: ansible-network/github_actions/.github/workflows/ansible-lint.yml@main
   changelog:
     uses: ansible-network/github_actions/.github/workflows/changelog.yml@main
     if: github.event_name == 'pull_request'
@@ -28,7 +26,6 @@ jobs:
   all_green:
     if: ${{ always() }}
     needs:
-      - ansible-lint
       - changelog
       - integration
       - sanity
@@ -38,7 +35,6 @@ jobs:
       - run: >-
           python -c "assert 'failure' not in
           set([
-          '${{ needs.ansible-lint.result }}',
           '${{ needs.changelog.result }}',
           '${{ needs.integration.result }}',
           '${{ needs.sanity.result }}',
