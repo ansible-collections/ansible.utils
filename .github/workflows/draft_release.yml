@@ -7,7 +7,7 @@ on:  # yamllint disable-line rule:truthy
   workflow_dispatch:
 env:
   NAMESPACE: ${{ github.repository_owner }}
-  COLLECTION_NAME: ios
+  COLLECTION_NAME: utils
   ANSIBLE_COLLECTIONS_PATHS: ./
 jobs:
   update_release_draft:
