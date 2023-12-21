@@ -43,6 +43,6 @@ jobs:
           '${{ needs.changelog.result }}',
           '${{ needs.integration.result }}',
           '${{ needs.sanity.result }}',
-          '${{ needs.unit-galaxy.result }}'
+          '${{ needs.unit-galaxy.result }}',
           '${{ needs.ansible-lint.result }}'
           ])"
