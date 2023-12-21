@@ -27,7 +27,6 @@ jobs:
         git+https://github.com/ansible-collections/cisco.ios.git
   integration:
     uses: ansible/ansible-github-actions/.github/workflows/integration.yaml@main
-
   all_green:
     if: ${{ always() }}
     needs:
