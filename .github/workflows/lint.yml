@@ -1,5 +1,5 @@
 ---
-name: ansible-lint
+name: ansible_lint
 on:  # yamllint disable-line rule:truthy
   pull_request:
     branches: ["main"]
