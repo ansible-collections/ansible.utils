@@ -59,6 +59,11 @@ DOCUMENTATION = """
                     comparison
                 type: list
                 elements: str
+      common:
+        description:
+          - Show all common lines.
+        type: bool
+        default: false
 """
 
 EXAMPLES = """
@@ -185,7 +190,7 @@ except ImportError:
 def _fact_diff(*args, **kwargs):
     """Find the difference between currently set facts"""
 
-    keys = ["before", "after", "plugin"]
+    keys = ["before", "after", "plugin", "common"]
     data = dict(zip(keys, args[1:]))
     data.update(kwargs)
     aav = AnsibleArgSpecValidator(data=data, schema=DOCUMENTATION, name="fact_diff")
