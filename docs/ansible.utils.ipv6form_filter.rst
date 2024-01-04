@@ -44,6 +44,11 @@ Parameters
                     </div>
                 </td>
                 <td>
+                        <ul style="margin: 0; padding: 0"><b>Choices:</b>
+                                    <li>compress</li>
+                                    <li>expand</li>
+                                    <li>x509</li>
+                        </ul>
                 </td>
                     <td>
                     </td>
