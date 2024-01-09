@@ -61,7 +61,7 @@ DOCUMENTATION = """
             required: True
         format:
             type: str
-            choice:
+            choices:
                 ['compress', 'expand', 'x509']
             description: Different formats example. compress, expand, x509
 """
