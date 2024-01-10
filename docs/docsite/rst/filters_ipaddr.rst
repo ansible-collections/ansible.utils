@@ -345,9 +345,9 @@ To get the wildcard mask from host_prefix
 .. code-block:: jinja
 
     wildcard {{ host_prefix | ansible.utils.ipaddr('hostmask')}}
-    
+
     # from host_prefix '192.0.2.0/24' following will be generated
-    wildcard 0.0.0.255 
+    wildcard 0.0.0.255
 
 Converting subnet masks to CIDR notation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
