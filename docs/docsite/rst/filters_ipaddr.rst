@@ -340,6 +340,15 @@ If needed, you can extract subnet and prefix information from the 'host/prefix' 
     # {{ host_prefix | ansible.utils.ipaddr('host/prefix') | ansible.utils.ipaddr('prefix') }}
     [64, 24]
 
+To get the wildcard mask from host_prefix
+
+.. code-block:: jinja
+
+    wildcard {{ host_prefix | ansible.utils.ipaddr('hostmask')}}
+    
+    # from host_prefix '192.0.2.0/24' following will be generated
+    wildcard 0.0.0.255 
+
 Converting subnet masks to CIDR notation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
