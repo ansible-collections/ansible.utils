@@ -123,14 +123,13 @@ class fact_diff_native(CallbackBase):
                 has_diff = False
                 for line in difflines:
                     has_diff = True
-                    if not diff["common"]:
-                        if line.startswith("+"):
-                            line = stringc(line, C.COLOR_DIFF_ADD)
-                        elif line.startswith("-"):
-                            line = stringc(line, C.COLOR_DIFF_REMOVE)
-                        elif line.startswith("@@"):
-                            line = stringc(line, C.COLOR_DIFF_LINES)
-                    ret.append(line)
+                    if diff["common"]:
+                        if line.startswith("+") or line.startswith("-"):
+                            pass
+                        else:
+                            ret.append(line)
+                    else:
+                        ret.append(line)
                 if has_diff:
                     ret.append("\n")
             if "prepared" in diff:
