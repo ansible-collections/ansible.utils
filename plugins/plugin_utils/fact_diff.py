@@ -15,9 +15,7 @@ import re
 
 from collections.abc import MutableMapping
 
-from ansible import constants as C
 from ansible.plugins.callback import CallbackBase
-from ansible.utils.color import stringc
 
 
 __metaclass__ = type
