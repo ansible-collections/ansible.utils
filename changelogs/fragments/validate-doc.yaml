@@ -1,0 +1,4 @@
+---
+doc_changes:
+  - validate lookup plugin - Fix syntax in EXAMPLES.
+  - validate module - Fix syntax in EXAMPLES.
