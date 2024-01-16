@@ -1,0 +1,2 @@
+bugfixes:
+  - Avoid unnecessary use of a persistent connection.
