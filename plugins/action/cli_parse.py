@@ -37,6 +37,8 @@ ARGSPEC_CONDITIONALS = {
 class ActionModule(ActionBase):
     """action module"""
 
+    _requires_connection = False
+
     PARSER_CLS_NAME = "CliParser"
 
     def __init__(self, *args, **kwargs):
