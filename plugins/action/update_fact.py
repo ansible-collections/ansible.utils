@@ -26,6 +26,8 @@ from ansible_collections.ansible.utils.plugins.modules.update_fact import DOCUME
 class ActionModule(ActionBase):
     """action module"""
 
+    _requires_connection = False
+
     def __init__(self, *args, **kwargs):
         """Start here"""
         super(ActionModule, self).__init__(*args, **kwargs)
