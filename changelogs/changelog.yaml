@@ -390,3 +390,20 @@ releases:
     fragments:
       - update_requires_ansible.yaml
     release_date: "2023-11-30"
+  3.1.0:
+    changes:
+      bugfixes:
+        - Avoid unnecessary use of persistent connection in `cli_parse`, `fact_diff`,
+          `update_fact` and `validate` as this action does not require a connection.
+      doc_changes:
+        - ipv6form filter plugin - Fix to be displayed correctly.
+        - validate lookup plugin - Fix syntax in EXAMPLES.
+        - validate module - Fix syntax in EXAMPLES.
+      minor_changes:
+        - Add support in fact_diff filter plugin to show common lines.(https://github.com/ansible-collections/ansible.utils/issues/311)
+    fragments:
+      - Fre_fact_diff.yaml
+      - add_require_Connection.yaml
+      - ipv6form-doc.yaml
+      - validate-doc.yaml
+    release_date: "2024-01-30"

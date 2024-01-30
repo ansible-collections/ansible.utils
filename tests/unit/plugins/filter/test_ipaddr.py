@@ -544,13 +544,13 @@ class TestIpFilter(unittest.TestCase):
             ipsubnet("1.1.1.1/25", "24")
         self.assertEqual(exc.exception.message, expected)
 
-        with self.assertRaisesRegexp(
+        with self.assertRaisesRegex(
             AnsibleFilterError,
             "You must pass a valid subnet or IP address; invalid_subnet is invalid",
         ):
             ipsubnet("192.168.144.5", "invalid_subnet")
 
-        with self.assertRaisesRegexp(
+        with self.assertRaisesRegex(
             AnsibleFilterError,
             "192.168.144.0/30 is not in the subnet 192.168.144.4/30",
         ):
