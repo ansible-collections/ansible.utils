@@ -38,10 +38,16 @@ netaddr = pytest.importorskip("netaddr")
 
 class TestIpFilter(unittest.TestCase):
     def test_cidr_merge(self):
-        with pytest.raises(AnsibleFilterError, match="cidr_merge: expected iterable, got None"):
+        with pytest.raises(
+            AnsibleFilterError,
+            match="cidr_merge: expected iterable, got None",
+        ):
             cidr_merge(None)
 
-        with pytest.raises(AnsibleFilterError, match="cidr_merge: invalid action 'floop'"):
+        with pytest.raises(
+            AnsibleFilterError,
+            match="cidr_merge: invalid action 'floop'",
+        ):
             cidr_merge([], "floop")
 
         self.assertEqual(cidr_merge([]), [])
@@ -389,15 +395,30 @@ class TestIpFilter(unittest.TestCase):
         address = "1.12.1.0/25"
         self.assertEqual(ipaddr(address, "network_netmask"), "1.12.1.0 255.255.255.128")
         address = "1.12.1.36/28"
-        self.assertEqual(ipaddr(address, "network_netmask"), "1.12.1.32 255.255.255.240")
+        self.assertEqual(
+            ipaddr(address, "network_netmask"),
+            "1.12.1.32 255.255.255.240",
+        )
         address = "1.12.1.36/255.255.255.240"
-        self.assertEqual(ipaddr(address, "network_netmask"), "1.12.1.32 255.255.255.240")
+        self.assertEqual(
+            ipaddr(address, "network_netmask"),
+            "1.12.1.32 255.255.255.240",
+        )
         address = "1.12.1.36/31"
-        self.assertEqual(ipaddr(address, "network_netmask"), "1.12.1.36 255.255.255.254")
+        self.assertEqual(
+            ipaddr(address, "network_netmask"),
+            "1.12.1.36 255.255.255.254",
+        )
         address = "1.12.1.37/31"
-        self.assertEqual(ipaddr(address, "network_netmask"), "1.12.1.36 255.255.255.254")
+        self.assertEqual(
+            ipaddr(address, "network_netmask"),
+            "1.12.1.36 255.255.255.254",
+        )
         address = "1.12.1.36/32"
-        self.assertEqual(ipaddr(address, "network_netmask"), "1.12.1.36 255.255.255.255")
+        self.assertEqual(
+            ipaddr(address, "network_netmask"),
+            "1.12.1.36 255.255.255.255",
+        )
         address = "1.12.1.254/24"
         self.assertEqual(ipaddr(address, "network_netmask"), "1.12.1.0 255.255.255.0")
 
@@ -493,7 +514,10 @@ class TestIpFilter(unittest.TestCase):
         self.assertEqual(ipmath("2001::1", 9), "2001::a")
         self.assertEqual(ipmath("2001::1", 10), "2001::b")
         self.assertEqual(ipmath("2001::5", -3), "2001::2")
-        self.assertEqual(ipmath("2001::5", -10), "2000:ffff:ffff:ffff:ffff:ffff:ffff:fffb")
+        self.assertEqual(
+            ipmath("2001::5", -10),
+            "2000:ffff:ffff:ffff:ffff:ffff:ffff:fffb",
+        )
 
         expected = "You must pass a valid IP address; invalid_ip is invalid"
         with self.assertRaises(AnsibleFilterError) as exc:
