@@ -23,26 +23,14 @@ from ansible_collections.ansible.utils.plugins.filter.ip4_hex import ip4_hex
 from ansible_collections.ansible.utils.plugins.filter.ipaddr import _ipaddr
 from ansible_collections.ansible.utils.plugins.filter.ipmath import ipmath
 from ansible_collections.ansible.utils.plugins.filter.ipsubnet import ipsubnet
-from ansible_collections.ansible.utils.plugins.filter.network_in_network import (
-    network_in_network,
-)
-from ansible_collections.ansible.utils.plugins.filter.network_in_usable import (
-    network_in_usable,
-)
-from ansible_collections.ansible.utils.plugins.filter.next_nth_usable import (
-    next_nth_usable,
-)
+from ansible_collections.ansible.utils.plugins.filter.network_in_network import network_in_network
+from ansible_collections.ansible.utils.plugins.filter.network_in_usable import network_in_usable
+from ansible_collections.ansible.utils.plugins.filter.next_nth_usable import next_nth_usable
 from ansible_collections.ansible.utils.plugins.filter.nthhost import nthhost
-from ansible_collections.ansible.utils.plugins.filter.previous_nth_usable import (
-    previous_nth_usable,
-)
-from ansible_collections.ansible.utils.plugins.filter.reduce_on_network import (
-    reduce_on_network,
-)
+from ansible_collections.ansible.utils.plugins.filter.previous_nth_usable import previous_nth_usable
+from ansible_collections.ansible.utils.plugins.filter.reduce_on_network import reduce_on_network
 from ansible_collections.ansible.utils.plugins.filter.slaac import slaac
-from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddr_utils import (
-    ipaddr,
-)
+from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddr_utils import ipaddr
 
 
 netaddr = pytest.importorskip("netaddr")
@@ -51,12 +39,14 @@ netaddr = pytest.importorskip("netaddr")
 class TestIpFilter(unittest.TestCase):
     def test_cidr_merge(self):
         with pytest.raises(
-            AnsibleFilterError, match="cidr_merge: expected iterable, got None"
+            AnsibleFilterError,
+            match="cidr_merge: expected iterable, got None",
         ):
             cidr_merge(None)
 
         with pytest.raises(
-            AnsibleFilterError, match="cidr_merge: invalid action 'floop'"
+            AnsibleFilterError,
+            match="cidr_merge: invalid action 'floop'",
         ):
             cidr_merge([], "floop")
 
@@ -406,23 +396,28 @@ class TestIpFilter(unittest.TestCase):
         self.assertEqual(ipaddr(address, "network_netmask"), "1.12.1.0 255.255.255.128")
         address = "1.12.1.36/28"
         self.assertEqual(
-            ipaddr(address, "network_netmask"), "1.12.1.32 255.255.255.240"
+            ipaddr(address, "network_netmask"),
+            "1.12.1.32 255.255.255.240",
         )
         address = "1.12.1.36/255.255.255.240"
         self.assertEqual(
-            ipaddr(address, "network_netmask"), "1.12.1.32 255.255.255.240"
+            ipaddr(address, "network_netmask"),
+            "1.12.1.32 255.255.255.240",
         )
         address = "1.12.1.36/31"
         self.assertEqual(
-            ipaddr(address, "network_netmask"), "1.12.1.36 255.255.255.254"
+            ipaddr(address, "network_netmask"),
+            "1.12.1.36 255.255.255.254",
         )
         address = "1.12.1.37/31"
         self.assertEqual(
-            ipaddr(address, "network_netmask"), "1.12.1.36 255.255.255.254"
+            ipaddr(address, "network_netmask"),
+            "1.12.1.36 255.255.255.254",
         )
         address = "1.12.1.36/32"
         self.assertEqual(
-            ipaddr(address, "network_netmask"), "1.12.1.36 255.255.255.255"
+            ipaddr(address, "network_netmask"),
+            "1.12.1.36 255.255.255.255",
         )
         address = "1.12.1.254/24"
         self.assertEqual(ipaddr(address, "network_netmask"), "1.12.1.0 255.255.255.0")
@@ -520,7 +515,8 @@ class TestIpFilter(unittest.TestCase):
         self.assertEqual(ipmath("2001::1", 10), "2001::b")
         self.assertEqual(ipmath("2001::5", -3), "2001::2")
         self.assertEqual(
-            ipmath("2001::5", -10), "2000:ffff:ffff:ffff:ffff:ffff:ffff:fffb"
+            ipmath("2001::5", -10),
+            "2000:ffff:ffff:ffff:ffff:ffff:ffff:fffb",
         )
 
         expected = "You must pass a valid IP address; invalid_ip is invalid"
