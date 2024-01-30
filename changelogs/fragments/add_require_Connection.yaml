@@ -1,2 +1,0 @@
-bugfixes:
-  - Avoid unnecessary use of persistent connection in `cli_parse`, `fact_diff`, `update_fact` and `validate` as this action does not require a connection.
