@@ -5,6 +5,26 @@ Ansible Utils Collection Release Notes
 .. contents:: Topics
 
 
+v3.1.0
+======
+
+Minor Changes
+-------------
+
+- Add support in fact_diff filter plugin to show common lines.(https://github.com/ansible-collections/ansible.utils/issues/311)
+
+Bugfixes
+--------
+
+- Avoid unnecessary use of persistent connection in `cli_parse`, `fact_diff`, `update_fact` and `validate` as this action does not require a connection.
+
+Documentation Changes
+---------------------
+
+- ipv6form filter plugin - Fix to be displayed correctly.
+- validate lookup plugin - Fix syntax in EXAMPLES.
+- validate module - Fix syntax in EXAMPLES.
+
 v3.0.0
 ======
 
