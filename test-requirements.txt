@@ -12,4 +12,4 @@ pytest-xdist
 pexpect
 git+https://github.com/ansible-network/pytest-ansible-network-integration.git
 ipaddress ; python_version < '3.0'
-netaddr
+netaddr==0.10.1
