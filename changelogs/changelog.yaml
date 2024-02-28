@@ -97,50 +97,6 @@ releases:
       - add_missing_test_requirements.yml
       - fix_tests.yaml
     release_date: "2021-04-27"
-  2.10.0:
-    release_date: "2023-05-11"
-  2.10.1:
-    release_date: "2023-05-12"
-  2.10.2:
-    changes:
-      minor_changes:
-        - validate - Add option `check_format` for the jsonschema engine to disable
-          JSON Schema format checking.
-        - validate - Add support for JSON Schema draft 2019-09 and 2020-12 as well as
-          automatically choosing the draft from the `$schema` field of the criteria.
-    fragments:
-      - netaddr_error.yml
-      - pre-commit.yaml
-      - validate_jsonschema_update.yaml
-    release_date: "2023-05-13"
-  2.10.3:
-    fragments:
-      - fix_workflow_names.yml
-    release_date: "2023-05-17"
-  2.10.4:
-    release_date: "2023-05-19"
-  2.11.0:
-    changes:
-      bugfixes:
-        - Validate input for ipv4_hex(https://github.com/ansible-collections/ansible.utils/issues/281)
-      minor_changes:
-        - Add ipcut filter plugin.(https://github.com/ansible-collections/ansible.utils/issues/251)
-        - Add ipv6form filter plugin.(https://github.com/ansible-collections/ansible.utils/issues/230)
-    fragments:
-      - Bugfix_ipv4_hex.yaml
-      - ipcut.yaml
-      - ipv6form.yaml
-    plugins:
-      filter:
-        - description: This filter is designed to get 1st or last few bits of IP address.
-          name: ipcut
-          namespace: null
-        - description:
-            This filter is designed to convert ipv6 address in different
-            formats. For example expand, compressetc.
-          name: ipv6form
-          namespace: null
-    release_date: "2023-09-07"
   2.2.0:
     changes:
       minor_changes:
@@ -366,3 +322,88 @@ releases:
       - fix_pre_commit.yaml
       - to_xml_disable_xml_declaration.yaml
     release_date: "2023-01-30"
+  2.10.0:
+    release_date: "2023-05-11"
+  2.10.1:
+    release_date: "2023-05-12"
+  2.10.2:
+    changes:
+      minor_changes:
+        - validate - Add option `check_format` for the jsonschema engine to disable
+          JSON Schema format checking.
+        - validate - Add support for JSON Schema draft 2019-09 and 2020-12 as well as
+          automatically choosing the draft from the `$schema` field of the criteria.
+    fragments:
+      - netaddr_error.yml
+      - pre-commit.yaml
+      - validate_jsonschema_update.yaml
+    release_date: "2023-05-13"
+  2.10.3:
+    fragments:
+      - fix_workflow_names.yml
+    release_date: "2023-05-17"
+  2.10.4:
+    release_date: "2023-05-19"
+  2.11.0:
+    changes:
+      bugfixes:
+        - Validate input for ipv4_hex(https://github.com/ansible-collections/ansible.utils/issues/281)
+      minor_changes:
+        - Add ipcut filter plugin.(https://github.com/ansible-collections/ansible.utils/issues/251)
+        - Add ipv6form filter plugin.(https://github.com/ansible-collections/ansible.utils/issues/230)
+    fragments:
+      - Bugfix_ipv4_hex.yaml
+      - ipcut.yaml
+      - ipv6form.yaml
+    plugins:
+      filter:
+        - description: This filter is designed to get 1st or last few bits of IP address.
+          name: ipcut
+          namespace: null
+        - description:
+            This filter is designed to convert ipv6 address in different
+            formats. For example expand, compressetc.
+          name: ipv6form
+          namespace: null
+    release_date: "2023-09-07"
+  2.12.0:
+    changes:
+      minor_changes:
+        - Fact_diff filter plugin - Add fact_diff filter plugin. (https://github.com/ansible-collections/ansible.utils/issues/78).
+    fragments:
+      - fact_diff_filter_plugin.yaml
+    plugins:
+      filter:
+        - description: Find the difference between currently set facts
+          name: fact_diff
+          namespace: null
+    release_date: "2023-11-27"
+  3.0.0:
+    changes:
+      major_changes:
+        - Bumping `requires_ansible` to `>=2.14.0`, since previous ansible-core versions
+          are EoL now.
+      release_summary:
+        Starting from this release, the minimum `ansible-core` version
+        this collection requires is `2.14.0`. That last known version compatible with
+        ansible-core<2.14 is `v2.12.0`.
+    fragments:
+      - update_requires_ansible.yaml
+    release_date: "2023-11-30"
+  3.1.0:
+    changes:
+      bugfixes:
+        - Avoid unnecessary use of persistent connection in `cli_parse`, `fact_diff`,
+          `update_fact` and `validate` as this action does not require a connection.
+      doc_changes:
+        - ipv6form filter plugin - Fix to be displayed correctly.
+        - validate lookup plugin - Fix syntax in EXAMPLES.
+        - validate module - Fix syntax in EXAMPLES.
+      minor_changes:
+        - Add support in fact_diff filter plugin to show common lines.(https://github.com/ansible-collections/ansible.utils/issues/311)
+    fragments:
+      - Fre_fact_diff.yaml
+      - add_require_Connection.yaml
+      - ipv6form-doc.yaml
+      - validate-doc.yaml
+    release_date: "2024-01-30"

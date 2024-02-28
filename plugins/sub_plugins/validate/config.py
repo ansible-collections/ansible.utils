@@ -48,6 +48,8 @@ EXAMPLES = r"""
 
 import re
 
+from io import StringIO
+
 from ansible.errors import AnsibleError
 from ansible.module_utils._text import to_text
 from ansible.module_utils.six import string_types
@@ -87,7 +89,7 @@ class Validate(ValidateBase):
 
         try:
             if isinstance(self._criteria, string_types):
-                self._criteria = yaml.load(str(self._criteria), Loader=SafeLoader)
+                self._criteria = yaml.load(StringIO(self._criteria), Loader=SafeLoader)
         except yaml.parser.ParserError as exc:
             msg = (
                 "'criteria' option value is invalid, value should be valid YAML."
@@ -105,7 +107,9 @@ class Validate(ValidateBase):
                 issues.append('Criteria {item} missing "action" key'.format(item=item))
             elif item["action"] not in ("warn", "fail"):
                 issues.append(
-                    'Action in criteria {item} is not one of "warn" or "fail"'.format(item=item),
+                    'Action in criteria {item} is not one of "warn" or "fail"'.format(
+                        item=item,
+                    ),
                 )
             if "rule" not in item:
                 issues.append('Criteria {item} missing "rule" key'.format(item=item))
@@ -159,7 +163,9 @@ class Validate(ValidateBase):
                         warnings.append(format_message(match, line_number, criteria))
                     if criteria["action"] == "fail":
                         errors.append({"message": criteria["name"], "found": line})
-                        error_messages.append(format_message(match, line_number, criteria))
+                        error_messages.append(
+                            format_message(match, line_number, criteria),
+                        )
 
         if errors:
             if "errors" not in self._result:

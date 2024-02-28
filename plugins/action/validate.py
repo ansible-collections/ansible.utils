@@ -29,6 +29,7 @@ class ActionModule(ActionBase):
     """action module"""
 
     VALIDATE_CLS_NAME = "Validate"
+    _requires_connection = False
 
     def __init__(self, *args, **kwargs):
         super(ActionModule, self).__init__(*args, **kwargs)

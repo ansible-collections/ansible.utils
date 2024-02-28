@@ -1,13 +1,13 @@
 # Ansible Utilities Collection
 [![Codecov](https://codecov.io/gh/ansible-collections/ansible.utils/branch/main/graph/badge.svg)](https://codecov.io/gh/ansible-collections/ansible.utils)
-[![CI](https://github.com/ansible-collections/ansible.utils/actions/workflows/test.yml/badge.svg?branch=main&event=schedule)](https://github.com/ansible-collections/ansible.utils/actions/workflows/test.yml)
+[![CI](https://github.com/ansible-collections/ansible.utils/actions/workflows/tests.yml/badge.svg?branch=main&event=schedule)](https://github.com/ansible-collections/ansible.utils/actions/workflows/tests.yml)
 
 The Ansible ``ansible.utils`` collection includes a variety of plugins that aid in the management, manipulation and visibility of data for the Ansible playbook developer.
 
 <!--start requires_ansible-->
 ## Ansible version compatibility
 
-This collection has been tested against following Ansible versions: **>=2.9.10**.
+This collection has been tested against following Ansible versions: **>=2.14.0**.
 
 For collections that support Ansible 2.9, please ensure you update your `network_os` to use the
 fully qualified collection name (for example, `cisco.ios.ios`).

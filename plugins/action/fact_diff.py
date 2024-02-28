@@ -24,6 +24,8 @@ from ansible_collections.ansible.utils.plugins.modules.fact_diff import DOCUMENT
 class ActionModule(ActionBase):
     """action module"""
 
+    _requires_connection = False
+
     def __init__(self, *args, **kwargs):
         super(ActionModule, self).__init__(*args, **kwargs)
         self._supports_async = True

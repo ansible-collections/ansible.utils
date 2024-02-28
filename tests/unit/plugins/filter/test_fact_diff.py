@@ -106,3 +106,13 @@ class TestUpdate_Fact(unittest.TestCase):
             "missing required arguments: after",
             str(error.exception),
         )
+
+    def test_diff_dict_common(self):
+        """Compare two dicts that with common option"""
+        self.maxDiff = None
+        before = {"a": {"b": {"c": {"d": [0, 1, 2, 3]}}}}
+        after = {"a": {"b": {"c": {"d": [0, 1, 2, 4]}}}}
+        result = _fact_diff("", before, after, common=True)
+        self.assertIn("                    0", result)
+        self.assertIn("                    1", result)
+        self.assertIn("                    2", result)
