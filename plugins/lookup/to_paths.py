@@ -143,8 +143,7 @@ class LookupModule(LookupBase):
             terms = dict(zip(keys, terms))
         terms.update(kwargs)
 
-        schema = [v for k, v in globals().items() if k.lower() == "documentation"]
-        aav = AnsibleArgSpecValidator(data=terms, schema=schema[0], name="to_paths")
+        aav = AnsibleArgSpecValidator(data=terms, schema=DOCUMENTATION, name="to_paths")
         valid, errors, updated_data = aav.validate()
         if not valid:
             raise AnsibleLookupError(errors)
