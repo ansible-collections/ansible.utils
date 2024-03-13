@@ -28,7 +28,7 @@
 
 - name: Ipaddr filter with public network query
   ansible.builtin.set_fact:
-    result3: "{{ value | ansible.utils.ipaddr | ansible.utils.ipaddr('public') }}"
+    result3: "{{ value | ansible.utils.ipaddr('public') }}"
 
 - name: Assert result for ipaddr public network query
   ansible.builtin.assert:
