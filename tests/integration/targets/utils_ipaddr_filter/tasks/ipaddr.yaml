@@ -20,7 +20,7 @@
 
 - name: Ipaddr filter with host string query
   ansible.builtin.set_fact:
-    result2: "{{ value | ansible.utils.ipaddr('host') }}"
+    result2: "{{ value | ansible.utils.ipaddr | ansible.utils.ipaddr('host') }}"
 
 - name: Assert result for ipaddr host query
   ansible.builtin.assert:
