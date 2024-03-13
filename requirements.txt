@@ -2,4 +2,4 @@ jsonschema
 textfsm
 ttp
 xmltodict
-netaddr==0.10.1
+netaddr>=0.10.1
