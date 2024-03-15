@@ -1,0 +1,3 @@
+---
+bugfixes:
+  - "AnsibleArgSpecValidator - removes empty keys in task args before validating against schema."

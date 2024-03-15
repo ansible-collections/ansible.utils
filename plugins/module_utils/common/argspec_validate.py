@@ -29,7 +29,10 @@ import re
 from ansible.module_utils.basic import AnsibleModule
 from ansible.module_utils.six import iteritems
 
-from ansible_collections.ansible.utils.plugins.module_utils.common.utils import dict_merge
+from ansible_collections.ansible.utils.plugins.module_utils.common.utils import (
+    dict_merge,
+    remove_empties,
+)
 
 
 try:
@@ -220,7 +223,7 @@ class AnsibleArgSpecValidator:
             )
             updated_data = {}
         else:
-            mm = MonkeyModule(data=self._data, schema=self._schema, name=self._name)
+            mm = MonkeyModule(data=remove_empties(self._data), schema=self._schema, name=self._name)
             valid, errors, updated_data = mm.validate()
         return valid, errors, updated_data
 
