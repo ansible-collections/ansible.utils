@@ -205,8 +205,11 @@ class ActionModule(ActionBase):
             cmd_as_fname = self._task.args.get("parser").get("command").replace(" ", "_")
             fname = "{os}_{cmd}.{ext}".format(os=oper_sys, cmd=cmd_as_fname, ext=template_extension)
             source = self._find_needle("templates", fname)
-            self._debug("template_path in task args updated to {source}".format(source=source))
-            self._task.args["parser"]["template_path"] = source
+        else:
+            source = self._task.args.get("parser").get("template_path")
+            source = self._find_needle("templates", source)
+        self._debug("template_path in task args updated to {source}".format(source=source))
+        self._task.args["parser"]["template_path"] = source
 
     def _get_template_contents(self):
         """Retrieve the contents of the parser template
