@@ -1,2 +1,14 @@
 ---
-# tasks file for utils_replace_keys
+- name: Recursively find all test files
+  find:
+    file_type: file
+    paths: "{{ role_path }}/tasks"
+    recurse: false
+    use_regex: true
+    patterns:
+      - "^(?!_|main).+$"
+  delegate_to: localhost
+  register: found
+
+- include_tasks: "{{ item.path }}"
+  loop: "{{ found.files }}"

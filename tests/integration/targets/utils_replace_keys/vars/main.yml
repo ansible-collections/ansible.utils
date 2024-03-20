@@ -1,2 +1,43 @@
 ---
-# vars file for utils_replace_keys
+replace:
+  default:
+    - name: eth0
+      enabled: true
+      duplex: auto
+      speed: auto
+    - name: eth1
+      description: Configured by Ansible - Interface 1
+      mtu: 1500
+      speed: auto
+      duplex: auto
+      enabled: true
+      vifs:
+        - vlan_id: 100
+          description: Eth1 - VIF 100
+          mtu: 400
+          enabled: true
+        - vlan_id: 101
+          description: Eth1 - VIF 101
+          enabled: true
+    - name: eth2
+      description: Configured by Ansible - Interface 2 (ADMIN DOWN)
+      mtu: 600
+      enabled: false
+l1:
+  - { p1: a, p2: a, p3: a }
+  - { p1: b, p2: b, p3: b }
+  - { p1: c, p2: c, p3: c }
+l2:
+  - - { p1: a, p2: a, p3: a }
+    - { p1: b, p2: b, p3: b }
+    - { p1: c, p2: c, p3: c }
+  - - { p1: a, p2: a, p3: a }
+    - { p1: b, p2: b, p3: b }
+    - { p1: c, p2: c, p3: c }
+  - - { p1: a, p2: a, p3: a }
+    - { p1: b, p2: b, p3: b }
+    - { p1: c, p2: c, p3: c }
+l3:
+  - { p1_key_o1: a, p2_key_o2: a, p3_key_o3: a }
+  - { p1_key_o4: b, p2_key_o5: b, p3_key_o6: b }
+  - { p1_key_o7: c, p2_key_o8: c, p3_key_o9: c }
