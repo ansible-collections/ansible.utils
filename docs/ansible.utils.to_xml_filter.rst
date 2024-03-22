@@ -73,6 +73,68 @@ Parameters
                         <div>Conversion library to use within the filter plugin.</div>
                 </td>
             </tr>
+            <tr>
+                <td colspan="1">
+                    <div class="ansibleOptionAnchor" id="parameter-"></div>
+                    <b>full_document</b>
+                    <a class="ansibleOptionLink" href="#parameter-" title="Permalink to this option"></a>
+                    <div style="font-size: small">
+                        <span style="color: purple">boolean</span>
+                    </div>
+                </td>
+                <td>
+                        <ul style="margin: 0; padding: 0"><b>Choices:</b>
+                                    <li>no</li>
+                                    <li><div style="color: blue"><b>yes</b>&nbsp;&larr;</div></li>
+                        </ul>
+                </td>
+                    <td>
+                    </td>
+                <td>
+                        <div>The option to disable xml declaration(defaults to True).</div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="1">
+                    <div class="ansibleOptionAnchor" id="parameter-"></div>
+                    <b>indent</b>
+                    <a class="ansibleOptionLink" href="#parameter-" title="Permalink to this option"></a>
+                    <div style="font-size: small">
+                        <span style="color: purple">string</span>
+                    </div>
+                </td>
+                <td>
+                        <ul style="margin: 0; padding: 0"><b>Choices:</b>
+                                    <li><div style="color: blue"><b>tabs</b>&nbsp;&larr;</div></li>
+                                    <li>spaces</li>
+                        </ul>
+                </td>
+                    <td>
+                    </td>
+                <td>
+                        <div>The character used for indentation (defaults to tabs).</div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="1">
+                    <div class="ansibleOptionAnchor" id="parameter-"></div>
+                    <b>indent_width</b>
+                    <a class="ansibleOptionLink" href="#parameter-" title="Permalink to this option"></a>
+                    <div style="font-size: small">
+                        <span style="color: purple">integer</span>
+                    </div>
+                </td>
+                <td>
+                        <b>Default:</b><br/><div style="color: blue">4</div>
+                </td>
+                    <td>
+                    </td>
+                <td>
+                        <div>The number of spaces to use to indent output data.</div>
+                        <div>This option is only used when indent=&quot;spaces&quot;, otherwise it is ignored.</div>
+                        <div>When indent=&quot;tabs&quot;, a single tab is always used for indentation.</div>
+                </td>
+            </tr>
     </table>
     <br/>
 
@@ -89,11 +151,11 @@ Examples
     - name: Define JSON data
       ansible.builtin.set_fact:
           data:
-            "interface-configurations":
-              "@xmlns": "http://cisco.com/ns/yang/Cisco-IOS-XR-ifmgr-cfg"
-              "interface-configuration":
+              "interface-configurations":
+                  "@xmlns": "http://cisco.com/ns/yang/Cisco-IOS-XR-ifmgr-cfg"
+                  "interface-configuration":
     - debug:
-        msg:  "{{ data|ansible.utils.to_xml }}"
+          msg: "{{ data | ansible.utils.to_xml }}"
 
     # TASK [Define JSON data ] *************************************************************************
     # task path: /Users/amhatre/ansible-collections/playbooks/test_utils_json_to_xml.yaml:5
@@ -121,12 +183,12 @@ Examples
 
     - name: Define JSON data
       ansible.builtin.set_fact:
-        data:
-          "interface-configurations":
-              "@xmlns": "http://cisco.com/ns/yang/Cisco-IOS-XR-ifmgr-cfg"
-              "interface-configuration":
+          data:
+              "interface-configurations":
+                  "@xmlns": "http://cisco.com/ns/yang/Cisco-IOS-XR-ifmgr-cfg"
+                  "interface-configuration":
     - debug:
-        msg:  "{{ data|ansible.utils.to_xml('xmltodict') }}"
+          msg: "{{ data | ansible.utils.to_xml('xmltodict') }}"
 
     # TASK [Define JSON data ] *************************************************************************
     # task path: /Users/amhatre/ansible-collections/playbooks/test_utils_json_to_xml.yaml:5
@@ -147,6 +209,38 @@ Examples
     # ok: [localhost] => {
     #     "msg": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<interface-configurations xmlns=\"http://cisco.com/ns/yang/
     #     Cisco-IOS-XR-ifmgr-cfg\">\n\t<interface-configuration></interface-configuration>\n</interface-configurations>"
+    # }
+
+    #### example3 with indent='spaces' and indent_width=2
+
+    - name: Define JSON data
+      ansible.builtin.set_fact:
+          data:
+              "interface-configurations":
+                  "@xmlns": "http://cisco.com/ns/yang/Cisco-IOS-XR-ifmgr-cfg"
+                  "interface-configuration":
+    - debug:
+          msg: "{{ data | ansible.utils.to_xml(indent='spaces', indent_width=2) }}"
+
+    # TASK [Define JSON data ] *************************************************************************
+    # task path: /Users/amhatre/ansible-collections/playbooks/test_utils_json_to_xml.yaml:5
+    # ok: [localhost] => {
+    #     "ansible_facts": {
+    #         "data": {
+    #             "interface-configurations": {
+    #                 "@xmlns": "http://cisco.com/ns/yang/Cisco-IOS-XR-ifmgr-cfg",
+    #                 "interface-configuration": null
+    #             }
+    #         }
+    #     },
+    #     "changed": false
+    # }
+    # TASK [debug] ***********************************************************************************************************
+    # task path: /Users/amhatre/ansible-collections/playbooks/test_utils_json_to_xml.yaml:13
+    # Loading collection ansible.utils from /Users/amhatre/ansible-collections/collections/ansible_collections/ansible/utils
+    # ok: [localhost] => {
+    #     "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<interface-configurations xmlns=\"http://cisco.com/ns/yang/
+    #     Cisco-IOS-XR-ifmgr-cfg\">\n  <interface-configuration></interface-configuration>\n</interface-configurations>"
     # }
 
 

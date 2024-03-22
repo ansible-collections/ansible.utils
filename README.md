@@ -1,14 +1,13 @@
-
-
 # Ansible Utilities Collection
-[![Codecov](https://img.shields.io/codecov/c/github/ansible-collections/ansible.utils)](https://codecov.io/gh/ansible-collections/ansible.utils)
+[![Codecov](https://codecov.io/gh/ansible-collections/ansible.utils/branch/main/graph/badge.svg)](https://codecov.io/gh/ansible-collections/ansible.utils)
+[![CI](https://github.com/ansible-collections/ansible.utils/actions/workflows/tests.yml/badge.svg?branch=main&event=schedule)](https://github.com/ansible-collections/ansible.utils/actions/workflows/tests.yml)
 
 The Ansible ``ansible.utils`` collection includes a variety of plugins that aid in the management, manipulation and visibility of data for the Ansible playbook developer.
 
 <!--start requires_ansible-->
 ## Ansible version compatibility
 
-This collection has been tested against following Ansible versions: **>=2.9.10**.
+This collection has been tested against following Ansible versions: **>=2.14.0**.
 
 For collections that support Ansible 2.9, please ensure you update your `network_os` to use the
 fully qualified collection name (for example, `cisco.ios.ios`).
@@ -25,16 +24,19 @@ Name | Description
 --- | ---
 [ansible.utils.cidr_merge](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.cidr_merge_filter.rst)|This filter can be used to merge subnets or individual addresses.
 [ansible.utils.consolidate](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.consolidate_filter.rst)|Consolidate facts together on common attributes.
+[ansible.utils.fact_diff](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.fact_diff_filter.rst)|Find the difference between currently set facts
 [ansible.utils.from_xml](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.from_xml_filter.rst)|Convert given XML string to native python dictionary.
 [ansible.utils.get_path](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.get_path_filter.rst)|Retrieve the value in a variable using a path
 [ansible.utils.hwaddr](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.hwaddr_filter.rst)|HWaddr / MAC address filters
 [ansible.utils.index_of](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.index_of_filter.rst)|Find the indices of items in a list matching some criteria
 [ansible.utils.ip4_hex](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ip4_hex_filter.rst)|This filter is designed to convert IPv4 address to Hexadecimal notation with optional delimiter.
 [ansible.utils.ipaddr](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipaddr_filter.rst)|This filter is designed to return the input value if a query is True, else False.
+[ansible.utils.ipcut](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipcut_filter.rst)|This filter is designed to get 1st or last few bits of IP address.
 [ansible.utils.ipmath](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipmath_filter.rst)|This filter is designed to do simple IP math/arithmetic.
 [ansible.utils.ipsubnet](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipsubnet_filter.rst)|This filter can be used to manipulate network subnets in several ways.
 [ansible.utils.ipv4](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipv4_filter.rst)|To filter only Ipv4 addresses Ipv4 filter is used.
 [ansible.utils.ipv6](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipv6_filter.rst)|To filter only Ipv6 addresses Ipv6 filter is used.
+[ansible.utils.ipv6form](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipv6form_filter.rst)|This filter is designed to convert ipv6 address in different formats. For example expand, compressetc.
 [ansible.utils.ipwrap](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.ipwrap_filter.rst)|This filter is designed to Wrap IPv6 addresses in [ ] brackets.
 [ansible.utils.keep_keys](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.keep_keys_filter.rst)|Keep specific keys from a data recursively.
 [ansible.utils.macaddr](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.macaddr_filter.rst)|macaddr / MAC address filters

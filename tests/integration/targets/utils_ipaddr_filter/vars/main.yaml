@@ -26,7 +26,6 @@ ipaddr_result2:
 
 ipaddr_result3:
   - 192.24.2.1
-  - 2001:db8:32c:faad::/64
 
 ipaddr_result4:
   - 192.168.32.0/24
@@ -39,7 +38,7 @@ ipwrap_result1:
   - "192.168.32.0/24"
   - "[fe80::100]/10"
   - "[2001:db8:32c:faad::]/64"
-  - True
+  - true
 
 ipv6_result1:
   - "::ffff:192.168.32.0/120"

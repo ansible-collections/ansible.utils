@@ -1,0 +1,92 @@
+---
+- name: Set fact
+  ansible.builtin.set_fact:
+    before: [0, 1, 2]
+    after: [0, 1, 2, 3]
+    plugin:
+      vars:
+        skip_lines:
+          - "+"
+
+- name: Check for graceful fail of invalid regex
+  ansible.builtin.set_fact: "{{ before | ansible.utils.fact_diff(after, plugin) }}"
+  ignore_errors: true
+  register: result
+
+- name: Assert
+  ansible.builtin.assert:
+    that: "{{ msg in result.msg }}"
+  vars:
+    msg: "The regex '+', is not valid"
+
+- name: Check argspec validation
+  ansible.builtin.set_fact:
+    result: "{{ [1, 2, 3] | ansible.utils.fact_diff() }}"
+  register: error
+  ignore_errors: true
+
+- name: Assert
+  ansible.builtin.assert:
+    that: "{{ msg in error.msg }}"
+  vars:
+    msg: "missing required arguments: after"
+
+- name: Set fact
+  ansible.builtin.set_fact:
+    before:
+      a:
+        b:
+          c:
+            d:
+              - 0
+              - 1
+    after:
+      a:
+        b:
+          c:
+            d:
+              - 2
+              - 3
+
+- name: Show the difference in json format
+  ansible.builtin.set_fact:
+    result: "{{ before | ansible.utils.fact_diff(after) }}"
+
+- name: Show the difference in path format
+  ansible.builtin.set_fact:
+    before: "{{ before | ansible.utils.to_paths }}"
+    after: "{{ after | ansible.utils.to_paths }}"
+
+- name: Show the difference in path format
+  ansible.builtin.set_fact:
+    result: "{{ before | ansible.utils.fact_diff(after) }}"
+
+- name: Show the difference in yaml format
+  ansible.builtin.set_fact:
+    before: "{{ before | to_nice_yaml }}"
+    after: "{{ after | to_nice_yaml }}"
+
+- name: Show the difference in yaml format
+  ansible.builtin.set_fact:
+    result: "{{ before | ansible.utils.fact_diff(after) }}"
+
+- name: Set fact
+  ansible.builtin.set_fact:
+    before:
+      a:
+        b:
+          c:
+            d:
+              - 0
+              - 1
+    after:
+      a:
+        b:
+          c:
+            d:
+              - 2
+              - 3
+
+- name: Show the common lines in json format
+  ansible.builtin.set_fact:
+    result: "{{ before | ansible.utils.fact_diff(after, common=true) }}"

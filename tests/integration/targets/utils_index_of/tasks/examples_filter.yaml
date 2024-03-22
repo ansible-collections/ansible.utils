@@ -1,6 +1,7 @@
 ---
 #### Simple examples
-- ansible.builtin.set_fact:
+- name: Set fact
+  ansible.builtin.set_fact:
     data:
       - 1
       - 2
@@ -8,7 +9,7 @@
 
 - name: Find the index of 2
   ansible.builtin.set_fact:
-    indices: "{{ data|ansible.utils.index_of('eq', 2) }}"
+    indices: "{{ data | ansible.utils.index_of('eq', 2) }}"
 
 # TASK [Find the index of 2] *************************************************
 # ok: [nxos101] => changed=false
@@ -17,7 +18,7 @@
 
 - name: Find the index of 2, ensure list is returned
   ansible.builtin.set_fact:
-    indices: "{{ data|ansible.utils.index_of('eq', 2, wantlist=True) }}"
+    indices: "{{ data | ansible.utils.index_of('eq', 2, wantlist=true) }}"
 
 # TASK [Find the index of 2, ensure list is returned] ************************
 # ok: [nxos101] => changed=false
@@ -27,7 +28,7 @@
 
 - name: Find the index of 3 using the long format
   ansible.builtin.set_fact:
-    indices: "{{ data|ansible.utils.index_of(test='eq', value=value, wantlist=True) }}"
+    indices: "{{ data | ansible.utils.index_of(test='eq', value=value, wantlist=true) }}"
   vars:
     value: 3
 
@@ -37,13 +38,13 @@
 #     indices:
 #     - 2
 
-#- name: Find numbers greater than 1, using loop
-#  debug:
-#    msg: "{{ data[item] }} is {{ test }} than {{ value }}"
-#  loop: "{{ data|ansible.utils.index_of(test, value) }}"
-#  vars:
-#    test: '>'
-#    value: 1
+# - name: Find numbers greater than 1, using loop
+#   ansible.builtin.debug:
+#     msg: "{{ data[item] }} is {{ test }} than {{ value }}"
+#   loop: "{{ data|ansible.utils.index_of(test, value) }}"
+#   vars:
+#     test: '>'
+#     value: 1
 
 # TASK [Find numbers great than 1, using loop] *******************************
 # ok: [sw01] => (item=1) =>
@@ -53,7 +54,8 @@
 
 #### Working with lists of dictionaries
 
-- ansible.builtin.set_fact:
+- name: Set fact
+  ansible.builtin.set_fact:
     data:
       - name: sw01.example.lan
         type: switch
@@ -66,7 +68,7 @@
 
 - name: Find the index of all firewalls using the type key
   ansible.builtin.set_fact:
-    firewalls: "{{ data|ansible.utils.index_of('eq', 'firewall', 'type') }}"
+    firewalls: "{{ data | ansible.utils.index_of('eq', 'firewall', 'type') }}"
 
 # TASK [Find the index of all firewalls using the type key] ******************
 # ok: [nxos101] => changed=false
@@ -76,9 +78,9 @@
 #     - 3
 
 - name: Find the index of all firewalls, use in a loop
-  debug:
+  ansible.builtin.debug:
     msg: "The type of {{ device_type }} at index {{ item }} has name {{ data[item].name }}."
-  loop: "{{ data|ansible.utils.index_of('eq', device_type, 'type') }}"
+  loop: "{{ data | ansible.utils.index_of('eq', device_type, 'type') }}"
   vars:
     device_type: firewall
 
@@ -89,11 +91,12 @@
 #   msg: The type of firewall at index 3 has name fw02.example.corp.
 
 - name: Find the index of all devices with a .corp name
-  debug:
+  ansible.builtin.debug:
     msg: "The device named {{ data[item].name }} is a {{ data[item].type }}"
-  loop: "{{ data|ansible.utils.index_of('regex', expression, 'name') }}"
+  loop: "{{ data | ansible.utils.index_of('regex', expression, 'name') }}"
   vars:
-    expression: '\.corp$' # ends with .corp
+    expression: '\.corp$'
+# ends with .corp
 
 # TASK [Find the index of all devices with a .corp name] *********************
 # ok: [nxos101] => (item=2) =>
@@ -126,7 +129,7 @@
 #   vars:
 #     found: []
 #     ip: '192.168.101.'
-#     address: "{{ item.1.ipv4|d([])|ansible.utils.index_of('search', ip, 'address', wantlist=True) }}"
+#     address: "{{ item.1.ipv4|d([])|ansible.utils.index_of('search', ip, 'address', wantlist=true) }}"
 #     entry:
 #     - interface_idx: "{{ item.0 }}"
 #       address_idxs: "{{ address }}"
@@ -140,7 +143,7 @@
 #     interface_idx: '128'
 
 # - name: Show all interfaces and their address
-#   debug:
+#   ansible.builtin.debug:
 #     msg: "{{ interface.name }} has ip {{ address }}"
 #   loop: "{{ found|subelements('address_idxs') }}"
 #   vars:
@@ -153,7 +156,8 @@
 
 #### Working with deeply nested data
 
-- ansible.builtin.set_fact:
+- name: Set fact
+  ansible.builtin.set_fact:
     data:
       interfaces:
         interface:
@@ -199,10 +203,10 @@
                   index: 3
 
 - name: Find the description of loopback111, subinterface index 10
-  debug:
+  ansible.builtin.debug:
     msg: |-
-      {{ data.interfaces.interface[int_idx|int]
-          .subinterfaces.subinterface[subint_idx|int]
+      {{ data.interfaces.interface[int_idx | int]
+          .subinterfaces.subinterface[subint_idx | int]
             .config.description }}
   vars:
     # the values to search for
@@ -210,11 +214,11 @@
     sub_index: 10
     # retrieve the index in each nested list
     int_idx: |
-      {{ data.interfaces.interface|
+      {{ data.interfaces.interface |
             ansible.utils.index_of('eq', int_name, 'name') }}
     subint_idx: |
-      {{ data.interfaces.interface[int_idx|int]
-            .subinterfaces.subinterface|
+      {{ data.interfaces.interface[int_idx | int]
+            .subinterfaces.subinterface |
                 ansible.utils.index_of('eq', sub_index, 'index') }}
 
 # TASK [Find the description of loopback111, subinterface index 10] ************

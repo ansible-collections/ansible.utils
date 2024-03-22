@@ -35,6 +35,24 @@ DOCUMENTATION = """
         - Conversion library to use within the filter plugin.
         type: str
         default: xmltodict
+      indent:
+        description:
+        - The character used for indentation (defaults to tabs).
+        type: str
+        default: tabs
+        choices: ["tabs", "spaces"]
+      indent_width:
+        description:
+        - The number of spaces to use to indent output data.
+        - This option is only used when indent="spaces", otherwise it is ignored.
+        - When indent="tabs", a single tab is always used for indentation.
+        type: int
+        default: 4
+      full_document:
+        description:
+        - The option to disable xml declaration(defaults to True).
+        type: bool
+        default: True
 """
 
 EXAMPLES = r"""
@@ -44,11 +62,11 @@ EXAMPLES = r"""
 - name: Define JSON data
   ansible.builtin.set_fact:
       data:
-        "interface-configurations":
-          "@xmlns": "http://cisco.com/ns/yang/Cisco-IOS-XR-ifmgr-cfg"
-          "interface-configuration":
+          "interface-configurations":
+              "@xmlns": "http://cisco.com/ns/yang/Cisco-IOS-XR-ifmgr-cfg"
+              "interface-configuration":
 - debug:
-    msg:  "{{ data|ansible.utils.to_xml }}"
+      msg: "{{ data | ansible.utils.to_xml }}"
 
 # TASK [Define JSON data ] *************************************************************************
 # task path: /Users/amhatre/ansible-collections/playbooks/test_utils_json_to_xml.yaml:5
@@ -76,12 +94,12 @@ EXAMPLES = r"""
 
 - name: Define JSON data
   ansible.builtin.set_fact:
-    data:
-      "interface-configurations":
-          "@xmlns": "http://cisco.com/ns/yang/Cisco-IOS-XR-ifmgr-cfg"
-          "interface-configuration":
+      data:
+          "interface-configurations":
+              "@xmlns": "http://cisco.com/ns/yang/Cisco-IOS-XR-ifmgr-cfg"
+              "interface-configuration":
 - debug:
-    msg:  "{{ data|ansible.utils.to_xml('xmltodict') }}"
+      msg: "{{ data | ansible.utils.to_xml('xmltodict') }}"
 
 # TASK [Define JSON data ] *************************************************************************
 # task path: /Users/amhatre/ansible-collections/playbooks/test_utils_json_to_xml.yaml:5
@@ -104,6 +122,37 @@ EXAMPLES = r"""
 #     Cisco-IOS-XR-ifmgr-cfg\">\n\t<interface-configuration></interface-configuration>\n</interface-configurations>"
 # }
 
+#### example3 with indent='spaces' and indent_width=2
+
+- name: Define JSON data
+  ansible.builtin.set_fact:
+      data:
+          "interface-configurations":
+              "@xmlns": "http://cisco.com/ns/yang/Cisco-IOS-XR-ifmgr-cfg"
+              "interface-configuration":
+- debug:
+      msg: "{{ data | ansible.utils.to_xml(indent='spaces', indent_width=2) }}"
+
+# TASK [Define JSON data ] *************************************************************************
+# task path: /Users/amhatre/ansible-collections/playbooks/test_utils_json_to_xml.yaml:5
+# ok: [localhost] => {
+#     "ansible_facts": {
+#         "data": {
+#             "interface-configurations": {
+#                 "@xmlns": "http://cisco.com/ns/yang/Cisco-IOS-XR-ifmgr-cfg",
+#                 "interface-configuration": null
+#             }
+#         }
+#     },
+#     "changed": false
+# }
+# TASK [debug] ***********************************************************************************************************
+# task path: /Users/amhatre/ansible-collections/playbooks/test_utils_json_to_xml.yaml:13
+# Loading collection ansible.utils from /Users/amhatre/ansible-collections/collections/ansible_collections/ansible/utils
+# ok: [localhost] => {
+#     "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<interface-configurations xmlns=\"http://cisco.com/ns/yang/
+#     Cisco-IOS-XR-ifmgr-cfg\">\n  <interface-configuration></interface-configuration>\n</interface-configurations>"
+# }
 """
 
 from ansible.errors import AnsibleFilterError
@@ -123,7 +172,7 @@ except ImportError:
 @pass_environment
 def _to_xml(*args, **kwargs):
     """Convert the given data from json to xml."""
-    keys = ["data", "engine"]
+    keys = ["data", "engine", "indent", "indent_width"]
     data = dict(zip(keys, args[1:]))
     data.update(kwargs)
     aav = AnsibleArgSpecValidator(data=data, schema=DOCUMENTATION, name="to_xml")

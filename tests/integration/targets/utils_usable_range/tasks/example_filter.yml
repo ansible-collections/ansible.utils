@@ -5,7 +5,7 @@
     result1: "{{ '10.1.1.1' | ansible.utils.usable_range }}"
 
 - name: Assert result for 10.1.1.1
-  assert:
+  ansible.builtin.assert:
     that: "{{ result1 == result1_val }}"
 
 - name: Expand and produce list of usable IP addresses in 10.0.0.0/28
@@ -13,7 +13,7 @@
     result2: "{{ '10.0.0.0/28' | ansible.utils.usable_range }}"
 
 - name: Assert result for 10.0.0.0/28
-  assert:
+  ansible.builtin.assert:
     that: "{{ result2 == result2_val }}"
 
 - name: Expand and produce list of usable IP addresses in 192.0.2.0/24
@@ -21,7 +21,7 @@
     result3: "{{ '192.0.2.0/24' | ansible.utils.usable_range }}"
 
 - name: Assert result for 192.0.2.0/24
-  assert:
+  ansible.builtin.assert:
     # Since the list is huge, asserting only on number of ips
     that: "{{ result3.number_of_ips == result3_val.number_of_ips }}"
 
@@ -31,7 +31,7 @@
     result4: "{{ '2001:db8:abcd:0012::0/126' | ansible.utils.usable_range }}"
 
 - name: Assert result for 2001:db8:abcd:0012::0/126
-  assert:
+  ansible.builtin.assert:
     that: "{{ result4 == result4_val }}"
 
 - name: "Expand and produce list of usable IP addresses in 2001:db8:abcd:12::"
@@ -39,5 +39,5 @@
     result5: "{{ '2001:db8:abcd:12::' | ansible.utils.usable_range }}"
 
 - name: "Assert result for 2001:db8:abcd:12::"
-  assert:
+  ansible.builtin.assert:
     that: "{{ result5 == result5_val }}"

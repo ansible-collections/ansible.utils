@@ -29,10 +29,7 @@ DOCUMENTATION = """
         ip:
             description:
             - A string that represents the value against which the test is going to be performed
-            - For example:
-                - "8.8.8.8"
-                - "10.1.1.1"
-                - "192.168.1.250"
+            - 'For example: C(8.8.8.8), C(10.1.1.1), or C(192.168.1.250)'
             type: str
             required: True
     notes:
@@ -63,7 +60,6 @@ EXAMPLES = r"""
 #     },
 #     "changed": false
 # }
-
 """
 
 RETURN = """

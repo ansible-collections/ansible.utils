@@ -49,7 +49,7 @@ class ValidateBase(object):
         cref = dict(zip(["corg", "cname", "plugin"], engine.split(".")))
         validatorlib = (
             "ansible_collections.{corg}.{cname}.plugins.sub_plugins.validate.{plugin}".format(
-                **cref
+                **cref,
             )
         )
 
@@ -75,7 +75,6 @@ class ValidateBase(object):
             return None
 
         for option_name, option_value in iteritems(options):
-
             option_var_name_list = option_value.get("vars", [])
             option_env_name_list = option_value.get("env", [])
 
@@ -124,7 +123,9 @@ class ValidateBase(object):
                         break
 
         valid, argspec_result, updated_params = check_argspec(
-            yaml.dump(argspec_obj), self._engine, **params
+            yaml.dump(argspec_obj),
+            self._engine,
+            **params,
         )
         if not valid:
             raise AnsibleError(

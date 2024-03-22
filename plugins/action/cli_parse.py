@@ -37,6 +37,8 @@ ARGSPEC_CONDITIONALS = {
 class ActionModule(ActionBase):
     """action module"""
 
+    _requires_connection = False
+
     PARSER_CLS_NAME = "CliParser"
 
     def __init__(self, *args, **kwargs):
@@ -113,7 +115,7 @@ class ActionModule(ActionBase):
             self._display.warning(msg)
 
         parserlib = "ansible_collections.{corg}.{cname}.plugins.sub_plugins.cli_parser.{plugin}_parser".format(
-            **cref
+            **cref,
         )
         try:
             parsercls = getattr(import_module(parserlib), self.PARSER_CLS_NAME)
@@ -129,12 +131,13 @@ class ActionModule(ActionBase):
             # from ansible.netcommon collection
             if cref["cname"] == "netcommon" and cref["plugin"] in [
                 "native",
+                "content_templates",
                 "ntc",
                 "pyats",
             ]:
                 parserlib = (
                     "ansible_collections.{corg}.{cname}.plugins.cli_parsers.{plugin}_parser".format(
-                        **cref
+                        **cref,
                     )
                 )
                 try:
@@ -280,7 +283,7 @@ class ActionModule(ActionBase):
             DOCUMENTATION,
             "cli_parse module",
             schema_conditionals=ARGSPEC_CONDITIONALS,
-            **self._task.args
+            **self._task.args,
         )
         if not valid:
             return argspec_result

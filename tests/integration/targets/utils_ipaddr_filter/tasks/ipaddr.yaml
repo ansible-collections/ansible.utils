@@ -1,5 +1,5 @@
 ---
-- name: set ipaddress list
+- name: Set ipaddress list
   ansible.builtin.set_fact:
     value:
       - 192.24.2.1
@@ -8,52 +8,68 @@
       - 192.168.32.0/24
       - fe80::100/10
       - "42540766412265424405338506004571095040/64"
-      - True
+      - true
 
-- name: ipaddr filter with empty string query
+- name: Ipaddr filter with empty string query
   ansible.builtin.set_fact:
-    result1: "{{ value|ansible.utils.ipaddr }}"
+    result1: "{{ value | ansible.utils.ipaddr }}"
 
 - name: Assert result for ipaddr.
-  assert:
+  ansible.builtin.assert:
     that: "{{ result1 == ipaddr_result1 }}"
 
-- name: ipaddr filter with host string query
+- name: Ipaddr filter with host string query
   ansible.builtin.set_fact:
-    result2: "{{ value|ansible.utils.ipaddr('host') }}"
+    result2: "{{ value | ansible.utils.ipaddr('host') }}"
 
 - name: Assert result for ipaddr host query
-  assert:
+  ansible.builtin.assert:
     that: "{{ result2 == ipaddr_result2 }}"
 
-- name: ipaddr filter with public network query
+- name: Ipaddr filter with public network query
   ansible.builtin.set_fact:
-    result3: "{{ value|ansible.utils.ipaddr('public') }}"
+    result3: "{{ value | ansible.utils.ipaddr('public') }}"
 
 - name: Assert result for ipaddr public network query
-  assert:
-    that: "{{ result3== ipaddr_result3 }}"
+  ansible.builtin.assert:
+    that: "{{ result3 == ipaddr_result3 }}"
 
-- name: ipaddr filter with network query
+- name: Ipaddr filter with network query
   ansible.builtin.set_fact:
-    result4: "{{ value|ansible.utils.ipaddr('net') }}"
+    result4: "{{ value | ansible.utils.ipaddr('net') }}"
 
 - name: Assert result for ipaddr network query
-  assert:
+  ansible.builtin.assert:
     that: "{{ result4 == ipaddr_result4 }}"
 
-- name: ipaddr filter with network/prefix query
+- name: Ipaddr filter with network/prefix query
   ansible.builtin.set_fact:
     result5: "{{ '192.168.0.0/23' | ansible.utils.ipaddr('network/prefix') }}"
 
 - name: Assert result for ipaddr filter with network/prefix query
-  assert:
+  ansible.builtin.assert:
     that: "{{ result5 == '192.168.0.0/23' }}"
 
-- name: ipaddr filter with chained filters
+- name: Ipaddr filter with chained filters
   ansible.builtin.set_fact:
     result6: "{{ '192.168.255.0' | ansible.utils.ipaddr('network') | ansible.utils.ipmath(123) }}"
 
 - name: Assert result for ipaddr filter with chained filters
-  assert:
+  ansible.builtin.assert:
     that: "{{ result6 == '192.168.255.123' }}"
+
+- name: Debug
+  ansible.builtin.debug:
+    msg: "Test int input for ipaddr filter"
+
+- name: Set fact 1
+  ansible.builtin.set_fact:
+    ip1: "172.20.0.1"
+
+- name: Set fact 2
+  ansible.builtin.set_fact:
+    ip2: "{{ ((ip1 | ansible.utils.ipaddr('int')) + 6) | ansible.utils.ipaddr }}"
+
+- name: Assert result for ipaddr filter
+  ansible.builtin.assert:
+    that: "{{ ip2 == '172.20.0.7' }}"

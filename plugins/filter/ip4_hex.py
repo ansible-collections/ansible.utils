@@ -83,8 +83,6 @@ EXAMPLES = r"""
 # ok: [localhost] => {
 #     "msg": "c0:a8:01:05"
 # }
-
-
 """
 
 RETURN = """
@@ -110,6 +108,11 @@ def _ip4_hex(*args, **kwargs):
 
 def ip4_hex(arg, delimiter=""):
     """Convert an IPv4 address to Hexadecimal notation"""
+    try:
+        ip = netaddr.IPAddress(arg)
+    except (netaddr.AddrFormatError, ValueError):
+        msg = "You must pass a valid IP address; {0} is invalid".format(arg)
+        raise AnsibleFilterError(msg)
     numbers = list(map(int, arg.split(".")))
     return "{0:02x}{sep}{1:02x}{sep}{2:02x}{sep}{3:02x}".format(*numbers, sep=delimiter)
 

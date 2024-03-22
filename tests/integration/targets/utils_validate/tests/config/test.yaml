@@ -20,7 +20,7 @@
   ansible.builtin.set_fact:
     is_data_valid: "{{ fail_config is ansible.utils.validate(criteria=rules, engine='ansible.utils.config') }}"
 
-- assert:
+- ansible.builtin.assert:
     that:
       - "is_data_valid == false"
 
@@ -28,7 +28,7 @@
   ansible.builtin.set_fact:
     is_data_valid: "{{ warn_config is ansible.utils.validate(criteria=rules, engine='ansible.utils.config') }}"
 
-- assert:
+- ansible.builtin.assert:
     that:
       - "is_data_valid == true"
 
@@ -36,7 +36,7 @@
   ansible.builtin.set_fact:
     is_data_valid: "{{ pass_config is ansible.utils.validate(criteria=rules, engine='ansible.utils.config') }}"
 
-- assert:
+- ansible.builtin.assert:
     that:
       - "is_data_valid == true"
 
@@ -46,7 +46,7 @@
   ignore_errors: true
   register: result
 
-- assert:
+- ansible.builtin.assert:
     that:
       - "result['failed'] == true"
       - '"is not one of \"warn\" or \"fail\"" in result["msg"]'

@@ -1,16 +1,16 @@
 ---
-- name: next_nth_usable filter
+- name: Next_nth_usable filter
   ansible.builtin.set_fact:
-    result1: "{{ '192.168.122.1/24'|ansible.utils.next_nth_usable(2) }}"
+    result1: "{{ '192.168.122.1/24' | ansible.utils.next_nth_usable(2) }}"
 
 - name: Assert result for next_nth_usable.
-  assert:
+  ansible.builtin.assert:
     that: "{{ result1 == '192.168.122.3' }}"
 
-- name: next_nth_usable filter
+- name: Next_nth_usable filter
   ansible.builtin.set_fact:
-    result1: "{{ '192.168.122.254/24'|ansible.utils.next_nth_usable(2) }}"
+    result1: "{{ '192.168.122.254/24' | ansible.utils.next_nth_usable(2) }}"
 
 - name: Assert result for ipv4.
-  assert:
+  ansible.builtin.assert:
     that: "{{ result1 == '' }}"

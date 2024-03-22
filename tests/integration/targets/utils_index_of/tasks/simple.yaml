@@ -1,5 +1,6 @@
 ---
-- ansible.builtin.set_fact:
+- name: Set fact
+  ansible.builtin.set_fact:
     complex:
       a:
         - true
@@ -24,16 +25,16 @@
         - b
 
 - name: Some basic tests
-  assert:
+  ansible.builtin.assert:
     that: "{{ item.test == item.result }}"
   loop:
-    - test: "{{ complex.a|ansible.utils.index_of('eq', True) }}"
+    - test: "{{ complex.a | ansible.utils.index_of('eq', true) }}"
       result: [0, 1]
-    - test: "{{ lookup('ansible.utils.index_of', complex.a, 'eq', True) }}"
+    - test: "{{ lookup('ansible.utils.index_of', complex.a, 'eq', true) }}"
       result: [0, 1]
-    - test: "{{ complex.a|ansible.utils.index_of('in', [True, False]) }}"
+    - test: "{{ complex.a | ansible.utils.index_of('in', [true, False]) }}"
       result: [0, 1, 2]
-    - test: "{{ lookup('ansible.utils.index_of', complex.a, 'in', [True, False]) }}"
+    - test: "{{ lookup('ansible.utils.index_of', complex.a, 'in', [true, False]) }}"
       result: [0, 1, 2]
     # These are commented out due to jinja < 2.11 w/ 2.9, 'integer' not avaialable
     # can be enabled at a later date
@@ -42,22 +43,23 @@
     # - test: "{{ lookup('ansible.utils.index_of', complex.a, 'integer') }}"
     #   result: "3"
 
-    - test: "{{ complex.b|ansible.utils.index_of('==', 1, 'b1') }}"
+    - test: "{{ complex.b | ansible.utils.index_of('==', 1, 'b1') }}"
       result: "0"
     - test: "{{ lookup('ansible.utils.index_of', complex.b, '==', 1, 'b1') }}"
       result: "0"
 
-    - test: "{{ complex.c.c1|ansible.utils.index_of('!=', 'c') }}"
+    - test: "{{ complex.c.c1 | ansible.utils.index_of('!=', 'c') }}"
       result: [0, 1]
     - test: "{{ lookup('ansible.utils.index_of', complex.c.c1, '!=', 'c') }}"
       result: [0, 1]
 
-    - test: "{{ complex.d|ansible.utils.index_of('match', '.*d$') }}"
+    - test: "{{ complex.d | ansible.utils.index_of('match', '.*d$') }}"
       result: [0, 1]
     - test: "{{ lookup('ansible.utils.index_of', complex.d, 'match', '.*d$') }}"
       result: [0, 1]
 
-- ansible.builtin.set_fact:
+- name: Set fact
+  ansible.builtin.set_fact:
     complex:
       a:
         b:
@@ -70,38 +72,38 @@
                 e1: redhat
 
 - name: Find index in list of dictionaries
-  assert:
+  ansible.builtin.assert:
     that: "{{ item.test == item.result }}"
   loop:
-    - test: "{{ complex.a.b.c.d|ansible.utils.index_of('eq', 'ansible', 'e1') }}"
+    - test: "{{ complex.a.b.c.d | ansible.utils.index_of('eq', 'ansible', 'e1') }}"
       result: "0"
     - test: "{{ lookup('ansible.utils.index_of', complex.a.b.c.d, 'eq', 'ansible', 'e1') }}"
       result: "0"
-    - test: "{{ complex.a.b.c.d|ansible.utils.index_of('eq', 'ansible', 'e1', wantlist=True) }}"
+    - test: "{{ complex.a.b.c.d | ansible.utils.index_of('eq', 'ansible', 'e1', wantlist=true) }}"
       result: [0]
-    - test: "{{ lookup('ansible.utils.index_of', complex.a.b.c.d, 'eq', 'ansible', 'e1', wantlist=True) }}"
+    - test: "{{ lookup('ansible.utils.index_of', complex.a.b.c.d, 'eq', 'ansible', 'e1', wantlist=true) }}"
       result: [0]
 
 - name: Test a missing key in the list of dictionaries
-  assert:
+  ansible.builtin.assert:
     that: "{{ item.test == item.result }}"
   loop:
-    - test: "{{ complex.a.b.c.d|ansible.utils.index_of('eq', True, 'e2') }}"
+    - test: "{{ complex.a.b.c.d | ansible.utils.index_of('eq', true, 'e2') }}"
       result: "0"
-    - test: "{{ lookup('ansible.utils.index_of', complex.a.b.c.d, 'eq', True, 'e2') }}"
+    - test: "{{ lookup('ansible.utils.index_of', complex.a.b.c.d, 'eq', true, 'e2') }}"
       result: "0"
 
 - name: Test a missing key in the list of dictionaries, fail on missing
-  assert:
+  ansible.builtin.assert:
     that: "{{ item.test == item.result }}"
   loop:
-    - test: "{{ complex.a.b.c.d|ansible.utils.index_of('eq', True, 'e2', fail_on_missing=True) }}"
+    - test: "{{ complex.a.b.c.d | ansible.utils.index_of('eq', true, 'e2', fail_on_missing=true) }}"
       result: "0"
-    - test: "{{ lookup('ansible.utils.index_of', complex.a.b.c.d, 'eq', True, 'e2', fail_on_missing=True) }}"
+    - test: "{{ lookup('ansible.utils.index_of', complex.a.b.c.d, 'eq', true, 'e2', fail_on_missing=true) }}"
       result: "0"
   ignore_errors: true
   register: result
 
 - name: Ensure the previous test failed
-  assert:
+  ansible.builtin.assert:
     that: "{{ result.failed and 'not found in' in result.msg }}"

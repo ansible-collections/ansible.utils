@@ -35,18 +35,32 @@ def _raise_error(msg):
     raise AnsibleFilterError(error)
 
 
-def to_xml(data, engine):
+def to_xml(data, engine, indent, indent_width, full_document):
     """Convert data which is in json to xml"
 
     :param data: The data passed in (data|to_xml(...))
     :type data: xml
     :param engine: Conversion library default=xmltodict
+    :param indent: Indent char default='tabs'
+    :param indent_width: Indent char multiplier default=4
+    :param full_document: Flag to disable xml declaration
     """
+
+    indent_char = "\t"
+
+    if indent == "spaces":
+        indent_char = " " * indent_width
+
     if engine == "xmltodict":
         if not HAS_XMLTODICT:
             _raise_error("Missing required library xmltodict")
         try:
-            res = xmltodict.unparse(data, pretty=True)
+            res = xmltodict.unparse(
+                data,
+                pretty=True,
+                indent=indent_char,
+                full_document=full_document,
+            )
         except Exception:
             _raise_error("Input json is not valid")
         return res

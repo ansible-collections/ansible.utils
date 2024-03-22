@@ -1,14 +1,14 @@
 ---
-- name: "{{ parser }} Run command and parse with textfsm"
+- name: "Run command and parse with textfsm {{ parser }}"
   ansible.utils.cli_parse:
     command: "ifconfig"
     parser:
       name: ansible.utils.textfsm
-    set_fact: myfact
+    ansible.builtin.set_fact: myfact
   register: ifconfig_out
 
-- name: "{{ parser }} Check parser output"
-  assert:
+- name: "Check parser output {{ parser }}"
+  ansible.builtin.assert:
     that: "{{ item }}"
   with_items:
     - "{{ myfact is defined }}"

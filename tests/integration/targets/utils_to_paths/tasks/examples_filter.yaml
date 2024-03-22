@@ -1,6 +1,7 @@
 ---
 #### Simple examples
-- ansible.builtin.set_fact:
+- name: Set fact
+  ansible.builtin.set_fact:
     a:
       b:
         c:
@@ -11,8 +12,9 @@
             - true
             - false
 
-- ansible.builtin.set_fact:
-    paths: "{{ a|ansible.utils.to_paths }}"
+- name: Set fact
+  ansible.builtin.set_fact:
+    paths: "{{ a | ansible.utils.to_paths }}"
 
 # TASK [ansible.builtin.set_fact] ********************************************
 # ok: [nxos101] => changed=false
@@ -25,7 +27,7 @@
 
 - name: Use prepend to add the initial variable name
   ansible.builtin.set_fact:
-    paths: "{{ a|ansible.utils.to_paths(prepend='a') }}"
+    paths: "{{ a | ansible.utils.to_paths(prepend='a') }}"
 # TASK [Use prepend to add the initial variable name] **************************
 # ok: [nxos101] => changed=false
 #   ansible_facts:
