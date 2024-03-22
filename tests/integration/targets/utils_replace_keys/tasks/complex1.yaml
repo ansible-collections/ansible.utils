@@ -21,13 +21,13 @@
         fail_msg: |-
           [ERR] Assertion failed
           result:
-            {{ result|to_yaml|indent(2) }}
+            {{ result | to_yaml | indent(2) }}
           target:
-            {{ target|to_yaml|indent(2) }}
+            {{ target | to_yaml | indent(2) }}
 
 - name: 2.map replace_keys
   vars:
-    result: "{{ l2 | map('ansible.utils.replace_keys', target=_target)|
+    result: "{{ l2 | map('ansible.utils.replace_keys', target=_target) |
       list }}"
     _target:
       - { before: p1, after: x1 }
@@ -49,7 +49,7 @@
         var: result|to_yaml
       when: debug_test|d(false)|bool
     - name: 2.map replace_keys assert
-      assert:
+      ansible.builtin.assert:
         that: result == target
 
 - name: 3.replace_keys starts_with
@@ -70,7 +70,7 @@
         var: result|to_yaml
       when: debug_test|d(false)|bool
     - name: 3.replace_keys starts_with assert
-      assert:
+      ansible.builtin.assert:
         that: result == target
 
 - name: 4.replace_keys starts_with
@@ -91,7 +91,7 @@
         var: result|to_yaml
       when: debug_test|d(false)|bool
     - name: 4.replace_keys starts_with assert
-      assert:
+      ansible.builtin.assert:
         that: result == target
 
 - name: 5.replace_keys starts_with 'p'
@@ -111,7 +111,7 @@
         var: result|to_yaml
       when: debug_test|d(false)|bool
     - name: 5.replace_keys starts_with assert
-      assert:
+      ansible.builtin.assert:
         that: result == target
 
 - name: 6.replace_keys ends_with
@@ -132,7 +132,7 @@
         var: result|to_yaml
       when: debug_test|d(false)|bool
     - name: 6.replace_keys ends_with assert
-      assert:
+      ansible.builtin.assert:
         that: result == target
 
 - name: 7.replace_keys ends_with
@@ -153,7 +153,7 @@
         var: result|to_yaml
       when: debug_test|d(false)|bool
     - name: 7.replace_keys ends_with assert
-      assert:
+      ansible.builtin.assert:
         that: result == target
 
 - name: 8.replace_keys ends_with '2'
@@ -173,7 +173,7 @@
         var: result|to_yaml
       when: debug_test|d(false)|bool
     - name: 8.replace_keys ends_with '2' assert
-      assert:
+      ansible.builtin.assert:
         that: result == target
 
 - name: 9.replace_keys regex
@@ -192,5 +192,5 @@
         var: result|to_yaml
       when: debug_test|d(false)|bool
     - name: 9.replace_keys regex assert
-      assert:
+      ansible.builtin.assert:
         that: result == target
