@@ -43,7 +43,7 @@
 - name: 3.keep_keys starts_with
   vars:
     result: "{{ l1 | ansible.utils.keep_keys(target=['p1', 'p2'],
-      matching_parameter= 'starts_with') }}"
+      matching_parameter='starts_with') }}"
     target:
       - { p1: a, p2: a }
       - { p1: b, p2: b }
@@ -61,7 +61,7 @@
 - name: 4.keep_keys starts_with 'p'
   vars:
     result: "{{ l1 | ansible.utils.keep_keys(target=['p'],
-      matching_parameter= 'starts_with') }}"
+      matching_parameter='starts_with') }}"
     target:
       - { p1: a, p2: a, p3: a }
       - { p1: b, p2: b, p3: b }
@@ -79,7 +79,7 @@
 - name: 5.keep_keys ends_with
   vars:
     result: "{{ l1 | ansible.utils.keep_keys(target=['p1', 'p2'],
-      matching_parameter= 'ends_with') }}"
+      matching_parameter='ends_with') }}"
     target:
       - { p1: a, p2: a }
       - { p1: b, p2: b }
@@ -97,7 +97,7 @@
 - name: 6.keep_keys ends_with '2'
   vars:
     result: "{{ l1 | ansible.utils.keep_keys(target=['2'],
-      matching_parameter= 'ends_with') }}"
+      matching_parameter='ends_with') }}"
     target:
       - { p2: a }
       - { p2: b }
@@ -115,7 +115,7 @@
 - name: 7.keep_keys regex
   vars:
     result: "{{ l1 | ansible.utils.keep_keys(target=['p1', 'p2'],
-      matching_parameter= 'regex') }}"
+      matching_parameter='regex') }}"
     target:
       - { p1: a, p2: a }
       - { p1: b, p2: b }
