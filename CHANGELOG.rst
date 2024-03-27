@@ -365,3 +365,18 @@ New Modules
 - fact_diff - Find the difference between currently set facts
 - update_fact - Update currently set facts
 - validate - Validate data with provided criteria
+
+v4.0.0
+======
+
+Major Changes
+-------------
+
+- This release removes deprecated is_private() function in favour of netaddr is_global(). Please refer to the **Removed Features** section for details.
+
+Removed Features (previously deprecated)
+----------------------------------------
+
+- Remove deprecated is_private() function which is replaced with netaddr is_global() function.
+- Remove the IPAddress.is_private method.
+- Set netaddr minimum version required to 0.10.1

@@ -1,6 +1,0 @@
----
-minor_changes:
-  - Use netaddr is_global() function instead of the deprecated is_private() function.
-    (https://netaddr.readthedocs.io/en/latest/changes.html#release-1-0-0)
-  - Remove reserved IPv6 from integration test expected results.
-  - Set netaddr minimum version required to 0.10.1

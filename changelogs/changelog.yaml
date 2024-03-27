@@ -407,3 +407,15 @@ releases:
       - ipv6form-doc.yaml
       - validate-doc.yaml
     release_date: "2024-01-30"
+  4.0.0:
+    changes:
+      major_changes:
+        - Use netaddr is_global() function instead of the deprecated is_private() function. (https://netaddr.readthedocs.io/en/latest/changes.html#release-1-0-0)
+        - netaddr minimum version requirement is set to 0.10.1
+        - Bumping `netaddr` to `>=0.10.1`, means that anything lower than this would result in not using utils from next 4.0.0 release.
+      release_summary:
+        Starting from this release, the minimum `netaddr` version
+        this collection requires is `>=0.10.1`.
+    fragments:
+      - netaddr_is_private_deprecation.yaml
+    release_date: "2024-03-27"
