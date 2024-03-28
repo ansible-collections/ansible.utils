@@ -372,11 +372,7 @@ v4.0.0
 Major Changes
 -------------
 
-- This release removes deprecated is_private() function in favour of netaddr is_global(). Please refer to the **Removed Features** section for details.
-
-Removed Features (previously deprecated)
-----------------------------------------
-
-- Remove deprecated is_private() function which is replaced with netaddr is_global() function.
-- Remove the IPAddress.is_private method.
-- Set netaddr minimum version required to 0.10.1
+- This release mainly fixes the breaking changes in the `netaddr` library.
+- With the new release of `netaddr` 1.0.0, the `IPAddress.is_private()` method has been removed and instead, the `IPAddress.is_global()` method has been extended to support the same functionality. This change has been reflected in the `ipaddr` filter plugin (https://netaddr.readthedocs.io/en/latest/changes.html#release-1-0-0).
+- Bumping `netaddr` to `>=0.10.1`, means that starting from this release, the minimum `netaddr` version this collection requires is `>=0.10.1`.
+- Removes compat files as we stopped testing against python 2.7.

@@ -410,12 +410,15 @@ releases:
   4.0.0:
     changes:
       major_changes:
-        - Use netaddr is_global() function instead of the deprecated is_private() function. (https://netaddr.readthedocs.io/en/latest/changes.html#release-1-0-0)
-        - netaddr minimum version requirement is set to 0.10.1
+        - This release mainly fixes the breaking changes in the `netaddr` library.
+        - Removes the `IPAddress.is_private()` method and instead extends support to IPAddress.is_global() method as the replacement.(https://netaddr.readthedocs.io/en/latest/changes.html#release-1-0-0)
+        - Set netaddr minimum version required to `0.10.1`
         - Bumping `netaddr` to `>=0.10.1`, means that anything lower than this would result in not using utils from next 4.0.0 release.
+        - Removes compat files as we stopped testing against python 2.7.
       release_summary:
         Starting from this release, the minimum `netaddr` version
         this collection requires is `>=0.10.1`.
     fragments:
       - netaddr_is_private_deprecation.yaml
-    release_date: "2024-03-27"
+      - trivial_tests_updates.yaml
+    release_date: "2024-03-28"
