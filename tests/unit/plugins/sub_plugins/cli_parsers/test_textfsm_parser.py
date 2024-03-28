@@ -7,19 +7,18 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 import os
-
+from unittest import TestCase
 import pytest
 
 from ansible_collections.ansible.utils.plugins.sub_plugins.cli_parser.textfsm_parser import (
     CliParser,
 )
-from ansible_collections.ansible.utils.tests.unit.compat import unittest
 
 
 textfsm = pytest.importorskip("textfsm")
 
 
-class TestTextfsmParser(unittest.TestCase):
+class TestTextfsmParser(TestCase):
     def test_textfsm_parser(self):
         nxos_cfg_path = os.path.join(os.path.dirname(__file__), "fixtures", "nxos_show_version.cfg")
         nxos_template_path = os.path.join(

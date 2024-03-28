@@ -6,13 +6,12 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
+from unittest import TestCase
 import json
 
 from ansible_collections.ansible.utils.plugins.sub_plugins.cli_parser.json_parser import CliParser
-from ansible_collections.ansible.utils.tests.unit.compat import unittest
 
-
-class TestJsonParser(unittest.TestCase):
+class TestJsonParser(TestCase):
     def test_json_parser(self):
         test_value = {
             "string": "This is a string",
