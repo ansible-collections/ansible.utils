@@ -12,12 +12,12 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-import unittest
+from unittest import TestCase
 
 from ansible_collections.ansible.utils.plugins.filter.slaac import _slaac
 
 
-class Test_slaac(unittest.TestCase):
+class Test_slaac(TestCase):
     def setUp(self):
         pass
 

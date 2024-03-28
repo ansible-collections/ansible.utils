@@ -8,7 +8,7 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-import unittest
+from unittest import TestCase
 
 from ansible.errors import AnsibleError, AnsibleFilterError
 
@@ -35,7 +35,7 @@ OUTPUT_SPACES = """<?xml version="1.0" encoding="utf-8"?>
 </interface-configurations>"""
 
 
-class TestToXml(unittest.TestCase):
+class TestToXml(TestCase):
     def setUp(self):
         pass
 

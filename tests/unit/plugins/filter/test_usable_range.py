@@ -12,7 +12,7 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-import unittest
+from unittest import TestCase
 
 from ansible.errors import AnsibleError
 
@@ -73,7 +73,7 @@ VALID_OUTPUT_3 = {
 VALID_OUTPUT_4 = {"number_of_ips": 1, "usable_ips": ["2001:db8:abcd:12::"]}
 
 
-class TestUsableRange(unittest.TestCase):
+class TestUsableRange(TestCase):
     def setUp(self):
         pass
 

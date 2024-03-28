@@ -12,12 +12,12 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-import unittest
+from unittest import TestCase
 
 from ansible_collections.ansible.utils.plugins.test.mac import _mac
 
 
-class TestMac(unittest.TestCase):
+class TestMac(TestCase):
     def setUp(self):
         pass
 

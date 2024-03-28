@@ -12,7 +12,7 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-import unittest
+from unittest import TestCase
 
 import pytest
 
@@ -23,7 +23,7 @@ address = "192.168.144.5"
 subnet = "192.168.0.0/16"
 
 
-class TestIpSubnet(unittest.TestCase):
+class TestIpSubnet(TestCase):
     def setUp(self):
         pass
 

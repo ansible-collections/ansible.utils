@@ -12,7 +12,7 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-import unittest
+from unittest import TestCase
 
 from ansible.errors import AnsibleFilterError
 
@@ -30,7 +30,7 @@ VALID_DATA_SPAN = ["192.168.1.1", "192.168.1.2", "192.168.1.3", "192.168.1.4"]
 VALID_OUTPUT_SPAN = "192.168.1.0/29"
 
 
-class TestCidrMerge(unittest.TestCase):
+class TestCidrMerge(TestCase):
     def setUp(self):
         pass
 
