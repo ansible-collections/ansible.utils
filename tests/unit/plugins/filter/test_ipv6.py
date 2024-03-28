@@ -13,6 +13,7 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 from unittest import TestCase
+
 import pytest
 
 from ansible.errors import AnsibleFilterError

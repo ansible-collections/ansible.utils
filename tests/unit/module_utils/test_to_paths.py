@@ -12,6 +12,7 @@ __metaclass__ = type
 import heapq
 import json
 import os
+
 from unittest import TestCase
 
 from ansible.template import Templar

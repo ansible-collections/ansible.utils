@@ -6,11 +6,11 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-from unittest.mock import MagicMock, patch
-
-from unittest import TestCase
 import os
 import tempfile
+
+from unittest import TestCase
+from unittest.mock import MagicMock, patch
 
 from ansible.module_utils.connection import ConnectionError as AnsibleConnectionError
 from ansible.playbook.task import Task

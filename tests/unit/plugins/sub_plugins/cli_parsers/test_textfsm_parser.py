@@ -7,7 +7,9 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 import os
+
 from unittest import TestCase
+
 import pytest
 
 from ansible_collections.ansible.utils.plugins.sub_plugins.cli_parser.textfsm_parser import (

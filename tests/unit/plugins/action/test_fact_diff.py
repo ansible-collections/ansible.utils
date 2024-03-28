@@ -9,6 +9,7 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 import re
+
 from unittest import TestCase
 
 from ansible.playbook.task import Task
@@ -21,6 +22,7 @@ try:
     from unittest.mock import MagicMock  # pylint:disable=syntax-error
 except ImportError:
     from mock import MagicMock  # pyright: ignore[reportMissingModuleSource]
+
 
 class TestUpdate_Fact(TestCase):
     def setUp(self):

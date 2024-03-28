@@ -6,12 +6,13 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-from unittest import TestCase
 from collections import OrderedDict
+from unittest import TestCase
 
 import pytest
 
 from ansible_collections.ansible.utils.plugins.sub_plugins.cli_parser.xml_parser import CliParser
+
 
 xmltodict = pytest.importorskip("xmltodict")
 

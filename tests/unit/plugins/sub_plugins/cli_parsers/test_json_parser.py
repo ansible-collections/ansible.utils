@@ -6,10 +6,12 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-from unittest import TestCase
 import json
 
+from unittest import TestCase
+
 from ansible_collections.ansible.utils.plugins.sub_plugins.cli_parser.json_parser import CliParser
+
 
 class TestJsonParser(TestCase):
     def test_json_parser(self):

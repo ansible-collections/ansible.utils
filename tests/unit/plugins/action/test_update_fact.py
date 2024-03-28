@@ -9,6 +9,7 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 import copy
+
 from unittest import TestCase
 
 from ansible.playbook.task import Task
