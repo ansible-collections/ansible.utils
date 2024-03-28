@@ -8,14 +8,14 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-import unittest
+from unittest import TestCase
 
 from ansible.errors import AnsibleFilterError
 
 from ansible_collections.ansible.utils.plugins.filter.fact_diff import _fact_diff
 
 
-class TestUpdate_Fact(unittest.TestCase):
+class TestUpdate_Fact(TestCase):
     def setUp(self):
         pass
 

@@ -12,14 +12,14 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-import unittest
+from unittest import TestCase
 
 from ansible.errors import AnsibleError
 
 from ansible_collections.ansible.utils.plugins.filter.reduce_on_network import _reduce_on_network
 
 
-class Test_reduce_on_network(unittest.TestCase):
+class Test_reduce_on_network(TestCase):
     def setUp(self):
         pass
 

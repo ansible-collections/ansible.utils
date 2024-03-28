@@ -12,12 +12,12 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-import unittest
+from unittest import TestCase
 
 from ansible_collections.ansible.utils.plugins.test.ipv4_address import _ipv4_address
 
 
-class TestIpV4Address(unittest.TestCase):
+class TestIpV4Address(TestCase):
     def setUp(self):
         pass
 

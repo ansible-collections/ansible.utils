@@ -8,14 +8,13 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-import unittest
-
+from unittest import TestCase
 from ansible.errors import AnsibleFilterError
 
 from ansible_collections.ansible.utils.plugins.filter.keep_keys import _keep_keys
 
 
-class TestKeepKeys(unittest.TestCase):
+class TestKeepKeys(TestCase):
     def setUp(self):
         pass
 

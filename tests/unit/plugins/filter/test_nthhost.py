@@ -12,12 +12,12 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-import unittest
+from unittest import TestCase
 
 from ansible_collections.ansible.utils.plugins.filter.nthhost import _nthhost
 
 
-class Test_nthhost(unittest.TestCase):
+class Test_nthhost(TestCase):
     def setUp(self):
         pass
 

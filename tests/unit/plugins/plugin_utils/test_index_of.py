@@ -10,14 +10,14 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 
-import unittest
+from unittest import TestCase
 
 from ansible.template import Templar
 
 from ansible_collections.ansible.utils.plugins.plugin_utils.index_of import index_of
 
 
-class TestIndexOfFilter(unittest.TestCase):
+class TestIndexOfFilter(TestCase):
     def setUp(self):
         self._tests = Templar(loader=None).environment.tests
 
