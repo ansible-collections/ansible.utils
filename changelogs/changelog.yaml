@@ -415,8 +415,7 @@ releases:
         - Set netaddr minimum version required to `0.10.1`
         - Bumping `netaddr` to `>=0.10.1`, means that anything lower than this would result in not using utils from next 4.0.0 release.
         - Removes compat files as we stopped testing against python 2.7.
-      release_summary:
-        Starting from this release, the minimum `netaddr` version
+      release_summary: Starting from this release, the minimum `netaddr` version
         this collection requires is `>=0.10.1`.
     fragments:
       - netaddr_is_private_deprecation.yaml
