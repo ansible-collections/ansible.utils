@@ -11,7 +11,7 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-import unittest
+from unittest import TestCase
 
 import pytest
 
@@ -36,7 +36,7 @@ from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddr_utils im
 netaddr = pytest.importorskip("netaddr")
 
 
-class TestIpFilter(unittest.TestCase):
+class TestIpFilter(TestCase):
     def test_cidr_merge(self):
         with pytest.raises(
             AnsibleFilterError,

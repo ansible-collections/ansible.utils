@@ -8,7 +8,7 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-import unittest
+from unittest import TestCase
 
 from ansible.errors import AnsibleActionFail
 from ansible.playbook.task import Task
@@ -111,7 +111,7 @@ CRITERIA_FORMAT_SUPPORT_CHECK = {
 }
 
 
-class TestValidate(unittest.TestCase):
+class TestValidate(TestCase):
     def setUp(self):
         task = MagicMock(Task)
         play_context = MagicMock()

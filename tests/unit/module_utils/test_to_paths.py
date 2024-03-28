@@ -12,7 +12,8 @@ __metaclass__ = type
 import heapq
 import json
 import os
-import unittest
+
+from unittest import TestCase
 
 from ansible.template import Templar
 
@@ -20,7 +21,7 @@ from ansible_collections.ansible.utils.plugins.module_utils.common.get_path impo
 from ansible_collections.ansible.utils.plugins.module_utils.common.to_paths import to_paths
 
 
-class TestToPaths(unittest.TestCase):
+class TestToPaths(TestCase):
     def setUp(self):
         self._environment = Templar(loader=None).environment
 

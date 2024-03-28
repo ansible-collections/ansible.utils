@@ -12,12 +12,12 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-import unittest
+from unittest import TestCase
 
 from ansible_collections.ansible.utils.plugins.filter.macaddr import _macaddr
 
 
-class Test_macaddr(unittest.TestCase):
+class Test_macaddr(TestCase):
     def setUp(self):
         pass
 

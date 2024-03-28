@@ -9,14 +9,14 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-import unittest
+from unittest import TestCase
 
 from ansible.template import Templar
 
 from ansible_collections.ansible.utils.plugins.module_utils.common.get_path import get_path
 
 
-class TestGetPath(unittest.TestCase):
+class TestGetPath(TestCase):
     def setUp(self):
         self._environment = Templar(loader=None).environment
 

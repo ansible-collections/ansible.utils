@@ -9,12 +9,12 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-import unittest
+from unittest import TestCase
 
 from ansible_collections.ansible.utils.plugins.module_utils.common.utils import dict_merge
 
 
-class TestDict_merge(unittest.TestCase):
+class TestDict_merge(TestCase):
     def test_not_dict_base(self):
         base = [0]
         other = {"a": "b"}
