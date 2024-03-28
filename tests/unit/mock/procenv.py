@@ -22,6 +22,7 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
+from unittest import TestCase
 import json
 import sys
 
@@ -30,7 +31,6 @@ from io import BytesIO, StringIO
 
 from ansible.module_utils._text import to_bytes
 from ansible.module_utils.six import PY3
-from ansible_collections.ansible.netcommon.tests.unit.compat import unittest
 
 
 @contextmanager
@@ -77,7 +77,7 @@ def swap_stdout():
         sys.stdout = old_stdout
 
 
-class ModuleTestCase(unittest.TestCase):
+class ModuleTestCase(TestCase):
     def setUp(self, module_args=None):
         if module_args is None:
             module_args = {
