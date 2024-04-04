@@ -288,8 +288,15 @@ def _previous_usable_query(v, vtype):
                 return str(netaddr.IPAddress(int(v.ip) - 1))
 
 
+def _ip_is_global(ip):
+    # fallback to support netaddr < 1.0.0
+    # use IPAddress.is_private() if IPAddress.is_global() is not available
+    has_is_global = callable(getattr(ip, "is_global", None))
+    return ip.is_global() if has_is_global else not ip.is_private()
+
+
 def _private_query(v, value):
-    if not v.ip.is_global():
+    if not _ip_is_global(v.ip):
         return value
 
 
@@ -298,7 +305,7 @@ def _public_query(v, value):
     if all(
         [
             v_ip.is_unicast(),
-            v_ip.is_global(),
+            _ip_is_global(v_ip),
             not v_ip.is_loopback(),
             not v_ip.is_netmask(),
             not v_ip.is_hostmask(),

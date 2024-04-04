@@ -1,0 +1,4 @@
+---
+minor_changes:
+  - Fallback to IPAddress.is_private() when IPAddress.is_global() is not
+    available, to tolerate netaddr versions older than 0.10.0.
