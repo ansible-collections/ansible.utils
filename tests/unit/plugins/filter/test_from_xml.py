@@ -8,7 +8,7 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-import unittest
+from unittest import TestCase
 
 from ansible.errors import AnsibleError, AnsibleFilterError
 
@@ -26,7 +26,7 @@ OUTPUT = """{"netconf-state": \
 {"@xmlns": "urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring", "schemas": {"schema": null}}}"""
 
 
-class TestFromXml(unittest.TestCase):
+class TestFromXml(TestCase):
     def setUp(self):
         pass
 

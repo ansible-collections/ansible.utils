@@ -12,14 +12,14 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-import unittest
+from unittest import TestCase
 
 from ansible_collections.ansible.utils.plugins.filter.previous_nth_usable import (
     _previous_nth_usable,
 )
 
 
-class Test_previous_Nth_Usable(unittest.TestCase):
+class Test_previous_Nth_Usable(TestCase):
     def setUp(self):
         pass
 

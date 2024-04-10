@@ -9,7 +9,7 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-import unittest
+from unittest import TestCase
 
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     AnsibleArgSpecValidator,
@@ -18,7 +18,7 @@ from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_valid
 from .fixtures.docstring import DOCUMENTATION
 
 
-class TestSortList(unittest.TestCase):
+class TestSortList(TestCase):
     def test_simple_pass(self):
         data = {"param_str": "string"}
         aav = AnsibleArgSpecValidator(

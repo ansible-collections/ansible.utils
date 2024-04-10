@@ -12,7 +12,7 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-import unittest
+from unittest import TestCase
 
 import pytest
 
@@ -46,7 +46,7 @@ VALID_OUTPUT = [
 ]
 
 
-class TestIpWrap(unittest.TestCase):
+class TestIpWrap(TestCase):
     def setUp(self):
         pass
 
