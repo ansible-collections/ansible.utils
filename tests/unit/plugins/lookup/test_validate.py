@@ -8,7 +8,7 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-import unittest
+from unittest import TestCase
 
 from ansible.errors import AnsibleLookupError
 
@@ -92,7 +92,7 @@ CRITERIA_IN_RATE_CHECK = {
 }
 
 
-class TestValidate(unittest.TestCase):
+class TestValidate(TestCase):
     def setUp(self):
         self._lp = LookupModule()
 

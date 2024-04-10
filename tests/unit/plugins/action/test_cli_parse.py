@@ -9,6 +9,9 @@ __metaclass__ = type
 import os
 import tempfile
 
+from unittest import TestCase
+from unittest.mock import MagicMock, patch
+
 from ansible.module_utils.connection import ConnectionError as AnsibleConnectionError
 from ansible.playbook.task import Task
 from ansible.template import Templar
@@ -22,12 +25,10 @@ from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_valid
 )
 from ansible_collections.ansible.utils.plugins.modules.cli_parse import DOCUMENTATION
 from ansible_collections.ansible.utils.plugins.plugin_utils.base.cli_parser import CliParserBase
-from ansible_collections.ansible.utils.tests.unit.compat import unittest
-from ansible_collections.ansible.utils.tests.unit.compat.mock import MagicMock, patch
 from ansible_collections.ansible.utils.tests.unit.mock.loader import DictDataLoader
 
 
-class TestCli_Parse(unittest.TestCase):
+class TestCli_Parse(TestCase):
     def setUp(self):
         task = MagicMock(Task)
         play_context = MagicMock()

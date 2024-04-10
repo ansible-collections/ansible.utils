@@ -407,3 +407,14 @@ releases:
       - ipv6form-doc.yaml
       - validate-doc.yaml
     release_date: "2024-01-30"
+  4.0.0:
+    changes:
+      major_changes:
+        - This release mainly addresses the breaking changes in the `netaddr` library.
+        - With the new release of `netaddr` 1.0.0, the `IPAddress.is_private()` method has been removed and instead, the `IPAddress.is_global()` method has been extended to support the same functionality. This change has been reflected in the `ipaddr` filter plugin.
+        - Bumping `netaddr` to `>=0.10.1`, means that starting from this release, the minimum `netaddr` version this collection requires is `>=0.10.1`.
+      release_summary: Starting from this release, the minimum `netaddr` version this collection requires is `>=0.10.1`.
+    fragments:
+      - netaddr_is_private_deprecation.yaml
+      - trivial_tests_updates.yaml
+    release_date: "2024-03-28"

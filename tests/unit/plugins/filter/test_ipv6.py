@@ -12,7 +12,7 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-import unittest
+from unittest import TestCase
 
 import pytest
 
@@ -44,7 +44,7 @@ VALID_OUTPUT1 = ["192.168.32.0/24", "192.24.2.1/32"]
 VALID_OUTPUT2 = ["::ffff:192.168.32.0", "::ffff:192.24.2.1", "fe80::100"]
 
 
-class TestIp6(unittest.TestCase):
+class TestIp6(TestCase):
     def setUp(self):
         pass
 

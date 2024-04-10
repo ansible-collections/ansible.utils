@@ -289,7 +289,7 @@ def _previous_usable_query(v, vtype):
 
 
 def _private_query(v, value):
-    if v.is_private():
+    if not v.ip.is_global():
         return value
 
 
@@ -298,7 +298,7 @@ def _public_query(v, value):
     if all(
         [
             v_ip.is_unicast(),
-            not v_ip.is_private(),
+            v_ip.is_global(),
             not v_ip.is_loopback(),
             not v_ip.is_netmask(),
             not v_ip.is_hostmask(),
