@@ -299,18 +299,16 @@ def _ip_is_global(ip):
         else (
             not (ip.is_private() or ip.is_link_local() or ip.is_reserved())
             and all(
-                [
-                    ip not in netaddr.IPNetwork(ipv6net)
-                    for ipv6net in [
-                        "::1/128",
-                        "::/128",
-                        "::ffff:0:0/96",
-                        "64:ff9b:1::/48",
-                        "100::/64",
-                        "2001::/23",
-                        "2001:db8::/32",
-                        "2002::/16",
-                    ]
+                ip not in netaddr.IPNetwork(ipv6net)
+                for ipv6net in [
+                    "::1/128",
+                    "::/128",
+                    "::ffff:0:0/96",
+                    "64:ff9b:1::/48",
+                    "100::/64",
+                    "2001::/23",
+                    "2001:db8::/32",
+                    "2002::/16",
                 ]
             )
             or ip in netaddr.IPRange("239.0.0.0", "239.255.255.255")  # Administrative Multicast
