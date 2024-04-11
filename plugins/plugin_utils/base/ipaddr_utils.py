@@ -290,9 +290,31 @@ def _previous_usable_query(v, vtype):
 
 def _ip_is_global(ip):
     # fallback to support netaddr < 1.0.0
-    # use IPAddress.is_private() if IPAddress.is_global() is not available
+    # attempt to emulate IPAddress.is_global() if it's not available
+    # note that there still might be some behavior differences (e.g. exceptions)
     has_is_global = callable(getattr(ip, "is_global", None))
-    return ip.is_global() if has_is_global else not ip.is_private()
+    return ip.is_global() if has_is_global else (
+        not (ip.is_private() or ip.is_link_local() or ip.is_reserved())
+        and all([
+            ip not in netaddr.IPNetwork(ipv6net) for ipv6net in [
+                '::1/128',
+                '::/128',
+                '::ffff:0:0/96',
+                '64:ff9b:1::/48',
+                '100::/64',
+                '2001::/23',
+                '2001:db8::/32',
+                '2002::/16'
+            ]
+        ])
+        or ip in netaddr.IPRange('239.0.0.0', '239.255.255.255')  # Administrative Multicast
+        or ip in netaddr.IPNetwork('233.252.0.0/24')              # Multicast test network
+        or ip in netaddr.IPRange('234.0.0.0', '238.255.255.255')
+        or ip in netaddr.IPRange('225.0.0.0', '231.255.255.255')
+        or ip in netaddr.IPNetwork('192.88.99.0/24')              # 6to4 anycast relays (RFC 3068)
+        or ip in netaddr.IPNetwork('192.0.0.9/32')
+        or ip in netaddr.IPNetwork('192.0.0.10/32')
+    )
 
 
 def _private_query(v, value):

@@ -10,6 +10,18 @@
       - "42540766412265424405338506004571095040/64"
       - true
 
+- name: Set ipaddress list for private/public test
+  ansible.builtin.set_fact:
+    value_private_public: "{{ value + value_private_public_additional }}"
+  vars:
+    value_private_public_additional:
+      - 172.16.0.1   # valid private subnet address
+      - 192.0.0.9    # exception: globally reachable address
+      - 233.252.0.1  # multicast test network: considered global in netaddr
+      - 234.0.0.1
+      - 225.0.0.1
+      - 239.0.0.1    # Administrative Multicast: considered global in netaddr
+
 - name: Ipaddr filter with empty string query
   ansible.builtin.set_fact:
     result1: "{{ value | ansible.utils.ipaddr }}"
@@ -28,11 +40,19 @@
 
 - name: Ipaddr filter with public network query
   ansible.builtin.set_fact:
-    result3: "{{ value | ansible.utils.ipaddr('public') }}"
+    result3: "{{ value_private_public | ansible.utils.ipaddr('public') }}"
 
 - name: Assert result for ipaddr public network query
   ansible.builtin.assert:
     that: "{{ result3 == ipaddr_result3 }}"
+
+- name: Ipaddr filter with private network query
+  ansible.builtin.set_fact:
+    result_private: "{{ value_private_public | ansible.utils.ipaddr('private') }}"
+
+- name: Assert result for ipaddr private network query
+  ansible.builtin.assert:
+    that: "{{ result_private == ipaddr_result_private }}"
 
 - name: Ipaddr filter with network query
   ansible.builtin.set_fact:
