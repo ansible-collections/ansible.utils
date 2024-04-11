@@ -15,12 +15,16 @@
     value_private_public: "{{ value + value_private_public_additional }}"
   vars:
     value_private_public_additional:
-      - 172.16.0.1 # valid private subnet address
-      - 192.0.0.9 # exception: globally reachable address
-      - 233.252.0.1 # multicast test network: considered global in netaddr
+      # valid private subnet address
+      - 172.16.0.1
+      # exception: globally reachable address
+      - 192.0.0.9
+      # multicast test network: considered global in netaddr
+      - 233.252.0.1
       - 234.0.0.1
+      # administrative multicast: considered global in netaddr
       - 225.0.0.1
-      - 239.0.0.1 # Administrative Multicast: considered global in netaddr
+      - 239.0.0.1
 
 - name: Ipaddr filter with empty string query
   ansible.builtin.set_fact:
