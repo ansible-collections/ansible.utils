@@ -1,4 +1,5 @@
 ---
 minor_changes:
-  - Fallback to IPAddress.is_private() when IPAddress.is_global() is not
-    available, to tolerate netaddr versions older than 0.10.0.
+  - Implemented fallback to the IPAddress.is_private() method in cases where IPAddress.is_global() is not available. This adjustment ensures compatibility with netaddr versions older than 0.10.0.
+  - With the release of netaddr 1.0 (on 2024-02-10), the IPAddress.is_private() method was removed. Consequently, ansible.utils < 4.0 is only compatible with netaddr < 1.0, while ansible.utils >= 4.0 requires netaddr >= 0.10.1.
+  - To address compatibility issues with older netaddr versions, this pull request introduces backward compatibility by reverting to IPAddress.is_private() when IPAddress.is_global() is unavailable. This ensures smooth operation with netaddr versions prior to 0.10.0.
