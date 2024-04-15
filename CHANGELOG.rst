@@ -4,19 +4,28 @@ Ansible Utils Collection Release Notes
 
 .. contents:: Topics
 
+v4.1.0
+======
+
+Release Summary
+---------------
+
+This release mainly addresses the breaking changes in the `netaddr` library. In the last release, we bumped the `netaddr` version to 0.10.1 and since `netaddr` is also present in other sources, we added a fallback method which addresses the compatibility issues with older netaddr versions and once the netaddr is available on other sources we would be deprecating the `netaddr` 0.8.0 support.
+
 v4.0.0
 ======
 
 Release Summary
 ---------------
+
 Starting from this release, the minimum `netaddr` version this collection requires is `>=0.10.1`.
 
 Major Changes
 -------------
 
+- Bumping `netaddr` to `>=0.10.1`, means that starting from this release, the minimum `netaddr` version this collection requires is `>=0.10.1`.
 - This release mainly addresses the breaking changes in the `netaddr` library.
 - With the new release of `netaddr` 1.0.0, the `IPAddress.is_private()` method has been removed and instead, the `IPAddress.is_global()` method has been extended to support the same functionality. This change has been reflected in the `ipaddr` filter plugin.
-- Bumping `netaddr` to `>=0.10.1`, means that starting from this release, the minimum `netaddr` version this collection requires is `>=0.10.1`.
 
 v3.1.0
 ======
