@@ -10,7 +10,7 @@ v4.1.0
 Release Summary
 ---------------
 
-This release mainly addresses the breaking changes in the `netaddr` library. In the last release, we bumped the `netaddr` version to 0.10.1 and since `netaddr` is also present in other sources, we added a fallback method which addresses the compatibility issues with older netaddr versions and once the netaddr is available on other sources we would be deprecating the `netaddr` 0.8.0 support.
+In the last release (`v4.0.0`), we bumped the minimum required `netaddr` version to be `>=0.10.1`. However, since `netaddr>=0.10.1` is not yet available in many sources other than PyPI, we have temporarily added a fallback method to support the `ipaddr` filter with older `netaddr` versions with this release. Once the latest `netaddr` is available in all major sources, we will deprecate this support and eventually remove it.
 
 v4.0.0
 ======
