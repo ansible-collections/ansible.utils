@@ -1,6 +1,7 @@
 """
 The base class for validator
 """
+
 from __future__ import absolute_import, division, print_function
 
 
@@ -181,10 +182,10 @@ def _load_validator(engine, data, criteria, plugin_vars=None, cls_name="Validate
         return validator, result
     except Exception as exc:
         result["failed"] = True
-        result[
-            "msg"
-        ] = "For engine '{engine}' error loading the corresponding validate plugin: {err}".format(
-            engine=engine,
-            err=to_native(exc),
+        result["msg"] = (
+            "For engine '{engine}' error loading the corresponding validate plugin: {err}".format(
+                engine=engine,
+                err=to_native(exc),
+            )
         )
         return None, result
