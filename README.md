@@ -7,7 +7,7 @@ The Ansible ``ansible.utils`` collection includes a variety of plugins that aid 
 <!--start requires_ansible-->
 ## Ansible version compatibility
 
-This collection has been tested against following Ansible versions: **>=2.14.0**.
+This collection has been tested against following Ansible versions: **>=2.15.0**.
 
 For collections that support Ansible 2.9, please ensure you update your `network_os` to use the
 fully qualified collection name (for example, `cisco.ios.ios`).
@@ -152,7 +152,7 @@ Please read and familiarize yourself with this document.
 
 ## Release notes
 <!--Add a link to a changelog.md file or an external docsite to cover this information. -->
-Release notes are available [here](https://github.com/ansible-collections/ansible.utils/blob/main/changelogs/CHANGELOG.rst)
+Release notes are available [here](CHANGELOG.rst)
 For automated release announcements refer [here](https://twitter.com/AnsibleContent).
 
 
