@@ -436,3 +436,15 @@ releases:
     fragments:
       - ipaddress_is_global_fallback.yaml
     release_date: "2024-04-15"
+  5.0.0:
+    changes:
+      major_changes:
+        - Bumping `requires_ansible` to `>=2.15.0`, since previous ansible-core versions
+          are EoL now.
+      release_summary:
+        "With this release, the minimum required version of `ansible-core`
+        for this collection is `2.15.0`. The last version known to be compatible with
+        `ansible-core` versions below `2.15` is v4.1.0."
+    fragments:
+      - bump_215.yaml
+    release_date: "2024-06-10"
