@@ -37,7 +37,7 @@ ARGSPEC_CONDITIONALS = {
 class ActionModule(ActionBase):
     """action module"""
 
-    _requires_connection = False
+    _requires_connection = True
 
     PARSER_CLS_NAME = "CliParser"
 
