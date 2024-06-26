@@ -105,10 +105,15 @@ def _ipcut(*args, **kwargs):
 
 
 def ipcut(value, amount):
-    ipv6_oct = []
     try:
         ip = netaddr.IPAddress(value)
-        ipv6address = ip.bits().replace(":", "")
+        if ip.version == 6:
+            ip_bits = ip.bits().replace(":", "")
+        elif ip.version == 4:
+            ip_bits = ip.bits().replace(".", "")
+        else:
+            msg = "Unknown IP Address Version: {0}".format(ip.version)
+            raise AnsibleFilterError(msg)
     except (netaddr.AddrFormatError, ValueError):
         msg = "You must pass a valid IP address; {0} is invalid".format(value)
         raise AnsibleFilterError(msg)
@@ -120,20 +125,27 @@ def ipcut(value, amount):
         raise AnsibleFilterError(msg)
     else:
         if amount < 0:
-            ipsub = ipv6address[amount:]
+            ipsub = ip_bits[amount:]
         else:
-            ipsub = ipv6address[0:amount]
+            ipsub = ip_bits[0:amount]
 
-    ipsubfinal = []
-
-    for i in range(0, len(ipsub), 16):
-        oct_sub = i + 16
-        ipsubfinal.append(ipsub[i:oct_sub])
-
-    for i in ipsubfinal:
-        x = hex(int(i, 2))
-        ipv6_oct.append(x.replace("0x", ""))
-    return str(":".join(ipv6_oct))
+    if ip.version == 6:
+        ipv4_oct = []
+        for i in range(0, len(ipsub),  16):
+            oct_sub = i + 16
+            ipv4_oct.append(
+                hex(int(ipsub[i:oct_sub], 2)).replace("0x", "")
+            )
+        result = str(":".join(ipv4_oct))
+    else: # ip.version == 4:
+        ipv4_oct = []
+        for i in range(0, len(ipsub),  8):
+            oct_sub = i + 8
+            ipv4_oct.append(
+                str(int(ipsub[i:oct_sub], 2))
+            )
+        result = str(".".join(ipv4_oct))
+    return result
 
 
 class FilterModule(object):
