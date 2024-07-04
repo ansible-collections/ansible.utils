@@ -4,19 +4,41 @@ Ansible Utils Collection Release Notes
 
 .. contents:: Topics
 
+v5.0.0
+======
+
+Release Summary
+---------------
+
+With this release, the minimum required version of `ansible-core` for this collection is `2.15.0`. The last version known to be compatible with `ansible-core` versions below `2.15` is v4.1.0.
+
+Major Changes
+-------------
+
+- Bumping `requires_ansible` to `>=2.15.0`, since previous ansible-core versions are EoL now.
+
+v4.1.0
+======
+
+Release Summary
+---------------
+
+In the last release (`v4.0.0`), we bumped the minimum required `netaddr` version to be `>=0.10.1`. However, since `netaddr>=0.10.1` is not yet available in many sources other than PyPI, we have temporarily added a fallback method to support the `ipaddr` filter with older `netaddr` versions with this release. Once the latest `netaddr` is available in all major sources, we will deprecate this support and eventually remove it.
+
 v4.0.0
 ======
 
 Release Summary
 ---------------
+
 Starting from this release, the minimum `netaddr` version this collection requires is `>=0.10.1`.
 
 Major Changes
 -------------
 
+- Bumping `netaddr` to `>=0.10.1`, means that starting from this release, the minimum `netaddr` version this collection requires is `>=0.10.1`.
 - This release mainly addresses the breaking changes in the `netaddr` library.
 - With the new release of `netaddr` 1.0.0, the `IPAddress.is_private()` method has been removed and instead, the `IPAddress.is_global()` method has been extended to support the same functionality. This change has been reflected in the `ipaddr` filter plugin.
-- Bumping `netaddr` to `>=0.10.1`, means that starting from this release, the minimum `netaddr` version this collection requires is `>=0.10.1`.
 
 v3.1.0
 ======
