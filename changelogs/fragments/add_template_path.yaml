@@ -1,0 +1,3 @@
+---
+minor_changes:
+  - Allows the cli_parse module to find parser.template_path inside roles or collections when a path relative to the role/collection directory is provided.
