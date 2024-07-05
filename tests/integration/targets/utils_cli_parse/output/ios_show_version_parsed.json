@@ -1,58 +1,58 @@
 {
-    "Cisco_IOS_XE_Software_Version": "17.09.01a",
-    "Cisco_IOS_Software": {
-      "Edition": "[Cupertino]",
-      "Type": "Virtual XE Software",
-      "Platform": "X86_64_LINUX_IOSD-UNIVERSALK9-M",
-      "Version": "17.9.1a",
-      "Release_Type": "RELEASE SOFTWARE (fc2)"
+  "Cisco_IOS_XE_Software_Version": "17.09.01a",
+  "Cisco_IOS_Software": {
+    "Edition": "[Cupertino]",
+    "Type": "Virtual XE Software",
+    "Platform": "X86_64_LINUX_IOSD-UNIVERSALK9-M",
+    "Version": "17.9.1a",
+    "Release_Type": "RELEASE SOFTWARE (fc2)"
+  },
+  "Technical_Support": "http://www.cisco.com/techsupport",
+  "Copyright": "1986-2022 by Cisco Systems, Inc.",
+  "Compiled_Date": "Thu 18-Aug-22 17:31 by mcpre",
+  "Cisco_IOS_XE_Copyright": "2005-2022 by Cisco Systems, Inc.",
+  "GPL_License": {
+    "Version": "2.0",
+    "Warranty": "ABSOLUTELY NO WARRANTY",
+    "URL": "http://www.cisco.com/wwl/export/crypto/tool/stqrg.html",
+    "Contact": "export@cisco.com"
+  },
+  "ROM": "IOS-XE ROMMON",
+  "Uptime": {
+    "Admin": "13 weeks, 3 days, 6 hours, 10 minutes",
+    "Control_Processor": "13 weeks, 3 days, 6 hours, 11 minutes"
+  },
+  "System_Returned_To_ROM_By": "reload",
+  "System_Image_File": "bootflash:packages.conf",
+  "Last_Reload_Reason": "reload",
+  "Cryptographic_Features": {
+    "Laws_Governing": "United States and local country laws",
+    "URL": "http://www.cisco.com/wwl/export/crypto/tool/stqrg.html",
+    "Contact": "export@cisco.com"
+  },
+  "License": {
+    "Level": "Perpetual",
+    "Next_Reload_Level": null,
+    "Addon": {
+      "Level": "Subscription",
+      "Next_Reload_Level": null
+    }
+  },
+  "Current_Throughput_Level": "20000 kbps",
+  "Smart_Licensing_Status": "Smart Licensing Using Policy",
+  "Hardware": {
+    "Model": "cisco C8000V",
+    "Processor": {
+      "Type": "VXE",
+      "Revision": "VXE",
+      "Memory": "1980807K/3075K bytes"
     },
-    "Technical_Support": "http://www.cisco.com/techsupport",
-    "Copyright": "1986-2022 by Cisco Systems, Inc.",
-    "Compiled_Date": "Thu 18-Aug-22 17:31 by mcpre",
-    "Cisco_IOS_XE_Copyright": "2005-2022 by Cisco Systems, Inc.",
-    "GPL_License": {
-      "Version": "2.0",
-      "Warranty": "ABSOLUTELY NO WARRANTY",
-      "URL": "http://www.cisco.com/wwl/export/crypto/tool/stqrg.html",
-      "Contact": "export@cisco.com"
-    },
-    "ROM": "IOS-XE ROMMON",
-    "Uptime": {
-      "Admin": "13 weeks, 3 days, 6 hours, 10 minutes",
-      "Control_Processor": "13 weeks, 3 days, 6 hours, 11 minutes"
-    },
-    "System_Returned_To_ROM_By": "reload",
-    "System_Image_File": "bootflash:packages.conf",
-    "Last_Reload_Reason": "reload",
-    "Cryptographic_Features": {
-      "Laws_Governing": "United States and local country laws",
-      "URL": "http://www.cisco.com/wwl/export/crypto/tool/stqrg.html",
-      "Contact": "export@cisco.com"
-    },
-    "License": {
-      "Level": "Perpetual",
-      "Next_Reload_Level": null,
-      "Addon": {
-        "Level": "Subscription",
-        "Next_Reload_Level": null
-      }
-    },
-    "Current_Throughput_Level": "20000 kbps",
-    "Smart_Licensing_Status": "Smart Licensing Using Policy",
-    "Hardware": {
-      "Model": "cisco C8000V",
-      "Processor": {
-        "Type": "VXE",
-        "Revision": "VXE",
-        "Memory": "1980807K/3075K bytes"
-      },
-      "Processor_Board_ID": "9CBSGPX26L2",
-      "Operating_Mode": "Autonomous",
-      "Interfaces": "4 Gigabit Ethernet interfaces",
-      "Non_Volatile_Memory": "32768K bytes",
-      "Physical_Memory": "3965332K bytes",
-      "Virtual_Hard_Disk": "5234688K bytes at bootflash"
-    },
-    "Configuration_Register": "0x2102"
+    "Processor_Board_ID": "9CBSGPX26L2",
+    "Operating_Mode": "Autonomous",
+    "Interfaces": "4 Gigabit Ethernet interfaces",
+    "Non_Volatile_Memory": "32768K bytes",
+    "Physical_Memory": "3965332K bytes",
+    "Virtual_Hard_Disk": "5234688K bytes at bootflash"
+  },
+  "Configuration_Register": "0x2102"
 }
