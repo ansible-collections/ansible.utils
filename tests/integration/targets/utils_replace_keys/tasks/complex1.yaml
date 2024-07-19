@@ -1,196 +1,127 @@
 ---
-- name: 1.replace_keys
-  vars:
-    result: "{{ l1 | ansible.utils.replace_keys(target=_target) }}"
-    _target:
-      - { before: p1, after: x1 }
-      - { before: p2, after: x2 }
-    target:
-      - { p3: a, x1: a, x2: a }
-      - { p3: b, x1: b, x2: b }
-      - { p3: c, x1: c, x2: c }
-  tags: replace_keys
-  block:
-    - name: 1.replace_keys debug
-      ansible.builtin.debug:
-        var: result|to_yaml
-      when: debug_test|d(false)|bool
-    - name: 1.replace_keys assert
-      ansible.builtin.assert:
-        that: result == target
-        fail_msg: |-
-          [ERR] Assertion failed
-          result:
-            {{ result | to_yaml | indent(2) }}
-          target:
-            {{ target | to_yaml | indent(2) }}
+- name: Include expected output data
+  include_vars:
+    file: complex.yaml
 
-- name: 2.map replace_keys
-  vars:
-    result: "{{ l2 | map('ansible.utils.replace_keys', target=_target) |
-      list }}"
-    _target:
-      - { before: p1, after: x1 }
-      - { before: p2, after: x2 }
-    target:
-      - - { p3: a, x1: a, x2: a }
-        - { p3: b, x1: b, x2: b }
-        - { p3: c, x1: c, x2: c }
-      - - { p3: a, x1: a, x2: a }
-        - { p3: b, x1: b, x2: b }
-        - { p3: c, x1: c, x2: c }
-      - - { p3: a, x1: a, x2: a }
-        - { p3: b, x1: b, x2: b }
-        - { p3: c, x1: c, x2: c }
-  tags: map_replace_keys
+- name: Block for l1 tests
   block:
-    - name: 2.map replace_keys debug
-      ansible.builtin.debug:
-        var: result|to_yaml
-      when: debug_test|d(false)|bool
-    - name: 2.map replace_keys assert
-      ansible.builtin.assert:
-        that: result == target
+    - name: Setup data as facts for complex replace integration test l1
+      ansible.builtin.set_fact:
+        l1:
+          - { p1: a, p2: a, p3: a }
+          - { p1: b, p2: b, p3: b }
+          - { p1: c, p2: c, p3: c }
 
-- name: 3.replace_keys starts_with
-  vars:
-    result: "{{ l1 | ansible.utils.replace_keys(target=_target,
-      matching_parameter='starts_with') }}"
-    _target:
-      - { before: p1, after: x1 }
-      - { before: p2, after: x2 }
-    target:
-      - { p3: a, x1: a, x2: a }
-      - { p3: b, x1: b, x2: b }
-      - { p3: c, x1: c, x2: c }
-  tags: replace_keys_starts_with_2
-  block:
-    - name: 3.replace_keys starts_with debug
+    - name: Debug l1
       ansible.builtin.debug:
-        var: result|to_yaml
-      when: debug_test|d(false)|bool
-    - name: 3.replace_keys starts_with assert
-      ansible.builtin.assert:
-        that: result == target
+        msg: "{{ l1 | ansible.utils.replace_keys(target=[{'before': 'p1', 'after': 'x1'}, {'before': 'p2', 'after': 'x2'}]) }}"
+      register: result_l1
 
-- name: 4.replace_keys starts_with
-  vars:
-    result: "{{ l3 | ansible.utils.replace_keys(target=_target,
-      matching_parameter='starts_with') }}"
-    _target:
-      - { before: p1, after: x1 }
-      - { before: p2, after: x2 }
-    target:
-      - { p3_key_o3: a, x1: a, x2: a }
-      - { p3_key_o6: b, x1: b, x2: b }
-      - { p3_key_o9: c, x1: c, x2: c }
-  tags: replace_keys_starts_with_3
-  block:
-    - name: 4.replace_keys starts_with debug
-      ansible.builtin.debug:
-        var: result|to_yaml
-      when: debug_test|d(false)|bool
-    - name: 4.replace_keys starts_with assert
+    - name: Assert result dicts l1
       ansible.builtin.assert:
-        that: result == target
+        that:
+          - result_l1['msg'] == replace['l1']
 
-- name: 5.replace_keys starts_with 'p'
-  vars:
-    result: "{{ l1 | ansible.utils.replace_keys(target=_target,
-      matching_parameter='starts_with') }}"
-    _target:
-      - { before: p, after: x }
-    target:
-      - { x: a }
-      - { x: b }
-      - { x: c }
-  tags: replace_keys_starts_with_1
-  block:
-    - name: 5.replace_keys starts_with 'p' debug
+    - name: Debug l1 for starts_with 'p'
       ansible.builtin.debug:
-        var: result|to_yaml
-      when: debug_test|d(false)|bool
-    - name: 5.replace_keys starts_with assert
-      ansible.builtin.assert:
-        that: result == target
+        msg: "{{ l1 | ansible.utils.replace_keys(target=[{'before': 'p', 'after': 'x'}], matching_parameter='starts_with') }}"
+      register: result_l1_starts_with_p
 
-- name: 6.replace_keys ends_with
-  vars:
-    result: "{{ l1 | ansible.utils.replace_keys(target=_target,
-      matching_parameter='ends_with') }}"
-    _target:
-      - { before: p1, after: x1 }
-      - { before: p2, after: x2 }
-    target:
-      - { p3: a, x1: a, x2: a }
-      - { p3: b, x1: b, x2: b }
-      - { p3: c, x1: c, x2: c }
-  tags: replace_keys_ends_with_2
-  block:
-    - name: 6.replace_keys ends_with debug
-      ansible.builtin.debug:
-        var: result|to_yaml
-      when: debug_test|d(false)|bool
-    - name: 6.replace_keys ends_with assert
+    - name: Assert result dicts l1 for starts_with 'p'
       ansible.builtin.assert:
-        that: result == target
+        that:
+          - result_l1_starts_with_p['msg'] == replace['l1_starts_with_p']
 
-- name: 7.replace_keys ends_with
-  vars:
-    result: "{{ l3 | ansible.utils.replace_keys(target=_target,
-      matching_parameter='ends_with') }}"
-    _target:
-      - { before: o1, after: x1 }
-      - { before: o2, after: x2 }
-    target:
-      - { p3_key_o3: a, x1: a, x2: a }
-      - { p1_key_o4: b, p2_key_o5: b, p3_key_o6: b }
-      - { p1_key_o7: c, p2_key_o8: c, p3_key_o9: c }
-  tags: replace_keys_ends_with_3
-  block:
-    - name: 7.replace_keys ends_with debug
+    - name: Debug l1 for ends_with
       ansible.builtin.debug:
-        var: result|to_yaml
-      when: debug_test|d(false)|bool
-    - name: 7.replace_keys ends_with assert
-      ansible.builtin.assert:
-        that: result == target
+        msg: "{{ l1 | ansible.utils.replace_keys(target=[{'before': 'p1', 'after': 'x1'}, {'before': 'p2', 'after': 'x2'}], matching_parameter='ends_with') }}"
+      register: result_l1_ends_with
 
-- name: 8.replace_keys ends_with '2'
-  vars:
-    result: "{{ l1 | ansible.utils.replace_keys(target=_target,
-      matching_parameter='ends_with') }}"
-    _target:
-      - { before: 2, after: 9 }
-    target:
-      - { "9": a, p1: a, p3: a }
-      - { "9": b, p1: b, p3: b }
-      - { "9": c, p1: c, p3: c }
-  tags: replace_keys_ends_with_1
-  block:
-    - name: 8.replace_keys ends_with '2' debug
-      ansible.builtin.debug:
-        var: result|to_yaml
-      when: debug_test|d(false)|bool
-    - name: 8.replace_keys ends_with '2' assert
+    - name: Assert result dicts l1 for ends_with
       ansible.builtin.assert:
-        that: result == target
+        that:
+          - result_l1_ends_with['msg'] == replace['l1_ends_with']
 
-- name: 9.replace_keys regex
-  vars:
-    result: "{{ l3 | ansible.utils.replace_keys(target=_target, matching_parameter='regex') }}"
-    _target:
-      - { before: "^(.*)_key_o2$", after: "XY_key_o2" }
-    target:
-      - { XY_key_o2: a, p1_key_o1: a, p3_key_o3: a }
-      - { p1_key_o4: b, p2_key_o5: b, p3_key_o6: b }
-      - { p1_key_o7: c, p2_key_o8: c, p3_key_o9: c }
-  tags: replace_keys_regex_1
-  block:
-    - name: 9.replace_keys regex debug
+    - name: Debug l1 for ends_with '2'
       ansible.builtin.debug:
-        var: result|to_yaml
-      when: debug_test|d(false)|bool
-    - name: 9.replace_keys regex assert
+        msg: "{{ l1 | ansible.utils.replace_keys(target=[{'before': '2', 'after': '9'}], matching_parameter='ends_with') }}"
+      register: result_l1_ends_with_2
+
+    - name: Assert result dicts l1 for ends_with '2'
       ansible.builtin.assert:
-        that: result == target
+        that:
+          - result_l1_ends_with_2['msg'] == replace['l1_ends_with_2']
+
+- name: Block for l2 tests
+  block:
+    - name: Setup data as facts for complex replace integration test l2
+      ansible.builtin.set_fact:
+        l2:
+          - - { p1: a, p2: a, p3: a }
+            - { p1: b, p2: b, p3: b }
+            - { p1: c, p2: c, p3: c }
+          - - { p1: a, p2: a, p3: a }
+            - { p1: b, p2: b, p3: b }
+            - { p1: c, p2: c, p3: c }
+          - - { p1: a, p2: a, p3: a }
+            - { p1: b, p2: b, p3: b }
+            - { p1: c, p2: c, p3: c }
+
+    - name: Debug l2
+      ansible.builtin.debug:
+        msg: "{{ l2 | map('ansible.utils.replace_keys', target=[{'before': 'p1', 'after': 'x1'}, {'before': 'p2', 'after': 'x2'}]) | list }}"
+      register: result_l2
+
+    - name: Assert result dicts l2
+      ansible.builtin.assert:
+        that:
+          - result_l2['msg'] == replace['l2']
+
+- name: Block for l3 tests
+  block:
+    - name: Setup data as facts for replace integration test l3
+      ansible.builtin.set_fact:
+        l3:
+          - { p1_key_o1: a, p2_key_o2: a, p3_key_o3: a }
+          - { p1_key_o4: b, p2_key_o5: b, p3_key_o6: b }
+          - { p1_key_o7: c, p2_key_o8: c, p3_key_o9: c }
+
+    - name: Debug l3
+      ansible.builtin.debug:
+        msg: "{{ l3 | ansible.utils.replace_keys(target=[{'before': 'p1_key_o1', 'after': 'p1_key_oX1'}, {'before': 'p2_key_o2', 'after': 'p2_key_oX2'}]) }}"
+      register: result_l3
+
+    - name: Assert result dicts l3
+      ansible.builtin.assert:
+        that:
+          - result_l3['msg'] == replace['l3']
+
+    - name: Debug l3 for starts_with
+      ansible.builtin.debug:
+        msg: "{{ l3 | ansible.utils.replace_keys(target=[{'before': 'p1', 'after': 'x1'}, {'before': 'p2', 'after': 'x2'}], matching_parameter='starts_with') }}"
+      register: result_l3_starts_with
+
+    - name: Assert result dicts l3 for starts_with
+      ansible.builtin.assert:
+        that:
+          - result_l3_starts_with['msg'] == replace['l3_starts_with']
+
+    - name: Debug l3 for ends_with
+      ansible.builtin.debug:
+        msg: "{{ l3 | ansible.utils.replace_keys(target=[{'before': 'o1', 'after': 'x1'}, {'before': 'o2', 'after': 'x2'}], matching_parameter='ends_with') }}"
+      register: result_l3_ends_with
+
+    - name: Assert result dicts l3 for ends_with
+      ansible.builtin.assert:
+        that:
+          - result_l3_ends_with['msg'] == replace['l3_ends_with']
+
+    - name: Debug l3 for regex
+      ansible.builtin.debug:
+        msg: "{{ l3 | ansible.utils.replace_keys(target=[{'before': '^(.*)_key_o2$', 'after': 'XY_key_o2'}], matching_parameter='regex') }}"
+      register: result_l3_regex
+
+    - name: Assert result dicts l3 for regex
+      ansible.builtin.assert:
+        that:
+          - result_l3_regex['msg'] == replace['l3_regex']
