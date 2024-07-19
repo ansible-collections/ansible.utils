@@ -19,6 +19,9 @@ Synopsis
 --------
 - This filter is designed to return the input value if a query is True, and False if a query is False
 - This way it can be easily used in chained filters
+- For more details on how to use this plugin, please refer to `<docsite/rst/filters_ipaddr.rst>`_
+
+
 
 
 Parameters
