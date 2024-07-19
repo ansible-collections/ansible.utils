@@ -1,6 +1,6 @@
 ---
 - name: Include expected output data
-  include_vars:
+  ansible.builtin.include_vars:
     file: complex.yaml
 
 - name: Block for l1 tests
