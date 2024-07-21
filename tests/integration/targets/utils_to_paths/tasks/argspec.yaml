@@ -1,5 +1,6 @@
 ---
-- ansible.builtin.set_fact:
+- name: Set fact
+  ansible.builtin.set_fact:
     a:
       b:
         c:
@@ -8,13 +9,16 @@
 
 - name: Check argspec validation with lookup
   ansible.builtin.set_fact:
-    _result: "{{ a|ansible.utils.to_paths(wantlist=5) }}"
+    _result: "{{ a | ansible.utils.to_paths(wantlist=5) }}"
   ignore_errors: true
   register: result
 
-- debug:
+- name: Debug
+  ansible.builtin.debug:
     var: result
-- assert:
+
+- name: Assert
+  ansible.builtin.assert:
     that: "{{ msg in result.msg }}"
   vars:
     msg: "'5' is not a valid boolean"
@@ -25,9 +29,12 @@
   ignore_errors: true
   register: result
 
-- debug:
+- name: Debug
+  ansible.builtin.debug:
     var: result
-- assert:
+
+- name: Assert
+  ansible.builtin.assert:
     that: "{{ msg in result.msg }}"
   vars:
     msg: "missing required arguments: var"

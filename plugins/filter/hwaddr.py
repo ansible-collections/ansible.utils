@@ -39,9 +39,8 @@ except ImportError:
 else:
 
     class mac_linux(netaddr.mac_unix):
-        pass
+        word_fmt = "%.2x"
 
-    mac_linux.word_fmt = "%.2x"
 
 DOCUMENTATION = """
     name: hwaddr
@@ -87,8 +86,6 @@ EXAMPLES = r"""
 # ok: [localhost] => {
 #     "msg": "1a2b.3c4d.5e6f"
 # }
-
-
 """
 
 RETURN = """

@@ -86,17 +86,14 @@ Examples
 
     #### Simple examples with out any engine. plugin will use default value as xmltodict
 
-    tasks:
-      - name: convert given XML to native python dictionary
-        ansible.builtin.set_fact:
-          data: "
-            <netconf-state xmlns=\"urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring\"><schemas><schema/></schemas></netconf-state>
-                "
 
-      - debug:
-          msg:  "{{ data|ansible.utils.from_xml }}"
+    - name: convert given XML to native python dictionary
+      ansible.builtin.set_fact:
+        data: ' <netconf-state xmlns="urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring"><schemas><schema/></schemas></netconf-state> '
+    - debug:
+        msg: '{{ data|ansible.utils.from_xml }}'
 
-    ##TASK######
+    # TASK######
     # TASK [convert given XML to native python dictionary] *****************************************************************************************************
     # task path: /Users/amhatre/ansible-collections/playbooks/test_utils.yaml:5
     # ok: [localhost] => {
@@ -122,17 +119,13 @@ Examples
 
     #### example2 with engine=xmltodict
 
-    tasks:
-      - name: convert given XML to native python dictionary
-        ansible.builtin.set_fact:
-          data: "
-            <netconf-state xmlns=\"urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring\"><schemas><schema/></schemas></netconf-state>
-                "
+    - name: convert given XML to native python dictionary
+      ansible.builtin.set_fact:
+        data: ' <netconf-state xmlns="urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring"><schemas><schema/></schemas></netconf-state> '
+    - debug:
+        msg: '{{ data|ansible.utils.from_xml(''xmltodict'') }}'
 
-      - debug:
-          msg:  "{{ data|ansible.utils.from_xml('xmltodict') }}"
-
-    ##TASK######
+    # TASK######
     # TASK [convert given XML to native python dictionary] *****************************************************************************************************
     # task path: /Users/amhatre/ansible-collections/playbooks/test_utils.yaml:5
     # ok: [localhost] => {

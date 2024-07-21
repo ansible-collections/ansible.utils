@@ -8,7 +8,7 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-import unittest
+from unittest import TestCase
 
 from ansible.errors import AnsibleError
 
@@ -92,7 +92,7 @@ CRITERIA_IN_RATE_CHECK = {
 }
 
 
-class TestValidate(unittest.TestCase):
+class TestValidate(TestCase):
     def setUp(self):
         pass
 
@@ -148,7 +148,7 @@ class TestValidate(unittest.TestCase):
         with self.assertRaises(AnsibleError) as error:
             validate(*args, **kwargs)
         self.assertIn(
-            "value of draft must be one of: draft3, draft4, draft6, draft7, got: draft0",
+            "value of draft must be one of: draft3, draft4, draft6, draft7, 2019-09, 2020-12, got: draft0",
             str(error.exception),
         )
 

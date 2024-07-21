@@ -1,5 +1,5 @@
 ---
-- name: set ipaddress list
+- name: Set ipaddress list
   ansible.builtin.set_fact:
     value:
       - 192.24.2.1
@@ -8,36 +8,36 @@
       - ::ffff:192.24.2.1/128
       - 192.168.32.0/24
       - fe80::100/10
-      - True
+      - true
 
-- name: ipv6 filter
+- name: Ipv6 filter
   ansible.builtin.set_fact:
-    result1: "{{ value|ansible.utils.ipv6 }}"
+    result1: "{{ value | ansible.utils.ipv6 }}"
 
 - name: Assert result for ipv6.
-  assert:
+  ansible.builtin.assert:
     that: "{{ result1 == ipv6_result1 }}"
 
-- name: convert ipv6 to ipv4 filter
+- name: Convert ipv6 to ipv4 filter
   ansible.builtin.set_fact:
-    result2: "{{ value|ansible.utils.ipv6('ipv4') }}"
+    result2: "{{ value | ansible.utils.ipv6('ipv4') }}"
 
 - name: Assert result for ipv4.
-  assert:
+  ansible.builtin.assert:
     that: "{{ result2 == ipv6_result2 }}"
 
 - name: Ipv6 filter with address query
   ansible.builtin.set_fact:
-    result3: "{{ value|ansible.utils.ipv6('address') }}"
+    result3: "{{ value | ansible.utils.ipv6('address') }}"
 
 - name: Assert result for ipv6 filter with address query.
-  assert:
+  ansible.builtin.assert:
     that: "{{ result3 == ipv6_result3 }}"
 
-- name: ipv6 filter with single value
+- name: Ipv6 filter with single value
   ansible.builtin.set_fact:
     result4: "{{ '::ffff:192.168.32.0/120' | ansible.utils.ipv6('ipv4') }}"
 
 - name: Assert result for ipv6 filter with single value
-  assert:
+  ansible.builtin.assert:
     that: "{{ result4 == '192.168.32.0/24' }}"

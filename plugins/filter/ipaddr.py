@@ -51,6 +51,7 @@ DOCUMENTATION = """
     description:
         - This filter is designed to return the input value if a query is True, and False if a query is False
         - This way it can be easily used in chained filters
+        - For more details on how to use this plugin, please refer to `<docsite/rst/filters_ipaddr.rst>`_
     options:
         value:
             description:
@@ -61,10 +62,11 @@ DOCUMENTATION = """
             description:
             - You can provide a single argument to each ipaddr() filter.
             - The filter will then treat it as a query and return values modified by that query.
-            - Types of queries include:
-                - query by name: ansible.utils.ipaddr('address'), ansible.utils.ipv4('network');
-                - query by CIDR range: ansible.utils.ipaddr('192.168.0.0/24'), ansible.utils.ipv6('2001:db8::/32');
-                - query by index number: ansible.utils.ipaddr('1'), ansible.utils.ipaddr('-1');
+            - >-
+              Types of queries include:
+              1. query by name: ansible.utils.ipaddr('address'), ansible.utils.ipv4('network');
+              2. query by CIDR range: ansible.utils.ipaddr('192.168.0.0/24'), ansible.utils.ipv6('2001:db8::/32');
+              3. query by index number: ansible.utils.ipaddr('1'), ansible.utils.ipaddr('-1');
             type: str
             default: ''
         version:
@@ -89,7 +91,7 @@ EXAMPLES = r"""
       - 192.168.32.0/24
       - fe80::100/10
       - 42540766412265424405338506004571095040/64
-      - True
+      - true
 - debug:
     msg: "{{ value|ansible.utils.ipaddr }}"
 
@@ -109,7 +111,7 @@ EXAMPLES = r"""
 
 - name: check if IP addresses or network ranges are accessible on a private Internet and return it.
   debug:
-     msg: "{{ value|ansible.utils.ipaddr('private') }}"
+    msg: "{{ value|ansible.utils.ipaddr('private') }}"
 
 - name: check which values are values are specifically network ranges and return it.
   debug:
@@ -259,6 +261,8 @@ def _ipaddr(*args, **kwargs):
         if isinstance(data["value"], str):
             pass
         elif isinstance(data["value"], list):
+            pass
+        elif isinstance(data["value"], int):
             pass
         else:
             raise AnsibleFilterError(

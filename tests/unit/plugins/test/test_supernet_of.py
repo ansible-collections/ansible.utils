@@ -12,12 +12,12 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-import unittest
+from unittest import TestCase
 
 from ansible_collections.ansible.utils.plugins.test.supernet_of import _supernet_of
 
 
-class TestSupernetOf(unittest.TestCase):
+class TestSupernetOf(TestCase):
     def setUp(self):
         pass
 

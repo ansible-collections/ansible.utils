@@ -36,10 +36,7 @@ DOCUMENTATION = """
         host:
             description:
             - A string that represents the IP address or the host name
-            - For example:
-                - "docs.ansible.com"
-                - 127.0.0.1
-                - ::1
+            - 'For example: C("docs.ansible.com"), C(127.0.0.1), or C(::1)'
             type: str
             required: True
     notes:
@@ -110,7 +107,6 @@ EXAMPLES = r"""
 #     "changed": false,
 #     "msg": "All assertions passed"
 # }
-
 """
 
 RETURN = """

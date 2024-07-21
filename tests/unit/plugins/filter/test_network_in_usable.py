@@ -12,12 +12,12 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-import unittest
+from unittest import TestCase
 
 from ansible_collections.ansible.utils.plugins.filter.network_in_usable import _network_in_usable
 
 
-class Test_Network_In_Usable(unittest.TestCase):
+class Test_Network_In_Usable(TestCase):
     def setUp(self):
         pass
 

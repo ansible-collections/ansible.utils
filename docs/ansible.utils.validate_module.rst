@@ -103,8 +103,8 @@ Examples
 
     - name: set facts for data and criteria
       ansible.builtin.set_fact:
-        data: "{{ lookup('ansible.builtin.file', './validate/data/show_interfaces_iosxr.json')}}"
-        criteria: "{{ lookup('ansible.builtin.file', './validate/criteria/jsonschema/show_interfaces_iosxr.json')}}"
+        data: "{{ lookup('ansible.builtin.file', './validate/data/show_interfaces_iosxr.json') }}"
+        criteria: "{{ lookup('ansible.builtin.file', './validate/criteria/jsonschema/show_interfaces_iosxr.json') }}"
 
     - name: validate data in with jsonschema engine (by passing task vars as configurable plugin options)
       ansible.utils.validate:
@@ -116,8 +116,8 @@ Examples
 
     - name: validate configuration with config plugin (see config plugin for criteria examples)
       ansible.utils.validate:
-        data: "{{ lookup('ansible.builtin.file', './backup/eos.config' }}"
-        criteria: "{{ lookup('ansible.builtin.file', './validate/criteria/config/eos_config_rules.yaml' }}"
+        data: "{{ lookup('ansible.builtin.file', './backup/eos.config') }}"
+        criteria: "{{ lookup('ansible.builtin.file', './validate/criteria/config/eos_config_rules.yaml') }}"
         engine: ansible.utils.config
 
 

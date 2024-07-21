@@ -50,7 +50,7 @@ Parameters
                     </td>
                 <td>
                         <div>A string that represents the value against which the test is going to be performed</div>
-                        <div>{&#x27;For example&#x27;: [&#x27;253.0.0.1&#x27;, &#x27;128.146.1.7&#x27;]}</div>
+                        <div>For example: <code>253.0.0.1</code> or <code>128.146.1.7</code></div>
                 </td>
             </tr>
     </table>

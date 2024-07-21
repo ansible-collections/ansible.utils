@@ -1,5 +1,6 @@
 ---
-- ansible.builtin.set_fact:
+- name: Set fact
+  ansible.builtin.set_fact:
     a:
       b:
         c:
@@ -44,13 +45,10 @@
 
 - name: Retrieve the value of each path from vars
   ansible.builtin.debug:
-    msg: "The value of path {{ path }} in vars is {{ value }}"
-  loop: "{{ paths.keys()|list }}"
+    msg: "The value of path {{ path }} in vars is {{ lookup('ansible.utils.get_path', hostvars[inventory_hostname], path) }}"
+  loop: "{{ paths.keys() | list }}"
   loop_control:
-    label: "{{ item }}"
-  vars:
-    path: "{{ item }}"
-    value: "{{ lookup('ansible.utils.get_path', hostvars[inventory_hostname], item) }}"
+    loop_var: path
 # TASK [Get the paths for the object] *******************************
 # ok: [nxos101] => changed=false
 #   ansible_facts:
@@ -66,7 +64,7 @@
 # ok: [nxos101] => (item=a.b.c.d[1]) =>
 #   msg: The value of path a.b.c.d[1] in vars is 1
 # ok: [nxos101] => (item=a.b.c.e[0]) =>
-#   msg: The value of path a.b.c.e[0] in vars is True
+#   msg: The value of path a.b.c.e[0] in vars is true
 # ok: [nxos101] => (item=a.b.c.e[1]) =>
 #   msg: The value of path a.b.c.e[1] in vars is False
 

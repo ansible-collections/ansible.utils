@@ -1,6 +1,7 @@
 """
 The base class for validator
 """
+
 from __future__ import absolute_import, division, print_function
 
 
@@ -49,7 +50,7 @@ class ValidateBase(object):
         cref = dict(zip(["corg", "cname", "plugin"], engine.split(".")))
         validatorlib = (
             "ansible_collections.{corg}.{cname}.plugins.sub_plugins.validate.{plugin}".format(
-                **cref
+                **cref,
             )
         )
 
@@ -75,7 +76,6 @@ class ValidateBase(object):
             return None
 
         for option_name, option_value in iteritems(options):
-
             option_var_name_list = option_value.get("vars", [])
             option_env_name_list = option_value.get("env", [])
 
@@ -124,7 +124,9 @@ class ValidateBase(object):
                         break
 
         valid, argspec_result, updated_params = check_argspec(
-            yaml.dump(argspec_obj), self._engine, **params
+            yaml.dump(argspec_obj),
+            self._engine,
+            **params,
         )
         if not valid:
             raise AnsibleError(
@@ -180,10 +182,10 @@ def _load_validator(engine, data, criteria, plugin_vars=None, cls_name="Validate
         return validator, result
     except Exception as exc:
         result["failed"] = True
-        result[
-            "msg"
-        ] = "For engine '{engine}' error loading the corresponding validate plugin: {err}".format(
-            engine=engine,
-            err=to_native(exc),
+        result["msg"] = (
+            "For engine '{engine}' error loading the corresponding validate plugin: {err}".format(
+                engine=engine,
+                err=to_native(exc),
+            )
         )
         return None, result

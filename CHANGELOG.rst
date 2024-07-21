@@ -4,6 +4,176 @@ Ansible Utils Collection Release Notes
 
 .. contents:: Topics
 
+v5.0.0
+======
+
+Release Summary
+---------------
+
+With this release, the minimum required version of `ansible-core` for this collection is `2.15.0`. The last version known to be compatible with `ansible-core` versions below `2.15` is v4.1.0.
+
+Major Changes
+-------------
+
+- Bumping `requires_ansible` to `>=2.15.0`, since previous ansible-core versions are EoL now.
+
+v4.1.0
+======
+
+Release Summary
+---------------
+
+In the last release (`v4.0.0`), we bumped the minimum required `netaddr` version to be `>=0.10.1`. However, since `netaddr>=0.10.1` is not yet available in many sources other than PyPI, we have temporarily added a fallback method to support the `ipaddr` filter with older `netaddr` versions with this release. Once the latest `netaddr` is available in all major sources, we will deprecate this support and eventually remove it.
+
+v4.0.0
+======
+
+Release Summary
+---------------
+
+Starting from this release, the minimum `netaddr` version this collection requires is `>=0.10.1`.
+
+Major Changes
+-------------
+
+- Bumping `netaddr` to `>=0.10.1`, means that starting from this release, the minimum `netaddr` version this collection requires is `>=0.10.1`.
+- This release mainly addresses the breaking changes in the `netaddr` library.
+- With the new release of `netaddr` 1.0.0, the `IPAddress.is_private()` method has been removed and instead, the `IPAddress.is_global()` method has been extended to support the same functionality. This change has been reflected in the `ipaddr` filter plugin.
+
+v3.1.0
+======
+
+Minor Changes
+-------------
+
+- Add support in fact_diff filter plugin to show common lines.(https://github.com/ansible-collections/ansible.utils/issues/311)
+
+Bugfixes
+--------
+
+- Avoid unnecessary use of persistent connection in `cli_parse`, `fact_diff`, `update_fact` and `validate` as this action does not require a connection.
+
+Documentation Changes
+---------------------
+
+- ipv6form filter plugin - Fix to be displayed correctly.
+- validate lookup plugin - Fix syntax in EXAMPLES.
+- validate module - Fix syntax in EXAMPLES.
+
+v3.0.0
+======
+
+Release Summary
+---------------
+
+Starting from this release, the minimum `ansible-core` version this collection requires is `2.14.0`. That last known version compatible with ansible-core<2.14 is `v2.12.0`.
+
+Major Changes
+-------------
+
+- Bumping `requires_ansible` to `>=2.14.0`, since previous ansible-core versions are EoL now.
+
+v2.12.0
+=======
+
+Minor Changes
+-------------
+
+- Fact_diff filter plugin - Add fact_diff filter plugin. (https://github.com/ansible-collections/ansible.utils/issues/78).
+
+New Plugins
+-----------
+
+Filter
+~~~~~~
+
+- fact_diff - Find the difference between currently set facts
+
+v2.11.0
+=======
+
+Minor Changes
+-------------
+
+- Add ipcut filter plugin.(https://github.com/ansible-collections/ansible.utils/issues/251)
+- Add ipv6form filter plugin.(https://github.com/ansible-collections/ansible.utils/issues/230)
+
+Bugfixes
+--------
+
+- Validate input for ipv4_hex(https://github.com/ansible-collections/ansible.utils/issues/281)
+
+New Plugins
+-----------
+
+Filter
+~~~~~~
+
+- ipcut - This filter is designed to get 1st or last few bits of IP address.
+- ipv6form - This filter is designed to convert ipv6 address in different formats. For example expand, compressetc.
+
+v2.10.4
+=======
+
+v2.10.3
+=======
+
+v2.10.2
+=======
+
+Minor Changes
+-------------
+
+- validate - Add option `check_format` for the jsonschema engine to disable JSON Schema format checking.
+- validate - Add support for JSON Schema draft 2019-09 and 2020-12 as well as automatically choosing the draft from the `$schema` field of the criteria.
+
+v2.10.1
+=======
+
+v2.10.0
+=======
+
+v2.9.0
+======
+
+Minor Changes
+-------------
+
+- to_xml - Added support to disable xml declartion with full_document flag.
+
+Bugfixes
+--------
+
+- mac - reorganize regexes to work around 3.11 regex changes. (https://github.com/ansible-collections/ansible.utils/pull/231)
+
+v2.8.0
+======
+
+Minor Changes
+-------------
+
+- to_xml - Added support for using spaces to indent an XML doc via a new `indent` parameter.
+
+Bugfixes
+--------
+
+- Accept int input for ipaddr filters.
+
+v2.7.0
+======
+
+Minor Changes
+-------------
+
+- Add support for content template parser
+- Added new connection base class similar to ansible.netcommon's NetworkConnectionBase without the network-specific option masking (https://github.com/ansible-collections/ansible.utils/pull/213).
+- ipsubnet - the index parameter should only ever be an integer if it is provided. this changes the argument type from str to int.
+
+Bugfixes
+--------
+
+- Fix filters to only raise AnsibleFilterError exceptions (https://github.com/ansible-collections/ansible.utils/issues/209).
+- ipsubnet - interacting with large subnets could cause performance constraints. the result would be the system would appear to hang while it built out a list of all possible subnets or stepped through all possible subnets one at a time. when sending a prefix that is a supernet of the passed in network the behavior wasn't consistent. this now returns an AnsibleFilterError in that scenario across all python releases. (https://github.com/ansible-collections/ansible.utils/issues/132)
 
 v2.6.1
 ======

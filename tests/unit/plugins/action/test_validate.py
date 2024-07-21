@@ -8,7 +8,7 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-import unittest
+from unittest import TestCase
 
 from ansible.errors import AnsibleActionFail
 from ansible.playbook.task import Task
@@ -111,7 +111,7 @@ CRITERIA_FORMAT_SUPPORT_CHECK = {
 }
 
 
-class TestValidate(unittest.TestCase):
+class TestValidate(TestCase):
     def setUp(self):
         task = MagicMock(Task)
         play_context = MagicMock()
@@ -186,7 +186,7 @@ class TestValidate(unittest.TestCase):
 
         result = self._plugin.run(task_vars={"ansible_validate_jsonschema_draft": "draft0"})
         self.assertIn(
-            "value of draft must be one of: draft3, draft4, draft6, draft7, got: draft0",
+            "value of draft must be one of: draft3, draft4, draft6, draft7, 2019-09, 2020-12, got: draft0",
             result["msg"],
         )
 
@@ -285,3 +285,15 @@ class TestValidate(unittest.TestCase):
 
         result = self._plugin.run(task_vars=None)
         self.assertIn("Validation errors were found", result["msg"])
+
+    def test_support_for_disabled_format_with_invalid_data(self):
+        """Check passing valid data as per criteria"""
+
+        self._plugin._task.args = {
+            "engine": "ansible.utils.jsonschema",
+            "data": IN_VALID_DATA,
+            "criteria": CRITERIA_FORMAT_SUPPORT_CHECK,
+        }
+
+        result = self._plugin.run(task_vars=dict(ansible_validate_jsonschema_check_format=False))
+        self.assertIn("All checks passed", result["msg"])

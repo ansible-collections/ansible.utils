@@ -7,17 +7,17 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 from collections import OrderedDict
+from unittest import TestCase
 
 import pytest
 
 from ansible_collections.ansible.utils.plugins.sub_plugins.cli_parser.xml_parser import CliParser
-from ansible_collections.ansible.utils.tests.unit.compat import unittest
 
 
 xmltodict = pytest.importorskip("xmltodict")
 
 
-class TestXmlParser(unittest.TestCase):
+class TestXmlParser(TestCase):
     def test_valid_xml(self):
         xml = "<tag1><tag2 arg='foo'>text</tag2></tag1>"
         xml_dict = OrderedDict(

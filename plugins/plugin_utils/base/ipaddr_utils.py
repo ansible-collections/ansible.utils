@@ -16,6 +16,7 @@ __metaclass__ = type
 import types
 
 from ansible.errors import AnsibleFilterError
+from ansible.module_utils.basic import missing_required_lib
 from ansible.utils.display import Display
 
 
@@ -287,8 +288,42 @@ def _previous_usable_query(v, vtype):
                 return str(netaddr.IPAddress(int(v.ip) - 1))
 
 
+def _ip_is_global(ip):
+    # fallback to support netaddr < 1.0.0
+    # attempt to emulate IPAddress.is_global() if it's not available
+    # note that there still might be some behavior differences (e.g. exceptions)
+    has_is_global = callable(getattr(ip, "is_global", None))
+    return (
+        ip.is_global()
+        if has_is_global
+        else (
+            not (ip.is_private() or ip.is_link_local() or ip.is_reserved())
+            and all(
+                ip not in netaddr.IPNetwork(ipv6net)
+                for ipv6net in [
+                    "::1/128",
+                    "::/128",
+                    "::ffff:0:0/96",
+                    "64:ff9b:1::/48",
+                    "100::/64",
+                    "2001::/23",
+                    "2001:db8::/32",
+                    "2002::/16",
+                ]
+            )
+            or ip in netaddr.IPRange("239.0.0.0", "239.255.255.255")  # Administrative Multicast
+            or ip in netaddr.IPNetwork("233.252.0.0/24")  # Multicast test network
+            or ip in netaddr.IPRange("234.0.0.0", "238.255.255.255")
+            or ip in netaddr.IPRange("225.0.0.0", "231.255.255.255")
+            or ip in netaddr.IPNetwork("192.88.99.0/24")  # 6to4 anycast relays (RFC 3068)
+            or ip in netaddr.IPNetwork("192.0.0.9/32")
+            or ip in netaddr.IPNetwork("192.0.0.10/32")
+        )
+    )
+
+
 def _private_query(v, value):
-    if v.is_private():
+    if not _ip_is_global(v.ip):
         return value
 
 
@@ -297,7 +332,7 @@ def _public_query(v, value):
     if all(
         [
             v_ip.is_unicast(),
-            not v_ip.is_private(),
+            _ip_is_global(v_ip),
             not v_ip.is_loopback(),
             not v_ip.is_netmask(),
             not v_ip.is_hostmask(),
@@ -468,7 +503,6 @@ def ipaddr(value, query="", version=False, alias="ipaddr"):
 
     # Check if value is a number and convert it to an IP address
     elif str(value).isdigit():
-
         # We don't know what IP version to assume, so let's check IPv4 first,
         # then IPv6
         try:
@@ -599,10 +633,7 @@ def _need_netaddr(f_name, *args, **kwargs):
     """
     verify python's netaddr for these filters to work
     """
-    raise AnsibleFilterError(
-        "The %s filter requires python's netaddr be "
-        "installed on the ansible controller" % f_name,
-    )
+    raise AnsibleFilterError(missing_required_lib("netaddr"))
 
 
 def _address_normalizer(value):
