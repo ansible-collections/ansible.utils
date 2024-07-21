@@ -41,8 +41,7 @@
 
 - name: Test remove_keys starts_with
   vars:
-    result: "{{ l1|ansible.utils.remove_keys(target=['p1', 'p2'],
-      matching_parameter= 'starts_with') }}"
+    result: "{{ l1|ansible.utils.remove_keys(target=['p1', 'p2'], matching_parameter= 'starts_with') }}"
     target:
       - { p3: a }
       - { p3: b }
@@ -59,8 +58,7 @@
 
 - name: Test remove_keys starts_with 'p'
   vars:
-    result: "{{ l1|ansible.utils.remove_keys(target=['p'],
-      matching_parameter= 'starts_with') }}"
+    result: "{{ l1|ansible.utils.remove_keys(target=['p'], matching_parameter= 'starts_with') }}"
     target: []
   tags: remove_keys_starts_with_1
   block:
@@ -74,8 +72,7 @@
 
 - name: Test remove_keys ends_with
   vars:
-    result: "{{ l1|ansible.utils.remove_keys(target=['p1', 'p2'],
-      matching_parameter= 'ends_with') }}"
+    result: "{{ l1|ansible.utils.remove_keys(target=['p1', 'p2'], matching_parameter= 'ends_with') }}"
     target:
       - { p3: a }
       - { p3: b }
@@ -92,8 +89,7 @@
 
 - name: Test remove_keys ends_with '2'
   vars:
-    result: "{{ l1|ansible.utils.remove_keys(target=['2'],
-      matching_parameter= 'ends_with') }}"
+    result: "{{ l1|ansible.utils.remove_keys(target=['2'], matching_parameter= 'ends_with') }}"
     target:
       - { p1: a, p3: a }
       - { p1: b, p3: b }
@@ -110,8 +106,7 @@
 
 - name: Test remove_keys regex
   vars:
-    result: "{{ l1|ansible.utils.remove_keys(target=['p1', 'p2'],
-      matching_parameter= 'regex') }}"
+    result: "{{ l1|ansible.utils.remove_keys(target=['p1', 'p2'], matching_parameter= 'regex') }}"
     target:
       - { p3: a }
       - { p3: b }
