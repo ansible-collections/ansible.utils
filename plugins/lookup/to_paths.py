@@ -54,11 +54,11 @@ EXAMPLES = r"""
       b:
         c:
           d:
-          - 0
-          - 1
+            - 0
+            - 1
           e:
-          - True
-          - False
+            - true
+            - false
 
 - ansible.builtin.set_fact:
     paths: "{{ lookup('ansible.utils.to_paths', a) }}"
@@ -95,7 +95,7 @@ EXAMPLES = r"""
       accept: "application/yang.data+json"
     url_password: password
     url_username: admin
-    validate_certs: False
+    validate_certs: false
   register: result
   delegate_to: localhost
 
@@ -117,7 +117,6 @@ EXAMPLES = r"""
 #       interfaces.interface[0].ethernet.state.counters['in-jabber-frames']: '0'
 #       interfaces.interface[0].ethernet.state.counters['in-mac-control-frames']: '0'
 #       <...>
-
 """
 
 RETURN = """
@@ -144,8 +143,7 @@ class LookupModule(LookupBase):
             terms = dict(zip(keys, terms))
         terms.update(kwargs)
 
-        schema = [v for k, v in globals().items() if k.lower() == "documentation"]
-        aav = AnsibleArgSpecValidator(data=terms, schema=schema[0], name="to_paths")
+        aav = AnsibleArgSpecValidator(data=terms, schema=DOCUMENTATION, name="to_paths")
         valid, errors, updated_data = aav.validate()
         if not valid:
             raise AnsibleLookupError(errors)

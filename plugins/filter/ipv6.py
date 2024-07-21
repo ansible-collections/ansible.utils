@@ -70,14 +70,14 @@ EXAMPLES = r"""
 # Ipv6 filter plugin with different queries.
 - name: Set value as input list
   ansible.builtin.set_fact:
-       value:
-            - 192.24.2.1
-            - ::ffff:192.168.32.0/120
-            - ''
-            - ::ffff:192.24.2.1/128
-            - 192.168.32.0/24
-            - fe80::100/10
-            - True
+    value:
+      - 192.24.2.1
+      - ::ffff:192.168.32.0/120
+      - ''
+      - ::ffff:192.24.2.1/128
+      - 192.168.32.0/24
+      - fe80::100/10
+      - true
 - name: IPv6 filter to filter Ipv6 Address
   debug:
     msg: "{{ value|ansible.utils.ipv6 }}"
@@ -134,7 +134,6 @@ EXAMPLES = r"""
 #     ]
 # }
 #
-
 """
 
 RETURN = """
@@ -155,6 +154,8 @@ def _ipv6(*args, **kwargs):
         if isinstance(data["value"], str):
             pass
         elif isinstance(data["value"], list):
+            pass
+        elif isinstance(data["value"], int):
             pass
         else:
             raise AnsibleFilterError(

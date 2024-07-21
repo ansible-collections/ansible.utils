@@ -26,13 +26,13 @@ DOCUMENTATION = """
         ip:
             description:
             - A string that represents an IP address of a host or network
-            - For example: "10.1.1.1"
+            - 'For example: C(10.1.1.1)'
             type: str
             required: True
         networks:
             description:
             - A list of string and each string represents a network address in CIDR form
-            - For example: ['10.0.0.0/8', '192.168.1.0/24']
+            - "For example: C(['10.0.0.0/8', '192.168.1.0/24'])"
             type: list
             required: True
     notes:
@@ -78,7 +78,6 @@ EXAMPLES = r"""
 #     },
 #     "changed": false
 # }
-
 """
 
 RETURN = """

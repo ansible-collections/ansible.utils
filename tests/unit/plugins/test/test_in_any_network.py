@@ -12,14 +12,14 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-import unittest
+from unittest import TestCase
 
 from ansible.errors import AnsibleError
 
 from ansible_collections.ansible.utils.plugins.test.in_any_network import _in_any_network
 
 
-class TestInAnyNetwork(unittest.TestCase):
+class TestInAnyNetwork(TestCase):
     def setUp(self):
         pass
 

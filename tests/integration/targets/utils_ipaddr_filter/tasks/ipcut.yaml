@@ -1,0 +1,16 @@
+---
+- name: Get first X bits of Ipv6 address
+  ansible.builtin.set_fact:
+    result1: "{{ '1234:4321:abcd:dcba::17' | ansible.utils.ipcut(64) }}"
+
+- name: Assert result for ipcut.
+  ansible.builtin.assert:
+    that: "{{ result1 == '1234:4321:abcd:dcba' }}"
+
+- name: Get last X bits of Ipv6 address
+  ansible.builtin.set_fact:
+    result1: "{{ '1234:4321:abcd:dcba::17' | ansible.utils.ipcut(-80) }}"
+
+- name: Assert result for ipcut.
+  ansible.builtin.assert:
+    that: "{{ result1 == 'dcba:0:0:0:17' }}"

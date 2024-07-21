@@ -1,5 +1,6 @@
 ---
-- ansible.builtin.set_fact:
+- name: Set fact
+  ansible.builtin.set_fact:
     a:
       b:
         c:
@@ -12,7 +13,7 @@
 
 - name: Retrieve a value deep inside a using a path
   ansible.builtin.set_fact:
-    value: "{{ a|ansible.utils.get_path(path) }}"
+    value: "{{ a | ansible.utils.get_path(path) }}"
   vars:
     path: b.c.d[0]
 
@@ -25,7 +26,7 @@
 
 - name: Retrieve a value deep inside all of the host's vars
   ansible.builtin.set_fact:
-    value: "{{ look_in|ansible.utils.get_path(look_for) }}"
+    value: "{{ look_in | ansible.utils.get_path(look_for) }}"
   vars:
     look_in: "{{ hostvars[inventory_hostname] }}"
     look_for: a.b.c.d[0]
@@ -40,17 +41,17 @@
 
 - name: Get the paths for the object
   ansible.builtin.set_fact:
-    paths: "{{ a|ansible.utils.to_paths(prepend='a') }}"
+    paths: "{{ a | ansible.utils.to_paths(prepend='a') }}"
 
 - name: Retrieve the value of each path from vars
   ansible.builtin.debug:
     msg: "The value of path {{ path }} in vars is {{ value }}"
-  loop: "{{ paths.keys()|list }}"
+  loop: "{{ paths.keys() | list }}"
   loop_control:
     label: "{{ item }}"
   vars:
     path: "{{ item }}"
-    value: "{{ vars|ansible.utils.get_path(item) }}"
+    value: "{{ vars | ansible.utils.get_path(item) }}"
 # TASK [Get the paths for the object] *******************************
 # ok: [nxos101] => changed=false
 #   ansible_facts:
@@ -66,7 +67,7 @@
 # ok: [nxos101] => (item=a.b.c.d[1]) =>
 #   msg: The value of path a.b.c.d[1] in vars is 1
 # ok: [nxos101] => (item=a.b.c.e[0]) =>
-#   msg: The value of path a.b.c.e[0] in vars is True
+#   msg: The value of path a.b.c.e[0] in vars is true
 # ok: [nxos101] => (item=a.b.c.e[1]) =>
 #   msg: The value of path a.b.c.e[1] in vars is False
 

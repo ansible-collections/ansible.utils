@@ -1,10 +1,9 @@
-black==22.3.0 ; python_version > '3.5'
-coverage==4.5.4
-flake8
-git+https://github.com/ansible-network/pytest-ansible-network-integration.git
-git+https://github.com/ansible-community/pytest-ansible-units.git
-ipaddress ; python_version < '3.0'
-mock ; python_version < '3.5'
+# Unit test runner
+pytest-ansible
 pytest-xdist
-yamllint
-netaddr
+
+# For integration tests
+pexpect
+git+https://github.com/ansible-network/pytest-ansible-network-integration.git
+ipaddress ; python_version < '3.0'
+netaddr==0.10.1

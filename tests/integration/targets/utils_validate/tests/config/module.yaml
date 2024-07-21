@@ -24,7 +24,7 @@
   ignore_errors: true
   register: result
 
-- assert:
+- ansible.builtin.assert:
     that:
       - "'errors' in result"
       - "result['errors'][0].found == 'interface Eth1/1'"
@@ -45,7 +45,7 @@
     engine: ansible.utils.config
   register: result
 
-- assert:
+- ansible.builtin.assert:
     that:
       - "'errors' not in result"
       - "'warnings' in result"
@@ -60,7 +60,7 @@
     engine: ansible.utils.config
   register: result
 
-- assert:
+- ansible.builtin.assert:
     that:
       - "'errors' not in result"
       - "'warnings' not in result"
@@ -75,7 +75,7 @@
   ignore_errors: true
   register: result
 
-- assert:
+- ansible.builtin.assert:
     that:
       - "result['failed'] == true"
       - '"is not one of \"warn\" or \"fail\"" in result["msg"]'

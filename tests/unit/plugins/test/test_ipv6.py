@@ -12,12 +12,12 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-import unittest
+from unittest import TestCase
 
 from ansible_collections.ansible.utils.plugins.test.ipv6 import _ipv6
 
 
-class TestIpV6(unittest.TestCase):
+class TestIpV6(TestCase):
     def setUp(self):
         pass
 

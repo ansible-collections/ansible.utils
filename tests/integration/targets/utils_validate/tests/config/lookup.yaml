@@ -20,7 +20,7 @@
   ansible.builtin.set_fact:
     data_criteria_checks: "{{ lookup('ansible.utils.validate', fail_config, rules, engine='ansible.utils.config') }}"
 
-- assert:
+- ansible.builtin.assert:
     that:
       - "data_criteria_checks[0].found == 'interface Eth1/1'"
       - "data_criteria_checks[1].found == 'interface Loopback 10'"
@@ -30,7 +30,7 @@
   ansible.builtin.set_fact:
     data_criteria_checks: "{{ lookup('ansible.utils.validate', warn_config, rules, engine='ansible.utils.config') }}"
 
-- assert:
+- ansible.builtin.assert:
     that:
       - "data_criteria_checks == []"
 
@@ -38,7 +38,7 @@
   ansible.builtin.set_fact:
     data_criteria_checks: "{{ lookup('ansible.utils.validate', pass_config, rules, engine='ansible.utils.config') }}"
 
-- assert:
+- ansible.builtin.assert:
     that:
       - "data_criteria_checks == []"
 
@@ -48,7 +48,7 @@
   ignore_errors: true
   register: result
 
-- assert:
+- ansible.builtin.assert:
     that:
       - "result['failed'] == true"
       - '"is not one of \"warn\" or \"fail\"" in result["msg"]'

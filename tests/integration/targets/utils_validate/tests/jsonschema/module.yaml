@@ -12,7 +12,7 @@
   vars:
     ansible_validate_jsonschema_draft: draft7
 
-- assert:
+- ansible.builtin.assert:
     that:
       - "'errors' in result"
       - "result['errors'][0].data_path == 'GigabitEthernet0/0/0/0.oper_status'"
@@ -33,7 +33,7 @@
   vars:
     ansible_validate_jsonschema_draft: draft7
 
-- assert:
+- ansible.builtin.assert:
     that:
       - "'errors' not in result"
       - "'All checks passed' in result.msg"
@@ -48,11 +48,11 @@
   vars:
     ansible_validate_jsonschema_draft: draft0
 
-- assert:
+- ansible.builtin.assert:
     that:
       - "'errors' not in result"
       - "result['failed'] == true"
-      - "'value of draft must be one of: draft3, draft4, draft6, draft7, got: draft0' in result.msg"
+      - "'value of draft must be one of: draft3, draft4, draft6, draft7, 2019-09, 2020-12, got: draft0' in result.msg"
 
 - name: invalid engine value
   ansible.utils.validate:
@@ -62,7 +62,7 @@
   ignore_errors: true
   register: result
 
-- assert:
+- ansible.builtin.assert:
     that:
       - "'errors' not in result"
       - "result['failed'] == true"
@@ -76,7 +76,7 @@
   ignore_errors: true
   register: result
 
-- assert:
+- ansible.builtin.assert:
     that:
       - "result['failed'] == true"
       - "'\\'data\\' option value is invalid' in result.msg"
@@ -89,7 +89,7 @@
   ignore_errors: true
   register: result
 
-- assert:
+- ansible.builtin.assert:
     that:
       - "result['failed'] == true"
       - "'\\'criteria\\' option value is invalid' in result.msg"
@@ -107,7 +107,7 @@
   vars:
     ansible_validate_jsonschema_draft: draft7
 
-- assert:
+- ansible.builtin.assert:
     that:
       - "'errors' in result"
       - "result['errors'][0].data_path == 'GigabitEthernet0/0/0/0.oper_status'"
@@ -128,7 +128,7 @@
   vars:
     ansible_validate_jsonschema_draft: draft7
 
-- assert:
+- ansible.builtin.assert:
     that:
       - "'errors' not in result"
       - "'All checks passed' in result.msg"
@@ -139,7 +139,7 @@
     criteria: "{{ lookup('ansible.builtin.file', 'criteria/check_list_data.json') }}"
     engine: ansible.utils.jsonschema
 
-- assert:
+- ansible.builtin.assert:
     that:
       - "'errors' not in result"
       - "'All checks passed' in result.msg"

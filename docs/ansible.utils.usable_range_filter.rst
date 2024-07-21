@@ -50,7 +50,7 @@ Parameters
                     </td>
                 <td>
                         <div>A string that represents an IP address of network in CIDR form</div>
-                        <div>{&#x27;For example&#x27;: [&#x27;10.0.0.0/24&#x27;, &#x27;2001:db8:abcd:0012::0/124&#x27;]}</div>
+                        <div>For example: <code>10.0.0.0/24</code> or <code>2001:db8:abcd:0012::0/124</code></div>
                 </td>
             </tr>
     </table>

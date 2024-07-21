@@ -25,12 +25,13 @@
         mtu: 600
         is_enabled: false
 
-- debug:
-    msg: "{{ data|ansible.utils.keep_keys(target=['desc', 'interface_'], matching_parameter= 'starts_with') }}"
+- name: Debug
+  ansible.builtin.debug:
+    msg: "{{ data | ansible.utils.keep_keys(target=['desc', 'interface_'], matching_parameter='starts_with') }}"
   register: result
 
 - name: Assert result dicts
-  assert:
+  ansible.builtin.assert:
     that:
       - keep['starts_with'] == result['msg']
 
@@ -60,11 +61,12 @@
         mtu: 600
         is_enabled: false
 
-- debug:
-    msg: "{{ data|ansible.utils.keep_keys(target=['interface_name', 'is_enabled', 'vlan_id']) }}"
+- name: Debug
+  ansible.builtin.debug:
+    msg: "{{ data | ansible.utils.keep_keys(target=['interface_name', 'is_enabled', 'vlan_id']) }}"
   register: result
 
 - name: Assert result dicts
-  assert:
+  ansible.builtin.assert:
     that:
       - keep_default['default'] == result['msg']

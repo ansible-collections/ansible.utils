@@ -97,6 +97,62 @@ releases:
       - add_missing_test_requirements.yml
       - fix_tests.yaml
     release_date: "2021-04-27"
+  2.10.0:
+    release_date: "2023-05-11"
+  2.10.1:
+    release_date: "2023-05-12"
+  2.10.2:
+    changes:
+      minor_changes:
+        - validate - Add option `check_format` for the jsonschema engine to disable
+          JSON Schema format checking.
+        - validate - Add support for JSON Schema draft 2019-09 and 2020-12 as well as
+          automatically choosing the draft from the `$schema` field of the criteria.
+    fragments:
+      - netaddr_error.yml
+      - pre-commit.yaml
+      - validate_jsonschema_update.yaml
+    release_date: "2023-05-13"
+  2.10.3:
+    fragments:
+      - fix_workflow_names.yml
+    release_date: "2023-05-17"
+  2.10.4:
+    release_date: "2023-05-19"
+  2.11.0:
+    changes:
+      bugfixes:
+        - Validate input for ipv4_hex(https://github.com/ansible-collections/ansible.utils/issues/281)
+      minor_changes:
+        - Add ipcut filter plugin.(https://github.com/ansible-collections/ansible.utils/issues/251)
+        - Add ipv6form filter plugin.(https://github.com/ansible-collections/ansible.utils/issues/230)
+    fragments:
+      - Bugfix_ipv4_hex.yaml
+      - ipcut.yaml
+      - ipv6form.yaml
+    plugins:
+      filter:
+        - description: This filter is designed to get 1st or last few bits of IP address.
+          name: ipcut
+          namespace: null
+        - description:
+            This filter is designed to convert ipv6 address in different
+            formats. For example expand, compressetc.
+          name: ipv6form
+          namespace: null
+    release_date: "2023-09-07"
+  2.12.0:
+    changes:
+      minor_changes:
+        - Fact_diff filter plugin - Add fact_diff filter plugin. (https://github.com/ansible-collections/ansible.utils/issues/78).
+    fragments:
+      - fact_diff_filter_plugin.yaml
+    plugins:
+      filter:
+        - description: Find the difference between currently set facts
+          name: fact_diff
+          namespace: null
+    release_date: "2023-11-27"
   2.2.0:
     changes:
       minor_changes:
@@ -259,3 +315,136 @@ releases:
       - sanity_fix.yaml
       - test inits.yml
     release_date: "2022-04-25"
+  2.7.0:
+    changes:
+      bugfixes:
+        - Fix filters to only raise AnsibleFilterError exceptions (https://github.com/ansible-collections/ansible.utils/issues/209).
+        - ipsubnet - interacting with large subnets could cause performance constraints.
+          the result would be the system would appear to hang while it built out a list
+          of all possible subnets or stepped through all possible subnets one at a time.
+          when sending a prefix that is a supernet of the passed in network the behavior
+          wasn't consistent. this now returns an AnsibleFilterError in that scenario
+          across all python releases. (https://github.com/ansible-collections/ansible.utils/issues/132)
+      minor_changes:
+        - Add support for content template parser
+        - Added new connection base class similar to ansible.netcommon's NetworkConnectionBase
+          without the network-specific option masking (https://github.com/ansible-collections/ansible.utils/pull/213).
+        - ipsubnet - the index parameter should only ever be an integer if it is provided.
+          this changes the argument type from str to int.
+    fragments:
+      - 172.yaml
+      - 179.yaml
+      - 180.yaml
+      - 183.yaml
+      - 184.yaml
+      - 185.yaml
+      - 186.yaml
+      - 187.yaml
+      - 188.yaml
+      - 189.yaml
+      - 190.yaml
+      - 207-trivial.yaml
+      - 209.yaml
+      - 217-test-filter-docs.yaml
+      - ccontent_template_parser.yaml
+      - ipsubnet_performance.yaml
+      - persistent.yaml
+      - tests.yaml
+      - use-before.yaml
+    release_date: "2022-11-03"
+  2.8.0:
+    changes:
+      bugfixes:
+        - Accept int input for ipaddr filters.
+      minor_changes:
+        - to_xml - Added support for using spaces to indent an XML doc via a new `indent`
+          parameter.
+    fragments:
+      - Ansible_lint_fix1.yaml
+      - Bugfix_162_accept_int_input.yaml
+      - pre-commit.yaml
+      - to_xml_indent_with_spaces.yaml
+    release_date: "2022-11-30"
+  2.9.0:
+    changes:
+      bugfixes:
+        - mac - reorganize regexes to work around 3.11 regex changes. (https://github.com/ansible-collections/ansible.utils/pull/231)
+      minor_changes:
+        - to_xml - Added support to disable xml declartion with full_document flag.
+    fragments:
+      - 3.11_fixes.yaml
+      - add_ipfilter_doc_ut.yaml
+      - fix_ansible_lint.yaml
+      - fix_pre_commit.yaml
+      - to_xml_disable_xml_declaration.yaml
+    release_date: "2023-01-30"
+  3.0.0:
+    changes:
+      major_changes:
+        - Bumping `requires_ansible` to `>=2.14.0`, since previous ansible-core versions
+          are EoL now.
+      release_summary:
+        Starting from this release, the minimum `ansible-core` version
+        this collection requires is `2.14.0`. That last known version compatible with
+        ansible-core<2.14 is `v2.12.0`.
+    fragments:
+      - update_requires_ansible.yaml
+    release_date: "2023-11-30"
+  3.1.0:
+    changes:
+      bugfixes:
+        - Avoid unnecessary use of persistent connection in `cli_parse`, `fact_diff`,
+          `update_fact` and `validate` as this action does not require a connection.
+      doc_changes:
+        - ipv6form filter plugin - Fix to be displayed correctly.
+        - validate lookup plugin - Fix syntax in EXAMPLES.
+        - validate module - Fix syntax in EXAMPLES.
+      minor_changes:
+        - Add support in fact_diff filter plugin to show common lines.(https://github.com/ansible-collections/ansible.utils/issues/311)
+    fragments:
+      - Fre_fact_diff.yaml
+      - add_require_Connection.yaml
+      - ipv6form-doc.yaml
+      - validate-doc.yaml
+    release_date: "2024-01-30"
+  4.0.0:
+    changes:
+      major_changes:
+        - Bumping `netaddr` to `>=0.10.1`, means that starting from this release, the
+          minimum `netaddr` version this collection requires is `>=0.10.1`.
+        - This release mainly addresses the breaking changes in the `netaddr` library.
+        - With the new release of `netaddr` 1.0.0, the `IPAddress.is_private()` method
+          has been removed and instead, the `IPAddress.is_global()` method has been
+          extended to support the same functionality. This change has been reflected
+          in the `ipaddr` filter plugin.
+      release_summary:
+        Starting from this release, the minimum `netaddr` version this
+        collection requires is `>=0.10.1`.
+    fragments:
+      - netaddr_is_private_deprecation.yaml
+      - trivial_tests_updates.yaml
+    release_date: "2024-03-28"
+  4.1.0:
+    changes:
+      release_summary:
+        In the last release (`v4.0.0`), we bumped the minimum required
+        `netaddr` version to be `>=0.10.1`. However, since `netaddr>=0.10.1` is not
+        yet available in many sources other than PyPI, we have temporarily added a
+        fallback method to support the `ipaddr` filter with older `netaddr` versions
+        with this release. Once the latest `netaddr` is available in all major sources,
+        we will deprecate this support and eventually remove it.
+    fragments:
+      - ipaddress_is_global_fallback.yaml
+    release_date: "2024-04-15"
+  5.0.0:
+    changes:
+      major_changes:
+        - Bumping `requires_ansible` to `>=2.15.0`, since previous ansible-core versions
+          are EoL now.
+      release_summary:
+        "With this release, the minimum required version of `ansible-core`
+        for this collection is `2.15.0`. The last version known to be compatible with
+        `ansible-core` versions below `2.15` is v4.1.0."
+    fragments:
+      - bump_215.yaml
+    release_date: "2024-06-10"

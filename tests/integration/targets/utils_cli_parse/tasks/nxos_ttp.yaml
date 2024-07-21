@@ -1,8 +1,9 @@
 ---
-- ansible.builtin.set_fact:
+- name: Set fact
+  ansible.builtin.set_fact:
     nxos_ttp_text_parsed: "{{ lookup('ansible.builtin.file', '{{ role_path }}/output/nxos_show_interface_ttp_parsed.json') | from_json }}"
 
-- name: "{{ parser }} Pass text and template_path"
+- name: "Pass text and template_path {{ parser }}"
   ansible.utils.cli_parse:
     text: "{{ lookup('ansible.builtin.file', '{{ role_path }}/files/nxos_show_interface.txt') }}"
     parser:
@@ -11,14 +12,14 @@
     set_fact: POpqMQoJWTiDpEW
   register: nxos_ttp_text
 
-- name: "{{ parser }} Confirm response"
-  assert:
+- name: "Confirm response {{ parser }}"
+  ansible.builtin.assert:
     that:
       - "{{ POpqMQoJWTiDpEW is defined }}"
-      - "{{ nxos_ttp_text['parsed'][0][0] | selectattr('interface', 'search', 'mgmt0') | list | length }}"
+      - nxos_ttp_text['parsed'][0][0] | selectattr('interface', 'search', 'mgmt0') | list | length
       - "{{ nxos_ttp_text['parsed'] == nxos_ttp_text_parsed }}"
 
-- name: "{{ parser }} Pass text and custom variable"
+- name: "Pass text and custom variable {{ parser }}"
   ansible.utils.cli_parse:
     text: "{{ lookup('ansible.builtin.file', '{{ role_path }}/files/nxos_show_interface.txt') }}"
     parser:
@@ -29,13 +30,13 @@
           extra_var: some_text
   register: nxos_ttp_vars
 
-- name: "{{ parser }} Confirm modified results"
-  assert:
+- name: "Confirm modified results {{ parser }}"
+  ansible.builtin.assert:
     that: "{{ item }}"
   with_items:
     - "{{ nxos_ttp_vars['parsed'][0][0][0]['var'] == 'some_text' }}"
 
-- name: "{{ parser }} Pass text and ttp_results modified"
+- name: "Pass text and ttp_results modified {{ parser }}"
   ansible.utils.cli_parse:
     text: "{{ lookup('ansible.builtin.file', '{{ role_path }}/files/nxos_show_interface.txt') }}"
     parser:
@@ -46,8 +47,8 @@
           format: yaml
   register: nxos_ttp_results
 
-- name: "{{ parser }} Confirm modified results"
-  assert:
-    that: "{{ item }}"
+- name: "Confirm modified results {{ parser }}"
+  ansible.builtin.assert:
+    that: item
   with_items:
-    - "{{ (nxos_ttp_results['parsed'][0]|from_yaml)[0] | selectattr('interface', 'search', 'mgmt0') | list | length }}"
+    - "{{ (nxos_ttp_results['parsed'][0] | from_yaml)[0] | selectattr('interface', 'search', 'mgmt0') | list | length }}"

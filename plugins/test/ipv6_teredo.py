@@ -29,10 +29,7 @@ DOCUMENTATION = """
         ip:
             description:
             - A string that represents the value against which the test is going to be performed
-            - For example:
-                - "2001::c0a8:6301:1"
-                - "2002::c0a8:6301:1"
-                - "hello_world"
+            - 'For example: C(2001::c0a8:6301:1), C(2002::c0a8:6301:1), or C("hello_world")'
             type: str
             required: True
     notes:
@@ -77,7 +74,6 @@ EXAMPLES = r"""
 #     },
 #     "changed": false
 # }
-
 """
 
 RETURN = """

@@ -60,12 +60,12 @@ DOCUMENTATION = """
 EXAMPLES = r"""
 - name: set facts for data and criteria
   ansible.builtin.set_fact:
-    data: "{{ lookup('ansible.builtin.file', './validate/data/show_interfaces_iosxr.json')}}"
-    criteria: "{{ lookup('ansible.builtin.file', './validate/criteria/jsonschema/show_interfaces_iosxr.json')}}"
+    data: "{{ lookup('ansible.builtin.file', './validate/data/show_interfaces_iosxr.json') }}"
+    criteria: "{{ lookup('ansible.builtin.file', './validate/criteria/jsonschema/show_interfaces_iosxr.json') }}"
 
 - name: validate data in json format using jsonschema with lookup plugin by passing plugin configuration variable as key/value pairs
   ansible.builtin.set_fact:
-    data_criteria_checks: "{{ lookup(data, criteria, engine='ansible.utils.jsonschema', draft='draft7') }}"
+    data_criteria_checks: "{{ lookup('ansible.utils.validate', data, criteria, engine='ansible.utils.jsonschema', draft='draft7') }}"
 
 - name: validate data in json format using jsonschema with lookup plugin by passing plugin configuration variable as task variable
   ansible.builtin.set_fact:
@@ -107,12 +107,11 @@ class LookupModule(LookupBase):
         if kwargs.get("engine"):
             params.update({"engine": kwargs["engine"]})
 
-        schema = [v for k, v in globals().items() if k.lower() == "documentation"]
         valid, argspec_result, updated_params = check_argspec(
-            schema=schema[0],
+            schema=DOCUMENTATION,
             name="validate lookup",
             schema_conditionals=ARGSPEC_CONDITIONALS,
-            **params
+            **params,
         )
         if not valid:
             raise AnsibleLookupError(

@@ -1,0 +1,32 @@
+---
+- name: Expand ipv6 address
+  ansible.builtin.set_fact:
+    result1: "{{ '1234:4321:abcd:dcba::17' | ansible.utils.ipv6form('expand') }}"
+
+- name: Assert result for ipv6form.
+  ansible.builtin.assert:
+    that: "{{ result1 == '1234:4321:abcd:dcba:0000:0000:0000:0017' }}"
+
+- name: Compress ipv6 address
+  ansible.builtin.set_fact:
+    result1: "{{ '1234:4321:abcd:dcba:0000:0000:0000:0017' | ansible.utils.ipv6form('compress') }}"
+
+- name: Assert result for ipv6form.
+  ansible.builtin.assert:
+    that: "{{ result1 == '1234:4321:abcd:dcba::17' }}"
+
+- name: Convert ipv6 address into x509 form used by digital certificate
+  ansible.builtin.set_fact:
+    result1: "{{ '1234:4321:abcd:dcba::17' | ansible.utils.ipv6form('x509') }}"
+
+- name: Assert result for ipv6form.
+  ansible.builtin.assert:
+    that: "{{ result1 == '1234:4321:abcd:dcba:0:0:0:17' }}"
+
+- name: Convert ipv6 address into x509 form used by digital certificate
+  ansible.builtin.set_fact:
+    result1: "{{ '1234:4321:abcd:dcba:0000:0000:0000:0017' | ansible.utils.ipv6form('x509') }}"
+
+- name: Assert result for ipv6form.
+  ansible.builtin.assert:
+    that: "{{ result1 == '1234:4321:abcd:dcba:0:0:0:17' }}"

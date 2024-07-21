@@ -106,73 +106,55 @@ Examples
     #### examples
     # Ipsubnet filter plugin with different queries.
     vars:
-        address: '192.168.144.5'
-        subnet: '192.168.0.0/16'
+      address: 192.168.144.5
+      subnet: 192.168.0.0/16
+      ipv6_address: '2001:4860:4860::8888'
+      ipv6_subnet: '2600:1f1c:1b3:8f00::/56'
     tasks:
-          # If the given string is an IP address, it will be converted into a subnet.
-          - name: convert IP address to subnet
-            debug:
-              msg: "{{ address | ansible.utils.ipsubnet }}"
-
-          # check if a given string is a subnet
-          - name: check if a given string is a subnet
-            debug:
-              msg: "{{ subnet | ansible.utils.ipsubnet }}"
-
-          # Get the number of subnets a given subnet can be split into.
-          - name: Get the number of subnets a given subnet can be split into.
-            debug:
-              msg: "{{ subnet | ansible.utils.ipsubnet(20) }}"
-
-          # Get a new subnet with the specified index.
-          - name: Get a 1st subnet
-            debug:
-              msg: "{{ subnet | ansible.utils.ipsubnet(20, 0) }}"
-
-          # Get a new subnet with the specified index.
-          - name: Get a last subnet
-            debug:
-              msg: "{{ subnet | ansible.utils.ipsubnet(20, -1) }}"
-
-          # If you specify an IP address instead of a subnet, and give a subnet size as the first argument, the ipsubnet() |
-          # filter will instead return the biggest subnet that contains that given IP address.
-          - name: Get biggest subnet that contains that given IP address.
-            debug:
-              msg: "{{ address | ansible.utils.ipsubnet(20) }}"
-
-          # Get smaller and smaller subnets by specifying an index number as a second argument
-          - name: Get 1st smaller subnet by specifying 0 as index number
-            debug:
-              msg: "{{ address | ansible.utils.ipsubnet(18, 0) }}"
-
-          # Get smaller and smaller subnets by specifying an index number as a second argument
-          - name: Get last subnet
-            debug:
-              msg: "{{ address | ansible.utils.ipsubnet(18, -1) }}"
-
-          # By specifying another subnet as a second argument, if the second subnet includes the first, you can determine |
-          # the rank of the first subnet in the second.
-          - name: The rank of the IP in the subnet (the IP is the 36870nth /32 of the subnet)
-            debug:
-              msg: "{{ address | ansible.utils.ipsubnet(subnet) }}"
-
-          # By specifying another subnet as a second argument, if the second subnet includes the first, you can determine |
-          # the rank of the first subnet in the second.
-          - name:  The rank in the /24 that contain the address
-            debug:
-              msg: "{{ address | ansible.utils.ipsubnet('192.168.144.0/24') }}"
-
-          # By specifying another subnet as a second argument, if the second subnet includes the first, you can determine |
-          # the rank of the first subnet in the second.
-          - name:  An IP with the subnet in the first /30 in a /24
-            debug:
-              msg: "{{ '192.168.144.1/30' | ansible.utils.ipsubnet('192.168.144.0/24') }}"
-
-          # By specifying another subnet as a second argument, if the second subnet includes the first, you can determine |
-          # the rank of the first subnet in the second.
-          - name: he fifth subnet /30 in a /24
-            debug:
-              msg: "{{ '192.168.144.16/30' | ansible.utils.ipsubnet('192.168.144.0/24') }}"
+      - name: convert IP address to subnet
+        debug:
+          msg: '{{ address | ansible.utils.ipsubnet }}'
+      - name: check if a given string is a subnet
+        debug:
+          msg: '{{ subnet | ansible.utils.ipsubnet }}'
+      - name: Get the number of subnets a given subnet can be split into.
+        debug:
+          msg: '{{ subnet | ansible.utils.ipsubnet(20) }}'
+      - name: Get a 1st subnet
+        debug:
+          msg: '{{ subnet | ansible.utils.ipsubnet(20, 0) }}'
+      - name: Get a last subnet
+        debug:
+          msg: '{{ subnet | ansible.utils.ipsubnet(20, -1) }}'
+      - name: Get first IPv6 subnet that has prefix length /120
+        debug:
+          msg: '{{ ipv6_subnet | ansible.utils.ipsubnet(120, 0) }}'
+      - name: Get last subnet that has prefix length /120
+        debug:
+          msg: '{{ ipv6_subnet | ansible.utils.ipsubnet(120, -1) }}'
+      - name: Get biggest subnet that contains that given IP address.
+        debug:
+          msg: '{{ address | ansible.utils.ipsubnet(20) }}'
+      - name: Get 1st smaller subnet by specifying 0 as index number
+        debug:
+          msg: '{{ address | ansible.utils.ipsubnet(18, 0) }}'
+      - name: Get last subnet
+        debug:
+          msg: '{{ address | ansible.utils.ipsubnet(18, -1) }}'
+      - name: >-
+          The rank of the IP in the subnet (the IP is the 36870nth /32 of the
+          subnet)
+        debug:
+          msg: '{{ address | ansible.utils.ipsubnet(subnet) }}'
+      - name: The rank in the /24 that contain the address
+        debug:
+          msg: '{{ address | ansible.utils.ipsubnet(''192.168.144.0/24'') }}'
+      - name: An IP with the subnet in the first /30 in a /24
+        debug:
+          msg: '{{ ''192.168.144.1/30'' | ansible.utils.ipsubnet(''192.168.144.0/24'') }}'
+      - name: The fifth subnet /30 in a /24
+        debug:
+          msg: '{{ ''192.168.144.16/30'' | ansible.utils.ipsubnet(''192.168.144.0/24'') }}'
 
 
     # PLAY [Ipsubnet filter plugin with different queries.] ****************************************************************

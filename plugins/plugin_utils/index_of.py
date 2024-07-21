@@ -159,7 +159,6 @@ def index_of(
                 res.append(idx)
 
     elif isinstance(key, (string_types, integer_types, bool)):
-
         if not all(isinstance(entry, dict) for entry in data):
             all_tipes = [type(_to_well_known_type(entry)).__name__ for entry in data]
             msg = (
