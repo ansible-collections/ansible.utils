@@ -34,7 +34,7 @@
       ansible.builtin.debug:
         msg: "{{ remove['l2']|map('ansible.utils.remove_keys', target=['p1', 'p2'])|list }}"
       register: result_l2
-    - name: convert to yaml
+    - name: Convert to yaml
       ansible.builtin.debug:
         var: result_l2|to_yaml
       when: debug_test|d(false)|bool
