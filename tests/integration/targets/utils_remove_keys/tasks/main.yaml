@@ -10,7 +10,6 @@
   delegate_to: localhost
   register: found
 
-
 - name: Include tasks
   ansible.builtin.include_tasks: "{{ item.path }}"
   loop: "{{ found.files }}"
