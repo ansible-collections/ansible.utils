@@ -100,19 +100,6 @@ class ActionModule(ActionBase):
         """
         requested_parser = self._task.args.get("parser").get("name")
         cref = dict(zip(["corg", "cname", "plugin"], requested_parser.split(".")))
-        if cref["cname"] == "netcommon" and cref["plugin"] in [
-            "json",
-            "textfsm",
-            "ttp",
-            "xml",
-        ]:
-            cref["cname"] = "utils"
-            msg = (
-                "Use 'ansible.utils.{plugin}' for parser name instead of '{requested_parser}'."
-                " This feature will be removed from 'ansible.netcommon' collection in a release"
-                " after 2022-11-01".format(plugin=cref["plugin"], requested_parser=requested_parser)
-            )
-            self._display.warning(msg)
 
         parserlib = "ansible_collections.{corg}.{cname}.plugins.sub_plugins.cli_parser.{plugin}_parser".format(
             **cref,
