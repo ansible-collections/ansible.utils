@@ -1,4 +1,8 @@
 ---
+- name: Include expected output data
+  ansible.builtin.include_vars:
+    file: complex.yaml
+
 - name: Test keep_keys
   vars:
     result: "{{ l1 | ansible.utils.keep_keys(target=['p1', 'p2']) }}"
