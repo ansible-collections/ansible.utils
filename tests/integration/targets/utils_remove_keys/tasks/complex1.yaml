@@ -1,4 +1,8 @@
 ---
+- name: Include expected output data
+  ansible.builtin.include_vars:
+    file: complex.yaml
+
 - name: Test for remove_keys
   vars:
     target:
