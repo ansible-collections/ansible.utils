@@ -41,7 +41,7 @@
 
 - name: Test keep_keys starts_with
   vars:
-    result: "{{ l1 | ansible.utils.keep_keys(target=['p1', 'p2'],matching_parameter='starts_with') }}"
+    result: "{{ l1 | ansible.utils.keep_keys(target=['p1', 'p2'], matching_parameter='starts_with') }}"
     target:
       - { p1: a, p2: a }
       - { p1: b, p2: b }
@@ -58,7 +58,7 @@
 
 - name: Test keep_keys starts_with 'p'
   vars:
-    result: "{{ l1 | ansible.utils.keep_keys(target=['p'],matching_parameter='starts_with') }}"
+    result: "{{ l1 | ansible.utils.keep_keys(target=['p'], matching_parameter='starts_with') }}"
     target:
       - { p1: a, p2: a, p3: a }
       - { p1: b, p2: b, p3: b }
@@ -75,7 +75,7 @@
 
 - name: Test keep_keys ends_with
   vars:
-    result: "{{ l1 | ansible.utils.keep_keys(target=['p1', 'p2'],matching_parameter='ends_with') }}"
+    result: "{{ l1 | ansible.utils.keep_keys(target=['p1', 'p2'], matching_parameter='ends_with') }}"
     target:
       - { p1: a, p2: a }
       - { p1: b, p2: b }
@@ -92,7 +92,7 @@
 
 - name: Test keep_keys ends_with '2'
   vars:
-    result: "{{ l1 | ansible.utils.keep_keys(target=['2'],matching_parameter='ends_with') }}"
+    result: "{{ l1 | ansible.utils.keep_keys(target=['2'], matching_parameter='ends_with') }}"
     target:
       - { p2: a }
       - { p2: b }
@@ -109,7 +109,7 @@
 
 - name: Test keep_keys regex
   vars:
-    result: "{{ l1 | ansible.utils.keep_keys(target=['p1', 'p2'],matching_parameter='regex') }}"
+    result: "{{ l1 | ansible.utils.keep_keys(target=['p1', 'p2'], matching_parameter='regex') }}"
     target:
       - { p1: a, p2: a }
       - { p1: b, p2: b }
