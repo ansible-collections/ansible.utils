@@ -1,4 +1,4 @@
-- example: "Cisco IOS XE Software, Version 17.09.01a"
-  getval: ".*Version (?P<version>.+).*"
+- example: Cisco IOS XE Software, Version 17.06.02
+  getval: '(?P<name>Cisco IOS XE Software), Version (?P<version>\d+\.\d+\.\d+)'
   result:
     version: "{{ version }}"

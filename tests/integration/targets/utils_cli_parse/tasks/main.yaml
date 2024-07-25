@@ -8,6 +8,13 @@
   vars:
     parser: "({{ inventory_hostname }}/argspec)"
 
+- name: Include cli_parse.yaml
+  ansible.builtin.include_tasks: cli_parse.yaml
+  vars:
+    parser: "(ansible.netcommon.native)"
+  tags:
+    - cli_parse
+
 - name: Include nxos_json.yaml
   ansible.builtin.include_tasks: "nxos_json.yaml"
   vars:

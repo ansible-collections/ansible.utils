@@ -3,7 +3,7 @@
   ansible.builtin.set_fact:
     ios_cli_parse_text_parsed: "{{ lookup('ansible.builtin.file', '{{ role_path }}/output/ios_show_version_parsed.json') | from_json }}"
 
-- name: Use custom cli_parse template
+- name: "Pass text and template_path {{ parser }}"
   ansible.utils.cli_parse:
     text: "{{ lookup('ansible.builtin.file', '{{ role_path }}/files/ios_show_version.txt') }}"
     parser:
@@ -15,4 +15,4 @@
   ansible.builtin.assert:
     that: "{{ item }}"
   with_items:
-    - "{{ ios_custom_cli_parse['parsed'] == ios_cli_parse_text_parsed }}"
+    - "{{ ios_custom_cli_parse['parsed']['version'] == ios_cli_parse_text_parsed['Cisco_IOS_XE_Software_Version'] }}"
