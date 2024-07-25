@@ -25,6 +25,10 @@
         mtu: 600
         enabled: false
 
+- name: Include expected output data
+  ansible.builtin.include_vars:
+    file: main.yaml
+
 - name: Debug
   ansible.builtin.debug:
     msg: "{{ data | ansible.utils.replace_keys(target=[{'before': 'interface_name', 'after': 'name'}]) }}"

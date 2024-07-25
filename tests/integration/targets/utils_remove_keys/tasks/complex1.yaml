@@ -1,0 +1,143 @@
+---
+- name: Include expected output data
+  ansible.builtin.include_vars:
+    file: complex.yaml
+
+- name: Test for remove_keys
+  vars:
+    target:
+      - { p3: a }
+      - { p3: b }
+      - { p3: c }
+  tags: remove_keys
+  block:
+    - name: Test remove_keys debug
+      ansible.builtin.debug:
+        msg: "{{ l1 | ansible.utils.remove_keys(target=['p1', 'p2']) }}"
+      register: result_l1
+    - name: Test remove_keys assert
+      ansible.builtin.assert:
+        that:
+          - result_l1["msg"] == target
+
+- name: Test map remove_keys
+  vars:
+    target:
+      - - { p3: a }
+        - { p3: b }
+        - { p3: c }
+      - - { p3: a }
+        - { p3: b }
+        - { p3: c }
+      - - { p3: a }
+        - { p3: b }
+        - { p3: c }
+  tags: remove_keys
+  block:
+    - name: Test remove_keys map debug
+      ansible.builtin.debug:
+        msg: "{{ l2 | map('ansible.utils.remove_keys', target=['p1', 'p2']) | list }}"
+      register: result_l2
+    - name: Convert to yaml
+      ansible.builtin.debug:
+        var: result_l2|to_yaml
+      when: debug_test|d(false)|bool
+    - name: Test remove_keys map assert
+      ansible.builtin.assert:
+        that:
+          - result_l2["msg"] == target
+
+- name: Test remove_keys starts_with
+  vars:
+    target:
+      - { p3: a }
+      - { p3: b }
+      - { p3: c }
+  tags: remove_keys_starts_with_2
+  block:
+    - name: Test remove_keys starts_with debug msg
+      ansible.builtin.debug:
+        msg: "{{ l1 | ansible.utils.remove_keys(target=['p1', 'p2'], matching_parameter='starts_with') }}"
+      register: result_3
+    - name: Test remove_keys starts_with convert to yaml
+      ansible.builtin.debug:
+        var: result_3|to_yaml
+      when: debug_test|d(false)|bool
+    - name: Test remove_keys assert
+      ansible.builtin.assert:
+        that: result_3["msg"] == target
+
+- name: Test remove_keys starts_with 'p'
+  tags: remove_keys_starts_with_1
+  block:
+    - name: Test remove_keys starts_with 'p' debug
+      ansible.builtin.debug:
+        msg: "{{ l1 | ansible.utils.remove_keys(target=['p'], matching_parameter='starts_with') }}"
+      register: result_4
+    - name: Test remove_keys starts_with 'p' convert to yaml
+      ansible.builtin.debug:
+        var: result_4|to_yaml
+      when: debug_test|d(false)|bool
+    - name: Test remove_keys assert
+      ansible.builtin.assert:
+        that: result_4["msg"] == []
+
+- name: Test remove_keys ends_with
+  vars:
+    target:
+      - { p3: a }
+      - { p3: b }
+      - { p3: c }
+  tags: remove_keys_ends_with_2
+  block:
+    - name: Test remove_keys ends_with
+      ansible.builtin.debug:
+        msg: "{{ l1 | ansible.utils.remove_keys(target=['p1', 'p2'], matching_parameter='ends_with') }}"
+      register: result_5
+    - name: Test remove_keys ends_with conver to yaml
+      ansible.builtin.debug:
+        var: result_5|to_yaml
+      when: debug_test|d(false)|bool
+    - name: Test remove_keys ends_with assert
+      ansible.builtin.assert:
+        that: result_5["msg"] == target
+
+- name: Test remove_keys ends_with '2'
+  vars:
+    target:
+      - { p1: a, p3: a }
+      - { p1: b, p3: b }
+      - { p1: c, p3: c }
+  tags: remove_keys_ends_with_1
+  block:
+    - name: Test remove_keys ends_with '2' debug
+      ansible.builtin.debug:
+        msg: "{{ l1 | ansible.utils.remove_keys(target=['2'], matching_parameter='ends_with') }}"
+      register: result_6
+    - name: Test remove_keys ends_with '2' debug convert to yaml
+      ansible.builtin.debug:
+        var: result_6|to_yaml
+      when: debug_test|d(false)|bool
+    - name: Test remove_keys ends_with '2' assert
+      ansible.builtin.assert:
+        that: result_6["msg"] == target
+
+- name: Test remove_keys regex
+  vars:
+    target:
+      - { p3: a }
+      - { p3: b }
+      - { p3: c }
+  tags: remove_keys_regex
+  block:
+    - name: Test remove_keys regex debug
+      ansible.builtin.debug:
+        msg: "{{ l1 | ansible.utils.remove_keys(target=['p1', 'p2'], matching_parameter='regex') }}"
+      register: result_7
+    - name: Test remove_keys regex debug conver to yaml
+      ansible.builtin.debug:
+        var: result_7|to_yaml
+      when: debug_test|d(false)|bool
+    - name: Test remove_keys regex assert
+      ansible.builtin.assert:
+        that: result_7["msg"] == target
