@@ -15,4 +15,4 @@
   ansible.builtin.assert:
     that: "{{ item }}"
   with_items:
-    - "{{ ios_custom_cli_parse['parsed']['version'] == ios_cli_parse_text_parsed['Cisco_IOS_XE_Software_Version'] }}"
+    - "{{ ios_custom_cli_parse['parsed'] == ios_cli_parse_text_parsed }}"
