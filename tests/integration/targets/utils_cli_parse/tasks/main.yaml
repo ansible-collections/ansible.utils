@@ -11,7 +11,7 @@
 - name: Include update_template_path.yaml
   ansible.builtin.include_tasks: update_template_path.yaml
   vars:
-    parser: "(ansible.cli.parse)"
+    parser: "(ansible.netcommon.native)"
   tags:
     - template_path
 
