@@ -15,7 +15,6 @@
   tags:
     - template_path
 
-
 - name: Include nxos_json.yaml
   ansible.builtin.include_tasks: "nxos_json.yaml"
   vars:
