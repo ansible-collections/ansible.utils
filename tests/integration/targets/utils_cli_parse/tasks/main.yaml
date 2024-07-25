@@ -8,13 +8,6 @@
   vars:
     parser: "({{ inventory_hostname }}/argspec)"
 
-- name: Include update_template_path.yaml
-  ansible.builtin.include_tasks: update_template_path.yaml
-  vars:
-    parser: "(ansible.netcommon.native)"
-  tags:
-    - template_path
-
 - name: Include nxos_json.yaml
   ansible.builtin.include_tasks: "nxos_json.yaml"
   vars:
