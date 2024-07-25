@@ -11,12 +11,6 @@ on:  # yamllint disable-line rule:truthy
   workflow_dispatch:
   schedule:
     - cron: '0 0 * * *'
-  workflow_call:
-    inputs:
-      collection_pre_install:
-        required: true
-        type: string
-        default: "ansible-netcommon"
 
 jobs:
   changelog:
@@ -29,12 +23,9 @@ jobs:
   unit-galaxy:
     uses: ansible/ansible-content-actions/.github/workflows/unit.yaml@main
   integration:
-    uses: ansible/ansible-content-actions/.github/workflows/integration.yaml@main
-  unit-source:
-    uses: ansible-network/github_actions/.github/workflows/unit_source.yml@main
+    uses: Ruchip16/ansible-content-actions/.github/workflows/integration.yaml@utils
     with:
-      collection_pre_install: >-
-        git+https://github.com/ansible-collections/ansible.netcommon.git
+      collection_pre_install: git+https://github.com/ansible-collections/ansible.netcommon.git
   all_green:
     if: ${{ always() }}
     needs:
@@ -43,7 +34,6 @@ jobs:
       - unit-galaxy
       - ansible-lint
       - integration
-      - unit-source
     runs-on: ubuntu-latest
     steps:
       - run: >-
@@ -54,5 +44,4 @@ jobs:
           '${{ needs.sanity.result }}',
           '${{ needs.unit-galaxy.result }}',
           '${{ needs.ansible-lint.result }}'
-          '${{ needs.unit-source.result }}'
           ])"
