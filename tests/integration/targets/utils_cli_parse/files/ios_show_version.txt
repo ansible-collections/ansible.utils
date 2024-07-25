@@ -1,5 +1,0 @@
-Cisco IOS XE Software, Version 17.09.01
-Cisco IOS Software [Cupertino], Virtual XE Software (X86_64_LINUX_IOSD-UNIVERSALK9-M), Version 17.9.1, RELEASE SOFTWARE (fc2)
-Technical Support: http://www.cisco.com/techsupport
-Copyright (c) 1986-2022 by Cisco Systems, Inc.
-Compiled Thu 18-Aug-22 17:31 by mcpre
