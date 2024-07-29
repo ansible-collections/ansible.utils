@@ -4,6 +4,22 @@ Ansible Utils Collection Release Notes
 
 .. contents:: Topics
 
+v5.1.0
+======
+
+Minor Changes
+-------------
+
+- Allows the cli_parse module to find parser.template_path inside roles or collections when a path relative to the role/collection directory is provided.
+- Fix cli_parse module to require a connection.
+- Removed conditional check for deprecated ansible.netcommon.cli_parse from ansible.utils.cli_parse
+- The from_xml filter returns a python dictionary instead of a json string.
+
+Documentation Changes
+---------------------
+
+- Add a wildcard mask/hostmask documentation to ipaddr filter doc page to obtain an IP address's wildcard mask/hostmask.
+
 v5.0.0
 ======
 
