@@ -4,14 +4,7 @@
     data: '
       <netconf-state xmlns="urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring"><schemas><schema/></schemas></netconf-state>
       '
-    output:
-      {
-        "netconf-state":
-          {
-            "@xmlns": "urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring",
-            "schemas": { "schema": null },
-          },
-      }
+    output: "{{ {'netconf-state': {'@xmlns': 'urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring', 'schemas': {'schema': None}}} | to_yaml | from_yaml }}"
 
 - name: Debug
   ansible.builtin.debug:
@@ -19,7 +12,7 @@
 
 - name: Integration tests with and without default engine as xmltodict and
   ansible.builtin.assert:
-    that: "{{ output == test_item.test }}"
+    that: "{{ output | to_yaml | from_yaml == (test_item.test | to_yaml | from_yaml) }}"
   loop:
     - test: "{{ data | ansible.utils.from_xml() }}"
     - test: "{{ data | ansible.utils.from_xml('xmltodict') }}"
