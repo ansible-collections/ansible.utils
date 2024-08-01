@@ -5,13 +5,7 @@
       <netconf-state xmlns="urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring"><schemas><schema/></schemas></netconf-state>
       '
     output:
-      {
-        "netconf-state":
-          {
-            "@xmlns": "urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring",
-            "schemas": { "schema": null },
-          },
-      }
+      "OrderedDict([('netconf-state', OrderedDict([('@xmlns', 'urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring'), ('schemas', OrderedDict([('schema', None)]))]))])"
 
 - name: Debug
   ansible.builtin.debug:
@@ -19,7 +13,7 @@
 
 - name: Integration tests with and without default engine as xmltodict and
   ansible.builtin.assert:
-    that: "{{ output | to_json == test_item.test | to_json }}"
+    that: "{{ output == test_item.test }}"
   loop:
     - test: "{{ data | ansible.utils.from_xml() }}"
     - test: "{{ data | ansible.utils.from_xml('xmltodict') }}"
