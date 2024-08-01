@@ -4,8 +4,7 @@
     data: '
       <netconf-state xmlns="urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring"><schemas><schema/></schemas></netconf-state>
       '
-    output:
-      "OrderedDict([('netconf-state', OrderedDict([('@xmlns', 'urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring'), ('schemas', OrderedDict([('schema', None)]))]))])"
+    output: "OrderedDict([('netconf-state', OrderedDict([('@xmlns', 'urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring'), ('schemas', OrderedDict([('schema', None)]))]))])"
 
 - name: Debug
   ansible.builtin.debug:
