@@ -22,12 +22,8 @@ VALID_DATA = (
     "<schemas><schema/></schemas></netconf-state>"
 )
 
-OUTPUT = {
-    "netconf-state": {
-        "@xmlns": "urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring",
-        "schemas": {"schema": None},
-    },
-}
+OUTPUT = """{"netconf-state": \
+{"@xmlns": "urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring", "schemas": {"schema": null}}}"""
 
 
 class TestFromXml(TestCase):
