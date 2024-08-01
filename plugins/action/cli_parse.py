@@ -100,19 +100,6 @@ class ActionModule(ActionBase):
         """
         requested_parser = self._task.args.get("parser").get("name")
         cref = dict(zip(["corg", "cname", "plugin"], requested_parser.split(".")))
-        if cref["cname"] == "netcommon" and cref["plugin"] in [
-            "json",
-            "textfsm",
-            "ttp",
-            "xml",
-        ]:
-            cref["cname"] = "utils"
-            msg = (
-                "Use 'ansible.utils.{plugin}' for parser name instead of '{requested_parser}'."
-                " This feature will be removed from 'ansible.netcommon' collection in a release"
-                " after 2022-11-01".format(plugin=cref["plugin"], requested_parser=requested_parser)
-            )
-            self._display.warning(msg)
 
         parserlib = "ansible_collections.{corg}.{cname}.plugins.sub_plugins.cli_parser.{plugin}_parser".format(
             **cref,
@@ -126,33 +113,6 @@ class ActionModule(ActionBase):
             )
             return parser
         except Exception as exc:
-            # TODO: The condition is added to support old sub-plugin structure.
-            # Remove the if condition after ansible.netcommon.cli_parse module is removed
-            # from ansible.netcommon collection
-            if cref["cname"] == "netcommon" and cref["plugin"] in [
-                "native",
-                "content_templates",
-                "ntc",
-                "pyats",
-            ]:
-                parserlib = (
-                    "ansible_collections.{corg}.{cname}.plugins.cli_parsers.{plugin}_parser".format(
-                        **cref,
-                    )
-                )
-                try:
-                    parsercls = getattr(import_module(parserlib), self.PARSER_CLS_NAME)
-                    parser = parsercls(
-                        task_args=self._task.args,
-                        task_vars=task_vars,
-                        debug=self._debug,
-                    )
-                    return parser
-                except Exception as exc:
-                    self._result["failed"] = True
-                    self._result["msg"] = "Error loading parser: {err}".format(err=to_native(exc))
-                    return None
-
             self._result["failed"] = True
             self._result["msg"] = "Error loading parser: {err}".format(err=to_native(exc))
             return None
@@ -205,8 +165,11 @@ class ActionModule(ActionBase):
             cmd_as_fname = self._task.args.get("parser").get("command").replace(" ", "_")
             fname = "{os}_{cmd}.{ext}".format(os=oper_sys, cmd=cmd_as_fname, ext=template_extension)
             source = self._find_needle("templates", fname)
-            self._debug("template_path in task args updated to {source}".format(source=source))
-            self._task.args["parser"]["template_path"] = source
+        else:
+            source = self._task.args.get("parser").get("template_path")
+            source = self._find_needle("templates", source)
+        self._debug("template_path in task args updated to {source}".format(source=source))
+        self._task.args["parser"]["template_path"] = source
 
     def _get_template_contents(self):
         """Retrieve the contents of the parser template
