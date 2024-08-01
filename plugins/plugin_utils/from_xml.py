@@ -13,6 +13,7 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
+import json
 from ansible.errors import AnsibleFilterError
 
 
@@ -44,7 +45,7 @@ def from_xml(data, engine):
         if not HAS_XMLTODICT:
             _raise_error("Missing required library xmltodict")
         try:
-            res = xmltodict.parse(data)
+            res = json.dumps(xmltodict.parse(data))
         except Exception:
             _raise_error("Input Xml is not valid")
         return res
