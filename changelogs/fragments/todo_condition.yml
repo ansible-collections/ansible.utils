@@ -1,3 +1,0 @@
----
-minor_changes:
-  - Removed conditional check for deprecated ansible.netcommon.cli_parse from ansible.utils.cli_parse
