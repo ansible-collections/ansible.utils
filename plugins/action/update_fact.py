@@ -70,39 +70,27 @@ class ActionModule(ActionBase):
         :return: the individual parts of the path
         :rtype: list
         """
-        que = list(path)
-        val = que.pop(0)
+        que = path
         fields = []
-        try:
-            while True:
-                field = ""
-                # found a '.', move to the next character
-                if val == ".":
-                    val = que.pop(0)
-                # found a '[', pop until ']' and then get the next
-                if val == "[":
-                    val = que.pop(0)
-                    while val != "]":
-                        field += val
-                        val = que.pop(0)
-                    val = que.pop(0)
-                else:
-                    while val not in [".", "["]:
-                        field += val
-                        val = que.pop(0)
-                try:
-                    # make numbers numbers
-                    fields.append(ast.literal_eval(field))
-                except Exception:
-                    # or strip the quotes
-                    fields.append(re.sub("['\"]", "", field))
-        except IndexError:
-            # pop'ed past the end of the que
-            # so add the final field
+        # regex match dotted values and square brackets
+        regex = re.compile(r'^[^\[\].]+|^\[[\'\"].+?[\'\"]\]|^\[.+?\]')
+        while (regex.match(que)):
+            m = regex.match(que)
+            # remove outer square brackets
+            field = re.sub(r'(^\[)|(\]$)', "", que[m.start():m.end()])
             try:
+                # make numbers numbers
                 fields.append(ast.literal_eval(field))
             except Exception:
+                # or strip the quotes
                 fields.append(re.sub("['\"]", "", field))
+            try:
+                if que[m.end()] == '.':
+                    que = que[m.end() + 1:]
+                else:
+                    que = que[m.end():]
+            except IndexError:
+                que = ''
         return fields
 
     def set_value(self, obj, path, val):
