@@ -30,7 +30,7 @@
     - name: Assert result dicts l1 for starts_with 'p'
       ansible.builtin.assert:
         that:
-            - result_l1_starts_with_p['msg'] == keep['l1_starts_with_p']
+          - result_l1_starts_with_p['msg'] == keep['l1_starts_with_p']
 
     - name: Debug l1 for ends_with
       ansible.builtin.debug:
