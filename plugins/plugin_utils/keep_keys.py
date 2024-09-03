@@ -17,6 +17,7 @@ import re
 
 from ansible.errors import AnsibleFilterError
 
+
 def _raise_error(msg):
     """Raise an error message, prepend with filter name
     :param msg: The message
