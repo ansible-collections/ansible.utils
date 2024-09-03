@@ -33,7 +33,7 @@
 - name: Assert result dicts
   ansible.builtin.assert:
     that:
-      - keep['starts_with'] == result['msg']
+      - keep_values['starts_with'] == result['msg']
 
 - name: Setup data as facts for equivalent
   ansible.builtin.set_fact:

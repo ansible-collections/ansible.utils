@@ -1,5 +1,5 @@
 ---
-keep:
+keep_values:
   starts_with:
     - interface_name: eth0
     - interface_name: eth1
