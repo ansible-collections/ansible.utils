@@ -22,3 +22,9 @@ keep_default:
           is_enabled: true
     - interface_name: eth2
       is_enabled: false
+
+keep_tomcat:
+  tomcat:
+    tomcats_block:
+      - tomcat1
+      - tomcat2

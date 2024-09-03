@@ -70,3 +70,27 @@
   ansible.builtin.assert:
     that:
       - keep_default['default'] == result['msg']
+
+- name: Setup data for multiple keys in dict
+  ansible.builtin.set_fact:
+    tomcat_data:
+      tomcat:
+        tomcat1:
+          name: tomcat1
+        tomcat2:
+          name: tomcat2
+        tomcat3:
+          name: tomcat3
+      tomcats_block:
+        - tomcat1
+        - tomcat2
+
+- name: Debug
+  ansible.builtin.debug:
+    msg: "{{ tomcat_data | ansible.utils.keep_keys(target=['tomcats_block']) }}"
+  register: result
+
+- name: Assert result dicts
+  ansible.builtin.assert:
+    that:
+      - keep_tomcat['tomcat'] == result['msg']
