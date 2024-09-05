@@ -4,6 +4,14 @@ Ansible Utils Collection Release Notes
 
 .. contents:: Topics
 
+v5.1.1
+======
+
+Bugfixes
+--------
+
+- keep_keys - Fixes issue where all keys are removed when data is passed in as a dict.
+
 v5.1.0
 ======
 
