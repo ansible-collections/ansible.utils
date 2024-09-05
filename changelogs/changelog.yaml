@@ -474,3 +474,12 @@ releases:
       - fix_from_xml.yaml
       - todo_condition.yml
     release_date: "2024-08-05"
+  5.1.1:
+    changes:
+      bugfixes:
+        - keep_keys - Fixes issue where all keys are removed when data is passed in
+          as a dict.
+    fragments:
+      - 0-readme.yml
+      - keep_keys.yaml
+    release_date: "2024-09-05"
