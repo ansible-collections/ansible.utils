@@ -100,7 +100,7 @@ def _ip_query(v):
 
 
 def _address_prefix_query(v):
-    if v.size > 2 and v.ip in (v.network, v.broadcast):
+    if v.ip in (v.network, v.broadcast):
         return False
     return str(v.ip) + "/" + str(v.prefixlen)
 
