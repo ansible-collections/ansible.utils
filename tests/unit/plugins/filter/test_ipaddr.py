@@ -270,6 +270,22 @@ class TestIpFilter(TestCase):
         self.assertEqual(ipaddr(address, "range_usable"), "1.12.1.1-1.12.1.254")
 
     def test_address_prefix(self):
+        # Single IP address without a prefix, should return empty
+        address = "203.0.113.23"
+        self.assertFalse(ipaddr(address, "address/prefix"))
+    
+        # Single IP address with /32, should return address with /32
+        address_with_prefix = "203.0.113.23/32"
+        self.assertEqual(ipaddr(address_with_prefix, "address/prefix"), address_with_prefix)
+    
+        # Valid /24 network range, should return the address and prefix
+        network_address = "203.0.113.0/24"
+        self.assertEqual(ipaddr(network_address, "address/prefix"), network_address)
+    
+        # Broadcast address of /24, should return False
+        broadcast_address = "203.0.113.255/24"
+        self.assertFalse(ipaddr(broadcast_address, "address/prefix"))
+        
         # Regular address
         address = "1.12.1.12/24"
         self.assertEqual(ipaddr(address, "address/prefix"), address)
