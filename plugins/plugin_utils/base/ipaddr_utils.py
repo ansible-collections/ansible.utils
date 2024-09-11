@@ -100,8 +100,15 @@ def _ip_query(v):
 
 
 def _address_prefix_query(v):
+    # Handle single IP address case
     if v.size == 1:
-        return False
+        # For IPv4, return False for a single IP without a /32 prefix
+        if v.version == 4 and v.prefixlen != 32:
+            return False
+        # For IPv6, return False for a single IP without a /128 prefix
+        if v.version == 6 and v.prefixlen != 128:
+            return False
+
     if v.size > 2 and v.ip in (v.network, v.broadcast):
         return False
     return str(v.ip) + "/" + str(v.prefixlen)
