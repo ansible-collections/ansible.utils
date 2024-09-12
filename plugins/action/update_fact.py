@@ -73,11 +73,11 @@ class ActionModule(ActionBase):
         que = path
         fields = []
         # regex match dotted values and square brackets
-        regex = re.compile(r'^[^\[\].]+|^\[[\'\"].+?[\'\"]\]|^\[.+?\]')
-        while (regex.match(que)):
+        regex = re.compile(r"^[^\[\].]+|^\[[\'\"].+?[\'\"]\]|^\[.+?\]")
+        while regex.match(que):
             m = regex.match(que)
             # remove outer square brackets
-            field = re.sub(r'(^\[)|(\]$)', "", que[m.start():m.end()])
+            field = re.sub(r"(^\[)|(\]$)", "", que[m.start() : m.end()])
             try:
                 # make numbers numbers
                 fields.append(ast.literal_eval(field))
@@ -85,12 +85,12 @@ class ActionModule(ActionBase):
                 # or strip the quotes
                 fields.append(re.sub("['\"]", "", field))
             try:
-                if que[m.end()] == '.':
-                    que = que[m.end() + 1:]
+                if que[m.end()] == ".":
+                    que = que[m.end() + 1 :]
                 else:
-                    que = que[m.end():]
+                    que = que[m.end() :]
             except IndexError:
-                que = ''
+                que = ""
         return fields
 
     def set_value(self, obj, path, val):
