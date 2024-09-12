@@ -118,17 +118,23 @@ def next_nth_usable(value, offset):
     Returns the next nth usable ip within a network described by value.
     """
     try:
+        v = None
         vtype = ipaddr(value, "type")
         if vtype == "address":
             v = ipaddr(value, "cidr")
         elif vtype == "network":
             v = ipaddr(value, "subnet")
 
-        v = netaddr.IPNetwork(v)
+        if v is not None:
+            v = netaddr.IPNetwork(v)
+        else:
+            return False
     except Exception:
         return False
+
     if not isinstance(offset, int):
         raise AnsibleFilterError("Must pass in an integer")
+
     if v.size > 1:
         first_usable, last_usable = _first_last(v)
         nth_ip = int(netaddr.IPAddress(int(v.ip) + offset))
