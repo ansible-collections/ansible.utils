@@ -23,6 +23,48 @@
       - "'patternProperties.^.*.properties.enabled.enum' in result.msg"
       - "'patternProperties.^.*.properties.counters.properties.in_crc_errors.maximum' in result.msg"
 
+- name: validate data using jsonschema engine with suppress_output is true
+  ansible.utils.validate:
+    data: "{{ show_interfaces }}"
+    criteria:
+      - "{{ oper_status }}"
+      - "{{ enable_check }}"
+      - "{{ crc_error_check }}"
+    engine: ansible.utils.jsonschema
+  ignore_errors: true
+  register: result
+  vars:
+    ansible_validate_jsonschema_draft: draft7
+    ansible_validate_jsonschema_suppress_output: true
+
+- ansible.builtin.assert:
+    that:
+      - "'errors' in result"
+      - "'found' not in result['errors'][0]"
+      - "'relative_schema' not in result['errors'][0]"
+      - "'data_path' in result['errors'][0]"
+
+- name: validate data using jsonschema engine with suppress_output is list
+  ansible.utils.validate:
+    data: "{{ show_interfaces }}"
+    criteria:
+      - "{{ oper_status }}"
+      - "{{ enable_check }}"
+      - "{{ crc_error_check }}"
+    engine: ansible.utils.jsonschema
+  ignore_errors: true
+  register: result
+  vars:
+    ansible_validate_jsonschema_draft: draft7
+    ansible_validate_jsonschema_suppress_output: ["data_path"]
+
+- ansible.builtin.assert:
+    that:
+      - "'errors' in result"
+      - "'found' in result['errors'][0]"
+      - "'relative_schema' in result['errors'][0]"
+      - "'data_path' not in result['errors'][0]"
+
 - name: validate data using jsonschema engine (valid data)
   ansible.utils.validate:
     data: "{{ show_interfaces }}"
