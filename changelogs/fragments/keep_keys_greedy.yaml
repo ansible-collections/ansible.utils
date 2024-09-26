@@ -1,0 +1,3 @@
+---
+bugfixes:
+  - keep_keys - Fixes keep_keys filter to retain the entire node when a key match occurs, rather than just the leaf node values.
