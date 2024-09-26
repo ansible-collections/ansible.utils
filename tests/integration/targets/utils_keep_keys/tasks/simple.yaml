@@ -94,3 +94,13 @@
   ansible.builtin.assert:
     that:
       - keep_tomcat['tomcat'] == result['msg']
+
+- name: Test to keep keys when initial node is matched
+  ansible.builtin.debug:
+    msg: "{{ tomcat_data['tomcat'] | ansible.utils.keep_keys(target=['tomcat1', 'tomcat2']) }}"
+  register: result
+
+- name: Assert result dicts
+  ansible.builtin.assert:
+    that:
+      - keep_tomcat['greedy_values'] == result['msg']
