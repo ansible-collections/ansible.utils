@@ -1,2 +1,0 @@
-[testgroup]
-testhost ansible_connection="local" ansible_pipelining="yes" ansible_python_interpreter="/home/roverflow/workspace/virtualvenvs/a216p312/bin/python"
