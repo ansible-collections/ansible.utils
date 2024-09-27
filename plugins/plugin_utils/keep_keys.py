@@ -37,7 +37,9 @@ def keep_keys_from_dict_n_list(data, target, matching_parameter):
         for k, val in data.items():
             match = False
             for key in target:
-                if not isinstance(val, (list, dict)):
+                if k == key:
+                    keep[k], match = val, True
+                elif not isinstance(val, (list, dict)):
                     if matching_parameter == "regex":
                         if re.match(key, k):
                             keep[k], match = val, True
