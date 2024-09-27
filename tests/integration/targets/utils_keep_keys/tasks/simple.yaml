@@ -79,12 +79,19 @@
           name: tomcat1
         tomcat2:
           name: tomcat2
+          tomcat3:
+            name: tomcat3
         tomcat3:
           name: tomcat3
+        tomcat4:
+          name: tomcat3
+          tomcat3:
+            tomcat3:
+              name: tomcattest
+            checktomcat3: stringinput
       tomcats_block:
         - tomcat1
         - tomcat2
-
 - name: Debug
   ansible.builtin.debug:
     msg: "{{ tomcat_data | ansible.utils.keep_keys(target=['tomcats_block']) }}"
@@ -104,3 +111,13 @@
   ansible.builtin.assert:
     that:
       - keep_tomcat['greedy_values'] == result['msg']
+
+- name: Test to keep keys to check if nested dict is matched
+  ansible.builtin.debug:
+    msg: "{{ tomcat_data['tomcat'] | ansible.utils.keep_keys(target=['tomcat3']) }}"
+  register: result
+
+- name: Assert result dicts
+  ansible.builtin.assert:
+    that:
+      - keep_tomcat['nested_values'] == result['msg']

@@ -33,3 +33,16 @@ keep_tomcat:
       name: tomcat1
     tomcat2:
       name: tomcat2
+      tomcat3:
+        name: tomcat3
+  nested_values:
+    tomcat2:
+      tomcat3:
+        name: tomcat3
+    tomcat3:
+      name: tomcat3
+    tomcat4:
+      tomcat3:
+        tomcat3:
+          name: tomcattest
+        checktomcat3: stringinput
