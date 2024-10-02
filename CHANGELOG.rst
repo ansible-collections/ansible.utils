@@ -4,6 +4,14 @@ Ansible Utils Collection Release Notes
 
 .. contents:: Topics
 
+v5.1.2
+======
+
+Bugfixes
+--------
+
+- keep_keys - Fixes keep_keys filter to retain the entire node when a key match occurs, rather than just the leaf node values.
+
 v5.1.1
 ======
 
