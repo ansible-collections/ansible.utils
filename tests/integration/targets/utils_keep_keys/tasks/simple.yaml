@@ -89,12 +89,12 @@
             tomcat3:
               name: tomcattest
             checktomcat3: stringinput
-      tomcats_block:
-        - tomcat1
-        - tomcat2
+        tomcats_block:
+          - tomcat1
+          - tomcat2
 - name: Debug
   ansible.builtin.debug:
-    msg: "{{ tomcat_data | ansible.utils.keep_keys(target=['tomcats_block']) }}"
+    msg: "{{ tomcat_data['tomcat'] | ansible.utils.keep_keys(target=['tomcats_block']) }}"
   register: result
 
 - name: Assert result dicts
