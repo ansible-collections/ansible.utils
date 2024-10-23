@@ -483,3 +483,11 @@ releases:
       - 0-readme.yml
       - keep_keys.yaml
     release_date: "2024-09-05"
+  5.1.2:
+    changes:
+      bugfixes:
+        - keep_keys - Fixes keep_keys filter to retain the entire node when a key match
+          occurs, rather than just the leaf node values.
+    fragments:
+      - keep_keys_greedy.yaml
+    release_date: "2024-09-30"

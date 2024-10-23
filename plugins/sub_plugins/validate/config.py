@@ -9,7 +9,7 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 DOCUMENTATION = """
-    author: Nathaniel Case (@Qalthos)
+    author: Katherine Case (@Qalthos)
     name: config
     short_description: Define configurable options for configuration validate plugin
     description:
