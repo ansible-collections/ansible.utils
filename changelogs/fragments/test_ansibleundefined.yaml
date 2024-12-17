@@ -1,0 +1,3 @@
+---
+trivial:
+  - Fixes test cases where there were assertion failure due to AnsibleUndefined path being changed.
