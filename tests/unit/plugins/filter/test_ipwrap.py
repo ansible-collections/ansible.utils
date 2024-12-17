@@ -55,7 +55,8 @@ class TestIpWrap(TestCase):
         args = ["", AnsibleUndefined(name="my_ip"), ""]
         with pytest.raises(
             AnsibleFilterError,
-            match="Unrecognized type <<class 'ansible.template.AnsibleUndefined'>> for ipwrap filter <value>",
+            # Note: this class has been moved to native_helpers dir since 2.16, hence adding regex to be backwards compatable with 2.15
+            match=r"Unrecognized type <<class 'ansible\.template\.(native_helpers\.)?AnsibleUndefined'>> for ipwrap filter <value>",
         ):
             _ipwrap(*args)
 
