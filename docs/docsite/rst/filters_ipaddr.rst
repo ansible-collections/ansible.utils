@@ -483,8 +483,8 @@ be automatically converted to a router address (with a ``::1/48`` host address).
 
 .. code-block:: yaml+jinja
 
-    # {{ '193.0.2.0' | ansible.utils.ipaddr('6to4') }}
-    2002:c100:0200::1/48
+    # {{ '192.0.2.0' | ansible.utils.ipaddr('6to4') }}
+    2002:c000:0200::1/48
 
 
 Finding IP addresses within a range
@@ -756,8 +756,8 @@ a given ``/48`` prefix into smaller ``/64`` subnets:
 
 .. code-block:: yaml+jinja
 
-    # {{ '193.0.2.0' | ansible.utils.ipaddr('6to4') | ipsubnet(64, 58820) | ansible.utils.ipaddr('1') }}
-    2002:c100:200:e5c4::1/64
+    # {{ '192.0.2.0' | ansible.utils.ipaddr('6to4') | ipsubnet(64, 58820) | ansible.utils.ipaddr('1') }}
+    2002:c000:200:e5c4::1/64
 
 Because of the size of IPv6 subnets, iteration over all of them to find the
 correct one may take some time on slower computers, depending on the size
