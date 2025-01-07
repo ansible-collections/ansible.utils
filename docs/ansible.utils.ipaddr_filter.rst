@@ -27,7 +27,7 @@ Requirements
 ------------
 The below requirements are needed on the local Ansible controller node that executes this filter.
 
-- netaddr
+- netaddr>=0.10.1
 
 
 Parameters
