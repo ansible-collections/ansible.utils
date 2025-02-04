@@ -1,6 +1,7 @@
 # Unit test runner
 pytest-ansible
 pytest-xdist
+typing-extensions
 
 # For integration tests
 pexpect
