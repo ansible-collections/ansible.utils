@@ -1,0 +1,3 @@
+---
+trivial:
+  - Adds netaddr as requirements in ansible.utils.ipaddr.
