@@ -1,0 +1,3 @@
+---
+trivial:
+  - Adds supress_output option to jsonschema validator
