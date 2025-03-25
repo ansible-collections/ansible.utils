@@ -84,32 +84,32 @@ Examples
     # Ipmath filter plugin with different arthmetic.
     # Get the next fifth address based on an IP address
     - debug:
-        msg: "{{ '192.168.1.5' | ansible.utils.ipmath(5) }}"
+        msg: "{{ '192.168.1.5' | ansible.netcommon.ipmath(5) }}"
 
     # Get the tenth previous address based on an IP address
     - debug:
-        msg: "{{ '192.168.1.5' | ansible.utils.ipmath(-10) }}"
+        msg: "{{ '192.168.1.5' | ansible.netcommon.ipmath(-10) }}"
 
     # Get the next fifth address using CIDR notation
     - debug:
-        msg: "{{ '192.168.1.1/24' | ansible.utils.ipmath(5) }}"
+        msg: "{{ '192.168.1.1/24' | ansible.netcommon.ipmath(5) }}"
 
     # Get the previous fifth address using CIDR notation
     - debug:
-        msg: "{{ '192.168.1.6/24' | ansible.utils.ipmath(-5) }}"
+        msg: "{{ '192.168.1.6/24' | ansible.netcommon.ipmath(-5) }}"
 
     # Get the previous tenth address using cidr notation
     # It returns a address of the previous network range
     - debug:
-        msg: "{{ '192.168.2.6/24' | ansible.utils.ipmath(-10) }}"
+        msg: "{{ '192.168.2.6/24' | ansible.netcommon.ipmath(-10) }}"
 
     # Get the next tenth address in IPv6
     - debug:
-        msg: "{{ '2001::1' | ansible.utils.ipmath(10) }}"
+        msg: "{{ '2001::1' | ansible.netcommon.ipmath(10) }}"
 
     # Get the previous tenth address in IPv6
     - debug:
-        msg: "{{ '2001::5' | ansible.utils.ipmath(-10) }}"
+        msg: "{{ '2001::5' | ansible.netcommon.ipmath(-10) }}"
 
     # TASK [debug] **********************************************************************************************************
     # ok: [localhost] => {
