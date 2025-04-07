@@ -1,0 +1,3 @@
+---
+bugfixes:
+  - Fix update_fact to update a fact where a key in the referenced path contains a bracket.
