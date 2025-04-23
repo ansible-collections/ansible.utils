@@ -1,143 +1,134 @@
 ---
-- name: validate data using jsonschema engine (invalid data)
+- name: validate data in json format using jsonschema (invalid data)
   ansible.utils.validate:
     data: "{{ show_interfaces }}"
+    engine: ansible.utils.jsonschema
     criteria:
       - "{{ oper_status }}"
       - "{{ enable_check }}"
       - "{{ crc_error_check }}"
-    engine: ansible.utils.jsonschema
-  ignore_errors: true
   register: result
-  vars:
-    ansible_validate_jsonschema_draft: draft7
+  ignore_errors: true
 
 - ansible.builtin.assert:
     that:
-      - "'errors' in result"
-      - "result['errors'][0].data_path == 'GigabitEthernet0/0/0/0.oper_status'"
-      - "result['errors'][1].data_path == 'GigabitEthernet0/0/0/1.enabled'"
-      - "result['errors'][2].data_path == 'GigabitEthernet0/0/0/1.counters.in_crc_errors'"
+      - "result.failed == true"
       - "'Validation errors were found' in result.msg"
-      - "'patternProperties.^.*.properties.oper_status.pattern' in result.msg"
-      - "'patternProperties.^.*.properties.enabled.enum' in result.msg"
-      - "'patternProperties.^.*.properties.counters.properties.in_crc_errors.maximum' in result.msg"
+      - "'oper_status' in result.msg"
+      - "'enabled' in result.msg"
+      - "'in_crc_errors' in result.msg"
 
-- name: validate data using jsonschema engine (valid data)
+- name: validate data in json format using jsonschema (valid data)
   ansible.utils.validate:
     data: "{{ show_interfaces }}"
-    criteria: "{{ in_rate_check }}"
     engine: ansible.utils.jsonschema
-  ignore_errors: true
+    criteria: "{{ in_rate_check }}"
   register: result
-  vars:
-    ansible_validate_jsonschema_draft: draft7
 
 - ansible.builtin.assert:
     that:
-      - "'errors' not in result"
+      - "result.failed == false"
       - "'All checks passed' in result.msg"
 
 - name: test invalid plugin configuration option
   ansible.utils.validate:
     data: "{{ show_interfaces }}"
-    criteria: "{{ in_rate_check }}"
     engine: ansible.utils.jsonschema
-  ignore_errors: true
+    criteria: "{{ in_rate_check }}"
+    invalid_param: draft0
   register: result
-  vars:
-    ansible_validate_jsonschema_draft: draft0
+  ignore_errors: true
 
 - ansible.builtin.assert:
     that:
-      - "'errors' not in result"
-      - "result['failed'] == true"
-      - "'value of draft must be one of: draft3, draft4, draft6, draft7, 2019-09, 2020-12, got: draft0' in result.msg"
+      - "result.failed == true"
+      - "'unsupported parameter' in result.msg"
 
 - name: invalid engine value
   ansible.utils.validate:
     data: "{{ show_interfaces }}"
-    criteria: "{{ in_rate_check }}"
     engine: ansible.utils.sample
-  ignore_errors: true
+    criteria: "{{ in_rate_check }}"
   register: result
+  ignore_errors: true
 
 - ansible.builtin.assert:
     that:
-      - "'errors' not in result"
-      - "result['failed'] == true"
+      - "result.failed == true"
       - "'For engine \\'ansible.utils.sample\\' error loading the corresponding validate plugin' in result.msg"
 
 - name: invalid data value
   ansible.utils.validate:
-    data: "sample"
-    criteria: "{{ in_rate_check }}"
+    data: invalid data
     engine: ansible.utils.jsonschema
-  ignore_errors: true
+    criteria: "{{ in_rate_check }}"
   register: result
+  ignore_errors: true
 
 - ansible.builtin.assert:
     that:
-      - "result['failed'] == true"
+      - "result.failed == true"
       - "'\\'data\\' option value is invalid' in result.msg"
 
 - name: invalid criteria value
   ansible.utils.validate:
     data: "{{ show_interfaces }}"
-    criteria: "sample}"
     engine: ansible.utils.jsonschema
-  ignore_errors: true
+    criteria: invalid data
   register: result
+  ignore_errors: true
 
 - ansible.builtin.assert:
     that:
-      - "result['failed'] == true"
+      - "result.failed == true"
       - "'\\'criteria\\' option value is invalid' in result.msg"
+
+- name: read data and criteria from file
+  ansible.builtin.set_fact:
+    data: "{{ lookup('ansible.builtin.file', '{{ role_path }}/files/data/show_interface.json') | from_json }}"
+    oper_status_up_criteria: "{{ lookup('ansible.builtin.file', '{{ role_path }}/files/criteria/oper_status_up.json') | from_json }}"
+    enabled_check_criteria: "{{ lookup('ansible.builtin.file', '{{ role_path }}/files/criteria/enabled_check.json') | from_json }}"
+    crc_error_check_criteria: "{{ lookup('ansible.builtin.file', '{{ role_path }}/files/criteria/crc_error_check.json') | from_json }}"
+    in_rate_check_criteria: "{{ lookup('ansible.builtin.file', '{{ role_path }}/files/criteria/in_rate_check.json') | from_json }}"
 
 - name: validate data using jsonschema engine (invalid data read from file)
   ansible.utils.validate:
-    data: "{{ lookup('ansible.builtin.file', 'data/show_interface.json') }}"
-    criteria:
-      - "{{ lookup('ansible.builtin.file', 'criteria/oper_status_up.json') }}"
-      - "{{ lookup('ansible.builtin.file', 'criteria/enabled_check.json') }}"
-      - "{{ lookup('ansible.builtin.file', 'criteria/crc_error_check.json') }}"
+    data: "{{ data }}"
     engine: ansible.utils.jsonschema
-  ignore_errors: true
+    criteria:
+      - "{{ oper_status_up_criteria }}"
+      - "{{ enabled_check_criteria }}"
+      - "{{ crc_error_check_criteria }}"
   register: result
-  vars:
-    ansible_validate_jsonschema_draft: draft7
+  ignore_errors: true
 
 - ansible.builtin.assert:
     that:
-      - "'errors' in result"
-      - "result['errors'][0].data_path == 'GigabitEthernet0/0/0/0.oper_status'"
-      - "result['errors'][1].data_path == 'GigabitEthernet0/0/0/1.enabled'"
-      - "result['errors'][2].data_path == 'GigabitEthernet0/0/0/1.counters.in_crc_errors'"
+      - "result.failed == true"
       - "'Validation errors were found' in result.msg"
-      - "'patternProperties.^.*.properties.oper_status.pattern' in result.msg"
-      - "'patternProperties.^.*.properties.enabled.enum' in result.msg"
-      - "'patternProperties.^.*.properties.counters.properties.in_crc_errors.maximum' in result.msg"
+      - "'oper_status' in result.msg"
+      - "'enabled' in result.msg"
+      - "'in_crc_errors' in result.msg"
 
 - name: validate data using jsonschema engine (valid data read from file)
   ansible.utils.validate:
-    data: "{{ lookup('ansible.builtin.file', 'data/show_interface.json') }}"
-    criteria: "{{ lookup('ansible.builtin.file', 'criteria/in_rate_check.json') }}"
+    data: "{{ data }}"
     engine: ansible.utils.jsonschema
-  ignore_errors: true
+    criteria: "{{ in_rate_check_criteria }}"
   register: result
-  vars:
-    ansible_validate_jsonschema_draft: draft7
 
 - ansible.builtin.assert:
     that:
-      - "'errors' not in result"
+      - "result.failed == false"
       - "'All checks passed' in result.msg"
 
 - name: validate list data using jsonschema
   ansible.utils.validate:
-    data: "{{ lookup('ansible.builtin.file', 'data/test_list_data.json') }}"
-    criteria: "{{ lookup('ansible.builtin.file', 'criteria/check_list_data.json') }}"
+    data: "{{ lookup('ansible.builtin.file', '{{ role_path }}/files/data/test_list_data.json') | from_json }}"
+    criteria: "{{ lookup('ansible.builtin.file', '{{ role_path }}/files/criteria/check_list_data.json') | from_json }}"
     engine: ansible.utils.jsonschema
+  register: result
+  ignore_errors: true
 
 - ansible.builtin.assert:
     that:

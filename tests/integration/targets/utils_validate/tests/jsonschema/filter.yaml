@@ -63,21 +63,25 @@
 
 - name: read data and criteria from file
   ansible.builtin.set_fact:
-    data: "{{ lookup('ansible.builtin.file', 'data/show_interface.json') }}"
-    oper_status_up_criteria: "{{ lookup('ansible.builtin.file', 'criteria/oper_status_up.json') }}"
-    enabled_check_criteria: "{{ lookup('ansible.builtin.file', 'criteria/enabled_check.json') }}"
-    crc_error_check_criteria: "{{ lookup('ansible.builtin.file', 'criteria/crc_error_check.json') }}"
-    in_rate_check_criteria: "{{ lookup('ansible.builtin.file', 'criteria/in_rate_check.json') }}"
+    data: "{{ lookup('ansible.builtin.file', '{{ role_path }}/files/data/show_interface.json') | from_json }}"
+    oper_status_up_criteria: "{{ lookup('ansible.builtin.file', '{{ role_path }}/files/criteria/oper_status_up.json') | from_json }}"
+    enabled_check_criteria: "{{ lookup('ansible.builtin.file', '{{ role_path }}/files/criteria/enabled_check.json') | from_json }}"
+    crc_error_check_criteria: "{{ lookup('ansible.builtin.file', '{{ role_path }}/files/criteria/crc_error_check.json') | from_json }}"
+    in_rate_check_criteria: "{{ lookup('ansible.builtin.file', '{{ role_path }}/files/criteria/in_rate_check.json') | from_json }}"
 
 - name: validate data using jsonschema engine (invalid data read from file)
   ansible.builtin.set_fact:
-    data_criteria_checks: "{{ data|ansible.utils.validate([oper_status_up_criteria, enabled_check_criteria, crc_error_check_criteria]) }}"
+    data_criteria_checks: "{{ data|ansible.utils.validate([oper_status_up_criteria, enabled_check_criteria, crc_error_check_criteria], engine='ansible.utils.jsonschema') }}"
 
-- ansible.builtin.assert:
+- name: ansible.builtin.assert
+  ansible.builtin.assert:
     that:
       - "data_criteria_checks[0].data_path == 'GigabitEthernet0/0/0/0.oper_status'"
+      - "data_criteria_checks[0].message == \"'down' does not match 'up'\""
       - "data_criteria_checks[1].data_path == 'GigabitEthernet0/0/0/1.enabled'"
+      - "data_criteria_checks[1].message == 'False is not one of [True]'"
       - "data_criteria_checks[2].data_path == 'GigabitEthernet0/0/0/1.counters.in_crc_errors'"
+      - "data_criteria_checks[2].message == '10 is greater than the maximum of 0'"
 
 - name: validate data using jsonschema engine (valid data read from file)
   ansible.builtin.set_fact:

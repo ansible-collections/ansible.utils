@@ -1,7 +1,7 @@
 ---
 - name: validate data in json format using jsonschema (invalid data)
   ansible.builtin.set_fact:
-    is_data_valid: "{{ show_interfaces is ansible.utils.validate(engine='ansible.utils.jsonschema', criteria=[oper_status, enable_check, crc_error_check], draft='draft7') }}"
+    is_data_valid: "{{ show_interfaces is ansible.utils.validate(engine='ansible.utils.jsonschema', criteria=[oper_status, enable_check, crc_error_check]) }}"
 
 - ansible.builtin.assert:
     that:
@@ -9,7 +9,7 @@
 
 - name: validate data in json format using jsonschema (valid data)
   ansible.builtin.set_fact:
-    is_data_valid: "{{ show_interfaces is ansible.utils.validate(criteria=in_rate_check) }}"
+    is_data_valid: "{{ show_interfaces is ansible.utils.validate(engine='ansible.utils.jsonschema', criteria=[in_rate_check]) }}"
 
 - ansible.builtin.assert:
     that:
@@ -61,27 +61,23 @@
 
 - name: read data and criteria from file
   ansible.builtin.set_fact:
-    data: "{{ lookup('ansible.builtin.file', 'data/show_interface.json') }}"
-    oper_status_up_criteria: "{{ lookup('ansible.builtin.file', 'criteria/oper_status_up.json') }}"
-    enabled_check_criteria: "{{ lookup('ansible.builtin.file', 'criteria/enabled_check.json') }}"
-    crc_error_check_criteria: "{{ lookup('ansible.builtin.file', 'criteria/crc_error_check.json') }}"
-    in_rate_check_criteria: "{{ lookup('ansible.builtin.file', 'criteria/in_rate_check.json') }}"
+    data: "{{ lookup('ansible.builtin.file', '{{ role_path }}/files/data/show_interface.json') | from_json }}"
+    oper_status_up_criteria: "{{ lookup('ansible.builtin.file', '{{ role_path }}/files/criteria/oper_status_up.json') | from_json }}"
+    enabled_check_criteria: "{{ lookup('ansible.builtin.file', '{{ role_path }}/files/criteria/enabled_check.json') | from_json }}"
+    crc_error_check_criteria: "{{ lookup('ansible.builtin.file', '{{ role_path }}/files/criteria/crc_error_check.json') | from_json }}"
+    in_rate_check_criteria: "{{ lookup('ansible.builtin.file', '{{ role_path }}/files/criteria/in_rate_check.json') | from_json }}"
 
 - name: validate data using jsonschema engine (invalid data read from file)
   ansible.builtin.set_fact:
-    is_data_valid: "{{ show_interfaces is ansible.utils.validate(engine='ansible.utils.jsonschema', criteria=[oper_status_up_criteria, enabled_check_criteria, crc_error_check_criteria], draft='draft7') }}"
+    is_data_valid: "{{ data is ansible.utils.validate(engine='ansible.utils.jsonschema', criteria=[oper_status_up_criteria, enabled_check_criteria, crc_error_check_criteria]) }}"
 
 - ansible.builtin.assert:
     that:
       - "is_data_valid == false"
 
-- name: validate data using jsonschema engine (invalid data read from file)
-  ansible.builtin.set_fact:
-    is_data_valid: "{{ show_interfaces is ansible.utils.validate(criteria=in_rate_check_criteria) }}"
-
 - name: validate data using jsonschema engine (valid data read from file)
   ansible.builtin.set_fact:
-    data_criteria_checks: "{{ data|ansible.utils.validate(in_rate_check_criteria) }}"
+    is_data_valid: "{{ data is ansible.utils.validate(engine='ansible.utils.jsonschema', criteria=[in_rate_check_criteria]) }}"
 
 - ansible.builtin.assert:
     that:
@@ -89,12 +85,12 @@
 
 - name: read data and criteria from file
   ansible.builtin.set_fact:
-    data: "{{ lookup('ansible.builtin.file', 'data/test_format_checker.json') }}"
-    criteria_1: "{{ lookup('ansible.builtin.file', 'criteria/format_checker.json') }}"
+    data: "{{ lookup('ansible.builtin.file', '{{ role_path }}/files/data/test_format_checker.json') | from_json }}"
+    criteria_1: "{{ lookup('ansible.builtin.file', '{{ role_path }}/files/criteria/format_checker.json') | from_json }}"
 
 - name: validate data using jsonschema engine (valid data read from file)
   ansible.builtin.set_fact:
-    is_data_valid: "{{ data is ansible.utils.validate(engine='ansible.utils.jsonschema', criteria=[criteria_1], draft='draft7') }}"
+    is_data_valid: "{{ data is ansible.utils.validate(engine='ansible.utils.jsonschema', criteria=[criteria_1], draft='2019-09') }}"
 
 - ansible.builtin.assert:
     that:

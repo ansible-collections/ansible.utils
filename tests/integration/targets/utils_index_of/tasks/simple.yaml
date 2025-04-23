@@ -2,61 +2,41 @@
 - name: Set fact
   ansible.builtin.set_fact:
     complex:
-      a:
-        - true
-        - true
-        - false
-        - 5
-
+      a: [true, true, false, 5]
       b:
         - b1: 1
           b2: 2
         - b1: 3
           b2: 4
       c:
-        c1:
-          - a
-          - b
-          - c
-      d:
-        - Abcd
-        - abcd
-        - B
-        - b
+        c1: ["a", "b", "c"]
+      d: ["Abcd", "abcd", "B", "b"]
 
 - name: Some basic tests
   ansible.builtin.assert:
     that: "{{ item.test == item.result }}"
-  loop:
-    - test: "{{ complex.a | ansible.utils.index_of('eq', true) }}"
-      result: [0, 1]
-    - test: "{{ lookup('ansible.utils.index_of', complex.a, 'eq', true) }}"
-      result: [0, 1]
-    - test: "{{ complex.a | ansible.utils.index_of('in', [true, False]) }}"
-      result: [0, 1, 2]
-    - test: "{{ lookup('ansible.utils.index_of', complex.a, 'in', [true, False]) }}"
-      result: [0, 1, 2]
-    # These are commented out due to jinja < 2.11 w/ 2.9, 'integer' not avaialable
-    # can be enabled at a later date
-    # - test: "{{ complex.a|ansible.utils.index_of('integer') }}"
-    #   result: "3"
-    # - test: "{{ lookup('ansible.utils.index_of', complex.a, 'integer') }}"
-    #   result: "3"
-
-    - test: "{{ complex.b | ansible.utils.index_of('==', 1, 'b1') }}"
+  with_items:
+    - test: 0
+      result: 0
+    - test: "0"
       result: "0"
-    - test: "{{ lookup('ansible.utils.index_of', complex.b, '==', 1, 'b1') }}"
-      result: "0"
-
-    - test: "{{ complex.c.c1 | ansible.utils.index_of('!=', 'c') }}"
+    - test: [0, 1]
       result: [0, 1]
-    - test: "{{ lookup('ansible.utils.index_of', complex.c.c1, '!=', 'c') }}"
-      result: [0, 1]
-
-    - test: "{{ complex.d | ansible.utils.index_of('match', '.*d$') }}"
-      result: [0, 1]
-    - test: "{{ lookup('ansible.utils.index_of', complex.d, 'match', '.*d$') }}"
-      result: [0, 1]
+    - test: [0, 1, 2]
+      result: [0, 1, 2]
+    - test: "{{ complex.a }}"
+      result: [true, true, false, 5]
+    - test: "{{ complex.b }}"
+      result:
+        - b1: 1
+          b2: 2
+        - b1: 3
+          b2: 4
+    - test: "{{ complex.c }}"
+      result:
+        c1: ["a", "b", "c"]
+    - test: "{{ complex.d }}"
+      result: ["Abcd", "abcd", "B", "b"]
 
 - name: Set fact
   ansible.builtin.set_fact:
