@@ -77,7 +77,7 @@
   ansible.builtin.assert:
     that:
       - "data_criteria_checks[0].data_path == 'GigabitEthernet0/0/0/0.oper_status'"
-      - "data_criteria_checks[0].message == \"'down' does not match 'up'\""
+      - 'data_criteria_checks[0].message == "''down'' does not match ''up''"'
       - "data_criteria_checks[1].data_path == 'GigabitEthernet0/0/0/1.enabled'"
       - "data_criteria_checks[1].message == 'False is not one of [True]'"
       - "data_criteria_checks[2].data_path == 'GigabitEthernet0/0/0/1.counters.in_crc_errors'"
