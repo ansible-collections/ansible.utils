@@ -13,11 +13,13 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 from unittest import TestCase
+from unittest.mock import MagicMock
 
 import pytest
 
 from ansible.errors import AnsibleFilterError
 from ansible.template import AnsibleUndefined
+from ansible._internal._templating._utils import TemplateContext
 
 from ansible_collections.ansible.utils.plugins.filter.ipv6 import _ipv6
 
@@ -50,13 +52,22 @@ class TestIp6(TestCase):
 
     def test_ipv6_undefined_value(self):
         """Check ipv6 filter undefined value"""
-        args = ["", AnsibleUndefined(name="my_ip"), ""]
-        with pytest.raises(
-            AnsibleFilterError,
-            # Note: this class has been moved to native_helpers dir since 2.16, hence adding regex to be backwards compatable with 2.15
-            match=r"Unrecognized type <<class 'ansible\.template\.(native_helpers\.)?AnsibleUndefined'>> for ipv6 filter <value>",
-        ):
-            _ipv6(*args)
+        cur_value = "cur"
+        cur_templar = MagicMock()
+        cur_options = MagicMock()
+
+        ctx = TemplateContext(template_value=cur_value, templar=cur_templar, options=cur_options)
+        ctx.__enter__()
+
+        try:
+            args = ["", AnsibleUndefined(name="my_ip"), ""]
+            with pytest.raises(
+                AnsibleFilterError,
+                match=r"Unrecognized type <<class 'ansible\..*Undefined.*'>> for ipv6 filter <value>",
+            ):
+                _ipv6(*args)
+        finally:
+            ctx.__exit__(None, None, None)
 
     def test_ipv6_filter_empty_query(self):
         """Check ipv6 filter empty query"""

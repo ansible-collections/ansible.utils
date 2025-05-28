@@ -13,11 +13,13 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 from unittest import TestCase
+from unittest.mock import MagicMock
 
 import pytest
 
 from ansible.errors import AnsibleFilterError
 from ansible.template import AnsibleUndefined
+from ansible._internal._templating._utils import TemplateContext
 
 from ansible_collections.ansible.utils.plugins.filter.ipwrap import _ipwrap
 
@@ -52,13 +54,22 @@ class TestIpWrap(TestCase):
 
     def test_ipwrap_undefined_value(self):
         """Check ipwrap filter undefined value"""
-        args = ["", AnsibleUndefined(name="my_ip"), ""]
-        with pytest.raises(
-            AnsibleFilterError,
-            # Note: this class has been moved to native_helpers dir since 2.16, hence adding regex to be backwards compatable with 2.15
-            match=r"Unrecognized type <<class 'ansible\.template\.(native_helpers\.)?AnsibleUndefined'>> for ipwrap filter <value>",
-        ):
-            _ipwrap(*args)
+        cur_value = "cur"
+        cur_templar = MagicMock()
+        cur_options = MagicMock()
+
+        ctx = TemplateContext(template_value=cur_value, templar=cur_templar, options=cur_options)
+        ctx.__enter__()
+
+        try:
+            args = ["", AnsibleUndefined(name="my_ip"), ""]
+            with pytest.raises(
+                AnsibleFilterError,
+                match=r"Unrecognized type <<class 'ansible\..*Undefined.*'>> for ipwrap filter <value>",
+            ):
+                _ipwrap(*args)
+        finally:
+            ctx.__exit__(None, None, None)
 
     def test_valid_data_list(self):
         """Check passing valid argspec(list)"""
