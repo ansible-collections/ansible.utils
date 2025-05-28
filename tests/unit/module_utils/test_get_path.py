@@ -11,33 +11,69 @@ __metaclass__ = type
 
 from unittest import TestCase
 
-from ansible.template import Templar
+from ansible._internal._templating._jinja_common import UndefinedMarker
+
+from ansible._internal._templating._engine import TemplateEngine
 
 from ansible_collections.ansible.utils.plugins.module_utils.common.get_path import get_path
 
+from ansible._internal._templating._utils import TemplateContext
+
+from ansible._internal._templating._utils import LazyOptions
+from ansible.parsing.yaml.objects import AnsibleUnicode
 
 class TestGetPath(TestCase):
     def setUp(self):
-        self._environment = Templar(loader=None).environment
+        self.engine = TemplateEngine(loader=None)
+        self._environment = self.engine.environment
 
     def test_get_path_pass(self):
         var = {"a": {"b": {"c": {"d": [0, 1]}}}}
         path = "a.b.c.d[0]"
-        result = get_path(var, path, environment=self._environment, wantlist=False)
-        expected = "0"
-        self.assertEqual(result, expected)
+
+        ctx = TemplateContext(
+            template_value=AnsibleUnicode(path),
+            templar=self.engine,
+            options=LazyOptions.DEFAULT,
+        )
+        token = TemplateContext._contextvar.set(ctx)
+
+        try:
+            result = get_path(var, path, environment=self._environment, wantlist=False)
+            self.assertEqual(result, 0)
+        finally:
+            TemplateContext._contextvar.reset(token)
 
     def test_get_path_pass_wantlist(self):
         var = {"a": {"b": {"c": {"d": [0, 1]}}}}
         path = "a.b.c.d[0]"
-        result = get_path(var, path, environment=self._environment, wantlist=True)
-        expected = ["0"]
-        self.assertEqual(result, expected)
+
+        ctx = TemplateContext(
+            template_value=AnsibleUnicode(path),
+            templar=self.engine,
+            options=LazyOptions.DEFAULT,
+        )
+        token = TemplateContext._contextvar.set(ctx)
+
+        try:
+            result = get_path(var, path, environment=self._environment, wantlist=True)
+            self.assertEqual(result, [0])
+        finally:
+            TemplateContext._contextvar.reset(token)
 
     def test_get_path_fail(self):
         var = {"a": {"b": {"c": {"d": [0, 1]}}}}
         path = "a.b.e"
-        expected = "dict object' has no attribute 'e'"
-        with self.assertRaises(Exception) as exc:
-            get_path(var, path, environment=self._environment, wantlist=False)
-        self.assertIn(expected, str(exc.exception))
+    
+        ctx = TemplateContext(
+            template_value=AnsibleUnicode(path),
+            templar=self.engine,
+            options=LazyOptions.DEFAULT,
+        )
+        token = TemplateContext._contextvar.set(ctx)
+    
+        try:
+            result = get_path(var, path, environment=self._environment, wantlist=False)
+            self.assertIsInstance(result, UndefinedMarker)
+        finally:
+            TemplateContext._contextvar.reset(token)

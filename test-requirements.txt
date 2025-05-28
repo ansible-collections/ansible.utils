@@ -2,7 +2,7 @@
 pytest-ansible
 pytest-xdist
 typing-extensions
-
+ansible-core>=2.17.0
 # For integration tests
 pexpect
 git+https://github.com/ansible-network/pytest-ansible-network-integration.git
