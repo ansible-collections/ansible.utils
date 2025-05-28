@@ -3,3 +3,4 @@ textfsm
 ttp
 xmltodict
 netaddr>=0.10.1
+ansible-core>=2.17.0

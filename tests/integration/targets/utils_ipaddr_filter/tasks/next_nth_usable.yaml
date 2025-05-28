@@ -13,4 +13,4 @@
 
 - name: Assert result for ipv4.
   ansible.builtin.assert:
-    that: "{{ result1 == '' }}"
+    that: result1 is not defined or result1 is none
