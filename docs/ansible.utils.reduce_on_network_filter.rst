@@ -120,7 +120,7 @@ Common return values are documented `here <https://docs.ansible.com/ansible/late
                 </td>
                 <td></td>
                 <td>
-                            <div>Returns the filtered list of addresses belonging to the network.</div>
+                            <div>Returns whether an address or a network passed as argument is in a network.</div>
                     <br/>
                 </td>
             </tr>
