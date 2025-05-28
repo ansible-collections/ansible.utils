@@ -12,13 +12,13 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 from unittest import TestCase
+from unittest.mock import MagicMock
 
 import pytest
 
+from ansible._internal._templating._utils import TemplateContext
 from ansible.errors import AnsibleFilterError
 from ansible.template import AnsibleUndefined
-from ansible._internal._templating._utils import TemplateContext
-from unittest.mock import MagicMock
 
 from ansible_collections.ansible.utils.plugins.filter.cidr_merge import cidr_merge
 from ansible_collections.ansible.utils.plugins.filter.ip4_hex import ip4_hex
