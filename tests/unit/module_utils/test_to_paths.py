@@ -15,15 +15,17 @@ import os
 
 from unittest import TestCase
 
-from ansible.template import Templar
-
+from ansible._internal._templating._engine import TemplateEngine
+from ansible._internal._templating._utils import TemplateContext, LazyOptions
+from ansible.parsing.yaml.objects import AnsibleUnicode
 from ansible_collections.ansible.utils.plugins.module_utils.common.get_path import get_path
 from ansible_collections.ansible.utils.plugins.module_utils.common.to_paths import to_paths
 
 
 class TestToPaths(TestCase):
     def setUp(self):
-        self._environment = Templar(loader=None).environment
+        self.engine = TemplateEngine(loader=None)
+        self._environment = self.engine.environment
 
     def test_to_paths(self):
         var = {"a": {"b": {"c": {"d": [0, 1]}}}}
@@ -57,9 +59,19 @@ class TestToPaths(TestCase):
         var = json.loads(big_json)
         paths = to_paths(var, prepend=None, wantlist=None)
         to_tests = heapq.nlargest(1000, list(paths.keys()), key=len)
+
         for to_test in to_tests:
-            gotten = get_path(var, to_test, environment=self._environment, wantlist=False)
-            self.assertEqual(gotten, paths[to_test])
+            ctx = TemplateContext(
+                template_value=AnsibleUnicode(to_test),
+                templar=self.engine,
+                options=LazyOptions.DEFAULT,
+            )
+            token = TemplateContext._contextvar.set(ctx)
+            try:
+                gotten = get_path(var, to_test, environment=self._environment, wantlist=False)
+                self.assertEqual(gotten, paths[to_test])
+            finally:
+                TemplateContext._contextvar.reset(token)
 
     def test_to_paths_empty_list(self):
         var = {"a": []}

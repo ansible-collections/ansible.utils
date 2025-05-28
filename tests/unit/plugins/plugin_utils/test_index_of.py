@@ -12,14 +12,17 @@ __metaclass__ = type
 
 from unittest import TestCase
 
-from ansible.template import Templar
+from ansible._internal._templating._engine import TemplateEngine
+from ansible._internal._templating._utils import TemplateContext, LazyOptions
+from ansible.parsing.yaml.objects import AnsibleUnicode
 
 from ansible_collections.ansible.utils.plugins.plugin_utils.index_of import index_of
 
 
 class TestIndexOfFilter(TestCase):
     def setUp(self):
-        self._tests = Templar(loader=None).environment.tests
+        self.engine = TemplateEngine(loader=None)
+        self._tests = self.engine.environment.tests
 
     def test_fail_no_qualfier(self):
         obj, test, value = [1, 2], "@@", 1
@@ -81,10 +84,20 @@ class TestIndexOfFilter(TestCase):
             ([1, 2, 3], "!<", 3, 2),
         ]
         for entry in objs:
-            obj, test, value, answer = entry
-            result = index_of(obj, test, value, tests=self._tests)
-            expected = answer
-            self.assertEqual(result, expected)
+            obj, test, value, expected = entry
+    
+            ctx = TemplateContext(
+                template_value=AnsibleUnicode(str(test)),
+                templar=self.engine,
+                options=LazyOptions.DEFAULT,
+            )
+            token = TemplateContext._contextvar.set(ctx)
+    
+            try:
+                result = index_of(obj, test, value, tests=self._tests)
+                self.assertEqual(result, expected)
+            finally:
+                TemplateContext._contextvar.reset(token)
 
     def test_simple_dict(self):
         objs = [
