@@ -12,11 +12,11 @@ from functools import partial
 
 from ansible.errors import AnsibleFilterError
 
-from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
-    AnsibleArgSpecValidator,
-)
 from ansible_collections.ansible.utils.plugins.filter.reduce_on_network import (
     reduce_on_network,
+)
+from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
+    AnsibleArgSpecValidator,
 )
 
 
@@ -125,4 +125,3 @@ class FilterModule(object):
     def filters(self):
         """ipaddr filter"""
         return self.filter_map
-

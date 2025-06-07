@@ -58,4 +58,3 @@ class Test_reduce_on_networks(TestCase):
             "192.168.2.34": ["192.128.0.0/9"],
         }
         self.assertEqual(result, expected)
-

@@ -1,4 +1,4 @@
-3.. _ansible.utils.reduce_on_networks_filter:
+.. _ansible.utils.reduce_on_networks_filter:
 
 
 ********************************
@@ -49,10 +49,10 @@ Parameters
                 </td>
                 <td>
                 </td>
+                    <td>
+                    </td>
                 <td>
-                </td>
-                <td>
-                    <div>The networks to validate against.</div>
+                        <div>The networks to validate against.</div>
                 </td>
             </tr>
             <tr>
@@ -86,11 +86,11 @@ Examples
 .. code-block:: yaml
 
     - name: To check whether multiple addresses belong to any of the networks, use the reduce_on_networks filter.
-    debug:
+      debug:
         msg: "{{ ['192.168.0.34', '10.3.0.3', '192.168.2.34'] | ansible.utils.reduce_on_networks( ['192.168.0.0/24', '192.128.0.0/9', '127.0.0.1/8'] ) }}"
 
     # TASK [To check whether multiple addresses belong to any of the networks, use the reduce_on_networks filter.] ***********
-    # task path: /Users/amhatre/ansible-collections/playbooks/test_reduce_on_networks.yaml:7
+    # task path: /Users/amhatre/ansible-collections/playbooks/test_reduce_on_network.yaml:7
     # Loading collection ansible.utils from /Users/amhatre/ansible-collections/collections/ansible_collections/ansible/utils
     # ok: [localhost] => {
     #     "msg": {
@@ -129,7 +129,7 @@ Common return values are documented `here <https://docs.ansible.com/ansible/late
                 </td>
                 <td></td>
                 <td>
-                    <div>Returns the filtered addresses belonging to any of the networks. The dict's key is the address, the value is a list of the matching networks</div>
+                            <div>Returns the filtered addresses belonging to any of the networks. The dict&#x27;s key is the address, the value is a list of the matching networks</div>
                     <br/>
                 </td>
             </tr>

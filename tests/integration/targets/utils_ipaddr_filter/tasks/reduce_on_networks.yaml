@@ -6,4 +6,3 @@
 - name: Assert result for reduce_on_network.
   ansible.builtin.assert:
     that: "{{ result1 == { '192.168.0.34': ['192.168.0.0/24', '192.128.0.0/9'], '192.168.2.34': ['192.128.0.0/9'], } }}
-
