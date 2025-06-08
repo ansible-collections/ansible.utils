@@ -52,17 +52,15 @@
 # ok: [sw01] => (item=2) =>
 #   msg: 3 is > than 1
 
-- name: Materialize params dict before using with_ansible.utils.index_of
-  ansible.builtin.set_fact:
-    resolved_params:
-      data: "{{ data }}"
-      test: ">"
-      value: 1
-
 # - name: Find numbers greater than 1, using with
 #   ansible.builtin.debug:
-#     msg: "{{ data[item] }} is {{ resolved_params.test }} than {{ resolved_params.value }}"
-#   with_ansible.utils.index_of: "{{ resolved_params }}"
+#     msg: "{{ data[item] }} is {{ params.test }} than {{ params.value }}"
+#   with_ansible.utils.index_of: "{{ params }}"
+#   vars:
+#     params:
+#       data: "{{ data }}"
+#       test: ">"
+#       value: 1
 
 # TASK [Find numbers greater than 1, using with] *****************************
 # ok: [nxos101] => (item=1) =>
