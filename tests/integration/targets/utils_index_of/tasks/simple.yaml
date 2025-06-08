@@ -98,7 +98,7 @@
       result: "0"
     - test: "{{ lookup('ansible.utils.index_of', complex.a.b.c.d, 'eq', true, 'e2', fail_on_missing=true) }}"
       result: "0"
-  ignore_errors: true
+  failed_when: false
   register: result
 
 - name: Ensure the previous test failed
