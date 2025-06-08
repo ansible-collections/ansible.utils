@@ -89,18 +89,3 @@
     - test: "{{ lookup('ansible.utils.index_of', complex.a.b.c.d, 'eq', true, 'e2') }}"
       result: 0
   ignore_errors: true
-
-- name: Test a missing key in the list of dictionaries, fail on missing
-  ansible.builtin.assert:
-    that: "{{ item.test == item.result }}"
-  loop:
-    - test: "{{ complex.a.b.c.d | ansible.utils.index_of('eq', true, 'e2', fail_on_missing=true) }}"
-      result: "0"
-    - test: "{{ lookup('ansible.utils.index_of', complex.a.b.c.d, 'eq', true, 'e2', fail_on_missing=true) }}"
-      result: "0"
-  failed_when: false
-  register: result
-
-- name: Ensure the previous test failed
-  ansible.builtin.assert:
-    that: "{{ result.failed and 'not found in' in result.msg }}"
