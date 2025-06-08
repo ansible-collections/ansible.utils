@@ -99,4 +99,3 @@
 - ansible.builtin.assert:
     that:
       - "is_data_valid == true"
-  failed_when: "is_data_valid == true"
