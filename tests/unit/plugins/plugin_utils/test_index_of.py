@@ -9,20 +9,28 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-
+import re
 from unittest import TestCase
 
-from ansible._internal._templating._engine import TemplateEngine
-from ansible._internal._templating._utils import TemplateContext, LazyOptions
-from ansible.parsing.yaml.objects import AnsibleUnicode
+from jinja2 import Environment
 
 from ansible_collections.ansible.utils.plugins.plugin_utils.index_of import index_of
 
 
+def jinja_match(value, pattern):
+    return re.match(pattern, value) is not None
+
+
+def jinja_search(value, pattern):
+    return re.search(pattern, value) is not None
+
+
 class TestIndexOfFilter(TestCase):
     def setUp(self):
-        self.engine = TemplateEngine(loader=None)
-        self._tests = self.engine.environment.tests
+        env = Environment()
+        env.tests["match"] = jinja_match
+        env.tests["search"] = jinja_search
+        self._tests = env.tests
 
     def test_fail_no_qualfier(self):
         obj, test, value = [1, 2], "@@", 1
@@ -84,20 +92,10 @@ class TestIndexOfFilter(TestCase):
             ([1, 2, 3], "!<", 3, 2),
         ]
         for entry in objs:
-            obj, test, value, expected = entry
-    
-            ctx = TemplateContext(
-                template_value=AnsibleUnicode(str(test)),
-                templar=self.engine,
-                options=LazyOptions.DEFAULT,
-            )
-            token = TemplateContext._contextvar.set(ctx)
-    
-            try:
-                result = index_of(obj, test, value, tests=self._tests)
-                self.assertEqual(result, expected)
-            finally:
-                TemplateContext._contextvar.reset(token)
+            obj, test, value, answer = entry
+            result = index_of(obj, test, value, tests=self._tests)
+            expected = answer
+            self.assertEqual(result, expected)
 
     def test_simple_dict(self):
         objs = [
@@ -113,14 +111,14 @@ class TestIndexOfFilter(TestCase):
             ),
             (
                 [{"a": "abc"}, {"a": "def"}, {"a": "ghi"}, {"a": "jkl"}],
-                "ansible.builtin.match",
+                "match",
                 "^a",
                 "a",
                 0,
             ),
             (
                 [{"a": "abc"}, {"a": "def"}, {"a": "ghi"}, {"a": "jkl"}],
-                "ansible.builtin.search",
+                "search",
                 "e",
                 "a",
                 1,
