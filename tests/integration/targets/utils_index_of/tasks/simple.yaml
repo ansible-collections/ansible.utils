@@ -44,9 +44,9 @@
     #   result: "3"
 
     - test: "{{ complex.b | ansible.utils.index_of('==', 1, 'b1') }}"
-      result: 0
+      result: "0"
     - test: "{{ lookup('ansible.utils.index_of', complex.b, '==', 1, 'b1') }}"
-      result: 0
+      result: "0"
 
     - test: "{{ complex.c.c1 | ansible.utils.index_of('!=', 'c') }}"
       result: [0, 1]

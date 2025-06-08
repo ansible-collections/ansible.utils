@@ -43,5 +43,5 @@ def run(localhost_project, environment):
         pytest.fail(reason=f"Integration test failed: {localhost_project.role}")
 
 
-def test_integration(localhost_project, environment):
+def test_integration(localhost_project, environment, monkeypatch):
     run(localhost_project, environment)

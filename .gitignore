@@ -136,3 +136,4 @@ dmypy.json
 
 # ide
 .tests/integration/inventory
+.vscode/
