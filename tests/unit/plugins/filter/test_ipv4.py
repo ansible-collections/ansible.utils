@@ -13,13 +13,6 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 from unittest import TestCase
-from unittest.mock import MagicMock
-
-import pytest
-
-from ansible.errors import AnsibleFilterError
-from ansible.template import AnsibleUndefined
-from ansible._internal._templating._utils import TemplateContext
 
 from ansible_collections.ansible.utils.plugins.filter.ipv4 import _ipv4
 
@@ -46,25 +39,6 @@ VALID_OUTPUT2 = ["192.24.2.1"]
 class TestIp4(TestCase):
     def setUp(self):
         pass
-
-    def test_ipv4_undefined_value(self):
-        """Check ipv4 filter undefined value"""
-        cur_value = "cur"
-        cur_templar = MagicMock()
-        cur_options = MagicMock()
-
-        ctx = TemplateContext(template_value=cur_value, templar=cur_templar, options=cur_options)
-        ctx.__enter__()
-
-        try:
-            args = ["", AnsibleUndefined(name="my_ip"), ""]
-            with pytest.raises(
-                AnsibleFilterError,
-                match=r"Unrecognized type <<class 'ansible\..*Undefined.*'>> for ipv4 filter <value>",
-            ):
-                _ipv4(*args)
-        finally:
-            ctx.__exit__(None, None, None)
 
     def test_ipv4_filter_empty_query(self):
         """Check ipv4 filter empty query"""

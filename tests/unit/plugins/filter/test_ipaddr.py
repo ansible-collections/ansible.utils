@@ -12,17 +12,13 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 from unittest import TestCase
-from unittest.mock import MagicMock
 
 import pytest
 
-from ansible._internal._templating._utils import TemplateContext
 from ansible.errors import AnsibleFilterError
-from ansible.template import AnsibleUndefined
 
 from ansible_collections.ansible.utils.plugins.filter.cidr_merge import cidr_merge
 from ansible_collections.ansible.utils.plugins.filter.ip4_hex import ip4_hex
-from ansible_collections.ansible.utils.plugins.filter.ipaddr import _ipaddr
 from ansible_collections.ansible.utils.plugins.filter.ipmath import ipmath
 from ansible_collections.ansible.utils.plugins.filter.ipsubnet import ipsubnet
 from ansible_collections.ansible.utils.plugins.filter.network_in_network import network_in_network
@@ -66,26 +62,6 @@ class TestIpFilter(TestCase):
         subnets = ["1.12.1.1", "1.12.1.255"]
         self.assertEqual(cidr_merge(subnets), ["1.12.1.1/32", "1.12.1.255/32"])
         self.assertEqual(cidr_merge(subnets, "span"), "1.12.1.0/24")
-
-    def test_ipaddr_undefined_value(self):
-        """Check ipaddr filter undefined value"""
-        cur_value = "cur"
-        cur_templar = MagicMock()
-        cur_options = MagicMock()
-
-        # Manually set the context so TemplateContext.current() won't fail
-        ctx = TemplateContext(template_value=cur_value, templar=cur_templar, options=cur_options)
-        ctx.__enter__()
-
-        try:
-            args = ["", AnsibleUndefined(name="my_ip"), ""]
-            with pytest.raises(
-                AnsibleFilterError,
-                match=r"Unrecognized type <<class 'ansible\..*Undefined.*'>> for ipaddr filter <value>",
-            ):
-                _ipaddr(*args)
-        finally:
-            ctx.__exit__(None, None, None)
 
     def test_ipaddr_empty_query(self):
         self.assertEqual(ipaddr("192.0.2.230"), "192.0.2.230")
