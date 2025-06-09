@@ -15,7 +15,7 @@ import os
 
 from unittest import TestCase
 
-from ansible.template import Templar
+from jinja2 import Environment
 
 from ansible_collections.ansible.utils.plugins.module_utils.common.get_path import get_path
 from ansible_collections.ansible.utils.plugins.module_utils.common.to_paths import to_paths
@@ -23,7 +23,7 @@ from ansible_collections.ansible.utils.plugins.module_utils.common.to_paths impo
 
 class TestToPaths(TestCase):
     def setUp(self):
-        self._environment = Templar(loader=None).environment
+        self._environment = Environment()
 
     def test_to_paths(self):
         var = {"a": {"b": {"c": {"d": [0, 1]}}}}

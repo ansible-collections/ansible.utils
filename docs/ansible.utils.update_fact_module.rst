@@ -195,9 +195,9 @@ Examples
         update_list: []
         update:
           - path: addresses[{{ idx }}].network
-            value: "{{ item['raw'] | ansible.netcommon.ipaddr('network') }}"
+            value: "{{ item['raw'] | ansible.utils.ipaddr('network') }}"
           - path: addresses[{{ idx }}].prefix
-            value: "{{ item['raw'] | ansible.netcommon.ipaddr('prefix') }}"
+            value: "{{ item['raw'] | ansible.utils.ipaddr('prefix') }}"
 
     - debug:
         var: update_list
