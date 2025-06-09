@@ -1,0 +1,3 @@
+---
+doc_changes:
+  - description: Fix the description of the reduce_on_network filter.
