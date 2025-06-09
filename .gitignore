@@ -135,4 +135,5 @@ dmypy.json
 .pyre/
 
 # ide
-.vscode
+.tests/integration/inventory
+.vscode/

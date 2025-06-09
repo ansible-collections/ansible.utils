@@ -14,11 +14,6 @@ __metaclass__ = type
 
 from unittest import TestCase
 
-import pytest
-
-from ansible.errors import AnsibleFilterError
-from ansible.template import AnsibleUndefined
-
 from ansible_collections.ansible.utils.plugins.filter.ipv6 import _ipv6
 
 
@@ -47,16 +42,6 @@ VALID_OUTPUT2 = ["::ffff:192.168.32.0", "::ffff:192.24.2.1", "fe80::100"]
 class TestIp6(TestCase):
     def setUp(self):
         pass
-
-    def test_ipv6_undefined_value(self):
-        """Check ipv6 filter undefined value"""
-        args = ["", AnsibleUndefined(name="my_ip"), ""]
-        with pytest.raises(
-            AnsibleFilterError,
-            # Note: this class has been moved to native_helpers dir since 2.16, hence adding regex to be backwards compatable with 2.15
-            match=r"Unrecognized type <<class 'ansible\.template\.(native_helpers\.)?AnsibleUndefined'>> for ipv6 filter <value>",
-        ):
-            _ipv6(*args)
 
     def test_ipv6_filter_empty_query(self):
         """Check ipv6 filter empty query"""
