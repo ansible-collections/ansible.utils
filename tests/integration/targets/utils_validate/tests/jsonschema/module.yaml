@@ -117,7 +117,7 @@
       - "'patternProperties.^.*.properties.oper_status.pattern' in result.msg"
       - "'patternProperties.^.*.properties.enabled.enum' in result.msg"
       - "'patternProperties.^.*.properties.counters.properties.in_crc_errors.maximum' in result.msg"
-  ignore_errors: true 
+  ignore_errors: true
 
 - name: validate data using jsonschema engine (valid data read from file)
   ansible.utils.validate:

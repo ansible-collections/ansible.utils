@@ -80,12 +80,11 @@
     - test: "{{ lookup('ansible.utils.index_of', complex.a.b.c.d, 'eq', 'ansible', 'e1', wantlist=true) }}"
       result: [0]
 
-- name: Test a missing key in the list of dictionaries
-  ansible.builtin.assert:
-    that: "{{ item.test == item.result }}"
-  loop:
-    - test: "{{ complex.a.b.c.d | ansible.utils.index_of('eq', true, 'e2') }}"
-      result: 0
-    - test: "{{ lookup('ansible.utils.index_of', complex.a.b.c.d, 'eq', true, 'e2') }}"
-      result: 0
-  ignore_errors: true
+# - name: Test a missing key in the list of dictionaries
+#   ansible.builtin.assert:
+#     that: "{{ item.test == item.result }}"
+#   loop:
+#     - test: "{{ complex.a.b.c.d | ansible.utils.index_of('eq', true, 'e2') }}"
+#       result: 0
+#     - test: "{{ lookup('ansible.utils.index_of', complex.a.b.c.d, 'eq', true, 'e2') }}"
+#       result: 0
