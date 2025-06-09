@@ -6,6 +6,7 @@
 
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 import heapq
@@ -13,6 +14,7 @@ import json
 import os
 
 from unittest import TestCase
+
 from jinja2 import Environment
 
 from ansible_collections.ansible.utils.plugins.module_utils.common.get_path import get_path

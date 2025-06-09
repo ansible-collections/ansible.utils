@@ -79,7 +79,6 @@
       result: [0]
     - test: "{{ lookup('ansible.utils.index_of', complex.a.b.c.d, 'eq', 'ansible', 'e1', wantlist=true) }}"
       result: [0]
-
 # - name: Test a missing key in the list of dictionaries
 #   ansible.builtin.assert:
 #     that: "{{ item.test == item.result }}"
