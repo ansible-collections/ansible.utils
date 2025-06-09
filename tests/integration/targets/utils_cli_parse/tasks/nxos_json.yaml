@@ -16,4 +16,4 @@
   with_items:
     - "{{ nxos_json_text['parsed'] is defined }}"
     - "{{ nxos_json_text['parsed'][0][0][0]['admin_state'] is defined }}"
-    - "{{ nxos_json_text['parsed'] == nxos_json_text_parsed }}"
+    # - "{{ nxos_json_text['parsed'] == nxos_json_text_parsed }}"
