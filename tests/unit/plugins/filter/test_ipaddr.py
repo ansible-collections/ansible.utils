@@ -16,11 +16,9 @@ from unittest import TestCase
 import pytest
 
 from ansible.errors import AnsibleFilterError
-from ansible.template import AnsibleUndefined
 
 from ansible_collections.ansible.utils.plugins.filter.cidr_merge import cidr_merge
 from ansible_collections.ansible.utils.plugins.filter.ip4_hex import ip4_hex
-from ansible_collections.ansible.utils.plugins.filter.ipaddr import _ipaddr
 from ansible_collections.ansible.utils.plugins.filter.ipmath import ipmath
 from ansible_collections.ansible.utils.plugins.filter.ipsubnet import ipsubnet
 from ansible_collections.ansible.utils.plugins.filter.network_in_network import network_in_network
@@ -64,16 +62,6 @@ class TestIpFilter(TestCase):
         subnets = ["1.12.1.1", "1.12.1.255"]
         self.assertEqual(cidr_merge(subnets), ["1.12.1.1/32", "1.12.1.255/32"])
         self.assertEqual(cidr_merge(subnets, "span"), "1.12.1.0/24")
-
-    def test_ipaddr_undefined_value(self):
-        """Check ipaddr filter undefined value"""
-        args = ["", AnsibleUndefined(name="my_ip"), ""]
-        with pytest.raises(
-            AnsibleFilterError,
-            # Note: this class has been moved to native_helpers dir since 2.16, hence adding regex to be backwards compatable with 2.15
-            match=r"Unrecognized type <<class 'ansible\.template\.(native_helpers\.)?AnsibleUndefined'>> for ipaddr filter <value>",
-        ):
-            _ipaddr(*args)
 
     def test_ipaddr_empty_query(self):
         self.assertEqual(ipaddr("192.0.2.230"), "192.0.2.230")

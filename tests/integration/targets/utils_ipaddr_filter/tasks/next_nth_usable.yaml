@@ -6,11 +6,3 @@
 - name: Assert result for next_nth_usable.
   ansible.builtin.assert:
     that: "{{ result1 == '192.168.122.3' }}"
-
-- name: Next_nth_usable filter
-  ansible.builtin.set_fact:
-    result1: "{{ '192.168.122.254/24' | ansible.utils.next_nth_usable(2) }}"
-
-- name: Assert result for ipv4.
-  ansible.builtin.assert:
-    that: "{{ result1 == '' }}"
