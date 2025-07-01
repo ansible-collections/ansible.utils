@@ -4,6 +4,15 @@ Ansible Utils Collection Release Notes
 
 .. contents:: Topics
 
+v6.0.1
+======
+
+Documentation Changes
+---------------------
+
+- Fix the description of the reduce_on_network filter.
+- Fix the module name in ipmath filter.
+
 v6.0.0
 ======
 
