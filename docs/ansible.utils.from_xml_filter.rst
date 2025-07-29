@@ -73,6 +73,24 @@ Parameters
                         <div>Conversion library to use within the filter plugin.</div>
                 </td>
             </tr>
+            <tr>
+                <td colspan="1">
+                    <div class="ansibleOptionAnchor" id="parameter-"></div>
+                    <b>src</b>
+                    <a class="ansibleOptionLink" href="#parameter-" title="Permalink to this option"></a>
+                    <div style="font-size: small">
+                        <span style="color: purple">string</span>
+                    </div>
+                </td>
+                <td>
+                </td>
+                    <td>
+                    </td>
+                <td>
+                        <div>The source of the data to be parsed</div>
+                        <div>This can be a file path, a URL, or a command to run</div>
+                </td>
+            </tr>
     </table>
     <br/>
 

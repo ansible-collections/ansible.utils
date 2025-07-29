@@ -81,6 +81,21 @@ Parameters
                         <div>The name of the validate plugin to use. The engine value should follow the fully qualified collection name format, that is &lt;org-name&gt;.&lt;collection-name&gt;.&lt;validate-plugin-name&gt;.</div>
                 </td>
             </tr>
+            <tr>
+                <td colspan="1">
+                    <div class="ansibleOptionAnchor" id="parameter-"></div>
+                    <b>src</b>
+                    <a class="ansibleOptionLink" href="#parameter-" title="Permalink to this option"></a>
+                    <div style="font-size: small">
+                        <span style="color: purple">string</span>
+                    </div>
+                </td>
+                <td>
+                </td>
+                <td>
+                        <div>The source of the data to be parsed</div>
+                </td>
+            </tr>
     </table>
     <br/>
 
