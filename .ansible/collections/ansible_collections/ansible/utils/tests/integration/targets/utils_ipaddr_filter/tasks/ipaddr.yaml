@@ -1,0 +1,99 @@
+---
+- name: Set ipaddress list
+  ansible.builtin.set_fact:
+    value:
+      - 192.24.2.1
+      - host.fqdn
+      - ::1
+      - 192.168.32.0/24
+      - fe80::100/10
+      - "42540766412265424405338506004571095040/64"
+      - true
+
+- name: Set ipaddress list for private/public test
+  ansible.builtin.set_fact:
+    value_private_public: "{{ value + value_private_public_additional }}"
+  vars:
+    value_private_public_additional:
+      # valid private subnet address
+      - 172.16.0.1
+      # exception: globally reachable address
+      - 192.0.0.9
+      # multicast test network: considered global in netaddr
+      - 233.252.0.1
+      - 234.0.0.1
+      # administrative multicast: considered global in netaddr
+      - 225.0.0.1
+      - 239.0.0.1
+
+- name: Ipaddr filter with empty string query
+  ansible.builtin.set_fact:
+    result1: "{{ value | ansible.utils.ipaddr }}"
+
+- name: Assert result for ipaddr.
+  ansible.builtin.assert:
+    that: "{{ result1 == ipaddr_result1 }}"
+
+- name: Ipaddr filter with host string query
+  ansible.builtin.set_fact:
+    result2: "{{ value | ansible.utils.ipaddr('host') }}"
+
+- name: Assert result for ipaddr host query
+  ansible.builtin.assert:
+    that: "{{ result2 == ipaddr_result2 }}"
+
+- name: Ipaddr filter with public network query
+  ansible.builtin.set_fact:
+    result3: "{{ value_private_public | ansible.utils.ipaddr('public') }}"
+
+- name: Assert result for ipaddr public network query
+  ansible.builtin.assert:
+    that: "{{ result3 == ipaddr_result3 }}"
+
+- name: Ipaddr filter with private network query
+  ansible.builtin.set_fact:
+    result_private: "{{ value_private_public | ansible.utils.ipaddr('private') }}"
+
+- name: Assert result for ipaddr private network query
+  ansible.builtin.assert:
+    that: "{{ result_private == ipaddr_result_private }}"
+
+- name: Ipaddr filter with network query
+  ansible.builtin.set_fact:
+    result4: "{{ value | ansible.utils.ipaddr('net') }}"
+
+- name: Assert result for ipaddr network query
+  ansible.builtin.assert:
+    that: "{{ result4 == ipaddr_result4 }}"
+
+- name: Ipaddr filter with network/prefix query
+  ansible.builtin.set_fact:
+    result5: "{{ '192.168.0.0/23' | ansible.utils.ipaddr('network/prefix') }}"
+
+- name: Assert result for ipaddr filter with network/prefix query
+  ansible.builtin.assert:
+    that: "{{ result5 == '192.168.0.0/23' }}"
+
+- name: Ipaddr filter with chained filters
+  ansible.builtin.set_fact:
+    result6: "{{ '192.168.255.0' | ansible.utils.ipaddr('network') | ansible.utils.ipmath(123) }}"
+
+- name: Assert result for ipaddr filter with chained filters
+  ansible.builtin.assert:
+    that: "{{ result6 == '192.168.255.123' }}"
+
+- name: Debug
+  ansible.builtin.debug:
+    msg: "Test int input for ipaddr filter"
+
+- name: Set fact 1
+  ansible.builtin.set_fact:
+    ip1: "172.20.0.1"
+
+- name: Set fact 2
+  ansible.builtin.set_fact:
+    ip2: "{{ ((ip1 | ansible.utils.ipaddr('int')) + 6) | ansible.utils.ipaddr }}"
+
+- name: Assert result for ipaddr filter
+  ansible.builtin.assert:
+    that: "{{ ip2 == '172.20.0.7' }}"

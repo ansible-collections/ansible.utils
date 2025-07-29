@@ -1,0 +1,55 @@
+---
+- name: Set fact
+  ansible.builtin.set_fact:
+    a:
+      b:
+        c:
+          d:
+            - 0
+            - 1
+
+- name: Test filter and lookup plugin, simple and prepend
+  ansible.builtin.assert:
+    that: "{{ item.result == item.expected }}"
+  loop:
+    - result: "{{ a | ansible.utils.to_paths }}"
+      expected:
+        b.c.d[0]: 0
+        b.c.d[1]: 1
+    - result: "{{ lookup('ansible.utils.to_paths', a) }}"
+      expected:
+        b.c.d[0]: 0
+        b.c.d[1]: 1
+    - result: "{{ a | ansible.utils.to_paths(prepend='a') }}"
+      expected:
+        a.b.c.d[0]: 0
+        a.b.c.d[1]: 1
+    - result: "{{ lookup('ansible.utils.to_paths', a, prepend='a') }}"
+      expected:
+        a.b.c.d[0]: 0
+        a.b.c.d[1]: 1
+
+- name: Set fact
+  ansible.builtin.set_fact:
+    a:
+      b:
+        c:
+          d:
+            - 0
+
+- name: Test filter and lookup plugin, wantlist and prepend
+  ansible.builtin.assert:
+    that: "{{ item.result == item.expected }}"
+  loop:
+    - result: "{{ a | ansible.utils.to_paths(wantlist=true) }}"
+      expected:
+        - b.c.d[0]: 0
+    - result: "{{ lookup('ansible.utils.to_paths', a, wantlist=true) }}"
+      expected:
+        - b.c.d[0]: 0
+    - result: "{{ a | ansible.utils.to_paths(wantlist=true, prepend='a') }}"
+      expected:
+        - a.b.c.d[0]: 0
+    - result: "{{ lookup('ansible.utils.to_paths', a, wantlist=true, prepend='a') }}"
+      expected:
+        - a.b.c.d[0]: 0

@@ -1,0 +1,40 @@
+---
+- name: Setup data as facts for replace integration test
+  ansible.builtin.set_fact:
+    data:
+      - interface_name: eth0
+        enabled: true
+        duplex: auto
+        speed: auto
+      - interface_name: eth1
+        description: Configured by Ansible - Interface 1
+        mtu: 1500
+        speed: auto
+        duplex: auto
+        enabled: true
+        vifs:
+          - vlan_id: 100
+            description: Eth1 - VIF 100
+            mtu: 400
+            enabled: true
+          - vlan_id: 101
+            description: Eth1 - VIF 101
+            enabled: true
+      - interface_name: eth2
+        description: Configured by Ansible - Interface 2 (ADMIN DOWN)
+        mtu: 600
+        enabled: false
+
+- name: Include expected output data
+  ansible.builtin.include_vars:
+    file: main.yaml
+
+- name: Debug
+  ansible.builtin.debug:
+    msg: "{{ data | ansible.utils.replace_keys(target=[{'before': 'interface_name', 'after': 'name'}]) }}"
+  register: result
+
+- name: Assert result dicts
+  ansible.builtin.assert:
+    that:
+      - replace['default'] == result['msg']

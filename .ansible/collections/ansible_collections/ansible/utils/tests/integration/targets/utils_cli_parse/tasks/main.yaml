@@ -1,0 +1,89 @@
+---
+- name: Set a short name
+  ansible.builtin.set_fact:
+    os: "{{ ansible_distribution | d }}"
+
+- name: Include argspec.yaml
+  ansible.builtin.include_tasks: argspec.yaml
+  vars:
+    parser: "({{ inventory_hostname }}/argspec)"
+
+- name: Include nxos_json.yaml
+  ansible.builtin.include_tasks: "nxos_json.yaml"
+  vars:
+    parser: "(nxos/json)"
+  tags:
+    - json
+
+- name: Include nxos_textfsm.yaml
+  ansible.builtin.include_tasks: "nxos_textfsm.yaml"
+  vars:
+    parser: "(nxos/textfsm)"
+  tags:
+    - textfsm
+
+- name: Include nxos_ttp.yaml
+  ansible.builtin.include_tasks: "nxos_ttp.yaml"
+  vars:
+    parser: "(nxos/ttp)"
+  tags:
+    - ttp
+
+- name: Include nxos_xml.yaml
+  ansible.builtin.include_tasks: "nxos_xml.yaml"
+  vars:
+    parser: "(nxos/xml)"
+  tags:
+    - xml
+
+- name: Debug os
+  ansible.builtin.debug:
+    msg: "{{ os }}"
+
+- name: Include centos_textfsm.yaml
+  ansible.builtin.include_tasks: "centos_textfsm.yaml"
+  vars:
+    parser: "(centos/textfsm)"
+  when: os == 'centos'
+  tags:
+    - textfsm
+
+- name: Include centos_ttp.yaml
+  ansible.builtin.include_tasks: "centos_ttp.yaml"
+  vars:
+    parser: "(centos/ttp)"
+  when: os == 'centos'
+  tags:
+    - ttp
+
+- name: Include fedora_textfsm.yaml
+  ansible.builtin.include_tasks: "fedora_textfsm.yaml"
+  vars:
+    parser: "(fedora/textfsm)"
+  when: os == 'fedora'
+  tags:
+    - textfsm
+
+- name: Include fedora_ttp.yaml
+  ansible.builtin.include_tasks: "fedora_ttp.yaml"
+  vars:
+    parser: "(fedora/ttp)"
+  when: os == 'fedora'
+  tags:
+    - ttp
+
+- name: Include ubuntu_textfsm.yaml
+  ansible.builtin.include_tasks: "ubuntu_textfsm.yaml"
+  vars:
+    parser: "(ubuntu/textfsm)"
+  when: os == 'ubuntu'
+  tags:
+    - textfsm
+
+- name: Include ubuntu_ttp.yaml
+  ansible.builtin.include_tasks: "ubuntu_ttp.yaml"
+  vars:
+    parser: "(ubuntu/ttp)"
+  when: os == 'ubuntu'
+  tags:
+    - ttp

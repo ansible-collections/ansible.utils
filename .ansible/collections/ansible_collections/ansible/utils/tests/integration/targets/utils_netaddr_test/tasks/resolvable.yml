@@ -1,0 +1,28 @@
+---
+- name: "Resolvable: Check if good_name is resolvable or not"
+  ansible.builtin.assert:
+    that: "{{ good_name is ansible.utils.resolvable }}"
+
+- name: "Resolvable: Check if ipv4_localhost is resolvable or not"
+  ansible.builtin.assert:
+    that: "{{ ipv4_localhost is ansible.utils.resolvable }}"
+
+- name: "Resolvable: Check if ipv6_localhost is resolvable or not"
+  ansible.builtin.assert:
+    that: "{{ ipv6_localhost is ansible.utils.resolvable }}"
+
+- name: "Resolvable: Test invalidness"
+  ansible.builtin.set_fact:
+    criteria_check1: "{{ bad_name is ansible.utils.resolvable }}"
+
+- name: "Resolvable: Assert invalidness"
+  ansible.builtin.assert:
+    that: "{{ criteria_check1 == false }}"
+
+- name: "Resolvable: Test invalidness"
+  ansible.builtin.set_fact:
+    criteria_check2: "{{ 'invalidhost' is ansible.utils.resolvable }}"
+
+- name: "Resolvable: Assert invalidness"
+  ansible.builtin.assert:
+    that: "{{ criteria_check2 == false }}"

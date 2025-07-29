@@ -1,0 +1,12 @@
+---
+- name: "Reserved: Check if 253.0.0.1 is a reserved IP address"
+  ansible.builtin.assert:
+    that: "{{ '253.0.0.1' is ansible.utils.reserved }}"
+
+- name: "Reserved: Test invalidness"
+  ansible.builtin.set_fact:
+    criteria_check: "{{ '128.146.1.7' is ansible.utils.reserved }}"
+
+- name: "Reserved: Assert invalidness"
+  ansible.builtin.assert:
+    that: "{{ criteria_check == false }}"

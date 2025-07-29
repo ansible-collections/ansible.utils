@@ -1,0 +1,123 @@
+---
+- name: Setup data as facts
+  ansible.builtin.set_fact:
+    data:
+      - interface_name: eth0
+        enabled: true
+        duplex: auto
+        speed: auto
+      - interface_name: eth1
+        description: Configured by Ansible - Interface 1
+        mtu: 1500
+        speed: auto
+        duplex: auto
+        is_enabled: true
+        vifs:
+          - vlan_id: 100
+            description: Eth1 - VIF 100
+            mtu: 400
+            is_enabled: true
+          - vlan_id: 101
+            description: Eth1 - VIF 101
+            is_enabled: true
+      - interface_name: eth2
+        description: Configured by Ansible - Interface 2 (ADMIN DOWN)
+        mtu: 600
+        is_enabled: false
+
+- name: Debug
+  ansible.builtin.debug:
+    msg: "{{ data | ansible.utils.keep_keys(target=['desc', 'interface_'], matching_parameter='starts_with') }}"
+  register: result
+
+- name: Assert result dicts
+  ansible.builtin.assert:
+    that:
+      - keep_values['starts_with'] == result['msg']
+
+- name: Setup data as facts for equivalent
+  ansible.builtin.set_fact:
+    data:
+      - interface_name: eth0
+        enabled: true
+        duplex: auto
+        speed: auto
+      - interface_name: eth1
+        description: Configured by Ansible - Interface 1
+        mtu: 1500
+        speed: auto
+        duplex: auto
+        is_enabled: true
+        vifs:
+          - vlan_id: 100
+            description: Eth1 - VIF 100
+            mtu: 400
+            is_enabled: true
+          - vlan_id: 101
+            description: Eth1 - VIF 101
+            is_enabled: true
+      - interface_name: eth2
+        description: Configured by Ansible - Interface 2 (ADMIN DOWN)
+        mtu: 600
+        is_enabled: false
+
+- name: Debug
+  ansible.builtin.debug:
+    msg: "{{ data | ansible.utils.keep_keys(target=['interface_name', 'is_enabled', 'vlan_id']) }}"
+  register: result
+
+- name: Assert result dicts
+  ansible.builtin.assert:
+    that:
+      - keep_default['default'] == result['msg']
+
+- name: Setup data for multiple keys in dict
+  ansible.builtin.set_fact:
+    tomcat_data:
+      tomcat:
+        tomcat1:
+          name: tomcat1
+        tomcat2:
+          name: tomcat2
+          tomcat3:
+            name: tomcat3
+        tomcat3:
+          name: tomcat3
+        tomcat4:
+          name: tomcat3
+          tomcat3:
+            tomcat3:
+              name: tomcattest
+            checktomcat3: stringinput
+      tomcats_block:
+        - tomcat1
+        - tomcat2
+- name: Debug
+  ansible.builtin.debug:
+    msg: "{{ tomcat_data | ansible.utils.keep_keys(target=['tomcats_block']) }}"
+  register: result
+
+- name: Assert result dicts
+  ansible.builtin.assert:
+    that:
+      - keep_tomcat['tomcat'] == result['msg']
+
+- name: Test to keep keys when initial node is matched
+  ansible.builtin.debug:
+    msg: "{{ tomcat_data['tomcat'] | ansible.utils.keep_keys(target=['tomcat1', 'tomcat2']) }}"
+  register: result
+
+- name: Assert result dicts
+  ansible.builtin.assert:
+    that:
+      - keep_tomcat['greedy_values'] == result['msg']
+
+- name: Test to keep keys to check if nested dict is matched
+  ansible.builtin.debug:
+    msg: "{{ tomcat_data['tomcat'] | ansible.utils.keep_keys(target=['tomcat3']) }}"
+  register: result
+
+- name: Assert result dicts
+  ansible.builtin.assert:
+    that:
+      - keep_tomcat['nested_values'] == result['msg']

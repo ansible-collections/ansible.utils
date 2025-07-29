@@ -1,0 +1,20 @@
+---
+- name: "Ipv6_teredo: Check if 2001::c0a8:6301:1 is a valid 6to4 address"
+  ansible.builtin.assert:
+    that: "{{ '2001::c0a8:6301:1' is ansible.utils.ipv6_teredo }}"
+
+- name: "Ipv6_teredo: Test invalidness"
+  ansible.builtin.set_fact:
+    criteria_check1: "{{ '2002::c0a8:6301:1' is ansible.utils.ipv6_teredo }}"
+
+- name: "Ipv6_teredo: Assert invalidness"
+  ansible.builtin.assert:
+    that: "{{ criteria_check1 == false }}"
+
+- name: "Ipv6_teredo: Test invalidness"
+  ansible.builtin.set_fact:
+    criteria_check2: "{{ 'helloworld' is ansible.utils.ipv6_teredo }}"
+
+- name: "Ipv6_teredo: Assert invalidness"
+  ansible.builtin.assert:
+    that: "{{ criteria_check2 == false }}"

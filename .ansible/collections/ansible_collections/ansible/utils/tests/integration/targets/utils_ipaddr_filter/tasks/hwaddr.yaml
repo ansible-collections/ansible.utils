@@ -1,0 +1,16 @@
+---
+- name: Hwaddr filter test1
+  ansible.builtin.set_fact:
+    result1: "{{ '1a:2b:3c:4d:5e:6f' | ansible.utils.hwaddr }}"
+
+- name: Assert result for hwaddr.
+  ansible.builtin.assert:
+    that: "{{ result1 == '1a:2b:3c:4d:5e:6f' }}"
+
+- name: Hwaddr filter test2
+  ansible.builtin.set_fact:
+    result1: "{{ '1a:2b:3c:4d:5e:6f' | ansible.utils.hwaddr('cisco') }}"
+
+- name: Assert result for hwaddr.
+  ansible.builtin.assert:
+    that: "{{ result1 == '1a2b.3c4d.5e6f' }}"

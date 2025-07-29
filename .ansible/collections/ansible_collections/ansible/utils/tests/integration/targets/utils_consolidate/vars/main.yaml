@@ -1,0 +1,16 @@
+---
+combined_facts:
+  GigabitEthernet0/1:
+    acl_interfaces:
+      name: GigabitEthernet0/1
+    interfaces:
+      description: This is a user template
+      enabled: true
+      name: GigabitEthernet0/1
+  GigabitEthernet0/2:
+    acl_interfaces:
+      name: GigabitEthernet0/2
+    interfaces:
+      description: This is a user template
+      enabled: true
+      name: GigabitEthernet0/2

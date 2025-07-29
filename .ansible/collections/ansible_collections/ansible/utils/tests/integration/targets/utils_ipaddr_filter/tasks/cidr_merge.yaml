@@ -1,0 +1,31 @@
+---
+- name: Cidr_merge with merge action
+  ansible.builtin.set_fact:
+    value:
+      - 192.168.0.0/17
+      - 192.168.128.0/17
+      - 192.168.128.1
+
+- name: Cidr_merge with merge action
+  ansible.builtin.set_fact:
+    result1: "{{ value | ansible.utils.cidr_merge }}"
+
+- name: Assert result for cidr_merge
+  ansible.builtin.assert:
+    that: "{{ result1 == cidr_result1 }}"
+
+- name: Cidr_merge with span action
+  ansible.builtin.set_fact:
+    value:
+      - 192.168.1.1
+      - 192.168.1.2
+      - 192.168.1.3
+      - 192.168.1.4
+
+- name: Cidr_merge with span action
+  ansible.builtin.set_fact:
+    result2: "{{ value | ansible.utils.cidr_merge('span') }}"
+
+- name: Assert result for cidr_merge(span)
+  ansible.builtin.assert:
+    that: "{{ result2 == cidr_result2 }}"

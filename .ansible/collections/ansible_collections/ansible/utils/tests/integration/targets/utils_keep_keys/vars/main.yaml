@@ -1,0 +1,48 @@
+---
+keep_values:
+  starts_with:
+    - interface_name: eth0
+    - interface_name: eth1
+      description: Configured by Ansible - Interface 1
+      vifs:
+        - description: Eth1 - VIF 100
+        - description: Eth1 - VIF 101
+    - interface_name: eth2
+      description: Configured by Ansible - Interface 2 (ADMIN DOWN)
+
+keep_default:
+  default:
+    - interface_name: eth0
+    - interface_name: eth1
+      is_enabled: true
+      vifs:
+        - vlan_id: 100
+          is_enabled: true
+        - vlan_id: 101
+          is_enabled: true
+    - interface_name: eth2
+      is_enabled: false
+
+keep_tomcat:
+  tomcat:
+    tomcats_block:
+      - tomcat1
+      - tomcat2
+  greedy_values:
+    tomcat1:
+      name: tomcat1
+    tomcat2:
+      name: tomcat2
+      tomcat3:
+        name: tomcat3
+  nested_values:
+    tomcat2:
+      tomcat3:
+        name: tomcat3
+    tomcat3:
+      name: tomcat3
+    tomcat4:
+      tomcat3:
+        tomcat3:
+          name: tomcattest
+        checktomcat3: stringinput

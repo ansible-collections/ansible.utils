@@ -1,0 +1,5 @@
+jsonschema
+netaddr
+textfsm
+ttp
+unittest2 ; python_version < '2.7'

@@ -1,0 +1,26 @@
+---
+- name: Ip4_hex without  delimiter
+  ansible.builtin.set_fact:
+    result1: "{{ '192.168.1.5' | ansible.utils.ip4_hex }}"
+
+- name: Assert result for ip4_hex.
+  ansible.builtin.assert:
+    that: "{{ result1 == 'c0a80105' }}"
+
+- name: Ip4_hex with delimiter
+  ansible.builtin.set_fact:
+    result1: "{{ '192.168.1.5' | ansible.utils.ip4_hex(':') }}"
+
+- name: Assert result for ip4_hex.
+  ansible.builtin.assert:
+    that: "{{ result1 == 'c0:a8:01:05' }}"
+
+- name: Ip4_hex validate input
+  ansible.builtin.set_fact:
+    result1: "{{ '555.444.333.999' | ansible.utils.ip4_hex }}"
+  register: output
+  ignore_errors: true
+
+- name: Assert result for ip4_hex.
+  ansible.builtin.assert:
+    that: "{{ 'You must pass a valid IP address; 555.444.333.999 is invalid' in output.msg }}"

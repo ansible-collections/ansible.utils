@@ -1,0 +1,88 @@
+---
+- name: Include expected output data
+  ansible.builtin.include_vars:
+    file: complex.yaml
+
+- name: Test keep_keys
+  tags: keep_keys
+  block:
+    - name: Setup data as facts for complex keep_keys integration test l1
+      ansible.builtin.set_fact:
+        l1:
+          - { p1: a, p2: a, p3: a }
+          - { p1: b, p2: b, p3: b }
+          - { p1: c, p2: c, p3: c }
+
+    - name: Test keep_keys debug
+      ansible.builtin.debug:
+        msg: "{{ l1 | ansible.utils.keep_keys(target=['p1', 'p2']) }}"
+      register: result
+
+    - name: Test keep_keys assert
+      ansible.builtin.assert:
+        that: result['msg'] == keep['l1']
+
+    - name: Debug l1 for starts_with 'p'
+      ansible.builtin.debug:
+        msg: "{{ l1 | ansible.utils.keep_keys(target=['p1', 'p2'], matching_parameter='starts_with') }}"
+      register: result_l1_starts_with_p
+
+    - name: Assert result dicts l1 for starts_with 'p'
+      ansible.builtin.assert:
+        that:
+          - result_l1_starts_with_p['msg'] == keep['l1_starts_with_p']
+
+    - name: Debug l1 for ends_with
+      ansible.builtin.debug:
+        msg: "{{ l1 | ansible.utils.keep_keys(target=['p1', 'p2'], matching_parameter='ends_with') }}"
+      register: result_l1_ends_with
+
+    - name: Assert result dicts l1 for ends_with
+      ansible.builtin.assert:
+        that:
+          - result_l1_ends_with['msg'] == keep['l1_ends_with']
+
+    - name: Debug l1 for ends_with '2'
+      ansible.builtin.debug:
+        msg: "{{ l1 | ansible.utils.keep_keys(target=['2'], matching_parameter='ends_with') }}"
+      register: result_l1_ends_with_2
+
+    - name: Assert result dicts l1 for ends_with '2'
+      ansible.builtin.assert:
+        that:
+          - result_l1_ends_with_2['msg'] == keep['l1_ends_with_2']
+
+    - name: Test keep_keys regex
+      ansible.builtin.debug:
+        msg: "{{ l1 | ansible.utils.keep_keys(target=['p1', 'p2'], matching_parameter='regex') }}"
+      register: result_l1_regex
+
+    - name: Assert result dicts l1 for regex
+      ansible.builtin.assert:
+        that:
+          - result_l1_regex['msg'] == keep['l1_regex']
+
+- name: Test map keep_keys
+  tags: map_keep_keys
+  block:
+    - name: Setup data as facts for complex keep integration test l2
+      ansible.builtin.set_fact:
+        l2:
+          - - { p1: a, p2: a, p3: a }
+            - { p1: b, p2: b, p3: b }
+            - { p1: c, p2: c, p3: c }
+          - - { p1: a, p2: a, p3: a }
+            - { p1: b, p2: b, p3: b }
+            - { p1: c, p2: c, p3: c }
+          - - { p1: a, p2: a, p3: a }
+            - { p1: b, p2: b, p3: b }
+            - { p1: c, p2: c, p3: c }
+
+    - name: Test map keep_keys debug
+      ansible.builtin.debug:
+        msg: "{{ l2 | map('ansible.utils.keep_keys', target=['p1', 'p2']) | list }}"
+      register: result
+
+    - name: Test map keep_keys assert
+      ansible.builtin.assert:
+        that: result['msg'] == keep['l2']

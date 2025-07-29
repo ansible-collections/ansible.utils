@@ -1,0 +1,42 @@
+---
+- name: Setup xml
+  ansible.builtin.set_fact:
+    data:
+      "interface-configurations":
+        "@xmlns": "http://cisco.com/ns/yang/Cisco-IOS-XR-ifmgr-cfg"
+        "interface-configuration":
+
+- name: Debug
+  ansible.builtin.debug:
+    msg: "{{ data | ansible.utils.to_xml() }}"
+
+- name: Integration tests with and without default engine as xmltodict and
+  ansible.builtin.assert:
+    that: "{{ output == item.test }}"
+  loop:
+    - test: "{{ data | ansible.utils.to_xml() }}"
+    - test: "{{ data | ansible.utils.to_xml('xmltodict') }}"
+
+- name: Test for supported engine for to_xml filter
+  ansible.builtin.set_fact:
+    data:
+      "interface-configurations":
+        "@xmlns": "http://cisco.com/ns/yang/Cisco-IOS-XR-ifmgr-cfg"
+
+- name: Validate input xml
+  ansible.builtin.set_fact:
+    _result: "{{ data | ansible.utils.to_xml('dicttoxml') }}"
+  ignore_errors: true
+  register: result
+
+- name: Assert
+  ansible.builtin.assert:
+    that: "{{ msg in result.msg }}"
+  vars:
+    msg: "Error when using plugin 'to_xml': engine: dicttoxml is not supported"
+
+- name: Integration tests with and without default engine as xmltodict and
+  ansible.builtin.assert:
+    that: "{{ output1 == item.test }}"
+  loop:
+    - test: "{{ data | ansible.utils.to_xml('xmltodict', full_document=False) }}"

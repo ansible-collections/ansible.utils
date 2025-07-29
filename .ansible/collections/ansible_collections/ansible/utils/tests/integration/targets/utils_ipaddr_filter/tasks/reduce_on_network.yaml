@@ -1,0 +1,8 @@
+---
+- name: Reduce_on_network filter test1
+  ansible.builtin.set_fact:
+    result1: "{{ ['192.168.0.34', '10.3.0.3', '192.168.2.34'] | ansible.utils.reduce_on_network('192.168.0.0/24') }}"
+
+- name: Assert result for reduce_on_network.
+  ansible.builtin.assert:
+    that: "{{ result1 == ['192.168.0.34'] }}"

@@ -1,0 +1,48 @@
+---
+- name: Get the next fifth address based on an IP address with Ipmath filter
+  ansible.builtin.set_fact:
+    result1: "{{ '192.168.1.5' | ansible.utils.ipmath('5') }}"
+
+- name: Assert result for ipmath.
+  ansible.builtin.assert:
+    that: "{{ result1 == '192.168.1.10' }}"
+
+- name: Get the tenth previous address based on an IP address with Ipmath filter
+  ansible.builtin.set_fact:
+    result1: "{{ '192.168.1.5' | ansible.utils.ipmath('-10') }}"
+
+- name: Assert result for ipmath.
+  ansible.builtin.assert:
+    that: "{{ result1 == '192.168.0.251' }}"
+
+- name: Get the next fifth address using CIDR notation with Ipmath filter
+  ansible.builtin.set_fact:
+    result1: "{{ '192.168.1.1/24' | ansible.utils.ipmath('5') }}"
+
+- name: Assert result for ipmath.
+  ansible.builtin.assert:
+    that: "{{ result1 == '192.168.1.6' }}"
+
+- name: Get the previous fifth address using CIDR notation with Ipmath filter
+  ansible.builtin.set_fact:
+    result1: "{{ '192.168.1.6/24' | ansible.utils.ipmath('-5') }}"
+
+- name: Assert result for ipmath.
+  ansible.builtin.assert:
+    that: "{{ result1 == '192.168.1.1' }}"
+
+- name: Get the next tenth address in IPv6 with Ipmath filter
+  ansible.builtin.set_fact:
+    result1: "{{ '2001::1' | ansible.utils.ipmath('10') }}"
+
+- name: Assert result for ipmath.
+  ansible.builtin.assert:
+    that: "{{ result1 == '2001::b' }}"
+
+- name: Get the previous tenth address in IPv6 with Ipmath filter
+  ansible.builtin.set_fact:
+    result1: "{{ '2001::5' | ansible.utils.ipmath('-10') }}"
+
+- name: Assert result for ipmath.
+  ansible.builtin.assert:
+    that: "{{ result1 == '2000:ffff:ffff:ffff:ffff:ffff:ffff:fffb' }}"

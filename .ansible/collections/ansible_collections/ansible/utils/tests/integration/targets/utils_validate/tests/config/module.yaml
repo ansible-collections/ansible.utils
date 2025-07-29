@@ -1,0 +1,84 @@
+---
+- name: Set up data and criteria
+  ansible.builtin.set_fact:
+    fail_config: "{{ lookup('ansible.builtin.file', 'data/fail.cfg') }}"
+    warn_config: "{{ lookup('ansible.builtin.file', 'data/warn.cfg') }}"
+    pass_config: "{{ lookup('ansible.builtin.file', 'data/pass.cfg') }}"
+    rules: "{{ lookup('ansible.builtin.file', 'criteria/rules.yaml') }}"
+    bad_rules:
+      - name: Invalid action
+        action: flunge
+        rule: Flunge it!
+      - name: No action
+        rule: Rule
+      - name: No rule
+        action: fail
+      - rule: No name
+        action: fail
+
+- name: validate configuration using config (with errors)
+  ansible.utils.validate:
+    data: "{{ fail_config }}"
+    criteria: "{{ rules }}"
+    engine: ansible.utils.config
+  ignore_errors: true
+  register: result
+
+- ansible.builtin.assert:
+    that:
+      - "'errors' in result"
+      - "result['errors'][0].found == 'interface Eth1/1'"
+      - "result['errors'][1].found == 'interface Loopback 10'"
+      - "result['errors'][2].found == 'interface po2.1'"
+      - "result['failed'] == true"
+      - "'Validation errors were found' in result.msg"
+      - "'Ethernet interface names should be in format' in result.msg"
+      - "'Loopback interface names should be in format' in result.msg"
+      - "'Port Channel names should be in format' in result.msg"
+      - "'warnings' in result"
+      - "'At line 2: Interface description should not be more than 8 chars' in result['warnings'][0]"
+
+- name: validate configuration using config (with warnings)
+  ansible.utils.validate:
+    data: "{{ warn_config }}"
+    criteria: "{{ rules }}"
+    engine: ansible.utils.config
+  register: result
+
+- ansible.builtin.assert:
+    that:
+      - "'errors' not in result"
+      - "'warnings' in result"
+      - "'At line 2: Interface description should not be more than 8 chars' in result['warnings'][0]"
+      - "result['failed'] == false"
+      - "'Non-fatal validation errors were found.' in result.msg"
+
+- name: validate configuration using config (all passed)
+  ansible.utils.validate:
+    data: "{{ pass_config }}"
+    criteria: "{{ rules }}"
+    engine: ansible.utils.config
+  register: result
+
+- ansible.builtin.assert:
+    that:
+      - "'errors' not in result"
+      - "'warnings' not in result"
+      - "result['failed'] == false"
+      - "'All checks passed' in result.msg"
+
+- name: invalid rules
+  ansible.utils.validate:
+    data: "{{ pass_config }}"
+    criteria: "{{ bad_rules }}"
+    engine: ansible.utils.config
+  ignore_errors: true
+  register: result
+
+- ansible.builtin.assert:
+    that:
+      - "result['failed'] == true"
+      - '"is not one of \"warn\" or \"fail\"" in result["msg"]'
+      - '"missing \"action\" key" in result["msg"]'
+      - '"missing \"rule\" key" in result["msg"]'
+      - '"missing \"name\" key" in result["msg"]'

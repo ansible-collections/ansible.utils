@@ -1,0 +1,43 @@
+---
+- name: Set ipaddress list
+  ansible.builtin.set_fact:
+    value:
+      - 192.24.2.1
+      - host.fqdn
+      - ::1
+      - 192.168.32.0/24
+      - fe80::100/10
+      - "42540766412265424405338506004571095040/64"
+      - true
+
+- name: Ipv4 filter
+  ansible.builtin.set_fact:
+    result1: "{{ value | ansible.utils.ipv4 }}"
+
+- name: Assert result for ipv4.
+  ansible.builtin.assert:
+    that: "{{ result1 == result1_val }}"
+
+- name: Convert ipv4 to ipv6 filter
+  ansible.builtin.set_fact:
+    result2: "{{ value | ansible.utils.ipv4('ipv6') }}"
+
+- name: Assert result for ipv6.
+  ansible.builtin.assert:
+    that: "{{ result2 == result2_val }}"
+
+- name: Ipv4 filter with address query
+  ansible.builtin.set_fact:
+    result3: "{{ value | ansible.utils.ipv4('address') }}"
+
+- name: Assert result for ipv4 filter with address query.
+  ansible.builtin.assert:
+    that: "{{ result3 == result3_val }}"
+
+- name: Ipv4 filter with single value
+  ansible.builtin.set_fact:
+    result4: "{{ '192.24.2.1' | ansible.utils.ipv4('ipv6') }}"
+
+- name: Assert result for ipv4 filter with single value
+  ansible.builtin.assert:
+    that: "{{ result4 == '::ffff:192.24.2.1/128' }}"

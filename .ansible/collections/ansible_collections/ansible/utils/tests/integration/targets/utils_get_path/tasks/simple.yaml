@@ -1,0 +1,61 @@
+---
+- name: Set fact
+  ansible.builtin.set_fact:
+    a:
+      b:
+        c:
+          d:
+            - 0
+            - 1
+
+- name: Simple test filter and lookup
+  ansible.builtin.assert:
+    that: "{{ item.result == item.expected }}"
+  loop:
+    - result: "{{ vars | ansible.utils.get_path('a') }}"
+      expected: "{{ a }}"
+    - result: "{{ a | ansible.utils.get_path('b') }}"
+      expected: "{{ a.b }}"
+    - result: "{{ a | ansible.utils.get_path('b.c') }}"
+      expected: "{{ a.b.c }}"
+    - result: "{{ a | ansible.utils.get_path('b.c.d') }}"
+      expected: "{{ a.b.c.d }}"
+    - result: "{{ a | ansible.utils.get_path('b.c.d[0]') }}"
+      expected: "{{ a.b.c.d[0] }}"
+    - result: "{{ a | ansible.utils.get_path('b.c.d[1]') }}"
+      expected: "{{ a.b.c.d[1] }}"
+    - result: '{{ a | ansible.utils.get_path(''b["c"]'') }}'
+      expected: "{{ a.b.c }}"
+    - result: "{{ lookup('ansible.utils.get_path', vars, 'a') }}"
+      expected: "{{ a }}"
+    - result: "{{ lookup('ansible.utils.get_path', a, 'b') }}"
+      expected: "{{ a.b }}"
+    - result: "{{ lookup('ansible.utils.get_path', a, 'b.c') }}"
+      expected: "{{ a.b.c }}"
+    - result: "{{ lookup('ansible.utils.get_path', a, 'b.c.d') }}"
+      expected: "{{ a.b.c.d }}"
+    - result: "{{ lookup('ansible.utils.get_path', a, 'b.c.d[0]') }}"
+      expected: "{{ a.b.c.d[0] }}"
+    - result: "{{ lookup('ansible.utils.get_path', a, 'b.c.d[1]') }}"
+      expected: "{{ a.b.c.d[1] }}"
+    - result: '{{ lookup(''ansible.utils.get_path'', a, ''b["c"]'') }}'
+      expected: "{{ a.b.c }}"
+
+- name: Set fact
+  ansible.builtin.set_fact:
+    a:
+      b:
+        c:
+          d:
+            - 0
+
+- name: Simple test filter and lookup w/ wantlist
+  ansible.builtin.assert:
+    that: "{{ item.result == item.expected }}"
+  loop:
+    - result: "{{ vars | ansible.utils.get_path('a.b.c.d[0]', wantlist=true) }}"
+      expected:
+        - "{{ a.b.c.d[0] }}"
+    - result: "{{ lookup('ansible.utils.get_path', vars, 'a.b.c.d[0]', wantlist=true) }}"
+      expected:
+        - "{{ a.b.c.d[0] }}"

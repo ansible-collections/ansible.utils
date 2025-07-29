@@ -1,0 +1,8 @@
+---
+- name: Next_nth_usable filter
+  ansible.builtin.set_fact:
+    result1: "{{ '192.168.122.1/24' | ansible.utils.next_nth_usable(2) }}"
+
+- name: Assert result for next_nth_usable.
+  ansible.builtin.assert:
+    that: "{{ result1 == '192.168.122.3' }}"

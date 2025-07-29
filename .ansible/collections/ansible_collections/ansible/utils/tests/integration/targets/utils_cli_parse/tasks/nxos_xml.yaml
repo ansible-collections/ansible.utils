@@ -1,0 +1,19 @@
+---
+- name: Set fact
+  ansible.builtin.set_fact:
+    nxos_xml_text_parsed: "{{ lookup('ansible.builtin.file', '{{ role_path }}/output/nxos_show_interface_xml_parsed.json') | from_json }}"
+
+- name: "Pass text and parse with xml {{ parser }}"
+  ansible.utils.cli_parse:
+    text: "{{ lookup('ansible.builtin.file', '{{ role_path }}/files/nxos_show_interface.xml') }}"
+    parser:
+      name: ansible.utils.xml
+      os: nxos
+  register: nxos_xml_text
+
+- name: "Confirm response {{ parser }}"
+  ansible.builtin.assert:
+    that: "{{ item }}"
+  with_items:
+    - "{{ nxos_xml_text['parsed'] == nxos_xml_text_parsed }}"
+    - "{{ nxos_xml_text['parsed']['nf:rpc-reply'] is defined }}"

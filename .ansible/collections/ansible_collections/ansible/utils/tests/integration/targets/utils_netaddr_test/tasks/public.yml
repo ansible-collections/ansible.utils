@@ -1,0 +1,12 @@
+---
+- name: "Public: Check if 8.8.8.8 is a public IP address"
+  ansible.builtin.assert:
+    that: "{{ '8.8.8.8' is ansible.utils.public }}"
+
+- name: "Public: Test invalidness"
+  ansible.builtin.set_fact:
+    criteria_check: "{{ '10.1.1.1' is ansible.utils.public }}"
+
+- name: "Public: Assert invalidness"
+  ansible.builtin.assert:
+    that: "{{ criteria_check == false }}"

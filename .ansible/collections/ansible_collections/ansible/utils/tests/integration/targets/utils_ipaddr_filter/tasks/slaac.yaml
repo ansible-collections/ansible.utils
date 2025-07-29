@@ -1,0 +1,8 @@
+---
+- name: Slaac filter test1
+  ansible.builtin.set_fact:
+    result1: "{{ 'fdcf:1894:23b5:d38c:0000:0000:0000:0000' | ansible.utils.slaac('c2:31:b3:83:bf:2b') }}"
+
+- name: Assert result for slaac.
+  ansible.builtin.assert:
+    that: "{{ result1 == 'fdcf:1894:23b5:d38c:c031:b3ff:fe83:bf2b' }}"

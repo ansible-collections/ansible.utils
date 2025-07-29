@@ -1,0 +1,55 @@
+---
+- name: Set up data and criteria
+  ansible.builtin.set_fact:
+    fail_config: "{{ lookup('ansible.builtin.file', 'data/fail.cfg') }}"
+    warn_config: "{{ lookup('ansible.builtin.file', 'data/warn.cfg') }}"
+    pass_config: "{{ lookup('ansible.builtin.file', 'data/pass.cfg') }}"
+    rules: "{{ lookup('ansible.builtin.file', 'criteria/rules.yaml') }}"
+    bad_rules:
+      - name: Invalid action
+        action: flunge
+        rule: Flunge it!
+      - name: No action
+        rule: Rule
+      - name: No rule
+        action: fail
+      - rule: No name
+        action: fail
+
+- name: validate configuration using config (with errors)
+  ansible.builtin.set_fact:
+    is_data_valid: "{{ fail_config is ansible.utils.validate(criteria=rules, engine='ansible.utils.config') }}"
+
+- ansible.builtin.assert:
+    that:
+      - "is_data_valid == false"
+
+- name: validate configuration using config (with warnings)
+  ansible.builtin.set_fact:
+    is_data_valid: "{{ warn_config is ansible.utils.validate(criteria=rules, engine='ansible.utils.config') }}"
+
+- ansible.builtin.assert:
+    that:
+      - "is_data_valid == true"
+
+- name: validate configuration using config (all pass)
+  ansible.builtin.set_fact:
+    is_data_valid: "{{ pass_config is ansible.utils.validate(criteria=rules, engine='ansible.utils.config') }}"
+
+- ansible.builtin.assert:
+    that:
+      - "is_data_valid == true"
+
+- name: invalid rules
+  ansible.builtin.set_fact:
+    is_data_valid: "{{ pass_config is ansible.utils.validate(criteria=bad_rules, engine='ansible.utils.config') }}"
+  ignore_errors: true
+  register: result
+
+- ansible.builtin.assert:
+    that:
+      - "result['failed'] == true"
+      - '"is not one of \"warn\" or \"fail\"" in result["msg"]'
+      - '"missing \"action\" key" in result["msg"]'
+      - '"missing \"rule\" key" in result["msg"]'
+      - '"missing \"name\" key" in result["msg"]'
