@@ -17,8 +17,10 @@ from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddress_utils
 )
 from ansible_collections.ansible.utils.plugins.plugin_utils.base.utils import _validate_args
 
-
 __metaclass__ = type
+
+from ansible.errors import AnsibleFilterError
+from ansible.module_utils.common.text.converters import to_text
 
 DOCUMENTATION = """
     name: usable_range
@@ -148,10 +150,6 @@ RETURN = """
         - List of usable IP addresses under the key C(usable_ips)
 """
 
-from ansible.errors import AnsibleFilterError
-from ansible.module_utils.common.text.converters import to_text
-from ansible.module_utils.six import ensure_text
-
 
 @_need_ipaddress
 def _usable_range(ip):
@@ -162,11 +160,11 @@ def _usable_range(ip):
 
     try:
         if ip_network(ip).version == 4:
-            ips = [to_text(usable_ips) for usable_ips in IPv4Network(ensure_text(ip))]
-            no_of_ips = IPv4Network(ensure_text(ip)).num_addresses
+            ips = [to_text(usable_ips) for usable_ips in IPv4Network(to_text(ip))]
+            no_of_ips = IPv4Network(to_text(ip)).num_addresses
         if ip_network(ip).version == 6:
-            ips = [to_text(usable_ips) for usable_ips in IPv6Network(ensure_text(ip))]
-            no_of_ips = IPv6Network(ensure_text(ip)).num_addresses
+            ips = [to_text(usable_ips) for usable_ips in IPv6Network(to_text(ip))]
+            no_of_ips = IPv6Network(to_text(ip)).num_addresses
 
     except Exception as e:
         raise AnsibleFilterError(
