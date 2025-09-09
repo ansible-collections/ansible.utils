@@ -11,7 +11,6 @@ __metaclass__ = type
 from copy import deepcopy
 
 from ansible.module_utils.common._collections_compat import Mapping
-from ansible.module_utils.six import iteritems
 
 
 def sort_list(val):
@@ -57,7 +56,7 @@ def dict_merge(base, other):
 
     combined = dict()
 
-    for key, value in iteritems(deepcopy(base)):
+    for key, value in deepcopy(base).items():
         if isinstance(value, dict):
             if key in other:
                 item = other.get(key)

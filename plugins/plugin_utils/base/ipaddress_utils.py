@@ -17,7 +17,7 @@ from functools import wraps
 from ansible import errors
 from ansible.errors import AnsibleError
 from ansible.module_utils.basic import missing_required_lib
-from ansible.module_utils.six import ensure_text
+from ansible.module_utils.common.text.converters import to_text
 
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     check_argspec,
@@ -38,7 +38,7 @@ def ip_network(ip):
     if not HAS_IPADDRESS:
         raise AnsibleError(missing_required_lib("ipaddress"))
 
-    return ipaddress.ip_network(ensure_text(ip))
+    return ipaddress.ip_network(to_text(ip))
 
 
 def ip_address(ip):
@@ -47,7 +47,7 @@ def ip_address(ip):
     if not HAS_IPADDRESS:
         raise AnsibleError(missing_required_lib("ipaddress"))
 
-    return ipaddress.ip_address(ensure_text(ip))
+    return ipaddress.ip_address(to_text(ip))
 
 
 def _need_ipaddress(func):
