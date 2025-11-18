@@ -27,7 +27,6 @@ __metaclass__ = type
 import re
 
 from ansible.module_utils.basic import AnsibleModule
-from ansible.module_utils.six import iteritems
 
 from ansible_collections.ansible.utils.plugins.module_utils.common.utils import dict_merge
 
@@ -175,7 +174,7 @@ class AnsibleArgSpecValidator:
         :type temp_schema: dict
         """
         options_obj = doc_obj.get("options")
-        for okey, ovalue in iteritems(options_obj):
+        for okey, ovalue in options_obj.items():
             temp_schema[okey] = {}
             for metakey in list(ovalue):
                 if metakey == "suboptions":

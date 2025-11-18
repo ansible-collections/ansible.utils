@@ -56,7 +56,6 @@ import json
 from ansible.errors import AnsibleError
 from ansible.module_utils._text import to_text
 from ansible.module_utils.basic import missing_required_lib
-from ansible.module_utils.six import string_types
 from ansible.utils.display import Display
 
 from ansible_collections.ansible.utils.plugins.module_utils.common.utils import to_list
@@ -138,7 +137,7 @@ class Validate(ValidateBase):
         :return: None: In case all arguments passed are valid
         """
         try:
-            if isinstance(self._data, string_types):
+            if isinstance(self._data, str):
                 self._data = json.loads(self._data)
             else:
                 self._data = json.loads(json.dumps(self._data))
@@ -155,7 +154,7 @@ class Validate(ValidateBase):
         try:
             criteria = []
             for item in to_list(self._criteria):
-                if isinstance(self._criteria, string_types):
+                if isinstance(self._criteria, str):
                     criteria.append(json.loads(item))
                 else:
                     criteria.append(json.loads(json.dumps(item)))

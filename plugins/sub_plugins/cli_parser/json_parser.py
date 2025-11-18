@@ -39,7 +39,6 @@ EXAMPLES = r"""
 import json
 
 from ansible.module_utils._text import to_native
-from ansible.module_utils.six import string_types
 
 from ansible_collections.ansible.utils.plugins.plugin_utils.base.cli_parser import CliParserBase
 
@@ -67,7 +66,7 @@ class CliParser(CliParserBase):
         """
         text = self._task_args.get("text")
         try:
-            if not isinstance(text, string_types):
+            if not isinstance(text, str):
                 text = json.dumps(text)
             parsed = json.loads(text)
         except Exception as exc:
