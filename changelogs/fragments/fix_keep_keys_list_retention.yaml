@@ -1,0 +1,3 @@
+---
+bugfixes:
+  - Add a cleanup step that removes empty {} and [] values from lists in keep_keys_from_dict_n_list()
