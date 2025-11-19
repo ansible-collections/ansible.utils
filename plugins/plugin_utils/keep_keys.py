@@ -36,10 +36,19 @@ def keep_keys_from_dict_n_list(data, target, matching_parameter):
         keep = {}
         for k, val in data.items():
             key_matches = any(
-                k == t if matching_parameter == "equality" else
-                (re.match(t, k) is not None) if matching_parameter == "regex" else
-                k.startswith(t) if matching_parameter == "starts_with" else
-                k.endswith(t)
+                (
+                    k == t
+                    if matching_parameter == "equality"
+                    else (
+                        (re.match(t, k) is not None)
+                        if matching_parameter == "regex"
+                        else (
+                            k.startswith(t)
+                            if matching_parameter == "starts_with"
+                            else k.endswith(t)
+                        )
+                    )
+                )
                 for t in target
             )
             if key_matches:
