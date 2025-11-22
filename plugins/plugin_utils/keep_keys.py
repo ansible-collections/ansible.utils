@@ -31,7 +31,6 @@ def keep_keys_from_dict_n_list(data, target, matching_parameter):
     if isinstance(data, list):
         list_data = [keep_keys_from_dict_n_list(each, target, matching_parameter) for each in data]
         return [r for r in list_data if r not in ([], {}, None)]
-
     if isinstance(data, dict):
         keep = {}
         for k, val in data.items():
