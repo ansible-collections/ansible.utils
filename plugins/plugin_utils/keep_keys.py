@@ -30,7 +30,7 @@ def _raise_error(msg):
 def keep_keys_from_dict_n_list(data, target, matching_parameter):
     if isinstance(data, list):
         list_data = [keep_keys_from_dict_n_list(each, target, matching_parameter) for each in data]
-        return [r for r in list_data if r not in ([], {})]
+        return [r for r in list_data if r not in ([], {}, None)]
 
     if isinstance(data, dict):
         keep = {}
@@ -55,10 +55,10 @@ def keep_keys_from_dict_n_list(data, target, matching_parameter):
                 keep[k] = val
             elif isinstance(val, (list, dict)):
                 nested_keep = keep_keys_from_dict_n_list(val, target, matching_parameter)
-                if nested_keep not in ([], {}):
+                if nested_keep not in ([], {}, None):
                     keep[k] = nested_keep
         return keep
-    return data
+    return None
 
 
 def keep_keys(data, target, matching_parameter="equality"):
