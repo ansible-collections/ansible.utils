@@ -93,7 +93,7 @@ Parameters
                 <td>
                         <div>If set to <em>True</em>, the return value will always be a list.</div>
                         <div>This can also be accomplished using <code>query</code> or <b>q</b> instead of <code>lookup</code>.</div>
-                        <div><a href='https://docs.ansible.com/ansible/latest/plugins/lookup.html'>https://docs.ansible.com/ansible/latest/plugins/lookup.html</a></div>
+                        <div><a href='https://docs.ansible.com/projects/ansible/latest/plugins/lookup.html'>https://docs.ansible.com/projects/ansible/latest/plugins/lookup.html</a></div>
                 </td>
             </tr>
     </table>
@@ -182,7 +182,7 @@ Examples
 
 Return Values
 -------------
-Common return values are documented `here <https://docs.ansible.com/ansible/latest/reference_appendices/common_return_values.html#common-return-values>`_, the following are the fields unique to this lookup:
+Common return values are documented `here <https://docs.ansible.com/projects/ansible/latest/reference_appendices/common_return_values.html#common-return-values>`_, the following are the fields unique to this lookup:
 
 .. raw:: html
 

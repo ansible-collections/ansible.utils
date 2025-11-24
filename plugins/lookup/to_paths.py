@@ -39,7 +39,7 @@ DOCUMENTATION = """
         description:
           - If set to I(True), the return value will always be a list.
           - This can also be accomplished using C(query) or B(q) instead of C(lookup).
-          - U(https://docs.ansible.com/ansible/latest/plugins/lookup.html)
+          - U(https://docs.ansible.com/projects/ansible/latest/plugins/lookup.html)
         type: bool
 
     notes:
