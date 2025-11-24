@@ -34,7 +34,7 @@ DOCUMENTATION = """
         description:
         - The name of the test to run against the list, a valid jinja2 test or ansible test plugin.
         - Jinja2 includes the following tests U(http://jinja.palletsprojects.com/templates/#builtin-tests).
-        - An overview of tests included in ansible U(https://docs.ansible.com/ansible/latest/user_guide/playbooks_tests.html)
+        - An overview of tests included in ansible U(https://docs.ansible.com/projects/ansible/latest/user_guide/playbooks_tests.html)
         type: str
         required: True
       value:

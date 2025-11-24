@@ -114,7 +114,7 @@ Parameters
                 <td>
                         <div>The name of the test to run against the list, a valid jinja2 test or ansible test plugin.</div>
                         <div>Jinja2 includes the following tests <a href='http://jinja.palletsprojects.com/templates/#builtin-tests'>http://jinja.palletsprojects.com/templates/#builtin-tests</a>.</div>
-                        <div>An overview of tests included in ansible <a href='https://docs.ansible.com/ansible/latest/user_guide/playbooks_tests.html'>https://docs.ansible.com/ansible/latest/user_guide/playbooks_tests.html</a></div>
+                        <div>An overview of tests included in ansible <a href='https://docs.ansible.com/projects/ansible/latest/user_guide/playbooks_tests.html'>https://docs.ansible.com/projects/ansible/latest/user_guide/playbooks_tests.html</a></div>
                 </td>
             </tr>
             <tr>

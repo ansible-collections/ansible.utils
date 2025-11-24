@@ -23,9 +23,9 @@ For more information you can check the communication section below.
   * [Social Spaces](https://forum.ansible.com/c/chat/4): gather and interact with fellow enthusiasts.
   * [News & Announcements](https://forum.ansible.com/c/news/5): track project-wide announcements including social events.
 
-* The Ansible [Bullhorn newsletter](https://docs.ansible.com/ansible/devel/community/communication.html#the-bullhorn): used to announce releases and important changes.
+* The Ansible [Bullhorn newsletter](https://docs.ansible.com/projects/ansible/latest/community/communication.html#the-bullhorn): used to announce releases and important changes.
 
-For more information about communication, see the [Ansible communication guide](https://docs.ansible.com/ansible/devel/community/communication.html).
+For more information about communication, see the [Ansible communication guide](https://docs.ansible.com/projects/ansible/latest/community/communication.html#the-bullhorn).
 
 <!--start requires_ansible-->
 ## Ansible version compatibility
@@ -145,15 +145,15 @@ The most common use case for this collection is when you want to work with the c
 
 ### See Also:
 
-* [Using collections](https://docs.ansible.com/ansible/latest/user_guide/collections_using.html) in the Ansible documentation for more details.
+* [Using collections](https://docs.ansible.com/projects/ansible/latest/user_guide/collections_using.html) in the Ansible documentation for more details.
 
 ## Contributing to this collection
 
 This collection is intended for plugins that are not platform or discipline specific. Simple plugin examples should be generic in nature. More complex examples can include real world platform modules to demonstrate the utility of the plugin in a playbook.
 
-We welcome community contributions to this collection. If you find problems, please open an issue or create a PR against the [ansible.utils collection repository](https://github.com/ansible-collections/ansible.utils). See [Contributing to Ansible-maintained collections](https://docs.ansible.com/ansible/devel/community/contributing_maintained_collections.html#contributing-maintained-collections) for complete details.
+We welcome community contributions to this collection. If you find problems, please open an issue or create a PR against the [ansible.utils collection repository](https://github.com/ansible-collections/ansible.utils). See [Contributing to Ansible-maintained collections](https://docs.ansible.com/projects/ansible/latest/community/contributing_maintained_collections.html#contributing-maintained-collections) for complete details.
 
-See the [Ansible Community Guide](https://docs.ansible.com/ansible/latest/community/index.html) for details on contributing to Ansible.
+See the [Ansible Community Guide](https://docs.ansible.com/projects/ansible/latest/community/index.html) for details on contributing to Ansible.
 
 ### Developer notes
 
@@ -167,7 +167,7 @@ See the [Ansible Community Guide](https://docs.ansible.com/ansible/latest/commun
 
 ### Code of Conduct
 This collection follows the Ansible project's
-[Code of Conduct](https://docs.ansible.com/ansible/devel/community/code_of_conduct.html).
+[Code of Conduct](https://docs.ansible.com/projects/ansible/latest/community/code_of_conduct.html).
 Please read and familiarize yourself with this document.
 
 
@@ -188,9 +188,9 @@ The releases will be done on an as-needed basis when new features and/or bugfixe
 ## More information
 
 - [Ansible Collection overview](https://github.com/ansible-collections/overview)
-- [Ansible User guide](https://docs.ansible.com/ansible/latest/user_guide/index.html)
-- [Ansible Developer guide](https://docs.ansible.com/ansible/latest/dev_guide/index.html)
-- [Ansible Community code of conduct](https://docs.ansible.com/ansible/latest/community/code_of_conduct.html)
+- [Ansible User guide](https://docs.ansible.com/projects/ansible/latest/user_guide/index.html)
+- [Ansible Developer guide](https://docs.ansible.com/projects/ansible/latest/dev_guide/index.html)
+- [Ansible Community code of conduct](https://docs.ansible.com/projects/ansible/latest/community/code_of_conduct.html)
 
 ## Licensing
 

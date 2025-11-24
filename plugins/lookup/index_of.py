@@ -34,7 +34,7 @@ DOCUMENTATION = """
         description:
           - The name of the test to run against the list, a valid jinja2 test or ansible test plugin.
           - Jinja2 includes the following tests U(http://jinja.palletsprojects.com/templates/#builtin-tests).
-          - An overview of tests included in ansible U(https://docs.ansible.com/ansible/latest/user_guide/playbooks_tests.html).
+          - An overview of tests included in ansible U(https://docs.ansible.com/projects/ansible/latest/user_guide/playbooks_tests.html).
         type: str
         required: True
       value:
@@ -58,7 +58,7 @@ DOCUMENTATION = """
           - When only a single entry in the I(data) is matched, the index of that entry is returned as an integer.
           - If set to C(True), the return value will always be a list, even if only a single entry is matched.
           - This can also be accomplished using C(query) or C(q) instead of C(lookup).
-          - U(https://docs.ansible.com/ansible/latest/plugins/lookup.html)
+          - U(https://docs.ansible.com/projects/ansible/latest/plugins/lookup.html)
         type: bool
 
     notes:
