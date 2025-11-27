@@ -1,5 +1,5 @@
 ---
-name: "Collection Tests 🧪"
+name: "CI"
 
 concurrency:
   group: ${{ github.head_ref || github.run_id }}-${{ github.event_name }}
@@ -30,10 +30,6 @@ jobs:
     uses: ansible/ansible-content-actions/.github/workflows/changelog.yaml@main
     if: github.event_name == 'pull_request'
 
-  build-import:
-    uses: ansible/ansible-content-actions/.github/workflows/build_import.yaml@main
-    if: github.event_name != 'push' && github.event_name != 'pull_request_target'
-
   ansible-lint:
     uses: ansible/ansible-content-actions/.github/workflows/ansible_lint.yaml@main
     if: github.event_name != 'push' && github.event_name != 'pull_request_target'
@@ -46,23 +42,18 @@ jobs:
     uses: ansible/ansible-content-actions/.github/workflows/unit.yaml@main
     if: github.event_name != 'push' && github.event_name != 'pull_request_target'
 
-  unit-source:
-    uses: ansible-network/github_actions/.github/workflows/unit_source.yml@main
+  integration:
+    uses: ansible/ansible-content-actions/.github/workflows/integration.yaml@main
     if: github.event_name != 'push' && github.event_name != 'pull_request_target'
-    with:
-      collection_pre_install: >-
-        git+https://github.com/ansible-collections/ansible.utils.git
-        git+https://github.com/ansible-collections/ansible.netcommon.git
 
   all_green:
     if: ${{ always() }}
     needs:
       - changelog
-      - build-import
       - sanity
       - unit-galaxy
-      - unit-source
       - ansible-lint
+      - integration
       - sonar
     runs-on: ubuntu-latest
     steps:
@@ -70,9 +61,9 @@ jobs:
           python -c "assert 'failure' not in
           set([
           '${{ needs.changelog.result }}',
+          '${{ needs.integration.result }}',
           '${{ needs.sanity.result }}',
           '${{ needs.unit-galaxy.result }}',
           '${{ needs.ansible-lint.result }}',
-          '${{ needs.unit-source.result }}',
           '${{ needs.sonar.result }}'
           ])"
