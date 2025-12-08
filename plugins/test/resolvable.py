@@ -31,7 +31,7 @@ DOCUMENTATION = """
     version_added: "2.2.0"
     short_description: Test if an IP or name can be resolved via /etc/hosts or DNS
     description:
-        - This plugin checks if the provided IP address of host name can be resolved using /etc/hosts or DNS
+        - This plugin checks if the provided IP address or host name can be resolved using /etc/hosts or DNS
     options:
         host:
             description:

@@ -17,7 +17,7 @@ Version added: 2.2.0
 
 Synopsis
 --------
-- This plugin checks if the provided IP address of host name can be resolved using /etc/hosts or DNS
+- This plugin checks if the provided IP address or host name can be resolved using /etc/hosts or DNS
 
 
 
