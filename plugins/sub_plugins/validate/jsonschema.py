@@ -45,6 +45,20 @@ DOCUMENTATION = """
         - name: ANSIBLE_VALIDATE_JSONSCHEMA_CHECK_FORMAT
         vars:
         - name: ansible_validate_jsonschema_check_format
+      suppress_output:
+        description:
+        - Suppress the fields of error output.
+        - It's useful when the I(criteria) is too large and the error output is not required.
+        - And also useful when the I(data) is too large or contains sensible info.
+        - Can be a boolean or a list of strings.
+        - If set to true, then the I(found) and I(relative_schema) will be suppressed.
+        - If set to a list of strings, then the fields mentioned in the list will be suppressed.
+        type: raw
+        default: false
+        env:
+        - name: ANSIBLE_VALIDATE_JSONSCHEMA_SUPPRESS_OUTPUT
+        vars:
+        - name: ansible_validate_jsonschema_suppress_output
     notes:
     - The value of I(data) option should be either a valid B(JSON) object or a B(JSON) string.
     - The value of I(criteria) should be B(list) of B(dict) or B(list) of B(strings) and each
@@ -220,6 +234,7 @@ class Validate(ValidateBase):
 
         draft = self._get_sub_plugin_options("draft")
         check_format = self._get_sub_plugin_options("check_format")
+        suppress_output = self._get_sub_plugin_options("suppress_output")
         error_messages = []
 
         for criteria in self._criteria:
@@ -264,6 +279,14 @@ class Validate(ValidateBase):
                 if "errors" not in self._result:
                     self._result["errors"] = []
 
+                suppress_fields = []
+                if suppress_output:
+                    suppress_fields = (
+                        suppress_output
+                        if isinstance(suppress_output, list)
+                        else ["found", "relative_schema"]
+                    )
+
                 for validation_error in validation_errors:
                     if isinstance(validation_error, jsonschema.ValidationError):
                         error = {
@@ -276,6 +299,10 @@ class Validate(ValidateBase):
                             "validator": validation_error.validator,
                             "found": validation_error.instance,
                         }
+
+                        for field in suppress_fields:
+                            error.pop(field, None)
+
                         self._result["errors"].append(error)
                         error_message = "At '{schema_path}' {message}. ".format(
                             schema_path=error["schema_path"],
