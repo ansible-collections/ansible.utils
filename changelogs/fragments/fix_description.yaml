@@ -1,3 +1,4 @@
 ---
 doc_changes:
   - Fix the description of the reduce_on_network filter.
+  - Fix the synopsis of the resolveable test.
