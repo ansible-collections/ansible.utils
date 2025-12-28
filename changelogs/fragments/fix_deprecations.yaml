@@ -1,0 +1,3 @@
+---
+trivial:
+  - "TestValidate: stop using invalid $schema"
