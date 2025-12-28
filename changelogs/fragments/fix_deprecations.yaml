@@ -1,3 +1,4 @@
 ---
 trivial:
+  - Add ansible deprecations to pytest warnings
   - "TestValidate: stop using invalid $schema"
