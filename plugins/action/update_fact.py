@@ -11,8 +11,9 @@ __metaclass__ = type
 import ast
 import re
 
+from collections.abc import MutableMapping, MutableSequence
+
 from ansible.errors import AnsibleActionFail
-from ansible.module_utils.common._collections_compat import MutableMapping, MutableSequence
 from ansible.module_utils.common.text.converters import to_native
 from ansible.plugins.action import ActionBase
 from jinja2 import Template, TemplateSyntaxError
