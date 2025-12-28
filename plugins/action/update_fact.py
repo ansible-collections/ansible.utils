@@ -12,8 +12,8 @@ import ast
 import re
 
 from ansible.errors import AnsibleActionFail
-from ansible.module_utils._text import to_native
 from ansible.module_utils.common._collections_compat import MutableMapping, MutableSequence
+from ansible.module_utils.common.text.converters import to_native
 from ansible.plugins.action import ActionBase
 from jinja2 import Template, TemplateSyntaxError
 

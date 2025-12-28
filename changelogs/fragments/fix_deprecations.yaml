@@ -1,4 +1,5 @@
 ---
 trivial:
   - Add ansible deprecations to pytest warnings
+  - Stop using the deprecated ansible.module_utils._text
   - "TestValidate: stop using invalid $schema"

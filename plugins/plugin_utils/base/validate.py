@@ -12,7 +12,7 @@ import os
 from importlib import import_module
 
 from ansible.errors import AnsibleError
-from ansible.module_utils._text import to_native, to_text
+from ansible.module_utils.common.text.converters import to_native, to_text
 
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     check_argspec,

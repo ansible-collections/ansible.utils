@@ -9,7 +9,7 @@ __metaclass__ = type
 import pytest
 
 from ansible.errors import AnsibleError
-from ansible.module_utils._text import to_text
+from ansible.module_utils.common.text.converters import to_text
 
 from ansible_collections.ansible.utils.plugins.plugin_utils.base.validate import _load_validator
 

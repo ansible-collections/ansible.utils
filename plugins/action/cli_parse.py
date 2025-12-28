@@ -16,7 +16,7 @@ import json
 from importlib import import_module
 
 from ansible.errors import AnsibleActionFail
-from ansible.module_utils._text import to_native, to_text
+from ansible.module_utils.common.text.converters import to_native, to_text
 from ansible.module_utils.connection import Connection
 from ansible.module_utils.connection import ConnectionError as AnsibleConnectionError
 from ansible.plugins.action import ActionBase
