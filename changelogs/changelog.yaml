@@ -518,4 +518,4 @@ releases:
       - fix_keep_keys_list_retention.yaml
       - fix_module_name.yaml
       - fix_sanity.yaml
-    release_date: '2025-12-31'
+    release_date: "2025-12-31"
