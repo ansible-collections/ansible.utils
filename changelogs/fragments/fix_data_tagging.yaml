@@ -1,3 +1,0 @@
----
-trivial:
-  - fix the failing unit tests and integration tests due to the missing arguments from the Template Context
