@@ -6,6 +6,9 @@
         c:
           - 1
           - 2
+        d:
+          "[bracket_key]": bracket_value
+          key: value
 
 - name: Update the fact
   ansible.utils.update_fact:
@@ -14,6 +17,10 @@
         value: 10
       - path: "a['b']['c'][1]"
         value: 20
+      - path: "a['b'][d]['[bracket_key]']"
+        value: new_bracket_value
+      - path: "a['b'][d]['key']"
+        value: new_value
   register: updated
 
 - name: Assert
@@ -26,6 +33,9 @@
           c:
             - 10
             - 20
+          d:
+            "[bracket_key]": new_bracket_value
+            key: new_value
 
 - name: Update the fact
   ansible.utils.update_fact:
@@ -70,3 +80,6 @@
           c:
             - 1
             - 20
+          d:
+            "[bracket_key]": bracket_value
+            key: value
