@@ -104,7 +104,7 @@ VALID_DATA = {"name": "ansible", "email": "ansible@redhat.com"}
 IN_VALID_DATA = {"name": "ansible", "email": "redhatcom"}
 
 CRITERIA_FORMAT_SUPPORT_CHECK = {
-    "$schema": "https://json-schema.org/schema#",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
     "properties": {"name": {"type": "string"}, "email": {"format": "email"}},
     "required": ["email"],

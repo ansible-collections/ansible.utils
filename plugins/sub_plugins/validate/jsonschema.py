@@ -54,8 +54,8 @@ DOCUMENTATION = """
 import json
 
 from ansible.errors import AnsibleError
-from ansible.module_utils._text import to_text
 from ansible.module_utils.basic import missing_required_lib
+from ansible.module_utils.common.text.converters import to_text
 from ansible.utils.display import Display
 
 from ansible_collections.ansible.utils.plugins.module_utils.common.utils import to_list
