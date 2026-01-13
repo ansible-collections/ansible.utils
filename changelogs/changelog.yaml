@@ -505,3 +505,17 @@ releases:
       - ipaddr.yaml
       - test_ansibleundefined.yaml
     release_date: "2025-04-08"
+  6.0.1:
+    changes:
+      bugfixes:
+        - Add a cleanup step that removes empty {} and [] values from lists in keep_keys_from_dict_n_list()
+      doc_changes:
+        - Fix the description of the reduce_on_network filter.
+        - Fix the module name in ipmath filter.
+    fragments:
+      - fix_data_tagging.yaml
+      - fix_description.yaml
+      - fix_keep_keys_list_retention.yaml
+      - fix_module_name.yaml
+      - fix_sanity.yaml
+    release_date: "2025-12-31"
