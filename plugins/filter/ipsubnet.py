@@ -6,6 +6,7 @@
 """
 filter plugin file for ipaddr filters: ipsubnet
 """
+
 from __future__ import absolute_import, division, print_function
 
 from functools import partial
@@ -20,12 +21,10 @@ from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddr_utils im
     ipaddr,
 )
 
-
 __metaclass__ = type
 
 
 from ansible.module_utils._text import to_text
-
 
 try:
     from jinja2.filters import pass_environment

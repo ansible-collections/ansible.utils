@@ -1,6 +1,5 @@
 from __future__ import absolute_import, division, print_function
 
-
 __metaclass__ = type
 
 DOCUMENTATION = """
@@ -77,7 +76,6 @@ from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_valid
 )
 from ansible_collections.ansible.utils.plugins.module_utils.common.utils import to_list
 from ansible_collections.ansible.utils.plugins.plugin_utils.base.validate import _load_validator
-
 
 ARGSPEC_CONDITIONALS = {}
 
