@@ -9,7 +9,6 @@ The utils file for all ipaddr filters
 
 from __future__ import absolute_import, division, print_function
 
-
 __metaclass__ = type
 
 
@@ -18,7 +17,6 @@ import types
 from ansible.errors import AnsibleFilterError
 from ansible.module_utils.basic import missing_required_lib
 from ansible.utils.display import Display
-
 
 try:
     import netaddr

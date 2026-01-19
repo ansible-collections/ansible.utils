@@ -7,7 +7,6 @@ https://github.com/dmulyalin/ttp
 
 from __future__ import absolute_import, division, print_function
 
-
 __metaclass__ = type
 
 DOCUMENTATION = """
@@ -44,7 +43,6 @@ from ansible.module_utils._text import to_native
 from ansible.module_utils.basic import missing_required_lib
 
 from ansible_collections.ansible.utils.plugins.plugin_utils.base.cli_parser import CliParserBase
-
 
 try:
     from ttp import ttp
