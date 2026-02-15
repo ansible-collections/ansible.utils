@@ -1,0 +1,43 @@
+---
+- name: "Simple: Allocate a single /24 from empty range"
+  ansible.utils.cidr_allocate:
+    master_cidr: "{{ simple_master_cidr }}"
+    prefix_length: "{{ simple_prefix_length }}"
+    used_cidrs: []
+  register: simple_result
+
+- name: "Simple: Verify single allocation"
+  ansible.builtin.assert:
+    that:
+      - simple_result is success
+      - simple_result.changed == false
+      - simple_result.count == 1
+      - simple_result.allocated_cidrs | length == 1
+      - simple_result.allocated_cidrs[0] == simple_expected_cidr
+
+- name: "Simple: Allocate with exclusions"
+  ansible.utils.cidr_allocate:
+    master_cidr: "{{ exclusion_master_cidr }}"
+    prefix_length: "{{ exclusion_prefix_length }}"
+    used_cidrs: "{{ exclusion_used_cidrs }}"
+  register: exclusion_result
+
+- name: "Simple: Verify exclusion allocation does not overlap used CIDRs"
+  ansible.builtin.assert:
+    that:
+      - exclusion_result is success
+      - exclusion_result.allocated_cidrs | length == 1
+      - exclusion_result.allocated_cidrs[0] not in exclusion_used_cidrs
+
+- name: "Simple: Verify best-fit selects smallest gap"
+  ansible.utils.cidr_allocate:
+    master_cidr: "{{ bestfit_master_cidr }}"
+    prefix_length: "{{ bestfit_prefix_length }}"
+    used_cidrs: "{{ bestfit_used_cidrs }}"
+  register: bestfit_result
+
+- name: "Simple: Assert best-fit picked the smallest gap"
+  ansible.builtin.assert:
+    that:
+      - bestfit_result is success
+      - bestfit_result.allocated_cidrs[0] == bestfit_expected_cidr

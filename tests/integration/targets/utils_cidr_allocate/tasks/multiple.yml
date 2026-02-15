@@ -1,0 +1,45 @@
+---
+- name: "Multiple: Allocate 3 /24 networks"
+  ansible.utils.cidr_allocate:
+    master_cidr: "{{ multi_master_cidr }}"
+    prefix_length: "{{ multi_prefix_length }}"
+    count: "{{ multi_count }}"
+    used_cidrs: []
+  register: multi_result
+
+- name: "Multiple: Verify correct count returned"
+  ansible.builtin.assert:
+    that:
+      - multi_result is success
+      - multi_result.count == multi_count
+      - multi_result.allocated_cidrs | length == multi_count
+
+- name: "Multiple: Verify all results are unique"
+  ansible.builtin.assert:
+    that:
+      - multi_result.allocated_cidrs | unique | length == multi_count
+
+- name: "Multiple: Verify all CIDRs are within master range"
+  ansible.builtin.assert:
+    that:
+      - cidr | ansible.utils.ipaddr('network') != false
+    msg: "{{ cidr }} is not a valid network"
+  loop: "{{ multi_result.allocated_cidrs }}"
+  loop_control:
+    loop_var: cidr
+
+- name: "Multiple: Allocate with some used CIDRs"
+  ansible.utils.cidr_allocate:
+    master_cidr: "{{ multi_master_cidr }}"
+    prefix_length: "{{ multi_prefix_length }}"
+    count: 2
+    used_cidrs:
+      - "10.0.0.0/24"
+  register: multi_used_result
+
+- name: "Multiple: Verify allocations avoid used CIDRs"
+  ansible.builtin.assert:
+    that:
+      - multi_used_result is success
+      - multi_used_result.count == 2
+      - "'10.0.0.0/24' not in multi_used_result.allocated_cidrs"

@@ -1,0 +1,27 @@
+---
+# Test data for cidr_allocate integration tests
+
+# Simple allocation tests
+simple_master_cidr: "10.0.0.0/8"
+simple_prefix_length: 24
+simple_expected_cidr: "10.0.0.0/24"
+
+# Allocation with exclusions
+exclusion_master_cidr: "10.0.0.0/24"
+exclusion_used_cidrs:
+  - "10.0.0.0/26"
+  - "10.0.0.64/26"
+exclusion_prefix_length: 26
+
+# Best-fit test
+bestfit_master_cidr: "10.0.0.0/24"
+bestfit_used_cidrs:
+  - "10.0.0.16/28"
+  - "10.0.0.64/26"
+bestfit_prefix_length: 28
+bestfit_expected_cidr: "10.0.0.0/28"
+
+# Multiple allocation tests
+multi_master_cidr: "10.0.0.0/22"
+multi_prefix_length: 24
+multi_count: 3

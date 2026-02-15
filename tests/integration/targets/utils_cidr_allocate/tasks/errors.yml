@@ -1,0 +1,72 @@
+---
+- name: "Errors: Attempt allocation with invalid master_cidr"
+  ansible.utils.cidr_allocate:
+    master_cidr: "not-a-valid-cidr"
+    prefix_length: 24
+    used_cidrs: []
+  register: invalid_master_result
+  ignore_errors: true
+
+- name: "Errors: Assert invalid master_cidr fails"
+  ansible.builtin.assert:
+    that:
+      - invalid_master_result is failed
+      - "'Invalid master CIDR' in invalid_master_result.msg"
+
+- name: "Errors: Attempt allocation with prefix_length smaller than master"
+  ansible.utils.cidr_allocate:
+    master_cidr: "10.0.0.0/16"
+    prefix_length: 8
+    used_cidrs: []
+  register: small_prefix_result
+  ignore_errors: true
+
+- name: "Errors: Assert prefix_length too small fails"
+  ansible.builtin.assert:
+    that:
+      - small_prefix_result is failed
+      - "'smaller than master CIDR prefix length' in small_prefix_result.msg"
+
+- name: "Errors: Attempt allocation with prefix_length > 32"
+  ansible.utils.cidr_allocate:
+    master_cidr: "10.0.0.0/8"
+    prefix_length: 33
+    used_cidrs: []
+  register: large_prefix_result
+  ignore_errors: true
+
+- name: "Errors: Assert prefix_length > 32 fails"
+  ansible.builtin.assert:
+    that:
+      - large_prefix_result is failed
+      - "'must be <= 32' in large_prefix_result.msg"
+
+- name: "Errors: Attempt allocation with exhausted address space"
+  ansible.utils.cidr_allocate:
+    master_cidr: "10.0.0.0/24"
+    prefix_length: 28
+    used_cidrs:
+      - "10.0.0.0/24"
+  register: exhausted_result
+  ignore_errors: true
+
+- name: "Errors: Assert exhausted space fails"
+  ansible.builtin.assert:
+    that:
+      - exhausted_result is failed
+      - "'No available address space' in exhausted_result.msg"
+
+- name: "Errors: Attempt to allocate more blocks than available"
+  ansible.utils.cidr_allocate:
+    master_cidr: "10.0.0.0/24"
+    prefix_length: 24
+    count: 2
+    used_cidrs: []
+  register: overcount_result
+  ignore_errors: true
+
+- name: "Errors: Assert over-allocation fails"
+  ansible.builtin.assert:
+    that:
+      - overcount_result is failed
+      - "'Could only allocate' in overcount_result.msg"
