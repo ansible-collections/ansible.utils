@@ -86,6 +86,7 @@ Name | Description
 ### Modules
 Name | Description
 --- | ---
+[ansible.utils.cidr_allocate](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.cidr_allocate_module.rst)|Allocate available CIDR blocks from a master range
 [ansible.utils.cli_parse](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.cli_parse_module.rst)|Parse cli output or text using a variety of parsers
 [ansible.utils.fact_diff](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.fact_diff_module.rst)|Find the difference between currently set facts
 [ansible.utils.update_fact](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.update_fact_module.rst)|Update currently set facts

@@ -6,6 +6,7 @@
 
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 DOCUMENTATION = r"""
@@ -108,6 +109,7 @@ count:
 """
 
 import ipaddress
+
 from ansible.module_utils.basic import AnsibleModule
 
 
@@ -136,12 +138,14 @@ class CIDRAllocator:
 
         # Validate prefix length
         if not isinstance(prefix_length, int):
-            raise ValueError(f"prefix_length must be an integer, got {type(prefix_length).__name__}")
+            raise ValueError(
+                f"prefix_length must be an integer, got {type(prefix_length).__name__}"
+            )
 
         if prefix_length < self.master_network.prefixlen:
             raise ValueError(
                 f"Requested prefix length ({prefix_length}) is smaller than master CIDR "
-                f"prefix length ({self.master_network.prefixlen})"
+                f"prefix length ({self.master_network.prefixlen})",
             )
 
         if prefix_length > 32:
@@ -272,7 +276,7 @@ class CIDRAllocator:
         if not gaps:
             raise ValueError(
                 f"No available address space in master CIDR {self.master_network}. "
-                f"All addresses are allocated."
+                f"All addresses are allocated.",
             )
 
         # For each gap, try to find a valid CIDR allocation
@@ -290,14 +294,16 @@ class CIDRAllocator:
             needed_size = 2 ** (32 - self.prefix_length)
             gap_descriptions = [
                 "{0}-{1} ({2} addresses)".format(
-                    ipaddress.IPv4Address(s), ipaddress.IPv4Address(e), e - s + 1
+                    ipaddress.IPv4Address(s),
+                    ipaddress.IPv4Address(e),
+                    e - s + 1,
                 )
                 for s, e in gaps
             ]
             raise ValueError(
                 f"Cannot allocate /{self.prefix_length} network in {self.master_network}. "
                 f"No suitable gaps found. Need {needed_size} contiguous addresses. "
-                f"Available gaps: {gap_descriptions}"
+                f"Available gaps: {gap_descriptions}",
             )
 
         # Sort by gap size (smallest first) for best-fit algorithm
@@ -334,7 +340,7 @@ class CIDRAllocator:
             except ValueError as e:
                 raise ValueError(
                     f"Could only allocate {len(allocated)} of {count} requested CIDR blocks. "
-                    f"Error: {str(e)}"
+                    f"Error: {str(e)}",
                 )
 
         return allocated
@@ -346,23 +352,23 @@ def run_module():
     """
     # Define module arguments
     module_args = dict(
-        master_cidr=dict(type='str', required=True),
-        used_cidrs=dict(type='list', elements='str', default=[]),
-        prefix_length=dict(type='int', required=True),
-        count=dict(type='int', default=1),
+        master_cidr=dict(type="str", required=True),
+        used_cidrs=dict(type="list", elements="str", default=[]),
+        prefix_length=dict(type="int", required=True),
+        count=dict(type="int", default=1),
     )
 
     # Initialize module
     module = AnsibleModule(
         argument_spec=module_args,
-        supports_check_mode=True
+        supports_check_mode=True,
     )
 
     # Get parameters
-    master_cidr = module.params['master_cidr']
-    used_cidrs = module.params['used_cidrs']
-    prefix_length = module.params['prefix_length']
-    count = module.params['count']
+    master_cidr = module.params["master_cidr"]
+    used_cidrs = module.params["used_cidrs"]
+    prefix_length = module.params["prefix_length"]
+    count = module.params["count"]
 
     # Validate count
     if count < 1:
@@ -381,7 +387,7 @@ def run_module():
         module.exit_json(
             changed=False,  # This is a read-only operation
             allocated_cidrs=allocated_cidrs,
-            count=len(allocated_cidrs)
+            count=len(allocated_cidrs),
         )
 
     except ValueError as e:
@@ -394,5 +400,5 @@ def main():
     run_module()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

@@ -9,6 +9,7 @@ Unit test file for cidr_allocate module
 
 from __future__ import absolute_import, division, print_function
 
+
 __metaclass__ = type
 
 import ipaddress
@@ -38,7 +39,9 @@ class TestCIDRAllocatorInit(TestCase):
 
     def test_valid_initialization_with_used_cidrs(self):
         allocator = CIDRAllocator(
-            "10.0.0.0/8", ["10.0.0.0/24", "10.0.1.0/24"], 24
+            "10.0.0.0/8",
+            ["10.0.0.0/24", "10.0.1.0/24"],
+            24,
         )
         self.assertEqual(len(allocator.used_networks), 2)
 
@@ -64,16 +67,21 @@ class TestCIDRAllocatorInit(TestCase):
 
     def test_used_cidrs_outside_master_are_filtered(self):
         allocator = CIDRAllocator(
-            "10.0.0.0/8", ["192.168.1.0/24", "10.0.0.0/24"], 24
+            "10.0.0.0/8",
+            ["192.168.1.0/24", "10.0.0.0/24"],
+            24,
         )
         self.assertEqual(len(allocator.used_networks), 1)
         self.assertEqual(
-            allocator.used_networks[0], ipaddress.ip_network("10.0.0.0/24")
+            allocator.used_networks[0],
+            ipaddress.ip_network("10.0.0.0/24"),
         )
 
     def test_used_cidrs_sorted_by_network_address(self):
         allocator = CIDRAllocator(
-            "10.0.0.0/8", ["10.0.2.0/24", "10.0.0.0/24", "10.0.1.0/24"], 24
+            "10.0.0.0/8",
+            ["10.0.2.0/24", "10.0.0.0/24", "10.0.1.0/24"],
+            24,
         )
         addresses = [net.network_address for net in allocator.used_networks]
         self.assertEqual(addresses, sorted(addresses))
@@ -101,21 +109,27 @@ class TestMergeOverlappingRanges(TestCase):
 
     def test_non_overlapping_ranges(self):
         allocator = CIDRAllocator(
-            "10.0.0.0/8", ["10.0.0.0/24", "10.0.2.0/24"], 24
+            "10.0.0.0/8",
+            ["10.0.0.0/24", "10.0.2.0/24"],
+            24,
         )
         merged = allocator._merge_overlapping_ranges()
         self.assertEqual(len(merged), 2)
 
     def test_overlapping_ranges_merged(self):
         allocator = CIDRAllocator(
-            "10.0.0.0/8", ["10.0.0.0/24", "10.0.0.128/25"], 24
+            "10.0.0.0/8",
+            ["10.0.0.0/24", "10.0.0.128/25"],
+            24,
         )
         merged = allocator._merge_overlapping_ranges()
         self.assertEqual(len(merged), 1)
 
     def test_adjacent_ranges_merged(self):
         allocator = CIDRAllocator(
-            "10.0.0.0/8", ["10.0.0.0/24", "10.0.1.0/24"], 24
+            "10.0.0.0/8",
+            ["10.0.0.0/24", "10.0.1.0/24"],
+            24,
         )
         merged = allocator._merge_overlapping_ranges()
         self.assertEqual(len(merged), 1)
@@ -144,7 +158,7 @@ class TestFindAvailableGaps(TestCase):
                 s == int(ipaddress.IPv4Address("10.0.0.0"))
                 and e == int(ipaddress.IPv4Address("10.0.0.127"))
                 for s, e in gaps
-            )
+            ),
         )
 
     def test_gap_after_last_used(self):
@@ -155,12 +169,14 @@ class TestFindAvailableGaps(TestCase):
                 s == int(ipaddress.IPv4Address("10.0.0.128"))
                 and e == int(ipaddress.IPv4Address("10.0.0.255"))
                 for s, e in gaps
-            )
+            ),
         )
 
     def test_gap_between_used_ranges(self):
         allocator = CIDRAllocator(
-            "10.0.0.0/24", ["10.0.0.0/26", "10.0.0.128/26"], 28
+            "10.0.0.0/24",
+            ["10.0.0.0/26", "10.0.0.128/26"],
+            28,
         )
         gaps = allocator._find_available_gaps()
         # Gap should be 10.0.0.64 - 10.0.0.127
@@ -169,7 +185,7 @@ class TestFindAvailableGaps(TestCase):
                 s == int(ipaddress.IPv4Address("10.0.0.64"))
                 and e == int(ipaddress.IPv4Address("10.0.0.127"))
                 for s, e in gaps
-            )
+            ),
         )
 
     def test_fully_used_no_gaps(self):
@@ -243,7 +259,9 @@ class TestAllocateSingle(TestCase):
         # Gaps: [0-15] (16 addr), [32-63] (32 addr), [128-255] (128 addr)
         # Requesting /28 (16 addresses): best-fit should pick the 16-addr gap [0-15]
         allocator = CIDRAllocator(
-            "10.0.0.0/24", ["10.0.0.16/28", "10.0.0.64/26"], 28
+            "10.0.0.0/24",
+            ["10.0.0.16/28", "10.0.0.64/26"],
+            28,
         )
         result = allocator.allocate_single()
         self.assertEqual(result, "10.0.0.0/28")
@@ -338,7 +356,9 @@ class TestEdgeCases(TestCase):
 
     def test_used_cidrs_outside_master_ignored(self):
         allocator = CIDRAllocator(
-            "10.0.0.0/24", ["192.168.0.0/16", "172.16.0.0/12"], 28
+            "10.0.0.0/24",
+            ["192.168.0.0/16", "172.16.0.0/12"],
+            28,
         )
         # No used_networks should be stored since none overlap
         self.assertEqual(len(allocator.used_networks), 0)
@@ -348,16 +368,20 @@ class TestEdgeCases(TestCase):
     def test_overlapping_used_cidrs_merged(self):
         # 10.0.0.0/25 and 10.0.0.0/26 overlap (the /26 is inside the /25)
         allocator = CIDRAllocator(
-            "10.0.0.0/24", ["10.0.0.0/25", "10.0.0.0/26"], 25
+            "10.0.0.0/24",
+            ["10.0.0.0/25", "10.0.0.0/26"],
+            25,
         )
         merged = allocator._merge_overlapping_ranges()
         self.assertEqual(len(merged), 1)
         # The merged range should cover the entire /25
         self.assertEqual(
-            merged[0][0], int(ipaddress.IPv4Address("10.0.0.0"))
+            merged[0][0],
+            int(ipaddress.IPv4Address("10.0.0.0")),
         )
         self.assertEqual(
-            merged[0][1], int(ipaddress.IPv4Address("10.0.0.127"))
+            merged[0][1],
+            int(ipaddress.IPv4Address("10.0.0.127")),
         )
 
     def test_allocate_multiple_prefix_32(self):
@@ -376,7 +400,7 @@ class TestRunModule(TestCase):
     """Test the run_module function via AnsibleModule mocking."""
 
     @patch(
-        "ansible_collections.ansible.utils.plugins.modules.cidr_allocate.AnsibleModule"
+        "ansible_collections.ansible.utils.plugins.modules.cidr_allocate.AnsibleModule",
     )
     def test_single_allocation_success(self, mock_module_cls):
         mock_module = MagicMock()
@@ -398,7 +422,7 @@ class TestRunModule(TestCase):
         self.assertEqual(call_kwargs["count"], 1)
 
     @patch(
-        "ansible_collections.ansible.utils.plugins.modules.cidr_allocate.AnsibleModule"
+        "ansible_collections.ansible.utils.plugins.modules.cidr_allocate.AnsibleModule",
     )
     def test_multiple_allocation_success(self, mock_module_cls):
         mock_module = MagicMock()
@@ -419,7 +443,7 @@ class TestRunModule(TestCase):
         self.assertEqual(len(call_kwargs["allocated_cidrs"]), 3)
 
     @patch(
-        "ansible_collections.ansible.utils.plugins.modules.cidr_allocate.AnsibleModule"
+        "ansible_collections.ansible.utils.plugins.modules.cidr_allocate.AnsibleModule",
     )
     def test_invalid_master_cidr_fails(self, mock_module_cls):
         mock_module = MagicMock()
@@ -439,7 +463,7 @@ class TestRunModule(TestCase):
         self.assertIn("Invalid master CIDR", fail_msg)
 
     @patch(
-        "ansible_collections.ansible.utils.plugins.modules.cidr_allocate.AnsibleModule"
+        "ansible_collections.ansible.utils.plugins.modules.cidr_allocate.AnsibleModule",
     )
     def test_count_less_than_1_fails(self, mock_module_cls):
         mock_module = MagicMock()
@@ -459,7 +483,7 @@ class TestRunModule(TestCase):
         self.assertIn("count must be at least 1", fail_msg)
 
     @patch(
-        "ansible_collections.ansible.utils.plugins.modules.cidr_allocate.AnsibleModule"
+        "ansible_collections.ansible.utils.plugins.modules.cidr_allocate.AnsibleModule",
     )
     def test_exhausted_space_fails(self, mock_module_cls):
         mock_module = MagicMock()
@@ -477,7 +501,7 @@ class TestRunModule(TestCase):
         mock_module.fail_json.assert_called_once()
 
     @patch(
-        "ansible_collections.ansible.utils.plugins.modules.cidr_allocate.AnsibleModule"
+        "ansible_collections.ansible.utils.plugins.modules.cidr_allocate.AnsibleModule",
     )
     def test_allocation_with_used_cidrs(self, mock_module_cls):
         mock_module = MagicMock()
