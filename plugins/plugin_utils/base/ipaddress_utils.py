@@ -76,7 +76,7 @@ def _is_subnet_of(network_a, network_b):
     the private _version was removed (see bpo-118710 / cpython@c530ce1).
     """
     try:
-        if network_a.version != network_b.version:
+        if _get_network_version(network_a) != _get_network_version(network_b):
             return False
         return (
             network_b.network_address <= network_a.network_address
