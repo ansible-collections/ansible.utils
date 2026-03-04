@@ -1,0 +1,3 @@
+---
+bugfixes:
+  - update_fact - Use task_vars at top-level instead of the deprecated ``vars`` key for compatibility with ansible-core 2.24 (ansible/ansible issue #426).
