@@ -60,18 +60,9 @@ def _need_ipaddress(func):
     return wrapper
 
 
-def _get_network_version(network):
-    """
-    Python 3.14 changes the _version attribute to version, so we have to try both.
-    """
-    if hasattr(network, "_version"):
-        return network._version
-    return network.version
-
-
 def _is_subnet_of(network_a, network_b):
     try:
-        if _get_network_version(network_a) != _get_network_version(network_b):
+        if network_a._version != network_b._version:
             return False
         return (
             network_b.network_address <= network_a.network_address
