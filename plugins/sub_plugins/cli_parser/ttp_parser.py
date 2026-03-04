@@ -126,9 +126,15 @@ class CliParser(CliParserBase):
             results = parser.result(**result_kwargs)
             # When flat_list is requested, flatten one level if we got [[...]]
             requested_flat = (
-                ttp_results.get("results") == "flat_list" or ttp_results.get("structure") == "flat_list"
+                ttp_results.get("results") == "flat_list"
+                or ttp_results.get("structure") == "flat_list"
             )
-            if requested_flat and isinstance(results, list) and len(results) == 1 and isinstance(results[0], list):
+            if (
+                requested_flat
+                and isinstance(results, list)
+                and len(results) == 1
+                and isinstance(results[0], list)
+            ):
                 results = results[0]
         except Exception as exc:
             msg = "Template Text Parser returned an error while parsing. Error: {err}"
