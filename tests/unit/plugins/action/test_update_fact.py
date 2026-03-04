@@ -301,9 +301,7 @@ class TestUpdate_Fact(TestCase):
     def test_run_not_dotted_success_one(self):
         """Test with a not dotted key"""
         task_vars = {"a": 0}
-        expected = copy.deepcopy(task_vars)
-        expected["a"] = 1
-        expected["changed"] = True
+        expected = {"a": 1, "ansible_facts": {"a": 1}, "changed": True}
         self._plugin._task.args = {"updates": [{"path": "a", "value": 1}]}
         result = self._plugin.run(task_vars=task_vars)
         self.assertEqual(result, expected)
@@ -311,9 +309,7 @@ class TestUpdate_Fact(TestCase):
     def test_run_not_dotted_success_three(self):
         """Test with a not dotted key longer"""
         task_vars = {"abc": 0}
-        expected = copy.deepcopy(task_vars)
-        expected["abc"] = 1
-        expected["changed"] = True
+        expected = {"abc": 1, "ansible_facts": {"abc": 1}, "changed": True}
         self._plugin._task.args = {"updates": [{"path": "abc", "value": 1}]}
         result = self._plugin.run(task_vars=task_vars)
         self.assertEqual(result, expected)
