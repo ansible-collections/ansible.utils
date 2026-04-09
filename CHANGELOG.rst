@@ -4,6 +4,17 @@ Ansible Utils Collection Release Notes
 
 .. contents:: Topics
 
+v6.0.2
+======
+
+Bugfixes
+--------
+
+- cidr_merge - Fix filter failing when used inside a Jinja2 macro called with ``with context`` by unwrapping Ansible lazy template lists before validation.
+- cli_parse - Honor ttp_results.results flat_list in TTP parser so output is a single-level list instead of double-wrapped (https://github.com/ansible-collections/ansible.utils/issues/402).
+- ipaddress_utils - Support Python 3.14+ by using the public ``version`` attribute instead of the removed private ``_version`` on ``ipaddress`` network objects (bpo-118710).
+- update_fact - Use task_vars at top-level instead of the deprecated ``vars`` key for compatibility with ansible-core 2.24 (ansible/ansible issue
+
 v6.0.1
 ======
 
