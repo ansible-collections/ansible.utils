@@ -1,3 +1,0 @@
----
-bugfixes:
-  - ipaddress_utils - Support Python 3.14+ by using the public ``version`` attribute instead of the removed private ``_version`` on ``ipaddress`` network objects (bpo-118710).

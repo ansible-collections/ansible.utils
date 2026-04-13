@@ -1,3 +1,0 @@
----
-bugfixes:
-  - cli_parse - Honor ttp_results.results flat_list in TTP parser so output is a single-level list instead of double-wrapped (https://github.com/ansible-collections/ansible.utils/issues/402).

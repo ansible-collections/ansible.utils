@@ -1,3 +1,0 @@
----
-bugfixes:
-  - cidr_merge - Fix filter failing when used inside a Jinja2 macro called with ``with context`` by unwrapping Ansible lazy template lists before validation.
