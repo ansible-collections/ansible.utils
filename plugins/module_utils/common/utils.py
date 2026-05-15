@@ -8,9 +8,8 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
+from collections.abc import Mapping
 from copy import deepcopy
-
-from ansible.module_utils.common._collections_compat import Mapping
 
 
 def sort_list(val):

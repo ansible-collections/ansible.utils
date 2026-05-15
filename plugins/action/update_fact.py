@@ -11,9 +11,10 @@ __metaclass__ = type
 import ast
 import re
 
+from collections.abc import MutableMapping, MutableSequence
+
 from ansible.errors import AnsibleActionFail
-from ansible.module_utils._text import to_native
-from ansible.module_utils.common._collections_compat import MutableMapping, MutableSequence
+from ansible.module_utils.common.text.converters import to_native
 from ansible.plugins.action import ActionBase
 from jinja2 import Template, TemplateSyntaxError
 
@@ -162,23 +163,30 @@ class ActionModule(ActionBase):
         self._result["changed"] = False
         self._check_argspec()
         results = set()
+        full_replaces = set()  # keys that were fully replaced (no path)
         self._ensure_valid_jinja()
+        # Use task_vars (top-level) instead of task_vars["vars"] to avoid the
+        # deprecated internal "vars" dictionary (ansible-core 2.24, issue #426).
         for entry in self._task.args["updates"]:
             parts = self._field_split(entry["path"])
             obj, path = parts[0], parts[1:]
             results.add(obj)
-            if obj not in task_vars["vars"]:
+            if obj not in task_vars:
                 msg = "'{obj}' was not found in the current facts.".format(obj=obj)
                 raise AnsibleActionFail(msg)
-            retrieved = task_vars["vars"].get(obj)
+            retrieved = task_vars.get(obj)
             if path:
                 self.set_value(retrieved, path, entry["value"])
             else:
-                if task_vars["vars"][obj] != entry["value"]:
-                    task_vars["vars"][obj] = entry["value"]
+                if retrieved != entry["value"]:
+                    self._result.setdefault("ansible_facts", {})[obj] = entry["value"]
+                    full_replaces.add(obj)
                     self._result["changed"] = True
 
         for key in results:
-            value = task_vars["vars"].get(key)
+            if key in full_replaces:
+                value = self._result.get("ansible_facts", {}).get(key)
+            else:
+                value = task_vars.get(key)
             self._result[key] = value
         return self._result

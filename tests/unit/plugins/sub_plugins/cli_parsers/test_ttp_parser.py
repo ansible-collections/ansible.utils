@@ -52,6 +52,40 @@ class TestTextfsmParser(TestCase):
         ]
         self.assertEqual(result["parsed"][0][0], parsed_output)
 
+    def test_ttp_parser_flat_list(self):
+        """With ttp_results.results: flat_list, output is a single-level list of items."""
+        nxos_cfg_path = os.path.join(os.path.dirname(__file__), "fixtures", "nxos_show_version.cfg")
+        nxos_template_path = os.path.join(
+            os.path.dirname(__file__),
+            "fixtures",
+            "nxos_show_version.ttp",
+        )
+
+        with open(nxos_cfg_path) as fhand:
+            nxos_show_version_output = fhand.read()
+
+        task_args = {
+            "text": nxos_show_version_output,
+            "parser": {
+                "name": "ansible.utils.ttp",
+                "command": "show version",
+                "template_path": nxos_template_path,
+                "vars": {
+                    "ttp_results": {"results": "flat_list"},
+                },
+            },
+        }
+        parser = CliParser(task_args=task_args, task_vars=[], debug=False)
+
+        result = parser.parse()
+        self.assertNotIn("errors", result)
+        parsed = result["parsed"]
+        self.assertIsInstance(parsed, list)
+        self.assertGreaterEqual(len(parsed), 1)
+        self.assertIsInstance(parsed[0], dict)
+        self.assertIn("boot_image", parsed[0])
+        self.assertIn("os", parsed[0])
+
     def test_textfsm_parser_invalid_parser(self):
         fake_path = "/ /I hope this doesn't exist"
         task_args = {

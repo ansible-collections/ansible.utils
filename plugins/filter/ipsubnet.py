@@ -24,7 +24,7 @@ from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddr_utils im
 __metaclass__ = type
 
 
-from ansible.module_utils._text import to_text
+from ansible.module_utils.common.text.converters import to_text
 
 
 try:
