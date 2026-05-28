@@ -83,7 +83,7 @@
           d:
             "[bracket_key]": bracket_value
             key: value
-            
+
 - name: Set a fact with multiple bracket variations
   ansible.builtin.set_fact:
     bracket_edge_cases:
@@ -95,7 +95,7 @@
       "[parent]":
         - regular:
             "[bracket]": old6
-            
+
 - name: update fact
   ansible.utils.update_fact:
     updates:
@@ -112,7 +112,7 @@
       - path: "bracket_edge_cases['[parent]'][0]['regular']['[bracket]']"
         value: new6
   register: updated
-  
+
 - name: Assert bracket edge cases
   ansible.builtin.assert:
     that: "{{ updated.bracket_edge_cases == expected.bracket_edge_cases }}"
