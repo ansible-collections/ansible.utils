@@ -40,8 +40,8 @@ EXAMPLES = r"""
 
 import os
 
-from ansible.module_utils._text import to_native
 from ansible.module_utils.basic import missing_required_lib
+from ansible.module_utils.common.text.converters import to_native
 
 from ansible_collections.ansible.utils.plugins.plugin_utils.base.cli_parser import CliParserBase
 
@@ -119,7 +119,23 @@ class CliParser(CliParserBase):
                 if parser_param.get("vars")
                 else {}
             )
-            results = parser.result(**ttp_results)
+            # TTP's result() uses keyword "structure", but we accept "results" from users
+            result_kwargs = dict(ttp_results)
+            if "results" in result_kwargs:
+                result_kwargs["structure"] = result_kwargs.pop("results")
+            results = parser.result(**result_kwargs)
+            # When flat_list is requested, flatten one level if we got [[...]]
+            requested_flat = (
+                ttp_results.get("results") == "flat_list"
+                or ttp_results.get("structure") == "flat_list"
+            )
+            if (
+                requested_flat
+                and isinstance(results, list)
+                and len(results) == 1
+                and isinstance(results[0], list)
+            ):
+                results = results[0]
         except Exception as exc:
             msg = "Template Text Parser returned an error while parsing. Error: {err}"
             return {"errors": [msg.format(err=to_native(exc))]}

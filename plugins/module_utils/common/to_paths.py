@@ -14,7 +14,7 @@ __metaclass__ = type
 
 import re
 
-from ansible.module_utils.common._collections_compat import Mapping, MutableMapping
+from collections.abc import Mapping, MutableMapping
 
 
 def to_paths(var, prepend, wantlist):

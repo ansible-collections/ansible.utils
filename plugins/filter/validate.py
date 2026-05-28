@@ -70,7 +70,7 @@ RETURN = """
 """
 
 from ansible.errors import AnsibleError, AnsibleFilterError
-from ansible.module_utils._text import to_text
+from ansible.module_utils.common.text.converters import to_text
 
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     check_argspec,

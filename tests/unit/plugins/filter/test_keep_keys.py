@@ -230,3 +230,29 @@ class TestKeepKeys(TestCase):
         with self.assertRaises(AnsibleFilterError) as error:
             _keep_keys(*args)
         self.assertIn("Error when using plugin 'keep_keys'", str(error.exception))
+
+    def test_keep_filter_excludes_list_values(self):
+        """Test that keep_keys excludes keys with list values that are not in target."""
+        data = [
+            {
+                "k0": "A",
+                "k1": "B",
+                "k2": [1],
+                "k3": "foo",
+            },
+            {
+                "k0": "A",
+                "k1": "B",
+                "k2": [2],
+                "k3": "bar",
+            },
+        ]
+        target = ["k0", "k1"]
+        output = [
+            {"k0": "A", "k1": "B"},
+            {"k0": "A", "k1": "B"},
+        ]
+        args = ["", data, target]
+
+        result = _keep_keys(*args)
+        self.assertEqual(result, output)

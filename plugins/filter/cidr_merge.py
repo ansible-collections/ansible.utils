@@ -129,12 +129,26 @@ RETURN = """
 """
 
 
+def _unwrap_lazy_list(value):
+    """
+    If value is an Ansible lazy template list, return a list of raw elements without
+    triggering templar.template() resolution. This avoids Template.__new__() errors
+    when the filter is used inside a Jinja2 macro called with ``with context``.
+    """
+    if value is not None and hasattr(value, "_yield_non_lazy_list_items"):
+        return list(value._yield_non_lazy_list_items())
+    return value
+
+
 @pass_environment
 def _cidr_merge(*args, **kwargs):
-    """Convert the given data from json to xml."""
+    """Merge CIDRs; compatible with pipe syntax (value | cidr_merge)."""
     keys = ["value", "action"]
     data = dict(zip(keys, args[1:]))
     data.update(kwargs)
+    # Unwrap lazy list when present to avoid resolution bug in macro context (no template.j2 change).
+    if "value" in data:
+        data["value"] = _unwrap_lazy_list(data["value"])
     aav = AnsibleArgSpecValidator(data=data, schema=DOCUMENTATION, name="cidr_merge")
     valid, errors, updated_data = aav.validate()
     if not valid:

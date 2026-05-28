@@ -12,7 +12,7 @@ import re
 
 from importlib import import_module
 
-from ansible.module_utils._text import to_native
+from ansible.module_utils.common.text.converters import to_native
 from ansible.plugins.action import ActionBase
 
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
