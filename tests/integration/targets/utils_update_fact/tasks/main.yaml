@@ -96,7 +96,7 @@
         - regular:
             "[bracket]": old6
 
-- name: update fact
+- name: Update fact
   ansible.utils.update_fact:
     updates:
       - path: "bracket_edge_cases['[[double]]']"
