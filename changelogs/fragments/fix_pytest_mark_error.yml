@@ -1,0 +1,4 @@
+---
+trivial:
+  - Update pyproject with dependency for pytest<9.1 to avoid
+    "Marks cannot be applied to fixtures" temporarily. 
