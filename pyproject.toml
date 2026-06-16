@@ -12,8 +12,5 @@ addopts = [
   "--color",
   "yes"
 ]
-deps = [
-  "pytest<9.1"
-]
 testpaths = ["tests"]
 filterwarnings = ['ignore:AnsibleCollectionFinder has already been configured']
