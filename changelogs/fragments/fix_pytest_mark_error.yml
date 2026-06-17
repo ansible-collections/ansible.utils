@@ -1,0 +1,7 @@
+---
+trivial:
+  - Remove ``pytest-ansible-network-integration`` from ``test-requirements.txt``
+    and its associated ``--integration-tests-path`` argument from
+    ``pyproject.toml``. This dependency was never required for
+    ``ansible.utils`` tests and pulled in ``libtmux`` which breaks under
+    pytest 9.1 due to ``@pytest.mark`` applied to a fixture function.
