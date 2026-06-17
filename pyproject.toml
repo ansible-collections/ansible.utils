@@ -11,5 +11,5 @@ addopts = [
   "--color",
   "yes"
 ]
-testpaths = ["tests"]
+testpaths = ["tests/unit"]
 filterwarnings = ['ignore:AnsibleCollectionFinder has already been configured']
