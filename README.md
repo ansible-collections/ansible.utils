@@ -67,6 +67,7 @@ Name | Description
 [ansible.utils.param_list_compare](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.param_list_compare_filter.rst)|Generate the final param list combining/comparing base and provided parameters.
 [ansible.utils.previous_nth_usable](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.previous_nth_usable_filter.rst)|This filter returns the previous nth usable ip within a network described by value.
 [ansible.utils.reduce_on_network](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.reduce_on_network_filter.rst)|This filter reduces a list of addresses to only the addresses that match a given network.
+[ansible.utils.reduce_on_networks](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.reduce_on_networks_filter.rst)|This filter reduces a list of addresses to only the addresses that match any of the given networks.
 [ansible.utils.remove_keys](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.remove_keys_filter.rst)|Remove specific keys from a data recursively.
 [ansible.utils.replace_keys](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.replace_keys_filter.rst)|Replaces specific keys with their after value from a data recursively.
 [ansible.utils.slaac](https://github.com/ansible-collections/ansible.utils/blob/main/docs/ansible.utils.slaac_filter.rst)|This filter returns the SLAAC address within a network for a given HW/MAC address.
