@@ -4,6 +4,14 @@ Ansible Utils Collection Release Notes
 
 .. contents:: Topics
 
+v6.0.3
+======
+
+Bugfixes
+--------
+
+- Fix update_fact to update a fact where a key in the referenced path contains a bracket.
+
 v6.0.2
 ======
 
