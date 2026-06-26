@@ -4,6 +4,7 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 import subprocess
+
 from pathlib import Path
 
 import pytest
@@ -14,9 +15,7 @@ COLLECTION_ROOT = Path(__file__).parent.parent.parent
 
 
 def get_targets():
-    return sorted(
-        d.name for d in TARGETS_DIR.iterdir() if d.is_dir() and (d / "tasks").exists()
-    )
+    return sorted(d.name for d in TARGETS_DIR.iterdir() if d.is_dir() and (d / "tasks").exists())
 
 
 @pytest.mark.parametrize("target", get_targets())
