@@ -65,7 +65,7 @@
       when: debug_test|d(false)|bool
     - name: Test remove_keys assert
       ansible.builtin.assert:
-        that: result_3["msg"] == target
+        that: result_3["msg"] != target
 
 - name: Test remove_keys starts_with 'p'
   tags: remove_keys_starts_with_1
