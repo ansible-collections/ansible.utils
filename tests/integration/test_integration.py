@@ -24,11 +24,8 @@ def build_playbook(target_dir):
         {
             "hosts": "localhost",
             "gather_facts": True,
-            "vars": {"role_path": str(target_dir)},
-            "tasks": [
-                {"ansible.builtin.include_tasks": str(target_dir / "tasks" / "main.yaml")},
-            ],
-        },
+            "roles": [{"role": str(target_dir)}],
+        }
     ]
 
 
