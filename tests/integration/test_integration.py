@@ -25,7 +25,7 @@ def build_playbook(target_dir):
             "hosts": "localhost",
             "gather_facts": True,
             "roles": [{"role": str(target_dir)}],
-        }
+        },
     ]
 
 
