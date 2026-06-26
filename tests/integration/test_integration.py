@@ -4,8 +4,8 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 import subprocess
-
 import tempfile
+
 from pathlib import Path
 
 import pytest
@@ -26,9 +26,9 @@ def build_playbook(target_dir):
             "gather_facts": True,
             "vars": {"role_path": str(target_dir)},
             "tasks": [
-                {"ansible.builtin.include_tasks": str(target_dir / "tasks" / "main.yaml")}
+                {"ansible.builtin.include_tasks": str(target_dir / "tasks" / "main.yaml")},
             ],
-        }
+        },
     ]
 
 
