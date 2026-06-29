@@ -493,12 +493,6 @@ def ipaddr(value, query="", version=False, alias="ipaddr"):
         return [item for item in _ret if item]
 
     elif not value or value is True:
-        # TODO: Remove this check in a major version release of collection with porting guide
-        # TODO: and raise exception commented out below
-        display.warning(
-            "The value '%s' is not a valid IP address or network, passing this value to ipaddr filter"
-            " might result in breaking change in future." % value,
-        )
         return False
 
     # Check if value is a number and convert it to an IP address
