@@ -71,7 +71,7 @@ DOCUMENTATION = """
 
 EXAMPLES = r"""
 #### examples
-# Ipwrap filter plugin o Wrap IPv6 addresses in [ ] brackets.
+# Ipwrap filter plugin to wrap IPv6 addresses in [ ] brackets.
 - name: Set value as input list
   ansible.builtin.set_fact:
     value:
