@@ -538,3 +538,13 @@ releases:
       - fix_deprecations.yaml
       - ipaddress_utils-python314.yml
     release_date: "2026-04-09"
+  6.0.3:
+    changes:
+      bugfixes:
+        - Fix update_fact to update a fact where a key in the referenced path contains
+          a bracket.
+    fragments:
+      - add_stale_closure_workflow.yml
+      - onboard-codecov.yml
+      - update_fact_bracket.yaml
+    release_date: "2026-06-12"
