@@ -36,6 +36,7 @@ def run(target, target_dir):
         playbook_path = tmp / "playbook.yaml"
         artifact_path = tmp / "artifact.json"
         log_path = tmp / "ansible-navigator.log"
+        cache_path = tmp / "collection-doc-cache.db"
 
         playbook_path.write_text(yaml.dump(build_playbook(target_dir), default_flow_style=False))
 
@@ -54,6 +55,8 @@ def run(target, target_dir):
                 "debug",
                 "--lf",
                 str(log_path),
+                "--cdcp",
+                str(cache_path),
                 "-vvvv",
             ],
             capture_output=True,
