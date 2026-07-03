@@ -4,3 +4,4 @@ typing-extensions
 netaddr==0.10.1
 textfsm
 ttp
+ansible-navigator
