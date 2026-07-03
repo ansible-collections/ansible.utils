@@ -63,9 +63,9 @@ def run(target, target_dir):
             text=True,
             check=False,
         )
+        print(result.stdout)
+        print(result.stderr)
         if result.returncode:
-            print(result.stdout)
-            print(result.stderr)
             pytest.fail(reason=f"Integration test failed: {target}")
 
 
