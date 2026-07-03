@@ -63,12 +63,10 @@ def run(target, target_dir):
             text=True,
             check=False,
         )
-        print(result.stdout)
-        print(result.stderr)
         if result.returncode:
             pytest.fail(reason=f"Integration test failed: {target}")
 
 
-def test_integration():
-    for target in get_targets():
-        run(target, (TARGETS_DIR / target).resolve())
+@pytest.mark.parametrize("target", get_targets())
+def test_integration(target):
+    run(target, (TARGETS_DIR / target).resolve())
