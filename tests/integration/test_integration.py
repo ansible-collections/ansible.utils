@@ -69,6 +69,6 @@ def run(target, target_dir):
             pytest.fail(reason=f"Integration test failed: {target}")
 
 
-@pytest.mark.parametrize("target", get_targets())
-def test_integration(target):
-    run(target, (TARGETS_DIR / target).resolve())
+def test_integration():
+    for target in get_targets():
+        run(target, (TARGETS_DIR / target).resolve())
