@@ -31,13 +31,31 @@ def build_playbook(target_dir):
 
 def run(target, target_dir):
     __tracebackhide__ = True
-    with tempfile.NamedTemporaryFile(mode="w", suffix=".yaml", delete=False) as f:
-        yaml.dump(build_playbook(target_dir), f, default_flow_style=False)
-        playbook_path = Path(f.name)
+    with tempfile.TemporaryDirectory() as tmpdir:
+        tmp = Path(tmpdir)
+        playbook_path = tmp / "playbook.yaml"
+        artifact_path = tmp / "artifact.json"
+        log_path = tmp / "ansible-navigator.log"
 
-    try:
+        playbook_path.write_text(yaml.dump(build_playbook(target_dir), default_flow_style=False))
+
         result = subprocess.run(
-            ["ansible-playbook", str(playbook_path), "-vvvv"],
+            [
+                "ansible-navigator",
+                "run",
+                str(playbook_path),
+                "--ee",
+                "false",
+                "--mode",
+                "stdout",
+                "--pas",
+                str(artifact_path),
+                "--ll",
+                "debug",
+                "--lf",
+                str(log_path),
+                "-vvvv",
+            ],
             capture_output=True,
             text=True,
             check=False,
@@ -46,8 +64,6 @@ def run(target, target_dir):
             print(result.stdout)
             print(result.stderr)
             pytest.fail(reason=f"Integration test failed: {target}")
-    finally:
-        playbook_path.unlink(missing_ok=True)
 
 
 @pytest.mark.parametrize("target", get_targets())
