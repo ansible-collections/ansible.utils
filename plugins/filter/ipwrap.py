@@ -88,14 +88,14 @@ EXAMPLES = r"""
     msg: "{{ value }}"
 
 - name: Show ipwrap result
-    ansible.builtin.debug:
+  ansible.builtin.debug:
     msg: "{{ value | ansible.utils.ipwrap }}"
 
     # ipwrap() did not filter out non-IP address values, which is usually what you want, e.g. when
     # you are mixing IP addresses with hostnames. If you still want to filter out all non-IP address values,
     # you can chain both filters together.
 - name: Show combined result of ipaddr and ipwrap
-    ansible.builtin.debug:
+  ansible.builtin.debug:
     msg: "{{ value | ansible.utils.ipaddr | ansible.utils.ipwrap  }}"
 
 # PLAY [Ipwrap filter plugin to wrap IPv6 addresses in [ ] brackets.] *************************************************
