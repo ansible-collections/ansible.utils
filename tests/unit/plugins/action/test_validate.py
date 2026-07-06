@@ -297,3 +297,47 @@ class TestValidate(TestCase):
 
         result = self._plugin.run(task_vars=dict(ansible_validate_jsonschema_check_format=False))
         self.assertIn("All checks passed", result["msg"])
+
+    def test_suppress_output_is_false(self):
+        """The `found` and `relative_schema` will output if suppress_output is false"""
+
+        self._plugin._task.args = {
+            "engine": "ansible.utils.jsonschema",
+            "data": IN_VALID_DATA,
+            "criteria": CRITERIA_FORMAT_SUPPORT_CHECK,
+        }
+
+        result = self._plugin.run(task_vars=None)
+        error = result.get("errors", [])[0]
+        self.assertIn("found", error)
+        self.assertIn("relative_schema", error)
+
+    def test_suppress_output_is_true(self):
+        """The `found` and `relative_schema` will not output if suppress_output is True"""
+
+        self._plugin._task.args = {
+            "engine": "ansible.utils.jsonschema",
+            "data": IN_VALID_DATA,
+            "criteria": CRITERIA_FORMAT_SUPPORT_CHECK,
+        }
+
+        result = self._plugin.run(task_vars=dict(ansible_validate_jsonschema_suppress_output=True))
+        error = result.get("errors", [])[0]
+        self.assertNotIn("found", error)
+        self.assertNotIn("relative_schema", error)
+
+    def test_suppress_output_is_a_list(self):
+        """The fields in suppress_output will be suppressed"""
+
+        self._plugin._task.args = {
+            "engine": "ansible.utils.jsonschema",
+            "data": IN_VALID_DATA,
+            "criteria": CRITERIA_FORMAT_SUPPORT_CHECK,
+        }
+
+        result = self._plugin.run(
+            task_vars=dict(ansible_validate_jsonschema_suppress_output=["relative_schema"]),
+        )
+        error = result.get("errors", [])[0]
+        self.assertIn("found", error)
+        self.assertNotIn("relative_schema", error)
