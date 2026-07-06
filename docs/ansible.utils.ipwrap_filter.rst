@@ -97,7 +97,7 @@ Examples
           - 42540766412265424405338506004571095040/64
           - true
     - name: Show input
-        ansible.builtin.debug:
+      ansible.builtin.debug:
         msg: "{{ value }}"
 
     - name: Show ipwrap result
