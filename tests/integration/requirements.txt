@@ -1,4 +1,0 @@
-jsonschema
-netaddr
-ttp
-textfsm
