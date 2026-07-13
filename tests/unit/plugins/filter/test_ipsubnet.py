@@ -9,7 +9,6 @@ Unit test file for ipwrap filter plugin
 
 from __future__ import absolute_import, division, print_function
 
-
 __metaclass__ = type
 
 from unittest import TestCase
@@ -17,7 +16,6 @@ from unittest import TestCase
 import pytest
 
 from ansible_collections.ansible.utils.plugins.filter.ipsubnet import _ipsubnet
-
 
 address = "192.168.144.5"
 subnet = "192.168.0.0/16"
