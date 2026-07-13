@@ -1,4 +1,4 @@
 ---
 # Migrated scenarios: collection is installed by ADE/tox; roles live under
-# each scenario's content/ and are included via converge. Skip prerun.
+# each scenario's roles/content/ and are included via converge. Skip prerun.
 prerun: false

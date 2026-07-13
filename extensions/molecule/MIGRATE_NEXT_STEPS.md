@@ -3,8 +3,8 @@
 Integration tests live under `extensions/molecule/<scenario>/`:
 
 - `molecule.yml` — scenario config (localhost/local by default; adjust platforms as needed)
-- `converge.yml` — `include_role` of local `content/`
-- `content/` — former `tests/integration/targets/<scenario>/` role tree
+- `converge.yml` — `include_role` of playbook-adjacent role `content`
+- `roles/content/` — former `tests/integration/targets/<scenario>/` role tree
 - `config.yml` — shared defaults (`prerun: false`; ADE/tox owns collection install)
 
 ## Run locally

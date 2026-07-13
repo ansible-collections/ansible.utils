@@ -6,4 +6,4 @@
   tasks:
     - name: Include migrated integration target
       ansible.builtin.include_role:
-        name: "{{ playbook_dir }}/content"
+        name: content
