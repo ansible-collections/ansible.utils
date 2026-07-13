@@ -3,3 +3,6 @@ profile: production
 
 exclude_paths:
   - changelogs/changelog.yaml
+  # Migrated ansible-test targets (not production roles); var-naming[no-role-prefix]
+  # would require rewriting every register/set_fact to content_*.
+  - extensions/molecule/*/roles/**

@@ -15,12 +15,13 @@ Mechanical migration is done. Help the maintainer finish a safe, runnable Molecu
 
 - Scenarios: `extensions/molecule/<target>/`
 - Role content: `extensions/molecule/<target>/roles/content/` (former ansible-test target)
+- Shared ansible-native config: `extensions/molecule/config.yml` + `inventory.yml`
 - Checklist: `extensions/molecule/MIGRATE_NEXT_STEPS.md`
 
 ## Steps
 
-1. List migrated scenarios under `extensions/molecule/` (ignore `utils/` and `MIGRATE_NEXT_STEPS.md`).
-2. For each scenario, open `molecule.yml` and confirm platforms/driver match how the old target ran (localhost vs containers vs remote). Adjust deliberately; do not invent cloud creds.
+1. List migrated scenarios under `extensions/molecule/` (ignore `utils/`, `config.yml`, `inventory.yml`, and `MIGRATE_NEXT_STEPS.md`).
+2. Confirm shared inventory (`ansible_connection: local` on localhost) matches how the old targets ran. Add scenario-local inventory only when a target needs something else; do not invent cloud creds.
 3. Inspect `roles/content/` for ansible-test-only files (`aliases`, `runme.sh`, setup deps). Remove or document anything Molecule will not honor.
 4. From the collection root, run `molecule test -s <target>` (or `molecule test --all` when appropriate). Fix playbook/role path issues first if converge fails to find role `content`.
 5. Update CI/tox so integration for migrated targets invokes Molecule, not `ansible-test integration`.
