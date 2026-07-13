@@ -20,6 +20,6 @@ tox --ansible -e integration-py3.12-2.19
 
 1. Fix scenarios that fail on current ansible-core (e.g. `utils_get_path` filter/argspec issues).
 2. Drop this file once the migrate is committed and team docs point at Molecule.
-3. Longer term: remove the interim tox `legacy_tox_ini` Molecule override when tox-ansible runs Molecule natively; restore shared content-actions integration workflow if it learns pyproject.toml.
+3. Longer term: remove the interim `tox-ansible.ini` Molecule `commands` override when tox-ansible runs Molecule natively.
 
 Agent assist: `.agents/skills/molecule-migrate-finalize/SKILL.md`
