@@ -25,4 +25,5 @@ Shared across scenarios:
 6. Commit the scenario tree and delete any hybrid stubs you no longer need.
 
 Agent assist: open `.agents/skills/molecule-migrate-finalize/SKILL.md` (or ask your coding agent to follow that skill).
+
 # Trigger CI against migrate-integration-to-molecule
