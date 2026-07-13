@@ -168,10 +168,22 @@ def _get_path(*args, **kwargs):
     data = dict(zip(keys, args))
     data.update(kwargs)
     environment = data.pop("environment")
-    aav = AnsibleArgSpecValidator(data=data, schema=DOCUMENTATION, name="get_path")
+    # ArgumentSpecValidator deepcopies params. On ansible-core 2.19+ that breaks
+    # when var holds lazy templates (e.g. Molecule inventory / vars|get_path).
+    # var is type:raw — only presence is validated; pass the original through.
+    var = data.get("var")
+    data_for_validation = dict(data)
+    if "var" in data_for_validation:
+        data_for_validation["var"] = {}
+    aav = AnsibleArgSpecValidator(
+        data=data_for_validation,
+        schema=DOCUMENTATION,
+        name="get_path",
+    )
     valid, errors, updated_data = aav.validate()
     if not valid:
         raise AnsibleFilterError(errors)
+    updated_data["var"] = var
     updated_data["environment"] = environment
     return get_path(**updated_data)
 

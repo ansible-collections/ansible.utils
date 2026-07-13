@@ -13,3 +13,20 @@ addopts = [
 ]
 testpaths = ["tests"]
 filterwarnings = ['ignore:AnsibleCollectionFinder has already been configured']
+
+# tox-ansible: use `tox --ansible` (no --conf). Generative section names are
+# INI-only, so the integration Molecule override is embedded via legacy_tox_ini.
+[tool.tox]
+legacy_tox_ini = """
+[tox]
+ignore_base_python_conflict = true
+
+# Interim: Molecule for integration until tox-ansible runs molecule natively.
+# Keep brace lists aligned with: tox -l --ansible
+# commands_pre (ade install) is unchanged.
+[testenv:integration-py{3.11,3.12,3.13,3.14}-{2.16,2.18,2.19,2.20,2.21,devel,milestone}]
+commands =
+    python -m molecule test --all --workers 4
+"""
+
+[tool.tox-ansible]

@@ -1,0 +1,20 @@
+---
+# Migrated from tests/integration/targets/utils_fact_diff
+# Review platforms/driver before relying on this default.
+platforms:
+  - name: localhost
+    connection: local
+provisioner:
+  name: ansible
+  playbooks:
+    converge: converge.yml
+  config_options:
+    defaults:
+      collections_path: ${ANSIBLE_COLLECTIONS_PATH}
+scenario:
+  test_sequence:
+    - converge
+  converge_sequence:
+    - converge
+  destroy_sequence: []
+  cleanup_sequence: []
