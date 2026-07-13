@@ -1,6 +1,5 @@
 from __future__ import absolute_import, division, print_function
 
-
 __metaclass__ = type
 
 DOCUMENTATION = """
@@ -158,7 +157,6 @@ from ansible.errors import AnsibleFilterError
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     check_argspec,
 )
-
 
 ARGSPEC_CONDITIONALS = {}
 

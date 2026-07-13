@@ -5,7 +5,6 @@
 
 from __future__ import absolute_import, division, print_function
 
-
 __metaclass__ = type
 
 from unittest import TestCase
@@ -13,7 +12,6 @@ from unittest import TestCase
 from ansible.errors import AnsibleError
 
 from ansible_collections.ansible.utils.plugins.test.validate import validate
-
 
 DATA = {
     "GigabitEthernet0/0/0/0": {

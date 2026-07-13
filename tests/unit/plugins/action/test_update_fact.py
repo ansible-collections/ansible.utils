@@ -5,7 +5,6 @@
 
 from __future__ import absolute_import, division, print_function
 
-
 __metaclass__ = type
 
 import copy
@@ -17,7 +16,6 @@ from ansible.template import Templar
 from jinja2 import Template, TemplateSyntaxError
 
 from ansible_collections.ansible.utils.plugins.action.update_fact import ActionModule
-
 
 try:
     from unittest.mock import MagicMock  # pylint:disable=syntax-error
