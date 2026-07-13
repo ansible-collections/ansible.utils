@@ -1,0 +1,6 @@
+---
+bugfixes:
+  - >-
+    get_path - avoid deepcopy of the input ``var`` during argspec validation so
+    the filter and lookup work when ``var`` contains ansible-core 2.19+ lazy
+    templates (for example ``vars | ansible.utils.get_path(...)`` under Molecule).

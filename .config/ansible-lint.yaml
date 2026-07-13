@@ -1,3 +1,5 @@
 ---
 exclude_paths:
   - .github
+  # Migrated ansible-test targets (not production roles).
+  - extensions/molecule/*/roles/**

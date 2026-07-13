@@ -9,10 +9,12 @@ on:  # yamllint disable-line rule:truthy
   push:
     branches: [main]
   pull_request_target:
-    branches: [main]
+    # Include the migration branch so a PR *into* it can exercise this
+    # workflow (pull_request_target always loads YAML from the base branch).
+    branches: [main, migrate-integration-to-molecule]
   workflow_dispatch:
   schedule:
-    - cron: '0 0 * * *'
+    - cron: "0 0 * * *"
 
 jobs:
   sonar:
@@ -37,8 +39,64 @@ jobs:
   unit-galaxy:
     uses: ansible/ansible-content-actions/.github/workflows/unit.yaml@main
 
-  integration:
-    uses: ansible/ansible-content-actions/.github/workflows/integration.yaml@main
+  # Local molecule matrix (not content-actions integration). Installs
+  # tox-ansible from cidrblock/molecule-test-type until that lands upstream.
+  molecule-matrix:
+    name: Matrix Molecule
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          repository: ${{ github.event.pull_request.head.repo.full_name || github.repository }}
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.14"
+      - name: Install tox-ansible (molecule-test-type)
+        run: >-
+          python -m pip install
+          git+https://github.com/cidrblock/tox-ansible.git@molecule-test-type
+      - name: Generate molecule matrix
+        id: generate-matrix
+        run: >-
+          python -m tox --ansible --gh-matrix --matrix-scope molecule
+          --conf tox-ansible.ini
+    outputs:
+      envlist: ${{ steps.generate-matrix.outputs.envlist }}
+
+  molecule:
+    needs: molecule-matrix
+    strategy:
+      fail-fast: false
+      matrix:
+        entry: ${{ fromJson(needs.molecule-matrix.outputs.envlist) }}
+    name: ${{ matrix.entry.name }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          repository: ${{ github.event.pull_request.head.repo.full_name || github.repository }}
+          fetch-depth: 0
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.entry.python }}
+      - name: Install tox-ansible (molecule-test-type)
+        run: >-
+          python -m pip install
+          git+https://github.com/cidrblock/tox-ansible.git@molecule-test-type
+      - name: Install build toolchain and openssl headers on Linux
+        if: ${{ matrix.entry.python >= 3.12 }}
+        shell: bash
+        run: sudo apt update && sudo apt install build-essential libssl-dev
+      - name: Run tox molecule tests
+        run: >-
+          python -m tox --ansible -e ${{ matrix.entry.name }}
+          --conf tox-ansible.ini
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   report-status:
     if: ${{ always() && github.event_name == 'schedule' }}
@@ -47,7 +105,7 @@ jobs:
       - ansible-lint
       - sanity
       - unit-galaxy
-      - integration
+      - molecule
     uses: ansible/ansible-content-actions/.github/workflows/upload_upstream_results.yaml@main
     with:
       job_context: ${{ toJSON(needs) }}
@@ -64,7 +122,7 @@ jobs:
       - sanity
       - unit-galaxy
       - ansible-lint
-      - integration
+      - molecule
       - sonar
       - report-status
     runs-on: ubuntu-latest
@@ -73,7 +131,7 @@ jobs:
           python -c "assert 'failure' not in
           set([
           '${{ needs.changelog.result }}',
-          '${{ needs.integration.result }}',
+          '${{ needs.molecule.result }}',
           '${{ needs.sanity.result }}',
           '${{ needs.unit-galaxy.result }}',
           '${{ needs.ansible-lint.result }}',

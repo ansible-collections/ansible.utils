@@ -1,0 +1,4 @@
+---
+# Migrated from tests/integration/targets/utils_index_of
+# Shared ansible-native config + inventory live in extensions/molecule/
+# (../config.yml, ../inventory.yml). Override here only when needed.
