@@ -4,44 +4,69 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 import subprocess
+import tempfile
+
+from pathlib import Path
 
 import pytest
+import yaml
 
 
-def run(localhost_project, environment):
-    __tracebackhide__ = True
-    args = [
-        "ansible-navigator",
-        "run",
-        str(localhost_project.playbook),
-        "--ee",
-        "false",
-        "--mode",
-        "stdout",
-        "--pas",
-        str(localhost_project.playbook_artifact),
-        "--ll",
-        "debug",
-        "--lf",
-        str(localhost_project.log_file),
-        "--cdcp",
-        str(localhost_project.collection_doc_cache),
-        "-vvvv",
+TARGETS_DIR = Path(__file__).parent / "targets"
+
+
+def get_targets():
+    return sorted(d.name for d in TARGETS_DIR.iterdir() if d.is_dir() and (d / "tasks").exists())
+
+
+def build_playbook(target_dir):
+    return [
+        {
+            "hosts": "localhost",
+            "gather_facts": True,
+            "roles": [{"role": str(target_dir)}],
+        },
     ]
-    process = subprocess.run(
-        args=args,
-        env=environment,
-        stderr=subprocess.PIPE,
-        stdout=subprocess.PIPE,
-        check=False,
-        shell=False,
-    )
-    if process.returncode:
-        print(process.stdout.decode("utf-8"))
-        print(process.stderr.decode("utf-8"))
-
-        pytest.fail(reason=f"Integration test failed: {localhost_project.role}")
 
 
-def test_integration(localhost_project, environment, monkeypatch):
-    run(localhost_project, environment)
+def run(target, target_dir):
+    __tracebackhide__ = True
+    with tempfile.TemporaryDirectory() as tmpdir:
+        tmp = Path(tmpdir)
+        playbook_path = tmp / "playbook.yaml"
+        artifact_path = tmp / "artifact.json"
+        log_path = tmp / "ansible-navigator.log"
+        cache_path = tmp / "collection-doc-cache.db"
+
+        playbook_path.write_text(yaml.dump(build_playbook(target_dir), default_flow_style=False))
+
+        result = subprocess.run(
+            [
+                "ansible-navigator",
+                "run",
+                str(playbook_path),
+                "--ee",
+                "false",
+                "--mode",
+                "stdout",
+                "--pas",
+                str(artifact_path),
+                "--ll",
+                "debug",
+                "--lf",
+                str(log_path),
+                "--cdcp",
+                str(cache_path),
+                "-vvvv",
+            ],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        if result.returncode:
+            pytest.fail(reason=f"Integration test failed: {target}")
+
+
+@pytest.mark.parametrize("target", get_targets())
+def test_integration(target):
+    run(target, (TARGETS_DIR / target).resolve())
