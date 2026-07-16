@@ -113,7 +113,7 @@ Parameters
                 <td>
                         <div>The name of the test to run against the list, a valid jinja2 test or ansible test plugin.</div>
                         <div>Jinja2 includes the following tests <a href='http://jinja.palletsprojects.com/templates/#builtin-tests'>http://jinja.palletsprojects.com/templates/#builtin-tests</a>.</div>
-                        <div>An overview of tests included in ansible <a href='https://docs.ansible.com/ansible/latest/user_guide/playbooks_tests.html'>https://docs.ansible.com/ansible/latest/user_guide/playbooks_tests.html</a>.</div>
+                        <div>An overview of tests included in ansible <a href='https://docs.ansible.com/projects/ansible/latest/user_guide/playbooks_tests.html'>https://docs.ansible.com/projects/ansible/latest/user_guide/playbooks_tests.html</a>.</div>
                 </td>
             </tr>
             <tr>
@@ -156,7 +156,7 @@ Parameters
                         <div>When only a single entry in the <em>data</em> is matched, the index of that entry is returned as an integer.</div>
                         <div>If set to <code>True</code>, the return value will always be a list, even if only a single entry is matched.</div>
                         <div>This can also be accomplished using <code>query</code> or <code>q</code> instead of <code>lookup</code>.</div>
-                        <div><a href='https://docs.ansible.com/ansible/latest/plugins/lookup.html'>https://docs.ansible.com/ansible/latest/plugins/lookup.html</a></div>
+                        <div><a href='https://docs.ansible.com/projects/ansible/latest/plugins/lookup.html'>https://docs.ansible.com/projects/ansible/latest/plugins/lookup.html</a></div>
                 </td>
             </tr>
     </table>

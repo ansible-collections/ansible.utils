@@ -146,7 +146,7 @@ Parameters
                 <td>
                         <div>Additional parser specific parameters</div>
                         <div>See the cli_parse user guide for examples of parser specific variables</div>
-                        <div><a href='https://docs.ansible.com/ansible/latest/network/user_guide/cli_parsing.html'>https://docs.ansible.com/ansible/latest/network/user_guide/cli_parsing.html</a></div>
+                        <div><a href='https://docs.ansible.com/projects/ansible/latest/network/user_guide/cli_parsing.html'>https://docs.ansible.com/projects/ansible/latest/network/user_guide/cli_parsing.html</a></div>
                 </td>
             </tr>
 
@@ -202,7 +202,7 @@ Notes
    - example xml requires xml_to_dict
    - Support of 3rd party python libraries is limited to the use of their public APIs as documented
    - Additional information and examples can be found in the parsing user guide:
-   - https://docs.ansible.com/ansible/latest/network/user_guide/cli_parsing.html
+   - https://docs.ansible.com/projects/ansible/latest/network/user_guide/cli_parsing.html
 
 
 
