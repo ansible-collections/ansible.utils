@@ -4,6 +4,14 @@ Ansible Utils Collection Release Notes
 
 .. contents:: Topics
 
+v6.1.0
+======
+
+Minor Changes
+-------------
+
+- remove warning message about potential instability of ipaddr (it has been stable for years)
+
 v6.0.3
 ======
 
