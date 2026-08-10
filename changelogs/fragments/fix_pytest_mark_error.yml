@@ -1,9 +1,0 @@
----
-trivial:
-  - Remove dependency on ``pytest-ansible-network-integration`` (and its transitive
-    dependencies ``cmlutils`` and ``libtmux``) by replacing the ``ansible-navigator``-based
-    integration test runner with a plain ``ansible-playbook`` runner. Each integration
-    target is now executed as an Ansible role via a generated playbook, which correctly
-    loads ``vars/`` and sets ``role_path`` without requiring network device infrastructure.
-  - Removed ``pexpect``, ``ipaddress`` (Python 2 backport), and the now-redundant
-    ``tests/integration/requirements.txt`` used by ``ansible-test integration``.

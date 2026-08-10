@@ -1,5 +1,0 @@
----
-minor_changes:
-  - remove warning message about potential instability of ipaddr (it has been stable for years)
-trivial:
-  - update ipwrap docs
