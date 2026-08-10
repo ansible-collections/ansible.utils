@@ -12,10 +12,6 @@ Minor Changes
 
 - remove warning message about potential instability of ipaddr (it has been stable for years)
 
-Bugfixes
---------
-
-- Fix update_fact to update a fact where a key in the referenced path contains a bracket.
 
 v6.0.3
 ======
