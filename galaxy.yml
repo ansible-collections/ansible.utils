@@ -20,8 +20,3 @@ tags:
   - validation
   - utils
 version: 6.1.0
-
-build_ignore:
-  - .venv
-  - collections
-  - .tox
