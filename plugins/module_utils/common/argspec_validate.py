@@ -26,6 +26,8 @@ __metaclass__ = type
 
 import re
 
+from collections.abc import Mapping, MutableSequence
+
 from ansible.module_utils.basic import AnsibleModule
 
 from ansible_collections.ansible.utils.plugins.module_utils.common.utils import dict_merge
@@ -245,7 +247,7 @@ class AnsibleArgSpecValidator:
                 return valid, errors, updated_data
             else:
                 validator = ArgumentSpecValidator(**self._schema)
-                result = validator.validate(self._data)
+                result = validator.validate(_to_plain(self._data))
                 valid = not bool(result.error_messages)
                 return (
                     valid,
@@ -254,6 +256,18 @@ class AnsibleArgSpecValidator:
                 )
         else:
             return self._validate()
+
+
+def _to_plain(obj):
+    # Recursively convert lazy containers (ansible-core 2.21+) to plain Python
+    # objects so deepcopy inside ValidationResult doesn't re-initialize
+    # Jinja2Loader with deprecated aliases.  Lazy containers register as
+    # Mapping/MutableSequence, so isinstance checks are authoritative here.
+    if isinstance(obj, Mapping):
+        return {k: _to_plain(v) for k, v in obj.items()}
+    if isinstance(obj, MutableSequence):
+        return [_to_plain(v) for v in obj]
+    return obj
 
 
 def check_argspec(schema, name, schema_format="doc", schema_conditionals=None, **args):
