@@ -267,6 +267,8 @@ def _to_plain(obj):
         return {k: _to_plain(v) for k, v in obj.items()}
     if isinstance(obj, MutableSequence):
         return [_to_plain(v) for v in obj]
+    if isinstance(obj, tuple):
+        return tuple(_to_plain(v) for v in obj)
     return obj
 
 
