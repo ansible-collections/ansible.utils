@@ -1,0 +1,4 @@
+---
+bugfixes:
+  - AnsibleArgSpecValidator - Add a `_to_plain` function to handle
+    ansible-core 2.21+ deep copy warnings by lazy containers.

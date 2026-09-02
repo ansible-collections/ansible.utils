@@ -9,6 +9,7 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
+from collections.abc import MutableMapping
 from unittest import TestCase
 
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
@@ -155,3 +156,45 @@ class TestSortList(TestCase):
         valid, errors, _updated_data = aav.validate()
         self.assertFalse(valid)
         self.assertIn("Invalid schema. Invalid keys found: not_valid", errors)
+
+    def test_lazy_mapping_data(self):
+        """Lazy-container inputs (ansible-core 2.21+) must be resolved before
+        deepcopy so Jinja2Loader.__init__ is never re-invoked with deprecated
+        aliases during ValidationResult construction."""
+
+        class _LazyMapping(MutableMapping):
+            """Minimal MutableMapping that explodes on deepcopy, mirroring the
+            behaviour of ansible-core 2.21 lazy containers."""
+
+            def __init__(self, data):
+                self._data = data
+
+            def __getitem__(self, key):
+                return self._data[key]
+
+            def __setitem__(self, key, value):
+                self._data[key] = value
+
+            def __delitem__(self, key):
+                del self._data[key]
+
+            def __iter__(self):
+                return iter(self._data)
+
+            def __len__(self):
+                return len(self._data)
+
+            def __deepcopy__(self, memo):
+                raise RuntimeError("deepcopy of lazy container must not occur")
+
+        data = _LazyMapping({"param_str": "string"})
+        aav = AnsibleArgSpecValidator(
+            data=data,
+            schema=DOCUMENTATION,
+            schema_format="doc",
+            schema_conditionals={},
+            name="test_action",
+        )
+        valid, errors, updated_data = aav.validate()
+        self.assertTrue(valid)
+        self.assertEqual(updated_data["param_str"], "string")
