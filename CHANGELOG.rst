@@ -4,6 +4,19 @@ Ansible Utils Collection Release Notes
 
 .. contents:: Topics
 
+v6.1.1
+======
+
+Bugfixes
+--------
+
+- AnsibleArgSpecValidator - Add a `_to_plain` function to handle ansible-core 2.21+ deep copy warnings by lazy containers.
+
+Documentation Changes
+---------------------
+
+- Update docs.ansible.com documentation URLs with the right references
+
 v6.1.0
 ======
 
@@ -11,7 +24,6 @@ Minor Changes
 -------------
 
 - remove warning message about potential instability of ipaddr (it has been stable for years)
-
 
 v6.0.3
 ======

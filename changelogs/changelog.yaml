@@ -562,3 +562,14 @@ releases:
       - remove-ipaddr-warning-message-update-docs.yml
       - tox_skip_cleanup.yml
     release_date: "2026-08-10"
+  6.1.1:
+    changes:
+      bugfixes:
+        - AnsibleArgSpecValidator - Add a `_to_plain` function to handle ansible-core
+          2.21+ deep copy warnings by lazy containers.
+      doc_changes:
+        - Update docs.ansible.com documentation URLs with the right references
+    fragments:
+      - aav-deprecated-warnings.yml
+      - update-ansible-doc-references.yml
+    release_date: "2026-09-16"
