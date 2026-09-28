@@ -7,7 +7,6 @@
 
 from __future__ import absolute_import, division, print_function
 
-
 __metaclass__ = type
 
 import os
@@ -17,7 +16,6 @@ from ansible.plugins.connection import ConnectionBase
 from ansible.plugins.loader import connection_loader
 from ansible.utils.display import Display
 from ansible.utils.path import unfrackpath
-
 
 display = Display()
 
