@@ -9,13 +9,11 @@ Unit test file for ipwrap filter plugin
 
 from __future__ import absolute_import, division, print_function
 
-
 __metaclass__ = type
 
 from unittest import TestCase
 
 from ansible_collections.ansible.utils.plugins.filter.ipv4 import _ipv4
-
 
 VALID_DATA = [
     "192.24.2.1",
