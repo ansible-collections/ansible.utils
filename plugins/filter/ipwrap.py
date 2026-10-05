@@ -6,6 +6,7 @@
 """
 filter plugin file for ipaddr filters: ipwrap
 """
+
 from __future__ import absolute_import, division, print_function
 
 import types
@@ -21,7 +22,6 @@ from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddr_utils im
     _need_netaddr,
     ipaddr,
 )
-
 
 __metaclass__ = type
 

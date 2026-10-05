@@ -5,7 +5,6 @@
 
 from __future__ import absolute_import, division, print_function
 
-
 __metaclass__ = type
 
 import re
@@ -16,7 +15,6 @@ from ansible.playbook.task import Task
 from ansible.template import Templar
 
 from ansible_collections.ansible.utils.plugins.action.fact_diff import ActionModule
-
 
 try:
     from unittest.mock import MagicMock  # pylint:disable=syntax-error

@@ -5,7 +5,6 @@ import warnings
 
 import ansible.utils.display
 
-
 ansible.utils.display.Display().deprecated = lambda msg, *args, **kwargs: warnings.warn(
     msg,
     DeprecationWarning,

@@ -6,6 +6,7 @@
 """
 filter plugin file for ipaddr filters: cidr_merge
 """
+
 from __future__ import absolute_import, division, print_function
 
 from functools import partial
@@ -18,7 +19,6 @@ from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_valid
 from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddress_utils import (
     _need_netaddr,
 )
-
 
 __metaclass__ = type
 

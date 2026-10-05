@@ -16,7 +16,6 @@ from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddress_utils
     ip_network,
 )
 
-
 __metaclass__ = type
 
 DOCUMENTATION = """
