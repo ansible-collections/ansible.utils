@@ -8,6 +8,7 @@
 """
 The fact_diff plugin code
 """
+
 from __future__ import absolute_import, division, print_function
 
 import difflib
@@ -16,7 +17,6 @@ import re
 from collections.abc import MutableMapping
 
 from ansible.plugins.callback import CallbackBase
-
 
 __metaclass__ = type
 
