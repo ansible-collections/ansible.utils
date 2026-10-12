@@ -5,7 +5,6 @@
 
 from __future__ import absolute_import, division, print_function
 
-
 __metaclass__ = type
 
 from unittest import TestCase
@@ -15,7 +14,6 @@ from ansible.playbook.task import Task
 from ansible.template import Templar
 
 from ansible_collections.ansible.utils.plugins.action.validate import ActionModule
-
 
 try:
     from unittest.mock import MagicMock  # pylint:disable=syntax-error
