@@ -3,21 +3,22 @@
 
 The Ansible ``ansible.utils`` collection includes a variety of plugins that aid in the management, manipulation and visibility of data for the Ansible playbook developer.
 
+## Requirements
+
+- Python 3.10 or later.
+- The Python packages `jsonschema`, `textfsm`, `ttp`, `xmltodict`, and `netaddr` (version 0.10.1 or later), listed in the collection's [requirements.txt](https://github.com/ansible-collections/ansible.utils/blob/main/requirements.txt).
+
 ## Support
 
-As a Red Hat Ansible [Certified Content](https://catalog.redhat.com/software/search?target_platforms=Red%20Hat%20Ansible%20Automation%20Platform), this collection is entitled to [support](https://access.redhat.com/support/) through [Ansible Automation Platform](https://www.redhat.com/en/technologies/management/ansible) (AAP).
+This collection is maintained by the Red Hat Ansible Network team. As Red Hat Ansible [Certified Content](https://catalog.redhat.com/software/search?target_platforms=Red%20Hat%20Ansible%20Automation%20Platform), it is entitled to [support](https://access.redhat.com/support/) through [Ansible Automation Platform](https://www.redhat.com/en/technologies/management/ansible) (AAP). Red Hat customers can open a support case by selecting the **Create issue** button in the top right corner of this collection's page in Automation Hub.
 
-If a support case cannot be opened with Red Hat and the collection has been obtained either from [Galaxy](https://galaxy.ansible.com/ui/) or [GitHub](https://github.com/ansible-collections/ansible.utils), there is community support available at no charge.
-
-You can join us on [#network:ansible.com](https://matrix.to/#/#network:ansible.com) room or the [Ansible Forum Network Working Group](https://forum.ansible.com/g/network-wg).
-
-For more information you can check the communication section below.
+If you obtained this collection from [Ansible Galaxy](https://galaxy.ansible.com/ui/) or [GitHub](https://github.com/ansible-collections/ansible.utils), community support is available at no charge. Join us on the [#network:ansible.com Matrix room](https://matrix.to/#/#network:ansible.com) or the [Ansible Forum Network Working Group](https://forum.ansible.com/g/network-wg).
 
 ## Communication
 
 * Join the Ansible forum:
   * [Get Help](https://forum.ansible.com/c/help/6): get help or help others.
-  * [Posts tagged with 'network'](https://forum.ansible.com/tag/network): subscribe to participate in collection-related conversations.```
+  * [Posts tagged with 'network'](https://forum.ansible.com/tag/network): subscribe to participate in collection-related conversations.
   * [Ansible Network Automation Working Group](https://forum.ansible.com/g/network-wg/): by joining the team you will automatically get subscribed to the posts tagged with [network](https://forum.ansible.com/tags/network).
   * [Social Spaces](https://forum.ansible.com/c/chat/4): gather and interact with fellow enthusiasts.
   * [News & Announcements](https://forum.ansible.com/c/news/5): track project-wide announcements including social events.
@@ -124,23 +125,58 @@ Name | Description
 
 ## Installing this collection
 
-You can install the ``ansible.utils`` collection with the Ansible Galaxy CLI:
+Install the certified ``ansible.utils`` collection from Red Hat Ansible Automation Hub. Access to certified content requires a Red Hat account with an active Ansible Automation Platform subscription and an Automation Hub offline token. In the Red Hat Hybrid Cloud Console, go to **Automation Hub > Connect Hub**, load the offline token, and store it securely. See the [Red Hat token management instructions](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/secure-token_management_hub).
 
-    ansible-galaxy collection install ansible.utils
+Configure your `ansible.cfg` to use the hosted Automation Hub service:
 
-You can also include it in a `requirements.yml` file and install it with `ansible-galaxy collection install -r requirements.yml`, using the format:
+```ini
+[galaxy]
+server_list = automation_hub
+
+[galaxy_server.automation_hub]
+url = https://console.redhat.com/api/automation-hub/content/published/
+auth_url = https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
+token = <your_automation_hub_token>
+```
+
+Keep the token secret and out of source control. Then install the collection:
+
+```bash
+ansible-galaxy collection install ansible.utils --server automation_hub
+```
+
+For a `requirements.yml` file, identify Automation Hub as the source:
+
+```yaml
+---
+collections:
+  - name: ansible.utils
+    source: automation_hub
+```
+
+Install the requirements with `ansible-galaxy collection install -r requirements.yml`.
+
+### Installing from Ansible Galaxy for community use
+
+For community use outside Red Hat supported environments, install the collection from Ansible Galaxy:
+
+```bash
+ansible-galaxy collection install ansible.utils
+```
+
+You can also add it to a `requirements.yml` file:
 
 ```yaml
 ---
 collections:
   - name: ansible.utils
 ```
+
 ## Using this collection
 
 The most common use case for this collection is when you want to work with the complex data structures present in an Ansible playbook, inventory, or returned from modules. See each plugin documentation page for detailed examples for how these utilities can be used in tasks.
 
 
-**NOTE**: For Ansible 2.9, you may not see deprecation warnings when you run your playbooks with this collection. Use this documentation to track when a module is deprecated.
 
 ### See Also:
 
