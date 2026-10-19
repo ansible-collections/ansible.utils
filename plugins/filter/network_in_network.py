@@ -6,6 +6,7 @@
 """
 filter plugin file for ipaddr filters: network_in_network
 """
+
 from __future__ import absolute_import, division, print_function
 
 from functools import partial
@@ -21,7 +22,6 @@ from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddr_utils im
     _range_checker,
     ipaddr,
 )
-
 
 __metaclass__ = type
 
