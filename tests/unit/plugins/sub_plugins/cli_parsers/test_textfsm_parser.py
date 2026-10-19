@@ -3,7 +3,6 @@
 
 from __future__ import absolute_import, division, print_function
 
-
 __metaclass__ = type
 
 import os
@@ -15,7 +14,6 @@ import pytest
 from ansible_collections.ansible.utils.plugins.sub_plugins.cli_parser.textfsm_parser import (
     CliParser,
 )
-
 
 textfsm = pytest.importorskip("textfsm")
 
