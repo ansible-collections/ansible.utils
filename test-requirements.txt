@@ -1,4 +1,3 @@
-pytest-ansible
 pytest-xdist
 typing-extensions
 netaddr==0.10.1
