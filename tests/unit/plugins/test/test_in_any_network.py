@@ -9,7 +9,6 @@ Unit test file for netaddr test plugin: in_any_network
 
 from __future__ import absolute_import, division, print_function
 
-
 __metaclass__ = type
 
 from unittest import TestCase

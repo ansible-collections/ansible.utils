@@ -1,6 +1,5 @@
 from __future__ import absolute_import, division, print_function
 
-
 __metaclass__ = type
 
 import subprocess
@@ -10,7 +9,6 @@ from pathlib import Path
 
 import pytest
 import yaml
-
 
 TARGETS_DIR = Path(__file__).parent / "targets"
 

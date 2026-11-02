@@ -6,8 +6,8 @@
 """
 The action plugin file for cli_parse
 """
-from __future__ import absolute_import, division, print_function
 
+from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
@@ -25,7 +25,6 @@ from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_valid
     check_argspec,
 )
 from ansible_collections.ansible.utils.plugins.modules.cli_parse import DOCUMENTATION
-
 
 ARGSPEC_CONDITIONALS = {
     "argument_spec": {"parser": {"mutually_exclusive": [["command", "template_path"]]}},
