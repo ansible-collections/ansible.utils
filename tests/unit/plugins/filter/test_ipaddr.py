@@ -6,8 +6,8 @@
 """
 Unit test file for ipaddr filter plugins
 """
-from __future__ import absolute_import, division, print_function
 
+from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
@@ -29,7 +29,6 @@ from ansible_collections.ansible.utils.plugins.filter.previous_nth_usable import
 from ansible_collections.ansible.utils.plugins.filter.reduce_on_network import reduce_on_network
 from ansible_collections.ansible.utils.plugins.filter.slaac import slaac
 from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddr_utils import ipaddr
-
 
 netaddr = pytest.importorskip("netaddr")
 

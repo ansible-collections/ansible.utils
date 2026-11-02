@@ -9,7 +9,6 @@ The utils file for all netaddr tests
 
 from __future__ import absolute_import, division, print_function
 
-
 __metaclass__ = type
 
 from functools import wraps
@@ -22,7 +21,6 @@ from ansible.module_utils.common.text.converters import to_text
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     check_argspec,
 )
-
 
 try:
     import ipaddress

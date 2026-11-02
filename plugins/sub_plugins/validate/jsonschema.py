@@ -5,7 +5,6 @@
 
 from __future__ import absolute_import, division, print_function
 
-
 __metaclass__ = type
 
 DOCUMENTATION = """
@@ -60,7 +59,6 @@ from ansible.utils.display import Display
 
 from ansible_collections.ansible.utils.plugins.module_utils.common.utils import to_list
 from ansible_collections.ansible.utils.plugins.plugin_utils.base.validate import ValidateBase
-
 
 display = Display()
 
