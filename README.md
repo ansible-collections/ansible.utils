@@ -10,7 +10,7 @@ The Ansible ``ansible.utils`` collection includes a variety of plugins that aid 
 
 ## Support
 
-This collection is maintained by the Red Hat Ansible Network team. As Red Hat Ansible [Certified Content](https://catalog.redhat.com/software/search?target_platforms=Red%20Hat%20Ansible%20Automation%20Platform), it is entitled to [support](https://access.redhat.com/support/) through [Ansible Automation Platform](https://www.redhat.com/en/technologies/management/ansible) (AAP). Red Hat customers can open a support case by selecting the **Create issue** button in the top right corner of this collection's page in Automation Hub.
+As Red Hat Ansible [Certified Content](https://catalog.redhat.com/software/search?target_platforms=Red%20Hat%20Ansible%20Automation%20Platform), it is entitled to [support](https://access.redhat.com/support/) through [Ansible Automation Platform](https://www.redhat.com/en/technologies/management/ansible) (AAP). Red Hat customers can open a support case by selecting the **Create issue** button in the top right corner of this collection's page in Automation Hub.
 
 If you obtained this collection from [Ansible Galaxy](https://galaxy.ansible.com/ui/) or [GitHub](https://github.com/ansible-collections/ansible.utils), community support is available at no charge. Join us on the [#network:ansible.com Matrix room](https://matrix.to/#/#network:ansible.com) or the [Ansible Forum Network Working Group](https://forum.ansible.com/g/network-wg).
 
