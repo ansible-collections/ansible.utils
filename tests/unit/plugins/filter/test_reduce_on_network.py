@@ -9,7 +9,6 @@ Unit test file for reduce_on_network filter plugin
 
 from __future__ import absolute_import, division, print_function
 
-
 __metaclass__ = type
 
 from unittest import TestCase

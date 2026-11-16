@@ -6,8 +6,8 @@
 """
 The action plugin file for validate
 """
-from __future__ import absolute_import, division, print_function
 
+from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
@@ -20,7 +20,6 @@ from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_valid
 )
 from ansible_collections.ansible.utils.plugins.modules.validate import DOCUMENTATION
 from ansible_collections.ansible.utils.plugins.plugin_utils.base.validate import _load_validator
-
 
 ARGSPEC_CONDITIONALS = {}
 

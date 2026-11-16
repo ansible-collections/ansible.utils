@@ -17,12 +17,10 @@ from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddress_utils
 )
 from ansible_collections.ansible.utils.plugins.plugin_utils.base.utils import _validate_args
 
-
 __metaclass__ = type
 
 from ansible.errors import AnsibleFilterError
 from ansible.module_utils.common.text.converters import to_text
-
 
 DOCUMENTATION = """
     name: usable_range
