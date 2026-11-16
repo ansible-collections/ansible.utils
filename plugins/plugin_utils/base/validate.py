@@ -4,7 +4,6 @@ The base class for validator
 
 from __future__ import absolute_import, division, print_function
 
-
 __metaclass__ = type
 
 import os
@@ -18,7 +17,6 @@ from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_valid
     check_argspec,
 )
 from ansible_collections.ansible.utils.plugins.module_utils.common.utils import to_list
-
 
 try:
     import yaml

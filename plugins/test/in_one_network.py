@@ -14,7 +14,6 @@ from ansible_collections.ansible.utils.plugins.plugin_utils.base.ipaddress_utils
 )
 from ansible_collections.ansible.utils.plugins.test.in_network import _in_network
 
-
 __metaclass__ = type
 
 DOCUMENTATION = """
